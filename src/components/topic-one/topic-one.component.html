@@ -13,18 +13,18 @@
 
     <div class="col d-flex flex-wrap gap-2 justify-content-md-end">
 
-      <button class="btn btn-sm btn-light border" (click)="carousel.prev()">
+      <button class="btn btn-sm btn-light border" (click)="carousel?.prev()">
         <i class="bi bi-chevron-left"></i>
       </button>
 
       <ng-container *ngFor="let slide of slides; let i = index">
         <button class="btn btn-sm" [class.btn-primary]="activeIndex === i" [class.btn-outline-secondary]="activeIndex !== i"
-          (click)="carousel.select('ngb-slide-' + i)">
+          (click)="carousel?.select('task-' + (i + 1))">
           {{ i + 1 }}
         </button>
       </ng-container>
 
-      <button class="btn btn-sm btn-light border" (click)="carousel.next()">
+      <button class="btn btn-sm btn-light border" (click)="carousel?.next()">
         <i class="bi bi-chevron-right"></i>
       </button>
 
@@ -37,7 +37,7 @@
     (slide)="onSlide($event)">
 
     <!-- Theory -->
-    <ng-template ngbSlide="task-1">
+    <ng-template ngbSlide id="task-1">
       <div class="row">
         <div class="col-12">
           <div ngbAccordion class="shadow-sm">
@@ -99,7 +99,7 @@
     </ng-template>
 
     <!-- Task-1 -->
-    <ng-template ngbSlide="task-2">
+    <ng-template ngbSlide id="task-2">
       <div class="row g-4">
 
         <!-- Problem Statement Column -->
@@ -187,7 +187,7 @@
 
 
     <!-- Task-2 -->
-    <ng-template ngbSlide="task-3">
+    <ng-template ngbSlide id="task-3">
       <div class="row g-4">
 
         <!-- Problem Statement Column -->
@@ -366,7 +366,7 @@
 
 
     <!-- Task-3 -->
-    <ng-template ngbSlide="task-4">
+    <ng-template ngbSlide id="task-4">
       <div class="row g-4">
 
         <!-- Problem Statement Column -->
@@ -495,7 +495,7 @@
 
 
     <!-- Task-4 -->
-    <ng-template ngbSlide="task-5">
+    <ng-template ngbSlide id="task-5">
       <div class="row g-4">
 
         <!-- Problem Statement Column -->
@@ -705,7 +705,7 @@ get fullName(): string &#123;
 
 
     <!-- Task-5 -->
-    <ng-template ngbSlide="task-6">
+    <ng-template ngbSlide id="task-6">
       <div class="row g-4">
 
         <!-- Problem Statement Column -->

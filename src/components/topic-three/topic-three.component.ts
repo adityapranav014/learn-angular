@@ -19,7 +19,7 @@ export class TopicThreeComponent {
   carousel!: NgbCarousel;
 
   onSlide(event: NgbSlideEvent) {
-    this.activeIndex = parseInt(event.current.replace('ngb-slide-', ''));
+    this.activeIndex = parseInt(event.current.replace('task-', '')) - 1;
   }
 
 
