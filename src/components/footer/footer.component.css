@@ -1,0 +1,29 @@
+.custom-footer-link {
+    transition: color 0.3s ease;
+}
+
+.custom-footer-link:hover {
+    color: #ffffff !important;
+    text-decoration: underline !important;
+}
+
+
+.gradient-animated {
+    background: linear-gradient(135deg, #8a2be2, #c41eab, #f5127b);
+    background-size: 200% 200%;
+    animation: smoothFlow 10s ease infinite;
+}
+
+@keyframes smoothFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}

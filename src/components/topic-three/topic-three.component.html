@@ -1,0 +1,986 @@
+<div class="container pb-4">
+
+  <!-- Pagination -->
+  <div class="row align-items-center mb-4">
+
+    <div class="col-auto">
+      <div class="d-flex align-items-center gap-2">
+        <img src="favicon.ico" alt="Logo" width="22" height="22" class="d-inline-block rounded">
+        <span class="vr opacity-25"></span>
+        <span class="fw-semibold text-dark" style="font-size: 0.95rem;">*ngClass &amp; *ngStyle</span>
+      </div>
+    </div>
+
+    <div class="col d-flex flex-wrap gap-2 justify-content-md-end">
+
+      <button class="btn btn-sm btn-light border" (click)="carousel.prev()">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+
+      <ng-container *ngFor="let slide of slides; let i = index">
+        <button class="btn btn-sm" [class.btn-primary]="activeIndex === i" [class.btn-outline-secondary]="activeIndex !== i"
+          (click)="carousel.select('ngb-slide-' + i)">
+          {{ i + 1 }}
+        </button>
+      </ng-container>
+
+      <button class="btn btn-sm btn-light border" (click)="carousel.next()">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- Task Carousel -->
+  <ngb-carousel #carousel [interval]="0" [showNavigationIndicators]="false" [showNavigationArrows]="false"
+    (slide)="onSlide($event)">
+
+    <!-- Theory -->
+    <ng-template ngbSlide="task-1">
+      <div class="row">
+        <div class="col-12">
+          <div ngbAccordion class="shadow-sm">
+            <div ngbAccordionItem="difference-panel" [collapsed]="false">
+
+              <h2 ngbAccordionHeader>
+                <button ngbAccordionButton class="fw-bold text-primary">
+                  <i class="bi bi-info-circle-fill me-2"></i> View Difference: [ngClass]/[ngStyle] vs Native Bindings
+                </button>
+              </h2>
+
+              <div ngbAccordionCollapse>
+                <div ngbAccordionBody>
+                  <ng-template>
+                    <div class="table-responsive">
+                      <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                          <tr>
+                            <th scope="col" class="w-50 text-secondary">
+                              <i class="bi bi-box me-1"></i> Directive: [ngClass] & [ngStyle]
+                            </th>
+                            <th scope="col" class="w-50 text-success">
+                              <i class="bi bi-lightning-charge-fill me-1"></i> Native: [class.name] & [style.prop]
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Requires importing <code>CommonModule</code>, <code>NgClass</code>, or
+                              <code>NgStyle</code>
+                              into your component.
+                            </td>
+                            <td>Built directly into the core Angular template engine. <strong>No imports
+                                needed.</strong>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Evaluates objects, arrays, or strings.
+                              Example:<br><code>[ngClass]="&#123; 'bg-success': isActive &#125;"</code></td>
+                            <td>Binds directly to a specific CSS class or style property.
+                              Example:<br><code>[class.bg-success]="isActive"</code></td>
+                          </tr>
+                          <tr>
+                            <td><strong>Best Use Case:</strong> Excellent when you need to apply <em>multiple</em>
+                              dynamic
+                              classes or styles at the exact same time based on complex logic.</td>
+                            <td><strong>Best Use Case:</strong> Highly optimized and preferred for toggling single,
+                              specific
+                              classes or individual style properties.</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </ng-template>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+
+    <!-- Task-1 -->
+    <ng-template ngbSlide="task-2">
+      <div class="row g-4">
+
+        <!-- Problem Statement Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-header bg-white border-bottom-0 pt-3 pb-2">
+              <h5 class="card-title text-secondary mb-0">
+                <i class="bi bi-clipboard-check me-2"></i>Task 1️⃣
+              </h5>
+            </div>
+            <div class="card-body bg-white rounded-bottom">
+              <ul class="mb-0 text-muted">
+                <li class="mb-2">Create a variable in TypeScript and store a CSS class string into it.</li>
+                <li>On page load, bind that variable to a <code>&lt;div&gt;</code> tag to apply the styles.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Solution Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-primary">
+            <div class="card-header bg-primary text-white pt-3 pb-2">
+              <h5 class="card-title mb-0">
+                <i class="bi bi-play-circle me-2"></i>Live Solution
+              </h5>
+            </div>
+            <div class="card-body d-flex align-items-center justify-content-center">
+
+              <div class="w-100 transition-all" [class]="dynamicCssClass">
+                <i class="bi bi-magic me-2"></i> I am dynamically styled!
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Hint Column -->
+        <div class="col-lg-4 col-md-12">
+          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
+            <div
+              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
+              <h5 class="card-title text-light mb-0">
+                <i class="bi bi-code-slash me-2"></i>Code Hint
+              </h5>
+            </div>
+            <div class="card-body">
+
+              <div class="mb-3">
+                <p class="small text-secondary fw-bold mb-2 tracking-wider">Legacy Syntax ([ngClass])</p>
+                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Requires importing NgClass --&gt;
+&lt;div [ngClass]="dynamicCssClass"&gt;
+  Dynamic Styles
+&lt;/div&gt;</code></pre>
+              </div>
+
+              <div>
+                <p class="small text-warning fw-bold mb-2 tracking-wider">Modern Syntax ([class])</p>
+                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Native binding, automatically merges classes --&gt;
+&lt;div [class]="dynamicCssClass"&gt;
+  Dynamic Styles
+&lt;/div&gt;</code></pre>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </ng-template>
+
+
+    <!-- Task-2 -->
+    <ng-template ngbSlide="task-3">
+      <div class="row g-4">
+
+        <!-- Problem Statement Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-header bg-white border-bottom-0 pt-3 pb-2">
+              <h5 class="card-title text-secondary mb-0">
+                <i class="bi bi-clipboard-check me-2"></i>Task 2️⃣
+              </h5>
+            </div>
+            <div class="card-body bg-white rounded-bottom">
+              <ul class="mb-0 text-muted">
+                <li class="mb-2">Create a variable and store a CSS class into it.</li>
+                <li class="mb-2">Create 1 button with the name "Toggle Class".</li>
+                <li>On click of the button, add the <code>bg-success</code> class to a div, and if clicked again, add
+                  the
+                  <code>bg-danger</code> class.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Solution Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-primary">
+            <div class="card-header bg-primary text-white pt-3 pb-2">
+              <h5 class="card-title mb-0">
+                <i class="bi bi-play-circle me-2"></i>Live Solution
+              </h5>
+            </div>
+            <div class="card-body d-flex flex-column align-items-center justify-content-center">
+
+              <div class="p-4 rounded-3 text-white fw-bold mb-4 w-100 text-center transition-all shadow-sm"
+                [class]="toggleBgClass">
+                My Div Area
+              </div>
+
+              <button class="btn btn-dark btn-sm fw-bold px-4 rounded-pill shadow-sm" (click)="toggleBackground()">
+                <i class="bi bi-arrow-left-right me-1"></i> Toggle Class
+              </button>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Hint Column -->
+        <div class="col-lg-4 col-md-12">
+          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
+            <div
+              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
+              <h5 class="card-title text-light mb-0">
+                <i class="bi bi-code-slash me-2"></i>Code Hint
+              </h5>
+            </div>
+            <div class="card-body">
+
+              <div class="mb-3">
+                <p class="small text-secondary fw-bold mb-2 tracking-wider">String Toggle (Task Method)</p>
+                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Swapping the whole string --&gt;
+&lt;div [class]="toggleBgClass"&gt;...&lt;/div&gt;
+
+&lt;button (click)="toggle()"&gt;Toggle&lt;/button&gt;</code></pre>
+              </div>
+
+              <div>
+                <p class="small text-warning fw-bold mb-2 tracking-wider">Boolean Toggle (Industry Standard)</p>
+                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Using a boolean: isSuccess = true --&gt;
+&lt;div [class.bg-success]="isSuccess" 
+     [class.bg-danger]="!isSuccess"&gt;
+&lt;/div&gt;
+
+&lt;button (click)="isSuccess = !isSuccess"&gt;
+  Toggle
+&lt;/button&gt;</code></pre>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+
+    <!-- Task-3 -->
+    <ng-template ngbSlide="task-4">
+      <div class="row g-4">
+
+        <!-- Problem Statement Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-header bg-white border-bottom-0 pt-3 pb-2">
+              <h5 class="card-title text-secondary mb-0">
+                <i class="bi bi-clipboard-check me-2"></i>Task 3️⃣
+              </h5>
+            </div>
+            <div class="card-body bg-white rounded-bottom">
+              <ul class="mb-0 text-muted">
+                <li class="mb-2">On "Success" button click, add the <code>bg-success</code> class. On "Danger", add the
+                  <code>bg-danger</code> class.
+                </li>
+                <li>Add buttons with a list of languages. On click of a language, mark it as selected.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Solution Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-primary">
+            <div class="card-header bg-primary text-white pt-3 pb-2">
+              <h5 class="card-title mb-0">
+                <i class="bi bi-play-circle me-2"></i>Live Solution
+              </h5>
+            </div>
+            <div class="card-body">
+
+              <div class="row align-items-center g-3">
+
+                <div class="col-12 text-center border-end">
+                  <div class="p-4 rounded-3 text-white fw-bold mb-3 shadow-sm transition-all" [class]="activeColor">
+                    Div - 1
+                  </div>
+                  <div class="d-flex justify-content-center gap-2">
+                    <button class="btn btn-sm btn-success fw-bold" (click)="changeColor('bg-success')">Success</button>
+                    <button class="btn btn-sm btn-danger fw-bold" (click)="changeColor('bg-danger')">Danger</button>
+                  </div>
+                </div>
+
+                <div class="col-12 mt-5">
+                  <div class="d-flex flex-wrap gap-2 justify-content-start ps-2">
+
+                    @for (lang of languages; track lang) {
+                    <button class="btn btn-sm fw-medium shadow-sm transition-all"
+                      [class.btn-success]="selectedLang === lang" [class.btn-secondary]="selectedLang !== lang"
+                      (click)="selectLanguage(lang)">
+                      {{ lang }}
+                    </button>
+                    }
+
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Hint Column -->
+        <div class="col-lg-4 col-md-12">
+          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
+            <div
+              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
+              <h5 class="card-title text-light mb-0">
+                <i class="bi bi-code-slash me-2"></i>Code Hint
+              </h5>
+            </div>
+            <div class="card-body">
+
+              <div class="mb-3">
+                <p class="small text-secondary fw-bold mb-2 tracking-wider">Dynamic String Binding</p>
+                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Swaps the entire class string --&gt;
+&lt;div [class]="activeColor"&gt;Div - 1&lt;/div&gt;
+
+&lt;button (click)="changeColor('bg-success')"&gt;
+  Success
+&lt;/button&gt;</code></pre>
+              </div>
+
+              <div>
+                <p class="small text-warning fw-bold mb-2 tracking-wider">Dynamic Boolean Binding</p>
+                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Toggles specific classes independently --&gt;
+&lt;button 
+  [class.btn-success]="selectedLang === lang"
+  [class.btn-secondary]="selectedLang !== lang"&gt;
+  {{ '{{' }} lang {{ '}}' }}
+&lt;/button&gt;</code></pre>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </ng-template>
+
+
+    <!-- Task-4 -->
+    <ng-template ngbSlide="task-5">
+      <div class="row g-4">
+
+        <!-- Problem Statement Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-header bg-white border-bottom-0 pt-3 pb-2">
+              <h5 class="card-title text-secondary mb-0">
+                <i class="bi bi-clipboard-check me-2"></i>Task 4️⃣
+              </h5>
+            </div>
+            <div class="card-body bg-white rounded-bottom">
+              <ul class="mb-0 text-muted">
+                <li class="mb-2">On <strong>Add</strong> button click, add the <code>col-7</code> class to the first div
+                  and
+                  show the 2nd div.</li>
+                <li>On <strong>Close</strong> button click, add the <code>col-12</code> class to the first div and hide
+                  the
+                  2nd div.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Solution Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-primary">
+            <div class="card-header bg-primary text-white pt-3 pb-2">
+              <h5 class="card-title mb-0">
+                <i class="bi bi-play-circle me-2"></i>Live Solution
+              </h5>
+            </div>
+            <div class="card-body">
+
+              <div class="row g-3">
+
+                <div class="transition-all" [class.col-12]="!isSidePanelOpen" [class.col-7]="isSidePanelOpen">
+                  <div class="card shadow-sm h-100 border-success">
+                    <div
+                      class="card-header bg-success text-white d-flex justify-content-between align-items-center py-2">
+                      <span class="fw-bold small">Main Panel</span>
+                      @if (!isSidePanelOpen) {
+                      <button class="btn btn-sm btn-light text-success fw-bold py-0 shadow-sm"
+                        (click)="isSidePanelOpen = true">
+                        <i class="bi bi-plus-lg"></i> Add
+                      </button>
+                      }
+                    </div>
+                    <div class="card-body p-4 text-center text-muted small">
+                      Main Panel Content
+                    </div>
+                  </div>
+                </div>
+
+                @if (isSidePanelOpen) {
+                <div class="col-5 transition-all">
+                  <div class="card shadow-sm h-100 border-secondary">
+                    <div
+                      class="card-header bg-secondary text-white d-flex justify-content-between align-items-center py-2">
+                      <span class="fw-bold small">Side Panel</span>
+                      <button class="btn btn-sm btn-danger text-white fw-bold py-0 shadow-sm"
+                        (click)="isSidePanelOpen = false">
+                        <i class="bi bi-x-lg" title="Close"></i>
+                      </button>
+                    </div>
+                    <div class="card-body p-4 text-center text-muted small">
+                      Side Panel Content
+                    </div>
+                  </div>
+                </div>
+                }
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Hint Column -->
+        <div class="col-lg-4 col-md-12">
+          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
+            <div
+              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
+              <h5 class="card-title text-light mb-0">
+                <i class="bi bi-code-slash me-2"></i>Code Hint
+              </h5>
+            </div>
+            <div class="card-body">
+
+              <div class="mb-3">
+                <p class="small text-secondary fw-bold mb-2 tracking-wider">Dynamic Layout ([class])</p>
+                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Swaps grid classes smoothly --&gt;
+&lt;div [class.col-12]="!isSidePanelOpen" 
+     [class.col-7]="isSidePanelOpen"&gt;
+  Main Div
+&lt;/div&gt;</code></pre>
+              </div>
+
+              <div>
+                <p class="small text-warning fw-bold mb-2 tracking-wider">Conditional Rendering (&#64;if)</p>
+                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Renders the side panel --&gt;
+&#64;if (isSidePanelOpen) &#123;
+  &lt;div class="col-5"&gt;
+    Side Div
+  &lt;/div&gt;
+&#125;</code></pre>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+
+    <!-- Task-5 -->
+    <ng-template ngbSlide="task-6">
+      <div class="row g-4">
+
+        <!-- Problem Statement Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-header bg-white border-bottom-0 pt-3 pb-2">
+              <h5 class="card-title text-secondary mb-0">
+                <i class="bi bi-clipboard-check me-2"></i>Task 5️⃣
+              </h5>
+            </div>
+            <div class="card-body bg-white rounded-bottom">
+              <ul class="mb-0 text-muted">
+                <li class="mb-2">Create an array of students with fields
+                  <code>studId, name, isActive, gender, state</code>.
+                </li>
+                <li class="mb-2">Using <code>&#64;for</code>, show the array in a table.</li>
+                <li class="mb-2">At a time, only one row should be selected.</li>
+                <li>On click of a <code>&lt;tr&gt;</code>, add the <code>table-info</code> class to highlight it.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Solution Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-primary">
+            <div class="card-header bg-primary text-white pt-3 pb-2">
+              <h5 class="card-title mb-0">
+                <i class="bi bi-play-circle me-2"></i>Live Solution
+              </h5>
+            </div>
+            <div class="card-body p-0">
+
+              <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 text-center" style="cursor: pointer;">
+                  <thead class="table-light">
+                    <tr>
+                      <th scope="col">Sr No</th>
+                      <th scope="col" class="text-start">Name</th>
+                      <th scope="col">Gender</th>
+                      <th scope="col">State</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    @for (stud of students; track stud.studId; let i = $index) {
+                    <tr [class.table-info]="selectedStudId === stud.studId" (click)="selectStudent(stud.studId)">
+
+                      <td class="text-muted fw-bold">{{ i + 1 }}</td>
+                      <td class="text-start fw-medium">{{ stud.name }}</td>
+                      <td>{{ stud.gender }}</td>
+                      <td>
+                        <span class="badge bg-light text-dark border">{{ stud.state }}</span>
+                      </td>
+                    </tr>
+                    }
+
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Hint Column -->
+        <div class="col-lg-4 col-md-12">
+          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
+            <div
+              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
+              <h5 class="card-title text-light mb-0">
+                <i class="bi bi-code-slash me-2"></i>Code Hint
+              </h5>
+            </div>
+            <div class="card-body">
+
+              <div class="mb-3">
+                <p class="small text-secondary fw-bold mb-2 tracking-wider">Dynamic Row Highlight</p>
+                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>&lt;tr 
+  [class.table-info]="selectedStudId === stud.studId"
+  (click)="selectStudent(stud.studId)"&gt;
+  ...
+&lt;/tr&gt;</code></pre>
+              </div>
+
+              <div>
+                <p class="small text-info fw-bold mb-2 tracking-wider">State Management (TS)</p>
+                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>// Keeps track of ONE active item
+selectedStudId: number | null = null;
+
+selectStudent(id: number) &#123;
+  this.selectedStudId = id;
+&#125;</code></pre>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </ng-template>
+
+
+    <!-- Task-6 -->
+    <ng-template ngbSlide="task-7">
+      <div class="row g-4">
+
+        <!-- Problem Statement Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-header bg-white border-bottom-0 pt-3 pb-2">
+              <h5 class="card-title text-secondary mb-0">
+                <i class="bi bi-clipboard-check me-2"></i>Task 6️⃣
+              </h5>
+            </div>
+            <div class="card-body bg-white rounded-bottom">
+              <ul class="mb-0 text-muted">
+                <li class="mb-2">Create input fields to capture Width, Height, Border-Radius, and Background Color.</li>
+                <li class="mb-2">Create a target <code>&lt;div&gt;</code> that will act as our shape canvas.</li>
+                <li>On "Create Shape" button click, apply the entered values dynamically to the target `div` using
+                  native
+                  Style bindings.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Solution Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-primary">
+            <div class="card-header bg-primary text-white pt-3 pb-2">
+              <h5 class="card-title mb-0">
+                <i class="bi bi-play-circle me-2"></i>Live Solution
+              </h5>
+            </div>
+            <div class="card-body">
+
+              <div class="row g-4 align-items-center">
+
+                <div class="col-6 border-end">
+                  <div class="row g-2">
+                    <div class="col-12">
+                      <label class="small fw-bold text-muted mb-1">Width (px)</label>
+                      <input type="number" class="form-control form-control-sm" placeholder="Width"
+                        [(ngModel)]="inputWidth">
+                    </div>
+                    <div class="col-12">
+                      <label class="small fw-bold text-muted mb-1">Height (px)</label>
+                      <input type="number" class="form-control form-control-sm" placeholder="Height"
+                        [(ngModel)]="inputHeight">
+                    </div>
+                    <div class="col-12">
+                      <label class="small fw-bold text-muted mb-1">Radius (px)</label>
+                      <input type="number" class="form-control form-control-sm" placeholder="Radius"
+                        [(ngModel)]="inputRadius">
+                    </div>
+                    <div class="col-12">
+                      <label class="small fw-bold text-muted mb-1">Bg-Color</label>
+                      <input type="color" class="form-control form-control-color form-control-sm w-100"
+                        [(ngModel)]="inputColor">
+                    </div>
+                    <div class="col-12 mt-3">
+                      <button class="btn btn-success btn-sm w-100 fw-bold shadow-sm" (click)="createShape()">
+                        <i class="bi bi-brush me-1"></i> Create Shape
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-6 d-flex justify-content-center align-items-center min-vh-25">
+
+                  <div
+                    class="transition-all shadow-sm d-flex justify-content-center align-items-center text-white small"
+                    [style.width.px]="appliedWidth" [style.height.px]="appliedHeight"
+                    [style.border-radius.px]="appliedRadius" [style.background-color]="appliedColor">
+                    <span style="mix-blend-mode: difference;">Shape</span>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Hint Column -->
+        <div class="col-lg-4 col-md-12">
+          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
+            <div
+              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
+              <h5 class="card-title text-light mb-0">
+                <i class="bi bi-code-slash me-2"></i>Code Hint
+              </h5>
+            </div>
+            <div class="card-body">
+
+              <div class="mb-3">
+                <p class="small text-secondary fw-bold mb-2 tracking-wider">Legacy Syntax ([ngStyle])</p>
+                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Requires object syntax & string concat --&gt;
+&lt;div [ngStyle]="&#123; 
+  'width': width + 'px', 
+  'border-radius': radius + 'px' 
+&#125;"&gt;&lt;/div&gt;</code></pre>
+              </div>
+
+              <div>
+                <p class="small text-warning fw-bold mb-2 tracking-wider">Modern Syntax ([style.prop])</p>
+                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Native binding, automatically adds 'px' --&gt;
+&lt;div [style.width.px]="width"
+     [style.border-radius.px]="radius"
+     [style.background-color]="bgColor"&gt;
+&lt;/div&gt;</code></pre>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </ng-template>
+
+
+    <!-- Task-7 -->
+    <ng-template ngbSlide="task-8">
+      <div class="row g-4">
+
+        <!-- Problem Statement Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-header bg-white border-bottom-0 pt-3 pb-2">
+              <h5 class="card-title text-secondary mb-0">
+                <i class="bi bi-clipboard-check me-2"></i>Task 7️⃣
+              </h5>
+            </div>
+            <div class="card-body bg-white rounded-bottom">
+              <ul class="mb-0 text-muted">
+                <li class="mb-2">Create a Bootstrap progress bar.</li>
+                <li class="mb-2">Provide a textbox to capture a percentage value from the user.</li>
+                <li>Dynamically update the width of the progress bar based on the value entered in the textbox.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Solution Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-primary">
+            <div class="card-header bg-primary text-white pt-3 pb-2">
+              <h5 class="card-title mb-0">
+                <i class="bi bi-play-circle me-2"></i>Live Solution
+              </h5>
+            </div>
+            <div class="card-body d-flex flex-column justify-content-center">
+
+              <div class="progress mb-4 shadow-sm" style="height: 25px;">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success fw-bold transition-all"
+                  role="progressbar" [style.width.%]="progressValue">
+                  {{ progressValue }}%
+                </div>
+              </div>
+
+              <div class="w-100">
+                <label class="small fw-bold text-muted mb-1">Set Progress (%)</label>
+                <div class="input-group input-group-sm">
+                  <input type="number" class="form-control" placeholder="Enter % value" [(ngModel)]="progressValue"
+                    min="0" max="100">
+                  <span class="input-group-text bg-light text-muted fw-bold">%</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Hint Column -->
+        <div class="col-lg-4 col-md-12">
+          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
+            <div
+              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
+              <h5 class="card-title text-light mb-0">
+                <i class="bi bi-code-slash me-2"></i>Code Hint
+              </h5>
+            </div>
+            <div class="card-body">
+
+              <div class="mb-3">
+                <p class="small text-secondary fw-bold mb-2 tracking-wider">Legacy Syntax ([ngStyle])</p>
+                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Required string concatenation --&gt;
+&lt;div class="progress-bar" 
+     [ngStyle]="&#123; 'width': progressValue + '%' &#125;"&gt;
+&lt;/div&gt;</code></pre>
+              </div>
+
+              <div>
+                <p class="small text-warning fw-bold mb-2 tracking-wider">Modern Syntax ([style.width.%])</p>
+                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Angular automatically handles the % unit --&gt;
+&lt;div class="progress-bar" 
+     [style.width.%]="progressValue"&gt;
+&lt;/div&gt;</code></pre>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </ng-template>
+
+
+    <!-- Task-8 -->
+    <ng-template ngbSlide="task-9">
+      <div class="row g-4">
+
+        <!-- Problem Statement Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-header bg-white border-bottom-0 pt-3 pb-2">
+              <h5 class="card-title text-secondary mb-0">
+                <i class="bi bi-clipboard-check me-2"></i>Task 8️⃣
+              </h5>
+            </div>
+            <div class="card-body bg-white rounded-bottom">
+              <ul class="mb-0 text-muted">
+                <li class="mb-2">Create an object in TypeScript with fields: <code>name, personType, gender, age</code>.
+                </li>
+                <li class="mb-2">On "Print" button click, display all the values selected by the user.</li>
+                <li>On "Reset", the form and object should be completely cleared.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Solution Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-primary">
+            <div class="card-header bg-primary text-white pt-3 pb-2">
+              <h5 class="card-title mb-0">
+                <i class="bi bi-play-circle me-2"></i>Live Solution
+              </h5>
+            </div>
+            <div class="card-body">
+
+              <div class="mb-4">
+                <label class="form-label small fw-bold text-muted mb-1">Your Name</label>
+                <input type="text" class="form-control form-control-sm" [(ngModel)]="personForm.name"
+                  placeholder="Enter name">
+              </div>
+
+              <h6 class="small fw-bold text-muted mb-2 border-bottom pb-1">Who Are You</h6>
+              <div class="row g-2 mb-4 text-center">
+
+                <div class="col-6">
+                  <div class="card cursor-pointer transition-all h-100"
+                    [class.border-primary]="personForm.personType === 'Sport Person'"
+                    [class.bg-primary-subtle]="personForm.personType === 'Sport Person'"
+                    (click)="setPersonType('Sport Person')">
+                    <div class="card-body p-2 d-flex flex-column align-items-center">
+                      <i class="bi bi-bicycle fs-3" [class.text-primary]="personForm.personType === 'Sport Person'"></i>
+                      <span class="small fw-medium mt-1">Sport Person</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <div class="card cursor-pointer transition-all h-100"
+                    [class.border-primary]="personForm.personType === 'Teacher'"
+                    [class.bg-primary-subtle]="personForm.personType === 'Teacher'" (click)="setPersonType('Teacher')">
+                    <div class="card-body p-2 d-flex flex-column align-items-center">
+                      <i class="bi bi-person-badge fs-3" [class.text-primary]="personForm.personType === 'Teacher'"></i>
+                      <span class="small fw-medium mt-1">Teacher</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <div class="card cursor-pointer transition-all h-100"
+                    [class.border-primary]="personForm.personType === 'Banker'"
+                    [class.bg-primary-subtle]="personForm.personType === 'Banker'" (click)="setPersonType('Banker')">
+                    <div class="card-body p-2 d-flex flex-column align-items-center">
+                      <i class="bi bi-bank fs-3" [class.text-primary]="personForm.personType === 'Banker'"></i>
+                      <span class="small fw-medium mt-1">Banker</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <div class="card cursor-pointer transition-all h-100"
+                    [class.border-primary]="personForm.personType === 'Musician'"
+                    [class.bg-primary-subtle]="personForm.personType === 'Musician'"
+                    (click)="setPersonType('Musician')">
+                    <div class="card-body p-2 d-flex flex-column align-items-center">
+                      <i class="bi bi-music-note-beamed fs-3"
+                        [class.text-primary]="personForm.personType === 'Musician'"></i>
+                      <span class="small fw-medium mt-1">Musician</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <h6 class="small fw-bold text-muted mb-2 border-bottom pb-1">Gender</h6>
+              <div class="row g-2 mb-4 text-center">
+
+                <div class="col-6">
+                  <div class="card cursor-pointer transition-all h-100"
+                    [class.border-success]="personForm.gender === 'Male'"
+                    [class.bg-success-subtle]="personForm.gender === 'Male'" (click)="setGender('Male')">
+                    <div class="card-body p-2 d-flex align-items-center justify-content-center gap-2">
+                      <i class="bi bi-gender-male fs-5" [class.text-success]="personForm.gender === 'Male'"></i>
+                      <span class="small fw-medium">Male</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <div class="card cursor-pointer transition-all h-100"
+                    [class.border-danger]="personForm.gender === 'Female'"
+                    [class.bg-danger-subtle]="personForm.gender === 'Female'" (click)="setGender('Female')">
+                    <div class="card-body p-2 d-flex align-items-center justify-content-center gap-2">
+                      <i class="bi bi-gender-female fs-5" [class.text-danger]="personForm.gender === 'Female'"></i>
+                      <span class="small fw-medium">Female</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <h6 class="small fw-bold text-muted mb-2 border-bottom pb-1">Your Age</h6>
+              <div class="d-flex align-items-center mb-4">
+                <button class="btn btn-outline-secondary btn-sm px-3" (click)="changeAge(-1)">
+                  <i class="bi bi-dash-lg"></i>
+                </button>
+                <h4 class="text-primary mb-0 mx-4 fw-bold">{{ personForm.age }}</h4>
+                <button class="btn btn-outline-secondary btn-sm px-3" (click)="changeAge(1)">
+                  <i class="bi bi-plus-lg"></i>
+                </button>
+              </div>
+
+              <div class="row g-2">
+                <div class="col-6">
+                  <button class="btn btn-outline-secondary btn-sm w-100 fw-bold" (click)="resetForm()">
+                    <i class="bi bi-arrow-counterclockwise me-1"></i> Reset
+                  </button>
+                </div>
+                <div class="col-6">
+                  <button class="btn btn-success btn-sm w-100 fw-bold shadow-sm" (click)="printObject()">
+                    <i class="bi bi-printer me-1"></i> Print Object
+                  </button>
+                </div>
+              </div>
+
+              @if (isPrinted) {
+              <div class="mt-4 p-3 bg-dark text-light rounded-3 shadow-sm border border-secondary">
+                <p class="small text-warning fw-bold mb-2 tracking-wider">Output JSON:</p>
+                <pre class="mb-0 small text-white-50"><code>{{ personForm | json }}</code></pre>
+              </div>
+              }
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Hint Column -->
+        <div class="col-lg-4 col-md-12">
+          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
+            <div
+              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
+              <h5 class="card-title text-light mb-0">
+                <i class="bi bi-code-slash me-2"></i>Code Hint
+              </h5>
+            </div>
+            <div class="card-body">
+
+              <div class="mb-3">
+                <p class="small text-secondary fw-bold mb-2 tracking-wider">Dynamic Select Cards</p>
+                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Bind class directly to object property --&gt;
+&lt;div class="card" 
+  [class.border-primary]="form.type === 'Teacher'"
+  (click)="setType('Teacher')"&gt;
+  ...
+&lt;/div&gt;</code></pre>
+              </div>
+
+              <div>
+                <p class="small text-warning fw-bold mb-2 tracking-wider">JSON Pipe (Template)</p>
+                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Renders object as formatted JSON --&gt;
+&lt;pre&gt;
+  {{ '{{' }} personForm | json {{ '}}' }}
+&lt;/pre&gt;</code></pre>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </ng-template>
+  </ngb-carousel>
+</div>

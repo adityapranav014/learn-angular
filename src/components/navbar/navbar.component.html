@@ -1,0 +1,66 @@
+<nav class="navbar navbar-light bg-white shadow-sm border-bottom py-2 mb-4 sticky-top">
+    <div class="container-fluid px-3">
+
+        <button class="navbar-toggler border-0 shadow-none px-2" type="button" (click)="openSidebar(content)">
+            <span class="navbar-toggler-icon opacity-75"></span>
+        </button>
+
+        <a class="navbar-brand me-auto ms-3 fw-bolder d-flex align-items-center gap-2" href="#">
+            <img src="favicon.ico" alt="Logo" width="30" height="30" class="d-inline-block align-text-top rounded">
+            <span class="brand-text">Angular</span>
+        </a>
+
+    </div>
+</nav>
+
+<ng-template #content let-offcanvas>
+
+    <div class="offcanvas-header px-3 py-2 border-bottom bg-light">
+        <h5 class="offcanvas-title fw-bold brand-text d-flex align-items-center mb-0">
+            <i class="bi bi-grid-fill me-2 fs-4"></i> Menu
+        </h5>
+        <button type="button" class="btn-close shadow-none opacity-75 me-1" aria-label="Close"
+            (click)="offcanvas.dismiss()"></button>
+    </div>
+
+    <div class="offcanvas-body p-3">
+
+        <ul class="nav nav-pills flex-column mb-auto gap-1">
+
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center rounded-3 px-3 py-2 transition-all" aria-current="page"
+                    routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                    (click)="offcanvas.dismiss()">
+                    <i class="bi bi-house-door me-3 fs-5 opacity-75"></i>
+                    <span class="fw-medium">Home</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center rounded-3 px-3 py-2 transition-all" routerLink="/one"
+                    routerLinkActive="active" (click)="offcanvas.dismiss()">
+                    <i class="bi bi-1-circle me-3 fs-5 opacity-75"></i>
+                    <span class="fw-medium">*ngIf & &#64;if</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center rounded-3 px-3 py-2 transition-all" routerLink="/two"
+                    routerLinkActive="active" (click)="offcanvas.dismiss()">
+                    <i class="bi bi-2-circle me-3 fs-5 opacity-75"></i>
+                    <span class="fw-medium">*ngFor & &#64;for</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center rounded-3 px-3 py-2 transition-all" routerLink="/three"
+                    routerLinkActive="active" (click)="offcanvas.dismiss()">
+                    <i class="bi bi-3-circle me-3 fs-5 opacity-75"></i>
+                    <span class="fw-medium">*ngClass & *ngStyle</span>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+
+</ng-template>

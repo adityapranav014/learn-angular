@@ -1,0 +1,823 @@
+<div class="container pb-4">
+
+  <!-- Pagination -->
+  <div class="row align-items-center mb-4">
+
+    <div class="col-auto">
+      <div class="d-flex align-items-center gap-2">
+        <img src="favicon.ico" alt="Logo" width="22" height="22" class="d-inline-block rounded">
+        <span class="vr opacity-25"></span>
+        <span class="fw-semibold text-dark" style="font-size: 0.95rem;">*ngIf &amp; &#64;if</span>
+      </div>
+    </div>
+
+    <div class="col d-flex flex-wrap gap-2 justify-content-md-end">
+
+      <button class="btn btn-sm btn-light border" (click)="carousel.prev()">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+
+      <ng-container *ngFor="let slide of slides; let i = index">
+        <button class="btn btn-sm" [class.btn-primary]="activeIndex === i" [class.btn-outline-secondary]="activeIndex !== i"
+          (click)="carousel.select('ngb-slide-' + i)">
+          {{ i + 1 }}
+        </button>
+      </ng-container>
+
+      <button class="btn btn-sm btn-light border" (click)="carousel.next()">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- Task Carousel -->
+  <ngb-carousel #carousel [interval]="0" [showNavigationIndicators]="false" [showNavigationArrows]="false"
+    (slide)="onSlide($event)">
+
+    <!-- Theory -->
+    <ng-template ngbSlide="task-1">
+      <div class="row">
+        <div class="col-12">
+          <div ngbAccordion class="shadow-sm">
+            <div ngbAccordionItem="difference-panel" [collapsed]="false">
+
+              <h2 ngbAccordionHeader>
+                <button ngbAccordionButton class="fw-bold text-primary">
+                  <i class="bi bi-info-circle-fill me-2"></i> View Difference: *ngIf vs &#64;if
+                </button>
+              </h2>
+
+              <div ngbAccordionCollapse>
+                <div ngbAccordionBody>
+                  <ng-template>
+                    <div class="table-responsive">
+                      <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                          <tr>
+                            <th scope="col" class="w-50 text-secondary">
+                              <i class="bi bi-clock-history me-1"></i> *ngIf Directive (Legacy)
+                            </th>
+                            <th scope="col" class="w-50 text-success">
+                              <i class="bi bi-lightning-charge-fill me-1"></i> &#64;if Block (Modern)
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Requires importing <code>CommonModule</code> or <code>NgIf</code> into your component.
+                            </td>
+                            <td>Built directly into the template engine. <strong>No imports needed.</strong></td>
+                          </tr>
+                          <tr>
+                            <td>Must be attached to a DOM element (like a <code>&lt;div&gt;</code>) or an
+                              <code>&lt;ng-template&gt;</code>.
+                            </td>
+                            <td>Independent of DOM elements. You can wrap plain text directly without creating extra
+                              HTML
+                              tags.</td>
+                          </tr>
+                          <tr>
+                            <td>Handling "else" conditions is clunky and requires referencing local template variables
+                              (<code>; else myTemplate</code>).</td>
+                            <td>Highly readable and intuitive syntax with native <code>&#64;else if</code> and
+                              <code>&#64;else</code> blocks.
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </ng-template>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+    <!-- Task-1 -->
+    <ng-template ngbSlide="task-2">
+      <div class="row g-4">
+
+        <!-- Problem Statement Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-header bg-white border-bottom-0 pt-3 pb-2">
+              <h5 class="card-title text-secondary mb-0">
+                <i class="bi bi-clipboard-check me-2"></i>Task 1️⃣
+              </h5>
+            </div>
+            <div class="card-body bg-white rounded-bottom">
+              <ul class="mb-0 text-muted">
+                <li class="mb-2">Create 2 Radio Buttons for male & female</li>
+                <li class="mb-2">If male is selected, show: <br><em>"You Have selected Male"</em></li>
+                <li>If female is selected, show: <br><em>"You Have selected Female"</em></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Solution -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-primary">
+            <div class="card-header bg-primary text-white pt-3 pb-2">
+              <h5 class="card-title mb-0">
+                <i class="bi bi-play-circle me-2"></i>Live Solution
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="d-flex gap-4 mb-4 mt-2">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="genderRadios" id="radioMale" value="Male"
+                    [(ngModel)]="selectedGender">
+                  <label class="form-check-label cursor-pointer" for="radioMale">Male</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="genderRadios" id="radioFemale" value="Female"
+                    [(ngModel)]="selectedGender">
+                  <label class="form-check-label cursor-pointer" for="radioFemale">Female</label>
+                </div>
+              </div>
+
+              <div class="p-3 border rounded bg-light min-vh-25 d-flex align-items-center justify-content-center">
+                @if (selectedGender) {
+                <h6 class="mb-0">
+                  You Have selected <span class="badge rounded-pill text-bg-success px-3">{{ selectedGender }}</span>
+                </h6>
+                } @else {
+                <span class="text-muted small">Please select a gender above.</span>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Hint Column -->
+        <div class="col-lg-4 col-md-12">
+          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
+            <div
+              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
+              <h5 class="card-title text-light mb-0">
+                <i class="bi bi-code-slash me-2"></i>Code Hint
+              </h5>
+            </div>
+            <div class="card-body">
+
+              <div class="mb-3">
+                <p class="small text-secondary fw-bold mb-2 tracking-wider">Legacy Syntax (*ngIf)</p>
+                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>&lt;h6 *ngIf="selectedGender"&gt;
+  You selected &#123;&#123; selectedGender &#125;&#125;
+&lt;/h6&gt;</code></pre>
+              </div>
+
+              <div>
+                <p class="small text-warning fw-bold mb-2 tracking-wider">Modern Syntax (&#64;if)</p>
+                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&#64;if (selectedGender) &#123;
+  &lt;h6&gt;You selected &#123;&#123; selectedGender &#125;&#125;&lt;/h6&gt;
+&#125;</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+
+    <!-- Task-2 -->
+    <ng-template ngbSlide="task-3">
+      <div class="row g-4">
+
+        <!-- Problem Statement Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-header bg-white border-bottom-0 pt-3 pb-2">
+              <h5 class="card-title text-secondary mb-0">
+                <i class="bi bi-clipboard-check me-2"></i>Task 2️⃣
+              </h5>
+            </div>
+            <div class="card-body bg-white rounded-bottom">
+              <ul class="mb-0 text-muted">
+                <li class="mb-2">Show Product Category in 3 Div</li>
+                <li class="mb-2">On click of div - store selected category in a variable</li>
+                <li>Show selected Companies of selected category using &#64;if / &#64;else if</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Solution Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-primary">
+            <div class="card-header bg-primary text-white pt-3 pb-2">
+              <h5 class="card-title mb-0">
+                <i class="bi bi-play-circle me-2"></i>Live Solution
+              </h5>
+            </div>
+            <div class="card-body">
+              <h6>Product Category:</h6>
+
+              <div class="col-12">
+                <div class="row g-2 g-md-4">
+
+                  <div class="col-4">
+                    <div class="card h-100 text-center border-1 transition-all cursor-pointer"
+                      [class.border-primary]="selectedCategory === 'tech'"
+                      [class.bg-primary]="selectedCategory === 'tech'" [class.text-white]="selectedCategory === 'tech'"
+                      (click)="selectCategory('tech')">
+                      <div class="card-body p-2 p-md-4">
+                        <i class="bi bi-laptop fs-2 d-block mb-2"></i>
+                        <span class="fw-bold d-none d-md-block">Tech</span>
+                        <span class="small fw-bold d-md-none">Tech</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-4">
+                    <div class="card h-100 text-center border-1 transition-all cursor-pointer"
+                      [class.border-primary]="selectedCategory === 'auto'"
+                      [class.bg-primary]="selectedCategory === 'auto'" [class.text-white]="selectedCategory === 'auto'"
+                      (click)="selectCategory('auto')">
+                      <div class="card-body p-2 p-md-4">
+                        <i class="bi bi-car-front fs-2 d-block mb-2"></i>
+                        <span class="fw-bold d-none d-md-block">Auto</span>
+                        <span class="small fw-bold d-md-none">Auto</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-4">
+                    <div class="card h-100 text-center border-1 transition-all cursor-pointer"
+                      [class.border-primary]="selectedCategory === 'finance'"
+                      [class.bg-primary]="selectedCategory === 'finance'"
+                      [class.text-white]="selectedCategory === 'finance'" (click)="selectCategory('finance')">
+                      <div class="card-body p-2 p-md-4">
+                        <i class="bi bi-bank fs-2 d-block mb-2"></i>
+                        <span class="fw-bold d-none d-md-block">Finance</span>
+                        <span class="small fw-bold d-md-none">Finance</span>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="col-12 mt-4">
+                @if (selectedCategory) {
+                <div class="card border-0 bg-light">
+                  <div class="card-header bg-white border-bottom-0 pt-4 pb-0 text-center">
+                    <h5 class="fw-bold text-muted">Selected Companies</h5>
+                  </div>
+                  <div class="card-body p-4 text-center">
+                    <div class="d-flex flex-wrap justify-content-center gap-3">
+
+                      @if (selectedCategory === 'tech') {
+                      <span class="badge text-bg-secondary fs-6 px-4 py-2 rounded-pill"><i
+                          class="bi bi-building me-2"></i>
+                        Apple</span>
+                      <span class="badge text-bg-secondary fs-6 px-4 py-2 rounded-pill"><i
+                          class="bi bi-building me-2"></i>
+                        Google</span>
+                      <span class="badge text-bg-secondary fs-6 px-4 py-2 rounded-pill"><i
+                          class="bi bi-building me-2"></i>
+                        Microsoft</span>
+                      <span class="badge text-bg-secondary fs-6 px-4 py-2 rounded-pill"><i
+                          class="bi bi-building me-2"></i>
+                        NVIDIA</span>
+                      }
+                      @else if (selectedCategory === 'auto') {
+                      <span class="badge text-bg-secondary fs-6 px-4 py-2 rounded-pill"><i
+                          class="bi bi-building me-2"></i>
+                        Tesla</span>
+                      <span class="badge text-bg-secondary fs-6 px-4 py-2 rounded-pill"><i
+                          class="bi bi-building me-2"></i>
+                        Ford</span>
+                      <span class="badge text-bg-secondary fs-6 px-4 py-2 rounded-pill"><i
+                          class="bi bi-building me-2"></i>
+                        Toyota</span>
+                      <span class="badge text-bg-secondary fs-6 px-4 py-2 rounded-pill"><i
+                          class="bi bi-building me-2"></i>
+                        Honda</span>
+                      }
+                      @else if (selectedCategory === 'finance') {
+                      <span class="badge text-bg-secondary fs-6 px-4 py-2 rounded-pill"><i
+                          class="bi bi-building me-2"></i>
+                        JPMorgan</span>
+                      <span class="badge text-bg-secondary fs-6 px-4 py-2 rounded-pill"><i
+                          class="bi bi-building me-2"></i>
+                        Visa</span>
+                      <span class="badge text-bg-secondary fs-6 px-4 py-2 rounded-pill"><i
+                          class="bi bi-building me-2"></i>
+                        Goldman Sachs</span>
+                      }
+
+                    </div>
+                  </div>
+                </div>
+                } @else {
+                <div class="alert alert-secondary text-center p-4 border-0" role="alert">
+                  <i class="bi bi-hand-index-thumb fs-4 d-block mb-2 text-muted"></i>
+                  Please select a category...
+                </div>
+                }
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Hint Column -->
+        <div class="col-lg-4 col-md-12">
+          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
+            <div
+              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
+              <h5 class="card-title text-light mb-0">
+                <i class="bi bi-code-slash me-2"></i>Code Hint
+              </h5>
+            </div>
+            <div class="card-body">
+
+              <div class="mb-3">
+                <p class="small text-secondary fw-bold mb-2 tracking-wider">Legacy Syntax (Chaining ngIf)</p>
+                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>&lt;div *ngIf="cat === 'tech'; else autoBlock"&gt;
+  Apple, Google
+&lt;/div&gt;
+&lt;ng-template #autoBlock&gt;
+  &lt;div *ngIf="cat === 'auto'"&gt;...&lt;/div&gt;
+&lt;/ng-template&gt;</code></pre>
+              </div>
+
+              <div>
+                <p class="small text-warning fw-bold mb-2 tracking-wider">Modern Syntax (&#64;else if)</p>
+                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&#64;if (cat === 'tech') &#123;
+  &lt;div&gt;Apple, Google&lt;/div&gt;
+&#125; &#64;else if (cat === 'auto') &#123;
+  &lt;div&gt;Tesla, Ford&lt;/div&gt;
+&#125;</code></pre>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+
+    <!-- Task-3 -->
+    <ng-template ngbSlide="task-4">
+      <div class="row g-4">
+
+        <!-- Problem Statement Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-header bg-white border-bottom-0 pt-3 pb-2">
+              <h5 class="card-title text-secondary mb-0">
+                <i class="bi bi-clipboard-check me-2"></i>Task 3️⃣
+              </h5>
+            </div>
+            <div class="card-body bg-white rounded-bottom">
+              <ul class="mb-0 text-muted">
+                <li class="mb-2">Show/Hide <strong>Div 1</strong> on click of Show & Hide buttons</li>
+                <li class="mb-2">Show/Hide <strong>Div 2</strong> on click of Toggle button</li>
+                <li>If you enter the same value in both textboxes, hide <strong>Div 3</strong>, else show it</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Solution Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-primary">
+            <div class="card-header bg-primary text-white pt-3 pb-2">
+              <h5 class="card-title mb-0">
+                <i class="bi bi-play-circle me-2"></i>Live Solution
+              </h5>
+            </div>
+            <div class="card-body">
+
+              <div class="row text-center text-white fw-bold mb-4 g-2 h-50">
+
+                <div class="col-4">
+                  @if (isDiv1Visible) {
+                  <div class="bg-success p-3 rounded shadow-sm h-100 d-flex align-items-center justify-content-center">
+                    Div 1
+                  </div>
+                  }
+                </div>
+
+                <div class="col-4">
+                  @if (isDiv2Visible) {
+                  <div
+                    class="bg-secondary p-3 rounded shadow-sm h-100 d-flex align-items-center justify-content-center">
+                    Div 2
+                  </div>
+                  }
+                </div>
+
+                <div class="col-4">
+                  @if (value1 === value2 && value1 !== '') {
+                  } @else {
+                  <div class="bg-primary p-3 rounded shadow-sm h-100 d-flex align-items-center justify-content-center">
+                    Div 3
+                  </div>
+                  }
+                </div>
+
+              </div>
+
+              <div class="row align-items-center g-2 text-center">
+
+                <div class="col-4">
+                  <div class="d-flex flex-column gap-2">
+                    <button class="btn btn-outline-success btn-sm fw-bold" (click)="isDiv1Visible = true">Show</button>
+                    <button class="btn btn-outline-danger btn-sm fw-bold" (click)="isDiv1Visible = false">Hide</button>
+                  </div>
+                </div>
+
+                <div class="col-4 h-100">
+                  <button class="btn btn-outline-secondary btn-sm w-100 h-100 fw-bold" style="min-height: 68px;"
+                    (click)="isDiv2Visible = !isDiv2Visible">
+                    Toggle
+                  </button>
+                </div>
+
+                <div class="col-4">
+                  <div class="d-flex flex-column gap-2">
+                    <input type="text" class="form-control form-control-sm text-center" placeholder="Value 1"
+                      [(ngModel)]="value1">
+                    <input type="text" class="form-control form-control-sm text-center" placeholder="Value 2"
+                      [(ngModel)]="value2">
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Hint Column -->
+        <div class="col-lg-4 col-md-12">
+          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
+            <div
+              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
+              <h5 class="card-title text-light mb-0">
+                <i class="bi bi-code-slash me-2"></i>Code Hint
+              </h5>
+            </div>
+            <div class="card-body">
+
+              <div class="mb-3">
+                <p class="small text-secondary fw-bold mb-2 tracking-wider">Inline Event Binding</p>
+                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Toggle a boolean directly in HTML --&gt;
+&lt;button (click)="isVisible = !isVisible"&gt;
+  Toggle Div
+&lt;/button&gt;</code></pre>
+              </div>
+
+              <div>
+                <p class="small text-warning fw-bold mb-2 tracking-wider">Conditional Logic (&#64;if)</p>
+                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Evaluate component variables --&gt;
+&#64;if (value1 === value2 && value1 !== '') &#123;
+  &lt;!-- Hidden --&gt;
+&#125; &#64;else &#123;
+  &lt;div&gt;Div 3&lt;/div&gt;
+&#125;</code></pre>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+
+    <!-- Task-4 -->
+    <ng-template ngbSlide="task-5">
+      <div class="row g-4">
+
+        <!-- Problem Statement Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-header bg-white border-bottom-0 pt-3 pb-2">
+              <h5 class="card-title text-secondary mb-0">
+                <i class="bi bi-clipboard-check me-2"></i>Task 4️⃣
+              </h5>
+            </div>
+            <div class="card-body bg-white rounded-bottom">
+              <ul class="mb-0 text-muted">
+                <li class="mb-2">Create full name dynamically from first name & last name.</li>
+                <li class="mb-2">If State or City "Other" is selected, show an additional textbox.</li>
+                <li>On radio button selection (Teacher, Sport, Musician), show the corresponding form block.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Solution Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-primary">
+            <div class="card-header bg-primary text-white pt-3 pb-2">
+              <h5 class="card-title mb-0">
+                <i class="bi bi-play-circle me-2"></i>Live Solution
+              </h5>
+            </div>
+            <div class="card-body">
+
+              <form class="row g-3">
+
+                <div class="col-md-6">
+                  <label class="form-label small fw-bold mb-1">First name</label>
+                  <input type="text" class="form-control form-control-sm" name="fName" [(ngModel)]="firstName">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small fw-bold mb-1">Last name</label>
+                  <input type="text" class="form-control form-control-sm" name="lName" [(ngModel)]="lastName">
+                </div>
+                <div class="col-12">
+                  <label class="form-label small fw-bold mb-1">Full Name</label>
+                  <input type="text" class="form-control form-control-sm bg-light text-primary fw-bold" disabled
+                    [value]="fullName">
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label small fw-bold mb-1">State</label>
+                  <select class="form-select form-select-sm" name="state" [(ngModel)]="selectedState">
+                    <option value="" disabled>Choose...</option>
+                    <option value="Maharashtra">Maharashtra</option>
+                    <option value="Goa">Goa</option>
+                    <option value="Gujrat">Gujrat</option>
+                    <option value="Madhya Pradesh">Madhya Pradesh</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  @if (selectedState === 'Other') {
+                  <label class="form-label small fw-bold mb-1 text-primary">Specify State</label>
+                  <input type="text" class="form-control form-control-sm border-primary" name="otherState">
+                  }
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label small fw-bold mb-1">City</label>
+                  <select class="form-select form-select-sm" name="city" [(ngModel)]="selectedCity">
+                    <option value="" disabled>Choose...</option>
+                    <option value="Nagpur">Nagpur</option>
+                    <option value="Mumbai">Mumbai</option>
+                    <option value="Pune">Pune</option>
+                    <option value="Solapur">Solapur</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  @if (selectedCity === 'Other') {
+                  <label class="form-label small fw-bold mb-1 text-primary">Specify City</label>
+                  <input type="text" class="form-control form-control-sm border-primary" name="otherCity">
+                  }
+                </div>
+
+                <div class="col-12 text-center mt-4">
+                  <span class="small fw-bold text-muted text-uppercase tracking-wider">What Are You?</span>
+                  <hr class="mt-2 mb-3">
+                </div>
+
+                <div class="col-12 d-flex justify-content-center gap-3">
+                  <div class="form-check">
+                    <input class="form-check-input cursor-pointer" type="radio" name="profession" value="teacher"
+                      id="radTeacher" [(ngModel)]="selectedProfession">
+                    <label class="form-check-label small cursor-pointer" for="radTeacher">Teacher</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input cursor-pointer" type="radio" name="profession" value="sport"
+                      id="radSport" [(ngModel)]="selectedProfession">
+                    <label class="form-check-label small cursor-pointer" for="radSport">Sport Person</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input cursor-pointer" type="radio" name="profession" value="musician"
+                      id="radMusic" [(ngModel)]="selectedProfession">
+                    <label class="form-check-label small cursor-pointer" for="radMusic">Musician</label>
+                  </div>
+                </div>
+
+                <div class="col-12">
+
+                  @if (selectedProfession === 'teacher') {
+                  <div class="p-3 bg-light border border-secondary border-opacity-25 rounded shadow-sm">
+                    <div class="row g-2">
+                      <div class="col-12">
+                        <label class="form-label small mb-1">Subjects You Can Teach</label>
+                        <textarea class="form-control form-control-sm" rows="2"></textarea>
+                      </div>
+                      <div class="col-8">
+                        <label class="form-label small mb-1">Highest Education</label>
+                        <input type="text" class="form-control form-control-sm">
+                      </div>
+                      <div class="col-4">
+                        <label class="form-label small mb-1">Age</label>
+                        <input type="text" class="form-control form-control-sm">
+                      </div>
+                    </div>
+                  </div>
+                  }
+
+                  @else if (selectedProfession === 'sport') {
+                  <div class="p-3 bg-light border border-secondary border-opacity-25 rounded shadow-sm">
+                    <div class="row g-2">
+                      <div class="col-12">
+                        <label class="form-label small mb-1">Sports You Are Good At</label>
+                        <textarea class="form-control form-control-sm" rows="2"></textarea>
+                      </div>
+                      <div class="col-6">
+                        <label class="form-label small mb-1">Height</label>
+                        <input type="text" class="form-control form-control-sm">
+                      </div>
+                      <div class="col-6">
+                        <label class="form-label small mb-1">Weight</label>
+                        <input type="text" class="form-control form-control-sm">
+                      </div>
+                    </div>
+                  </div>
+                  }
+
+                  @else if (selectedProfession === 'musician') {
+                  <div class="p-3 bg-light border border-secondary border-opacity-25 rounded shadow-sm">
+                    <div class="row g-2">
+                      <div class="col-12">
+                        <label class="form-label small mb-1">Instrument You Play</label>
+                        <textarea class="form-control form-control-sm" rows="2"></textarea>
+                      </div>
+                      <div class="col-12">
+                        <label class="form-label small mb-1">Any Major Achievement</label>
+                        <textarea class="form-control form-control-sm" rows="2"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  }
+
+                </div>
+
+                <div class="col-12 mt-3">
+                  <button class="btn btn-primary w-100 fw-bold" type="button">Submit form</button>
+                </div>
+
+              </form>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Hint Column -->
+        <div class="col-lg-4 col-md-12">
+          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
+            <div
+              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
+              <h5 class="card-title text-light mb-0">
+                <i class="bi bi-code-slash me-2"></i>Code Hint
+              </h5>
+            </div>
+            <div class="card-body">
+
+              <div class="mb-3">
+                <p class="small text-secondary fw-bold mb-2 tracking-wider">Dynamic Property (Typescript)</p>
+                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>// Auto-updates when inputs change
+get fullName(): string &#123;
+  return this.firstName + ' ' + this.lastName;
+&#125;</code></pre>
+              </div>
+
+              <div>
+                <p class="small text-warning fw-bold mb-2 tracking-wider">Dependent Dropdowns (&#64;if)</p>
+                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&lt;select [(ngModel)]="selectedState"&gt;...&lt;/select&gt;
+
+&#64;if (selectedState === 'Other') &#123;
+  &lt;input type="text" placeholder="Specify State"&gt;
+&#125;</code></pre>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </ng-template>
+
+
+    <!-- Task-5 -->
+    <ng-template ngbSlide="task-6">
+      <div class="row g-4">
+
+        <!-- Problem Statement Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-header bg-white border-bottom-0 pt-3 pb-2">
+              <h5 class="card-title text-secondary mb-0">
+                <i class="bi bi-clipboard-check me-2"></i>Task 5️⃣
+              </h5>
+            </div>
+            <div class="card-body bg-white rounded-bottom">
+              <ul class="mb-0 text-muted">
+                <li class="mb-2">Create a student array with name, age, attendance, gender, isIndian fields.</li>
+                <li class="mb-2">Show data in a table format.</li>
+                <li>If age &lt; 50 show "Low". Gender "M" = Male, else Female. isIndian true = Indian, else Foreigner.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Solution Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-primary">
+            <div class="card-header bg-primary text-white pt-3 pb-2">
+              <h5 class="card-title mb-0">
+                <i class="bi bi-play-circle me-2"></i>Live Solution
+              </h5>
+            </div>
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-hover  align-middle text-center small mb-0">
+                  <thead class="table-light">
+                    <tr>
+                      <th scope="col">Sr</th>
+                      <th scope="col" class="text-start">Name</th>
+                      <th scope="col">Age</th>
+                      <th scope="col">Att.</th>
+                      <th scope="col">Nat.</th>
+                      <th scope="col">Gen.</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (stud of students; track stud.name; let i = $index) {
+                    <tr>
+                      <td class="text-muted fw-bold">{{ i + 1 }}</td>
+                      <td class="text-start fw-medium">{{ stud.name }}</td>
+
+                      <td>
+                        @if (stud.age < 50) { <span class="text-danger fw-bold">Low</span>
+                          } @else {
+                          {{ stud.age }}
+                          }
+                      </td>
+
+                      <td>{{ stud.attendance }}%</td>
+
+                      <td>
+                        <span class="badge rounded-pill" [class.text-bg-success]="stud.isIndian"
+                          [class.text-bg-secondary]="!stud.isIndian">
+                          {{ stud.isIndian ? 'Indian' : 'Foreigner' }}
+                        </span>
+                      </td>
+
+                      <td>
+                        <i class="bi me-1" [class.bi-gender-male.text-primary]="stud.gender === 'M'"
+                          [class.bi-gender-female.text-danger]="stud.gender === 'F'"></i>
+                        {{ stud.gender === 'M' ? 'Male' : 'Female' }}
+                      </td>
+                    </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Hint Column -->
+        <div class="col-lg-4 col-md-12">
+          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
+            <div
+              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
+              <h5 class="card-title text-light mb-0">
+                <i class="bi bi-code-slash me-2"></i>Code Hint
+              </h5>
+            </div>
+            <div class="card-body">
+
+              <div class="mb-3">
+                <p class="small text-secondary fw-bold mb-2 tracking-wider">Legacy Array Index</p>
+                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>&lt;tr *ngFor="let stud of students; let i = index"&gt;
+  &lt;td&gt;{{ '{{' }} i + 1 {{ '}}' }}&lt;/td&gt;
+&lt;/tr&gt;</code></pre>
+              </div>
+
+              <div>
+                <p class="small text-warning fw-bold mb-2 tracking-wider">Modern Syntax ($index & Ternary)</p>
+                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&#64;for (stud of students; track stud.name; let i = $index) &#123;
+  &lt;tr&gt;
+    &lt;td&gt;{{ '{{' }} i + 1 {{ '}}' }}&lt;/td&gt;
+    &lt;td&gt;{{ '{{' }} stud.isIndian ? 'Indian' : 'Foreigner' {{ '}}' }}&lt;/td&gt;
+  &lt;/tr&gt;
+&#125;</code></pre>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </ng-template>
+  </ngb-carousel>
+</div>

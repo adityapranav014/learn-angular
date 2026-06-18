@@ -1,0 +1,739 @@
+<div class="container pb-4">
+
+  <!-- Pagination -->
+  <div class="row align-items-center mb-4">
+
+    <div class="col-auto">
+      <div class="d-flex align-items-center gap-2">
+        <img src="favicon.ico" alt="Logo" width="22" height="22" class="d-inline-block rounded">
+        <span class="vr opacity-25"></span>
+        <span class="fw-semibold text-dark" style="font-size: 0.95rem;">*ngFor &amp; &#64;for</span>
+      </div>
+    </div>
+
+    <div class="col d-flex flex-wrap gap-2 justify-content-md-end">
+
+      <button class="btn btn-sm btn-light border" (click)="carousel.prev()">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+
+      <ng-container *ngFor="let slide of slides; let i = index">
+        <button class="btn btn-sm" [class.btn-primary]="activeIndex === i" [class.btn-outline-secondary]="activeIndex !== i"
+          (click)="carousel.select('ngb-slide-' + i)">
+          {{ i + 1 }}
+        </button>
+      </ng-container>
+
+      <button class="btn btn-sm btn-light border" (click)="carousel.next()">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- Task Carousel -->
+  <ngb-carousel #carousel [interval]="0" [showNavigationIndicators]="false" [showNavigationArrows]="false"
+    (slide)="onSlide($event)">
+
+    <!-- Theory -->
+    <ng-template ngbSlide="task-1">
+      <div class="row">
+        <div class="col-12">
+          <div ngbAccordion class="shadow-sm">
+            <div ngbAccordionItem="difference-panel" [collapsed]="false">
+
+              <h2 ngbAccordionHeader>
+                <button ngbAccordionButton class="fw-bold text-primary">
+                  <i class="bi bi-info-circle-fill me-2"></i> View Difference: *ngFor vs &#64;for
+                </button>
+              </h2>
+
+              <div ngbAccordionCollapse>
+                <div ngbAccordionBody>
+                  <ng-template>
+                    <div class="table-responsive">
+                      <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                          <tr>
+                            <th scope="col" class="w-50 text-secondary">
+                              <i class="bi bi-clock-history me-1"></i> *ngFor Directive (Legacy)
+                            </th>
+                            <th scope="col" class="w-50 text-success">
+                              <i class="bi bi-lightning-charge-fill me-1"></i> &#64;for Block (Modern)
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Requires importing <code>CommonModule</code> or <code>NgFor</code> into your component.
+                            </td>
+                            <td>Built directly into the template engine. <strong>No imports needed.</strong></td>
+                          </tr>
+                          <tr>
+                            <td>Performance tracking requires creating a custom <code>trackBy</code> function in your
+                              TypeScript file.</td>
+                            <td>Highly optimized by default. Includes a mandatory, simple <code>track</code> expression
+                              directly in the HTML.</td>
+                          </tr>
+                          <tr>
+                            <td>Handling empty lists requires wrapping or accompanying the list with a separate
+                              <code>*ngIf</code> to check the array length.
+                            </td>
+                            <td>Highly readable and intuitive syntax with a native <code>&#64;empty</code> block for
+                              zero-item states.</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </ng-template>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+
+    <!-- Task-1 -->
+    <ng-template ngbSlide="task-2">
+      <div class="row g-4">
+
+        <!-- Problem Statement Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-header bg-white border-bottom-0 pt-3 pb-2">
+              <h5 class="card-title text-secondary mb-0">
+                <i class="bi bi-clipboard-check me-2"></i>Task 1️⃣
+              </h5>
+            </div>
+            <div class="card-body bg-white rounded-bottom">
+              <ul class="mb-0 text-muted">
+                <li class="mb-2">On "Add City" click, input text should append to the dropdown options.</li>
+                <li class="mb-2">After adding a city, the input field must be cleared.</li>
+                <li class="mb-2">Display the real-time total count of added cities beside the dropdown.</li>
+                <li>If the city is already present in the options list, display an error message.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Solution Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-primary">
+            <div class="card-header bg-primary text-white pt-3 pb-2">
+              <h5 class="card-title mb-0">
+                <i class="bi bi-play-circle me-2"></i>Live Solution
+              </h5>
+            </div>
+            <div class="card-body">
+
+              <div class="row g-2 align-items-start">
+                <div class="col-7">
+                  <input type="text" class="form-control form-control-sm" placeholder="Enter City" [(ngModel)]="newCity"
+                    (keyup.enter)="addCity()">
+
+                  @if (cityError) {
+                  <div class="text-danger small mt-1 fw-bold">
+                    <i class="bi bi-exclamation-circle-fill me-1"></i> {{ cityError }}
+                  </div>
+                  }
+                </div>
+                <div class="col-5">
+                  <button class="btn btn-success btn-sm w-100 fw-bold" (click)="addCity()">
+                    <i class="bi bi-plus-lg me-1"></i> Add City
+                  </button>
+                </div>
+              </div>
+
+              <div class="row mt-4 align-items-center g-2 bg-light p-3 rounded border">
+                <div class="col-6">
+                  <label class="form-label small text-muted mb-1">Select Option</label>
+                  <select class="form-select form-select-sm">
+                    <option value="" disabled selected>Select City</option>
+                    @for (city of cityList; track city) {
+                    <option [value]="city">{{ city }}</option>
+                    }
+                  </select>
+                </div>
+
+                <div class="col-6 text-center">
+                  <span class="small text-muted d-block mb-1">Total Cities</span>
+                  <span class="badge text-bg-primary fs-6 px-3 py-2 rounded-pill shadow-sm">
+                    <i class="bi bi-building me-1"></i> {{ cityList.length }}
+                  </span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Hint Column -->
+        <div class="col-lg-4 col-md-12">
+          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
+            <div
+              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
+              <h5 class="card-title text-light mb-0">
+                <i class="bi bi-code-slash me-2"></i>Code Hint
+              </h5>
+            </div>
+            <div class="card-body">
+
+              <div class="mb-3">
+                <p class="small text-secondary fw-bold mb-2 tracking-wider">Dynamic Option Loops (&#64;for)</p>
+                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&#64;for (city of cityList; track city) &#123;
+  &lt;option&gt;{{ '{{' }} city {{ '}}' }}&lt;/option&gt;
+&#125;</code></pre>
+              </div>
+
+              <div>
+                <p class="small text-warning fw-bold mb-2 tracking-wider">Validation Messaging (&#64;if)</p>
+                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&#64;if (cityError) &#123;
+  &lt;div class="text-danger"&gt;
+    {{ '{{' }} cityError {{ '}}' }}
+  &lt;/div&gt;
+&#125;</code></pre>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+
+    <!-- Task-2 -->
+    <ng-template ngbSlide="task-3">
+      <div class="row g-4">
+
+        <!-- Problem Statement Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-header bg-white border-bottom-0 pt-3 pb-2">
+              <h5 class="card-title text-secondary mb-0">
+                <i class="bi bi-clipboard-check me-2"></i>Task 2️⃣
+              </h5>
+            </div>
+            <div class="card-body bg-white rounded-bottom">
+              <ul class="mb-0 text-muted">
+                <li class="mb-2">Create an Array of strings with 5 Languages.</li>
+                <li class="mb-2">Use the new <code>&#64;for</code> loop to render the languages as buttons.</li>
+                <li>On click, mark the button as selected and change its color to green.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Solution Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-primary">
+            <div class="card-header bg-primary text-white pt-3 pb-2">
+              <h5 class="card-title mb-0">
+                <i class="bi bi-play-circle me-2"></i>Live Solution
+              </h5>
+            </div>
+            <div class="card-body d-flex flex-column justify-content-center">
+
+              <p class="small text-muted fw-bold mb-3 text-center">Select your favorite language:</p>
+
+              <div class="d-flex flex-wrap justify-content-center gap-2">
+
+                @for (lang of languages; track lang) {
+                <button class="btn btn-sm px-4 rounded-pill fw-bold transition-all shadow-sm"
+                  [class.btn-success]="selectedLanguage === lang"
+                  [class.btn-outline-secondary]="selectedLanguage !== lang"
+                  [class.text-dark]="selectedLanguage !== lang" (click)="selectLanguage(lang)">
+                  {{ lang }}
+                </button>
+                }
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Hint Column -->
+        <div class="col-lg-4 col-md-12">
+          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
+            <div
+              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
+              <h5 class="card-title text-light mb-0">
+                <i class="bi bi-code-slash me-2"></i>Code Hint
+              </h5>
+            </div>
+            <div class="card-body">
+
+              <div class="mb-3">
+                <p class="small text-secondary fw-bold mb-2 tracking-wider">Legacy Syntax (*ngFor)</p>
+                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>&lt;button *ngFor="let lang of languages"
+  [class.btn-success]="selectedLanguage === lang"&gt;
+  {{ '{{' }} lang {{ '}}' }}
+&lt;/button&gt;</code></pre>
+              </div>
+
+              <div>
+                <p class="small text-warning fw-bold mb-2 tracking-wider">Modern Syntax (&#64;for)</p>
+                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&#64;for (lang of languages; track lang) &#123;
+  &lt;button [class.btn-success]="selected === lang"&gt;
+    {{ '{{' }} lang {{ '}}' }}
+  &lt;/button&gt;
+&#125;</code></pre>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+
+    <!-- Task-3 -->
+    <ng-template ngbSlide="task-4">
+      <div class="row g-4">
+
+        <!-- Problem Statement Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-header bg-white border-bottom-0 pt-3 pb-2">
+              <h5 class="card-title text-secondary mb-0">
+                <i class="bi bi-clipboard-check me-2"></i>Task 3️⃣
+              </h5>
+            </div>
+            <div class="card-body bg-white rounded-bottom">
+              <ul class="mb-0 text-muted">
+                <li class="mb-2">On "Print" button click, show the multiplication table of the entered number in an HTML
+                  table.</li>
+                <li>If the textbox is empty, show an alert telling the user to enter a value.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Solution Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-primary">
+            <div class="card-header bg-primary text-white pt-3 pb-2">
+              <h5 class="card-title mb-0">
+                <i class="bi bi-play-circle me-2"></i>Live Solution
+              </h5>
+            </div>
+            <div class="card-body">
+
+              <div class="row g-2 mb-4 align-items-start">
+                <div class="col-7">
+                  <input type="number" class="form-control form-control-sm" placeholder="Enter Number"
+                    [(ngModel)]="inputNumber" (keyup.enter)="printTable()">
+
+                  @if (tableError) {
+                  <div class="text-danger small mt-1 fw-bold">
+                    <i class="bi bi-exclamation-circle-fill me-1"></i> {{ tableError }}
+                  </div>
+                  }
+                </div>
+                <div class="col-5">
+                  <button class="btn btn-success btn-sm w-100 fw-bold shadow-sm" (click)="printTable()">
+                    <i class="bi bi-printer me-1"></i> Print Table
+                  </button>
+                </div>
+              </div>
+
+              @if (activeNumber !== null) {
+              <div class="table-responsive">
+                <table class="table table-sm table-bordered table-hover text-center align-middle mb-0 shadow-sm">
+                  <thead class="table-light">
+                    <tr>
+                      <th scope="col" class="text-muted w-50">Calculation</th>
+                      <th scope="col" class="text-primary w-50">Result</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    @for (i of multipliers; track i) {
+                    <tr>
+                      <td class="text-muted small fw-medium">{{ activeNumber }} &times; {{ i }}</td>
+                      <td class="fw-bold text-dark">{{ activeNumber * i }}</td>
+                    </tr>
+                    }
+
+                  </tbody>
+                </table>
+              </div>
+              } @else {
+              <div class="alert alert-secondary text-center p-4 border-0 mb-0" role="alert">
+                <i class="bi bi-calculator fs-3 d-block mb-2 text-muted opacity-50"></i>
+                <span class="small text-muted">Enter a number above to view its table</span>
+              </div>
+              }
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Hint Column -->
+        <div class="col-lg-4 col-md-12">
+          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
+            <div
+              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
+              <h5 class="card-title text-light mb-0">
+                <i class="bi bi-code-slash me-2"></i>Code Hint
+              </h5>
+            </div>
+            <div class="card-body">
+
+              <div class="mb-3">
+                <p class="small text-secondary fw-bold mb-2 tracking-wider">Math in Template (&#64;for)</p>
+                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&#64;for (i of multipliers; track i) &#123;
+  &lt;tr&gt;
+    &lt;!-- Angular does the math instantly! --&gt;
+    &lt;td&gt;{{ '{{' }} activeNum * i {{ '}}' }}&lt;/td&gt;
+  &lt;/tr&gt;
+&#125;</code></pre>
+              </div>
+
+              <div>
+                <p class="small text-warning fw-bold mb-2 tracking-wider">Native Alert (Typescript)</p>
+                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>if (!this.inputNumber) &#123;
+  alert('Please enter a value');
+  return; // Stop function execution
+&#125;</code></pre>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+
+    <!-- Task-4 -->
+    <ng-template ngbSlide="task-5">
+      <div class="row g-4">
+
+        <!-- Problem Statement Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-header bg-white border-bottom-0 pt-3 pb-2">
+              <h5 class="card-title text-secondary mb-0">
+                <i class="bi bi-clipboard-check me-2"></i>Task 4️⃣
+              </h5>
+            </div>
+            <div class="card-body bg-white rounded-bottom">
+              <ul class="mb-0 text-muted">
+                <li class="mb-2">Create a single City Array in TypeScript.</li>
+                <li>Bind that same array to both the "From Station" and "To Station" dropdowns using the modern
+                  <code>&#64;for</code> loop.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Solution Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-primary">
+            <div class="card-header bg-primary text-white pt-3 pb-2">
+              <h5 class="card-title mb-0">
+                <i class="bi bi-play-circle me-2"></i>Live Solution
+              </h5>
+            </div>
+            <div class="card-body d-flex">
+
+              <div class="row g-3 w-100">
+
+                <div class="col-6">
+                  <label class="form-label small fw-bold text-muted mb-1">Select From Station</label>
+                  <select class="form-select form-select-sm" [(ngModel)]="fromStation">
+                    <option value="" disabled selected>From Station</option>
+                    @for (station of stations; track station) {
+                    <option [value]="station">{{ station }}</option>
+                    }
+                  </select>
+                </div>
+
+                <div class="col-6">
+                  <label class="form-label small fw-bold text-muted mb-1">Select To Station</label>
+                  <select class="form-select form-select-sm" [(ngModel)]="toStation">
+                    <option value="" disabled selected>To Station</option>
+                    @for (station of stations; track station) {
+                    <option [value]="station">{{ station }}</option>
+                    }
+                  </select>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Hint Column -->
+        <div class="col-lg-4 col-md-12">
+          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
+            <div
+              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
+              <h5 class="card-title text-light mb-0">
+                <i class="bi bi-code-slash me-2"></i>Code Hint
+              </h5>
+            </div>
+            <div class="card-body">
+
+              <div class="mb-3">
+                <p class="small text-warning fw-bold mb-2 tracking-wider">Reusable Data Binding (&#64;for)</p>
+                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&lt;select [(ngModel)]="toStation"&gt;
+  &lt;option value="" disabled&gt;Select Station&lt;/option&gt;
+  
+  &#64;for (station of stations; track station) &#123;
+    &lt;option [value]="station"&gt;
+      {{ '{{' }} station {{ '}}' }}
+    &lt;/option&gt;
+  &#125;
+
+&lt;/select&gt;</code></pre>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+
+    <!-- Task-5 -->
+    <ng-template ngbSlide="task-6">
+      <div class="row g-4">
+
+        <!-- Problem Statement Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-header bg-white border-bottom-0 pt-3 pb-2">
+              <h5 class="card-title text-secondary mb-0">
+                <i class="bi bi-clipboard-check me-2"></i>Task 5️⃣
+              </h5>
+            </div>
+            <div class="card-body bg-white rounded-bottom">
+              <ul class="mb-0 text-muted">
+                <li class="mb-2">Create an array of objects with fields URL and Text and display in a table.</li>
+                <li class="mb-2">Show Sr No in the 1st <code>&lt;td&gt;</code> by using the index property.</li>
+                <li class="mb-2 text-success fw-medium">Add success background to the 1st record using the first
+                  property.
+                </li>
+                <li class="text-danger fw-medium">Add danger background to the last record using the last property.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Solution Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-primary">
+            <div class="card-header bg-primary text-white pt-3 pb-2">
+              <h5 class="card-title mb-0">
+                <i class="bi bi-play-circle me-2"></i>Live Solution
+              </h5>
+            </div>
+            <div class="card-body p-0">
+
+              <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 text-center">
+                  <thead class="table-light">
+                    <tr>
+                      <th scope="col">Sr No</th>
+                      <th scope="col" class="text-start">Text</th>
+                      <th scope="col">URL</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    @for (item of links; track item.text) {
+                    <tr [class.table-success]="$first" [class.table-danger]="$last">
+
+                      <td class="fw-bold text-muted">{{ $index + 1 }}</td>
+
+                      <td class="text-start fw-medium">{{ item.text }}</td>
+
+                      <td>
+                        <a [href]="item.url" target="_blank"
+                          class="btn btn-sm btn-outline-dark rounded-pill px-3 shadow-sm">
+                          <i class="bi bi-link-45deg me-1"></i> Visit
+                        </a>
+                      </td>
+
+                    </tr>
+                    }
+
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Hint Column -->
+        <div class="col-lg-4 col-md-12">
+          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
+            <div
+              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
+              <h5 class="card-title text-light mb-0">
+                <i class="bi bi-code-slash me-2"></i>Code Hint
+              </h5>
+            </div>
+            <div class="card-body">
+
+              <div class="mb-3">
+                <p class="small text-secondary fw-bold mb-2 tracking-wider">Legacy Syntax (*ngFor)</p>
+                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Required defining every variable manually --&gt;
+&lt;tr *ngFor="let item of links; let i = index; let isFirst = first; let isLast = last"
+  [class.table-success]="isFirst"
+  [class.table-danger]="isLast"&gt;
+  &lt;td&gt;{{ '{{' }} i + 1 {{ '}}' }}&lt;/td&gt;
+&lt;/tr&gt;</code></pre>
+              </div>
+
+              <div>
+                <p class="small text-warning fw-bold mb-2 tracking-wider">Modern Context Variables (&#64;for)</p>
+                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- $index, $first, and $last are native! --&gt;
+&#64;for (item of links; track item.text) &#123;
+  &lt;tr [class.table-success]="$first"
+      [class.table-danger]="$last"&gt;
+    &lt;td&gt;{{ '{{' }} $index + 1 {{ '}}' }}&lt;/td&gt;
+  &lt;/tr&gt;
+&#125;</code></pre>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+
+    <!-- Task-6 -->
+    <ng-template ngbSlide="task-7">
+      <div class="row g-4">
+
+        <!-- Problem Statement Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-header bg-white border-bottom-0 pt-3 pb-2">
+              <h5 class="card-title text-secondary mb-0">
+                <i class="bi bi-clipboard-check me-2"></i>Task 6️⃣
+              </h5>
+            </div>
+            <div class="card-body bg-white rounded-bottom">
+              <ul class="mb-0 text-muted">
+                <li class="mb-2">Create City and State Arrays and bind them to Dropdowns.</li>
+                <li class="mb-2">City fields: <code>cityId, cityName</code> & State fields:
+                  <code>stateId, stateName</code>.
+                </li>
+                <li>On "Get Data" button click, show selected city and state ID in a span tag.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Solution Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-primary">
+            <div class="card-header bg-primary text-white pt-3 pb-2">
+              <h5 class="card-title mb-0">
+                <i class="bi bi-play-circle me-2"></i>Live Solution
+              </h5>
+            </div>
+            <div class="card-body">
+
+              <div class="row g-3 mb-3">
+                <div class="col-6">
+                  <label class="form-label small fw-bold text-muted mb-1">Select State</label>
+                  <select class="form-select form-select-sm" [(ngModel)]="selectedStateId">
+                    <option value="" disabled selected>Select State</option>
+                    @for (state of states; track state.stateId) {
+                    <option [value]="state.stateId">{{ state.stateName }}</option>
+                    }
+                  </select>
+                </div>
+
+                <div class="col-6">
+                  <label class="form-label small fw-bold text-muted mb-1">Select City</label>
+                  <select class="form-select form-select-sm" [(ngModel)]="selectedCityId">
+                    <option value="" disabled selected>Select City</option>
+                    @for (city of cities; track city.cityId) {
+                    <option [value]="city.cityId">{{ city.cityName }}</option>
+                    }
+                  </select>
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <div class="col-12">
+                  <button class="btn btn-primary btn-sm w-100 fw-bold shadow-sm" (click)="getData()">
+                    <i class="bi bi-box-arrow-in-down me-1"></i> Get Data
+                  </button>
+                </div>
+              </div>
+
+              <div class="row g-3 bg-light p-2 rounded border mx-0 align-items-center text-center">
+                <div class="col-6 border-end">
+                  <span class="small text-muted d-block mb-1">Selected State ID</span>
+                  @if (displayStateId) {
+                  <span class="badge text-bg-success fs-6 px-3 py-2 rounded-pill shadow-sm">
+                    {{ displayStateId }}
+                  </span>
+                  }
+                </div>
+                <div class="col-6">
+                  <span class="small text-muted d-block mb-1">Selected City ID</span>
+                  @if (displayCityId) {
+                  <span class="badge text-bg-success fs-6 px-3 py-2 rounded-pill shadow-sm">
+                    {{ displayCityId }}
+                  </span>
+                  }
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Hint Column -->
+        <div class="col-lg-4 col-md-12">
+          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
+            <div
+              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
+              <h5 class="card-title text-light mb-0">
+                <i class="bi bi-code-slash me-2"></i>Code Hint
+              </h5>
+            </div>
+            <div class="card-body">
+
+              <div class="mb-3">
+                <p class="small text-warning fw-bold mb-2 tracking-wider">Object Binding (&#64;for)</p>
+                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&lt;select [(ngModel)]="selectedStateId"&gt;
+  &#64;for (state of states; track state.stateId) &#123;
+    &lt;option [value]="state.stateId"&gt;
+      {{ '{{' }} state.stateName {{ '}}' }}
+    &lt;/option&gt;
+  &#125;
+&lt;/select&gt;</code></pre>
+              </div>
+
+              <div>
+                <p class="small text-info fw-bold mb-2 tracking-wider">Action Method (Typescript)</p>
+                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>// Update display values only on click
+getData() &#123;
+  this.displayStateId = this.selectedStateId;
+  this.displayCityId = this.selectedCityId;
+&#125;</code></pre>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ngb-carousel>
+</div>
