@@ -47,3 +47,23 @@
 .brand-text {
   color: #F637E3;
 }
+
+.gradient-animated {
+  background: linear-gradient(135deg, #8a2be2, #c41eab, #f5127b);
+  background-size: 200% 200%;
+  animation: smoothFlow 10s ease infinite;
+}
+
+@keyframes smoothFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}

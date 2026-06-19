@@ -1,60 +1,44 @@
-import { Component, inject, TemplateRef } from '@angular/core';
-import { DOCUMENT } from '@angular/common'; // <-- Angular's safe DOM wrapper
+import { Component, inject, TemplateRef, signal } from '@angular/core';
 import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { take } from 'rxjs/operators';
+import { ScrollActiveDirective } from '../../app/directives/appScrollActive.directive';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   standalone: true,
   styleUrls: ['./navbar.component.scss'],
-  imports: [RouterLink, RouterLinkActive]
+  // Added the new directive to the imports array
+  imports: [RouterLink, RouterLinkActive, ScrollActiveDirective, ]
 })
 export class NavbarComponent {
   private offcanvasService = inject(NgbOffcanvas);
   public router = inject(Router);
 
-  // 1. Inject Angular's Document Token (SSR Safe)
-  private document = inject(DOCUMENT);
-
-  activeMenuView: string = 'main';
+  // Upgraded to Angular 17 Signals
+  activeMenuView = signal<'main' | 'core-concepts' | 'logical-scenarios'>('main');
+  isOffcanvasReady = signal<boolean>(false);
 
   openSidebar(content: TemplateRef<any>) {
     this.determineActiveMenu();
+    this.isOffcanvasReady.set(false); // Reset animation state on open
 
-    // 2. Store the reference when opening
     const offcanvasRef = this.offcanvasService.open(content, { position: 'start' });
 
-    // 3. Subscribe to the native 'shown' lifecycle hook.
-    // This perfectly times the scroll to happen exactly when the slide animation finishes, eliminating the need for setTimeout.
-    offcanvasRef.shown.subscribe(() => {
-      this.scrollToActiveItem();
+    // take(1) ensures the subscription dies immediately after firing, preventing memory leaks
+    offcanvasRef.shown.pipe(take(1)).subscribe(() => {
+      this.isOffcanvasReady.set(true); // Triggers the directive in the template
     });
-  }
-
-  private scrollToActiveItem() {
-    // 4. Use the injected document to query, restricting the search to the offcanvas body for speed
-    const offcanvasBody = this.document.querySelector('.offcanvas-body');
-    if (!offcanvasBody) return;
-
-    const activeElement = offcanvasBody.querySelector('.active-sub, .active');
-
-    if (activeElement) {
-      activeElement.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-        inline: 'nearest'
-      });
-    }
   }
 
   private determineActiveMenu() {
     if (this.isCoreConceptActive()) {
-      this.activeMenuView = 'core-concepts';
+      this.activeMenuView.set('core-concepts');
     } else if (this.isLogicalScenariosActive()) {
-      this.activeMenuView = 'logical-scenarios';
+      this.activeMenuView.set('logical-scenarios');
     } else {
-      this.activeMenuView = 'main';
+      this.activeMenuView.set('main');
     }
   }
 
@@ -73,12 +57,12 @@ export class NavbarComponent {
     return currentPath.startsWith('/one') || currentPath.startsWith('/two') || currentPath.startsWith('/three');
   }
 
-  navigateToMenu(menuName: string, event: Event) {
+  navigateToMenu(menuName: 'main' | 'core-concepts' | 'logical-scenarios', event: Event) {
     event.preventDefault();
-    this.activeMenuView = menuName;
+    this.activeMenuView.set(menuName);
   }
 
   goBack() {
-    this.activeMenuView = 'main';
+    this.activeMenuView.set('main');
   }
 }

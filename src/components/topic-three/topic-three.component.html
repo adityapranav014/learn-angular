@@ -4,10 +4,10 @@
   <div class="row align-items-center mb-4">
 
     <div class="col-auto">
-      <div class="d-flex align-items-center gap-2">
-        <img src="favicon.ico" alt="Logo" width="22" height="22" class="d-inline-block rounded">
+      <div class="d-flex align-items-center gap-2 brand-text">
+        <i class="bi bi-3-circle fs-5 opacity-75"></i>
         <span class="vr opacity-25"></span>
-        <span class="fw-semibold text-dark" style="font-size: 0.95rem;">*ngClass &amp; *ngStyle</span>
+        <span class="fw-semibold" style="font-size: 0.95rem;">*ngClass &amp; *ngStyle</span>
       </div>
     </div>
 
@@ -18,8 +18,8 @@
       </button>
 
       <ng-container *ngFor="let slide of slides; let i = index">
-        <button class="btn btn-sm" [class.btn-primary]="activeIndex === i" [class.btn-outline-secondary]="activeIndex !== i"
-          (click)="carousel?.select('task-' + (i + 1))">
+        <button class="btn btn-sm" [class.btn-primary]="activeIndex === i"
+          [class.btn-outline-secondary]="activeIndex !== i" (click)="carousel?.select('task-' + (i + 1))">
           {{ i + 1 }}
         </button>
       </ng-container>

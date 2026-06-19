@@ -48,7 +48,7 @@ export const routes: Routes = [
     {
         path: 'subscription',
         component: SubscriptionComponent,
-        title: 'Tier & Subscription Matrix',
+        title: 'Subscriptions',
     },
     {
         path: 'rail-transit',
