@@ -1,14 +1,32 @@
 import { Routes } from '@angular/router';
+
+// Core Imports
 import { HomeComponent } from '../components/home/home.component';
 import { TopicOneComponent } from '../components/topic-one/topic-one.component';
 import { TopicTwoComponent } from '../components/topic-two/topic-two.component';
 import { TopicThreeComponent } from '../components/topic-three/topic-three.component';
+import { SubscriptionComponent } from '../components/subscription/subscription.component';
+import { RailTransitComponent } from '../components/rail-transit/rail-transit.component';
+import { BoxOfficeComponent } from '../components/box-office/box-office.component';
+import { FleetComponent } from '../components/fleet/fleet.component';
+import { HospitalityComponent } from '../components/hospitality/hospitality.component';
+import { CartComponent } from '../components/cart/cart.component';
+import { EnrollmentComponent } from '../components/enrollment/enrollment.component';
+import { SeatAllocatorComponent } from '../components/seat-allocator/seat-allocator.component';
+import { ComputeComponent } from '../components/compute/compute.component';
+import { TasksComponent } from '../components/tasks/tasks.component';
+import { KycComponent } from '../components/kyc/kyc.component';
+import { TabsComponent } from '../components/tabs/tabs.component';
+import { DataSelectorComponent } from '../components/data-selector/data-selector.component';
+import { PolymorphicComponent } from '../components/polymorphic/polymorphic.component';
+
 
 export const routes: Routes = [
-
+    // --- Core Routes ---
     {
         path: '',
         component: HomeComponent,
+        title: 'Home | Angular Architecture',
     },
     {
         path: 'one',
@@ -24,13 +42,85 @@ export const routes: Routes = [
         path: 'three',
         component: TopicThreeComponent,
         title: '*ngClass Directive',
+    },
+
+    // --- Logical Scenarios: Commerce & Logistics ---
+    {
+        path: 'subscription',
+        component: SubscriptionComponent,
+        title: 'Tier & Subscription Matrix',
+    },
+    {
+        path: 'rail-transit',
+        component: RailTransitComponent,
+        title: 'Rail Transit Engine',
+    },
+    {
+        path: 'box-office',
+        component: BoxOfficeComponent,
+        title: 'Cinematic Box Office',
+    },
+    {
+        path: 'fleet',
+        component: FleetComponent,
+        title: 'Fleet Telematics',
+    },
+    {
+        path: 'hospitality',
+        component: HospitalityComponent,
+        title: 'Hospitality Concierge',
+    },
+    {
+        path: 'cart',
+        component: CartComponent,
+        title: 'Smart Cart Automator',
+    },
+    {
+        path: 'enrollment',
+        component: EnrollmentComponent,
+        title: 'Campus Enrollment Portal',
+    },
+    {
+        path: 'seat-allocator',
+        component: SeatAllocatorComponent,
+        title: 'Spatial Seat Allocator',
+    },
+
+    // --- Logical Scenarios: Architecture & State ---
+    {
+        path: 'compute',
+        component: ComputeComponent,
+        title: 'Dynamic Compute Engine',
+    },
+    {
+        path: 'tasks',
+        component: TasksComponent,
+        title: 'Task Architecture',
+    },
+    {
+        path: 'kyc',
+        component: KycComponent,
+        title: 'KYC & Biometric Vault',
+    },
+    {
+        path: 'tabs',
+        component: TabsComponent,
+        title: 'Stateful Fluid Tabs',
+    },
+    {
+        path: 'data-selector',
+        component: DataSelectorComponent,
+        title: 'Relational Data Selector',
+    },
+    {
+        path: 'polymorphic',
+        component: PolymorphicComponent,
+        title: 'Polymorphic Interfaces',
+    },
+
+    // --- Fallback Route ---
+    {
+        path: '**',
+        redirectTo: ''
     }
-
-
-
-
-    // A wildcard route to catch bad URLs and redirect home
-    //   { path: '**', redirectTo: '' }
-
-
 ];

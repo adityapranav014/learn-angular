@@ -1,4 +1,5 @@
 import { Component, inject, TemplateRef } from '@angular/core';
+import { DOCUMENT } from '@angular/common'; // <-- Angular's safe DOM wrapper
 import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
@@ -6,7 +7,6 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   standalone: true,
-  // Add RouterLinkActive back here so the template can use it
   styleUrls: ['./navbar.component.scss'],
   imports: [RouterLink, RouterLinkActive]
 })
@@ -14,11 +14,38 @@ export class NavbarComponent {
   private offcanvasService = inject(NgbOffcanvas);
   public router = inject(Router);
 
+  // 1. Inject Angular's Document Token (SSR Safe)
+  private document = inject(DOCUMENT);
+
   activeMenuView: string = 'main';
 
   openSidebar(content: TemplateRef<any>) {
     this.determineActiveMenu();
-    this.offcanvasService.open(content, { position: 'start' });
+
+    // 2. Store the reference when opening
+    const offcanvasRef = this.offcanvasService.open(content, { position: 'start' });
+
+    // 3. Subscribe to the native 'shown' lifecycle hook.
+    // This perfectly times the scroll to happen exactly when the slide animation finishes, eliminating the need for setTimeout.
+    offcanvasRef.shown.subscribe(() => {
+      this.scrollToActiveItem();
+    });
+  }
+
+  private scrollToActiveItem() {
+    // 4. Use the injected document to query, restricting the search to the offcanvas body for speed
+    const offcanvasBody = this.document.querySelector('.offcanvas-body');
+    if (!offcanvasBody) return;
+
+    const activeElement = offcanvasBody.querySelector('.active-sub, .active');
+
+    if (activeElement) {
+      activeElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'nearest'
+      });
+    }
   }
 
   private determineActiveMenu() {
@@ -31,8 +58,6 @@ export class NavbarComponent {
     }
   }
 
-  // Add this helper method
-  // Note: Update these paths to match your actual route structure
   isLogicalScenariosActive(): boolean {
     const paths = [
       '/subscription', '/rail-transit', '/box-office', '/compute',
@@ -43,7 +68,6 @@ export class NavbarComponent {
     return paths.some(path => currentPath.startsWith(path));
   }
 
-  // Helper to keep the parent "Core Concepts" button highlighted if we are inside a sub-route
   isCoreConceptActive(): boolean {
     const currentPath = this.router.url.split('?')[0].split('#')[0];
     return currentPath.startsWith('/one') || currentPath.startsWith('/two') || currentPath.startsWith('/three');
