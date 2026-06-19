@@ -1,0 +1,146 @@
+/* Core Variables */
+$ng-magenta: #c026d3;
+$text-dark: #202124;
+$text-muted: #5f6368;
+$track-color: #e5e7eb;
+
+.text-dark {
+    color: $text-dark !important;
+}
+
+.text-muted {
+    color: $text-muted !important;
+}
+
+.text-magenta {
+    color: $ng-magenta !important;
+}
+
+/* Level 1 Main Menu Styling */
+.main-menu-link {
+    font-weight: 400;
+    transition: all 0.15s ease;
+    border-radius: 6px;
+    margin: 0 0.5rem;
+
+    &:hover {
+        background-color: #f8f9fa;
+    }
+
+    &.active {
+        background-color: #fdf4ff;
+        color: $ng-magenta !important;
+        font-weight: 500;
+
+        i.bi {
+            color: $ng-magenta !important;
+            opacity: 1 !important;
+        }
+    }
+}
+
+/* Level 2 Documentation Track Container */
+.docs-sub-menu-track {
+    border-left: 1px solid $track-color;
+    margin-left: 0.5rem;
+    padding-left: 1.25rem;
+}
+
+.docs-section-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-left: -2px;
+}
+
+/* Sub-Menu Links */
+/* Sub-Menu Links */
+.docs-sub-link {
+    color: $text-muted;
+    padding: 0.4rem 0.5rem;
+    font-size: 0.95rem;
+    border-left: 2px solid transparent;
+    margin-left: calc(-1.25rem - 1px);
+    padding-left: calc(1.25rem - 1px);
+
+    &:hover {
+        color: $text-dark;
+    }
+
+    &.active-sub {
+        color: $text-dark !important;
+        font-weight: 500;
+        /* Forced border application to override Bootstrap defaults */
+        border-left: 2px solid $ng-magenta !important;
+        background-color: #fdf4ff;
+        /* Optional: adds a very subtle highlight to the active row */
+
+        i.bi {
+            color: $ng-magenta !important;
+            opacity: 1 !important;
+        }
+    }
+}
+
+/* Badges */
+.badge {
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+    border-radius: 4px;
+}
+
+.badge-new {
+    background-color: #e6f4ea;
+    color: #1e8e3e;
+}
+
+.transition-all {
+    transition: all 0.2s ease;
+}
+
+/* Premium Header Styling */
+.custom-header-border {
+    /* A softer, much cleaner border than the default Bootstrap gray */
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.letter-spacing-wide {
+    letter-spacing: 0.02em;
+}
+
+/* Custom Interactive Icon Buttons */
+.custom-icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    border-radius: 0.25rem;
+    color: #5f6368;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+
+    /* Removes the default focus outline and replaces it with a softer shadow if needed */
+    outline: none;
+
+    i {
+        font-size: 1.1rem;
+        line-height: 1;
+        /* Ensure the icon itself doesn't capture pointer events */
+        pointer-events: none;
+    }
+
+    /* Soft hover state */
+    &:hover {
+        background-color: #f3f4f6;
+        color: #202124;
+    }
+
+    /* Micro-interaction on click */
+    &:active {
+        background-color: #e5e7eb;
+        transform: scale(0.92);
+    }
+}

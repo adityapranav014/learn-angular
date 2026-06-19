@@ -1,66 +1,232 @@
-<nav class="navbar navbar-light bg-white shadow-sm border-bottom py-2 mb-4 sticky-top">
+<nav class="navbar navbar-light bg-white border-bottom py-2 mb-4 sticky-top">
     <div class="container-fluid px-3">
-
         <button class="navbar-toggler border-0 shadow-none px-2" type="button" (click)="openSidebar(content)">
             <span class="navbar-toggler-icon opacity-75"></span>
         </button>
-
         <a class="navbar-brand me-auto ms-3 fw-bolder d-flex align-items-center gap-2" href="#">
             <img src="favicon.ico" alt="Logo" width="30" height="30" class="d-inline-block align-text-top rounded">
-            <span class="brand-text">Angular</span>
+            <span class="brand-text fs-5">Angular</span>
         </a>
-
     </div>
 </nav>
 
 <ng-template #content let-offcanvas>
 
-    <div class="offcanvas-header px-3 py-2 border-bottom bg-light">
-        <h5 class="offcanvas-title fw-bold brand-text d-flex align-items-center mb-0">
-            <i class="bi bi-grid-fill me-2 fs-4"></i> Menu
-        </h5>
-        <button type="button" class="btn-close shadow-none opacity-75 me-1" aria-label="Close"
-            (click)="offcanvas.dismiss()"></button>
+    @if (activeMenuView === 'main') {
+    <div class="offcanvas-header px-4 py-3 custom-header-border align-items-center justify-content-between">
+        <h5 class="offcanvas-title fw-semibold text-dark fs-6 mb-0 letter-spacing-wide">Menu</h5>
+        <button type="button" class="custom-icon-btn" aria-label="Close" (click)="offcanvas.dismiss()">
+            <i class="bi bi-x-lg"></i>
+        </button>
     </div>
 
-    <div class="offcanvas-body p-3">
-
-        <ul class="nav nav-pills flex-column mb-auto gap-1">
-
+    <div class="offcanvas-body p-0 py-2">
+        <ul class="nav flex-column list-unstyled">
             <li class="nav-item">
-                <a class="nav-link d-flex align-items-center rounded-3 px-3 py-2 transition-all" aria-current="page"
-                    routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-                    (click)="offcanvas.dismiss()">
-                    <i class="bi bi-house-door me-3 fs-5 opacity-75"></i>
-                    <span class="fw-medium">Home</span>
+                <a class="nav-link main-menu-link d-flex align-items-center px-3 py-2 text-dark" routerLink="/"
+                    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="offcanvas.dismiss()">
+                    <i class="bi bi-house me-3 fs-5 text-muted"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+
+            <li class="nav-item mt-1">
+                <a href="#"
+                    class="nav-link main-menu-link d-flex align-items-center justify-content-between px-4 py-3 text-dark"
+                    [class.active]="isCoreConceptActive()" (click)="navigateToMenu('core-concepts', $event)">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-layers me-3 fs-5 text-muted"></i>
+                        <span>Core Concepts</span>
+                    </div>
+                    <i class="bi bi-chevron-right fs-6 text-muted opacity-75"></i>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link d-flex align-items-center rounded-3 px-3 py-2 transition-all" routerLink="/one"
-                    routerLinkActive="active" (click)="offcanvas.dismiss()">
-                    <i class="bi bi-1-circle me-3 fs-5 opacity-75"></i>
-                    <span class="fw-medium">*ngIf & &#64;if</span>
+                <a href="#"
+                    class="nav-link main-menu-link d-flex align-items-center justify-content-between px-4 py-3 text-dark"
+                    [class.active]="isLogicalScenariosActive()" (click)="navigateToMenu('logical-scenarios', $event)">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-cpu me-3 fs-5 text-muted"></i>
+                        <span>Logical Scenarios</span>
+                    </div>
+                    <i class="bi bi-chevron-right fs-6 text-muted opacity-75"></i>
                 </a>
             </li>
-
-            <li class="nav-item">
-                <a class="nav-link d-flex align-items-center rounded-3 px-3 py-2 transition-all" routerLink="/two"
-                    routerLinkActive="active" (click)="offcanvas.dismiss()">
-                    <i class="bi bi-2-circle me-3 fs-5 opacity-75"></i>
-                    <span class="fw-medium">*ngFor & &#64;for</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link d-flex align-items-center rounded-3 px-3 py-2 transition-all" routerLink="/three"
-                    routerLinkActive="active" (click)="offcanvas.dismiss()">
-                    <i class="bi bi-3-circle me-3 fs-5 opacity-75"></i>
-                    <span class="fw-medium">*ngClass & *ngStyle</span>
-                </a>
-            </li>
-
         </ul>
     </div>
+    }
 
+    @if (activeMenuView === 'core-concepts') {
+    <div class="offcanvas-header px-3 py-3 custom-header-border align-items-center gap-2">
+        <button class="custom-icon-btn" aria-label="Go Back" (click)="goBack()">
+            <i class="bi bi-arrow-left"></i>
+        </button>
+        <h5 class="offcanvas-title fw-medium text-dark fs-6 mb-0 me-auto">Core Concepts</h5>
+        <button type="button" class="custom-icon-btn" aria-label="Close" (click)="offcanvas.dismiss()">
+            <i class="bi bi-x-lg"></i>
+        </button>
+    </div>
+
+    <div class="offcanvas-body px-4 py-4">
+        <div class="docs-sub-menu-track">
+            <h6 class="docs-section-title text-magenta mb-3">Overview</h6>
+            <ul class="nav flex-column list-unstyled gap-2 m-0 p-0">
+                <li class="nav-item">
+                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all" routerLink="/one"
+                        routerLinkActive="active-sub" (click)="offcanvas.dismiss()">
+                        <i class="bi bi-1-circle me-3 fs-5 opacity-75"></i>
+                        <span>*ngIf & &#64;if</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link docs-sub-link d-flex align-items-center justify-content-between transition-all"
+                        routerLink="/two" routerLinkActive="active-sub" (click)="offcanvas.dismiss()">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-2-circle me-3 fs-5 opacity-75"></i>
+                            <span>*ngFor & &#64;for</span>
+                        </div>
+                        <span class="badge badge-new">New</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link docs-sub-link d-flex align-items-center justify-content-between transition-all"
+                        routerLink="/three" routerLinkActive="active-sub" (click)="offcanvas.dismiss()">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-3-circle me-3 fs-5 opacity-75"></i>
+                            <span>*ngClass & *ngStyle</span>
+                        </div>
+                        <span class="badge badge-new">New</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    }
+
+    @if (activeMenuView === 'logical-scenarios') {
+    <div class="offcanvas-header px-3 py-3 custom-header-border align-items-center gap-2">
+        <button class="custom-icon-btn" aria-label="Go Back" (click)="goBack()">
+            <i class="bi bi-arrow-left"></i>
+        </button>
+        <h5 class="offcanvas-title fw-medium text-dark fs-6 mb-0 me-auto">Logical Scenarios</h5>
+        <button type="button" class="custom-icon-btn" aria-label="Close" (click)="offcanvas.dismiss()">
+            <i class="bi bi-x-lg"></i>
+        </button>
+    </div>
+
+    <div class="offcanvas-body px-4 py-4">
+        <div class="docs-sub-menu-track">
+
+            <h6 class="docs-section-title text-magenta mb-3">Commerce & Logistics</h6>
+
+            <ul class="nav flex-column list-unstyled gap-2 m-0 p-0 mb-4">
+                <li class="nav-item">
+                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all"
+                        routerLink="/subscription" routerLinkActive="active-sub" (click)="offcanvas.dismiss()">
+                        <i class="bi bi-box me-3 fs-5 opacity-75"></i>
+                        <span>Tier & Subscription Matrix</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all"
+                        routerLink="/rail-transit" routerLinkActive="active-sub" (click)="offcanvas.dismiss()">
+                        <i class="bi bi-train-freight-front me-3 fs-5 opacity-75"></i>
+                        <span>Rail Transit Engine</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all" routerLink="/box-office"
+                        routerLinkActive="active-sub" (click)="offcanvas.dismiss()">
+                        <i class="bi bi-ticket-perforated me-3 fs-5 opacity-75"></i>
+                        <span>Cinematic Box Office</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all" routerLink="/fleet"
+                        routerLinkActive="active-sub" (click)="offcanvas.dismiss()">
+                        <i class="bi bi-car-front me-3 fs-5 opacity-75"></i>
+                        <span>Fleet Telematics</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all" routerLink="/hospitality"
+                        routerLinkActive="active-sub" (click)="offcanvas.dismiss()">
+                        <i class="bi bi-buildings me-3 fs-5 opacity-75"></i>
+                        <span>Hospitality Concierge</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all" routerLink="/cart"
+                        routerLinkActive="active-sub" (click)="offcanvas.dismiss()">
+                        <i class="bi bi-basket me-3 fs-5 opacity-75"></i>
+                        <span>Smart Cart Automator</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all" routerLink="/enrollment"
+                        routerLinkActive="active-sub" (click)="offcanvas.dismiss()">
+                        <i class="bi bi-mortarboard me-3 fs-5 opacity-75"></i>
+                        <span>Campus Enrollment Portal</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all"
+                        routerLink="/seat-allocator" routerLinkActive="active-sub" (click)="offcanvas.dismiss()">
+                        <i class="bi bi-grid-3x3 me-3 fs-5 opacity-75"></i>
+                        <span>Spatial Seat Allocator</span>
+                    </a>
+                </li>
+            </ul>
+
+            <h6 class="docs-section-title text-magenta mb-3">Architecture & State</h6>
+
+            <ul class="nav flex-column list-unstyled gap-2 m-0 p-0">
+                <li class="nav-item">
+                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all" routerLink="/compute"
+                        routerLinkActive="active-sub" (click)="offcanvas.dismiss()">
+                        <i class="bi bi-calculator me-3 fs-5 opacity-75"></i>
+                        <span>Dynamic Compute Engine</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all" routerLink="/tasks"
+                        routerLinkActive="active-sub" (click)="offcanvas.dismiss()">
+                        <i class="bi bi-check2-square me-3 fs-5 opacity-75"></i>
+                        <span>Task Architecture</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all" routerLink="/kyc"
+                        routerLinkActive="active-sub" (click)="offcanvas.dismiss()">
+                        <i class="bi bi-shield-lock me-3 fs-5 opacity-75"></i>
+                        <span>KYC & Biometric Vault</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all" routerLink="/tabs"
+                        routerLinkActive="active-sub" (click)="offcanvas.dismiss()">
+                        <i class="bi bi-window-stack me-3 fs-5 opacity-75"></i>
+                        <span>Stateful Fluid Tabs</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all"
+                        routerLink="/data-selector" routerLinkActive="active-sub" (click)="offcanvas.dismiss()">
+                        <i class="bi bi-ui-radios me-3 fs-5 opacity-75"></i>
+                        <span>Relational Data Selector</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all" routerLink="/polymorphic"
+                        routerLinkActive="active-sub" (click)="offcanvas.dismiss()">
+                        <i class="bi bi-code-square me-3 fs-5 opacity-75"></i>
+                        <span>Polymorphic Interfaces</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    }
 </ng-template>
