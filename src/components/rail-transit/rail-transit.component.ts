@@ -7,7 +7,6 @@ import { NgbCarousel, NgbSlide } from '@ng-bootstrap/ng-bootstrap/carousel';
 @Component({
   selector: 'app-rail-transit',
   templateUrl: './rail-transit.component.html',
-  styleUrls: ['./rail-transit.component.css'],
   imports: [FormsModule, CommonModule, NgbAccordionModule, NgbCarousel, NgbSlide]
 
 })

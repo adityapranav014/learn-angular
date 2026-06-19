@@ -53,12 +53,12 @@ export const routes: Routes = [
     {
         path: 'rail-transit',
         component: RailTransitComponent,
-        title: 'Rail Transit Engine',
+        title: 'Train Booking Form',
     },
     {
         path: 'box-office',
         component: BoxOfficeComponent,
-        title: 'Cinematic Box Office',
+        title: 'Movie Ticket',
     },
     {
         path: 'fleet',
