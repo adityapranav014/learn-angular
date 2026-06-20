@@ -18,7 +18,7 @@
       </button>
 
       <ng-container *ngFor="let slide of slides; let i = index">
-        <button class="btn btn-sm" [class.btn-primary]="activeIndex === i"
+        <button class="btn btn-sm" [class.btn-brand]="activeIndex === i"
           [class.btn-outline-secondary]="activeIndex !== i" (click)="carousel?.select('task-' + (i + 1))">
           {{ i + 1 }}
         </button>
@@ -44,7 +44,7 @@
             <div ngbAccordionItem="difference-panel" [collapsed]="false">
 
               <h2 ngbAccordionHeader>
-                <button ngbAccordionButton class="fw-bold text-primary">
+                <button ngbAccordionButton class="fw-bold">
                   <i class="bi bi-info-circle-fill me-2"></i> View Difference: [ngClass]/[ngStyle] vs Native Bindings
                 </button>
               </h2>

@@ -87,3 +87,39 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
   font-weight: 500 !important;
 }
+
+/* Brand Button Styles */
+.btn-brand {
+  background-color: #F637E3 !important;
+  border-color: #F637E3 !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 4px rgba(246, 55, 227, 0.2) !important;
+  transition: all 0.2s ease !important;
+
+  &:hover, &:focus, &:active {
+    background-color: #e02ccb !important;
+    border-color: #e02ccb !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 8px rgba(246, 55, 227, 0.3) !important;
+  }
+}
+
+/* Brand Accordion Styles */
+.accordion-button {
+  transition: all 0.2s ease;
+
+  &:not(.collapsed) {
+    color: #F637E3 !important;
+    background-color: #fdf4ff !important;
+    box-shadow: inset 0 -1px 0 rgba(246, 55, 227, 0.15) !important;
+
+    i.bi {
+      color: #F637E3 !important;
+    }
+  }
+
+  &:focus {
+    border-color: rgba(246, 55, 227, 0.5) !important;
+    box-shadow: 0 0 0 0.25rem rgba(246, 55, 227, 0.25) !important;
+  }
+}

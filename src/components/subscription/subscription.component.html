@@ -18,7 +18,7 @@
       </button>
 
       <ng-container *ngFor="let slide of slides; let i = index">
-        <button class="btn btn-sm" [class.btn-primary]="activeIndex === i"
+        <button class="btn btn-sm" [class.btn-brand]="activeIndex === i"
           [class.btn-outline-secondary]="activeIndex !== i" (click)="carousel?.select('task-' + (i + 1))">
           {{ i + 1 }}
         </button>
