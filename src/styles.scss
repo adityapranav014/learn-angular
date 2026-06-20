@@ -71,3 +71,19 @@
 .brand-color {
   color: #F637E3;
 }
+
+/* Global Tooltip Customization */
+.tooltip {
+  --bs-tooltip-bg: #111827 !important;
+  --bs-tooltip-color: #ffffff !important;
+  --bs-tooltip-border-radius: 6px !important;
+  --bs-tooltip-font-size: 0.8rem !important;
+  --bs-tooltip-padding-y: 0.375rem !important;
+  --bs-tooltip-padding-x: 0.65rem !important;
+}
+
+.tooltip-inner {
+  border: 1px solid rgba(246, 55, 227, 0.35) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  font-weight: 500 !important;
+}

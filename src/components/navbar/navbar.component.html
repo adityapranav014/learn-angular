@@ -1,9 +1,9 @@
 <nav class="navbar navbar-light bg-white border-bottom py-2 mb-4 sticky-top">
     <div class="container-fluid px-3">
-        <button class="navbar-toggler border-0 shadow-none px-2" type="button" (click)="openSidebar(content)">
-            <span class="navbar-toggler-icon opacity-75"></span>
+        <button class="custom-icon-btn order-2 order-md-1" type="button" (click)="openSidebar(content)" aria-label="Open Menu" ngbTooltip="Menu" placement="bottom">
+            <i class="bi bi-list"></i>
         </button>
-        <a class="navbar-brand me-auto ms-3 fw-bolder d-flex align-items-center gap-2" href="#">
+        <a class="navbar-brand fw-bolder d-flex align-items-center gap-2 order-1 order-md-2 me-auto ms-0 ms-md-3" href="#">
             <img src="favicon.ico" alt="Logo" width="30" height="30" class="d-inline-block align-text-top rounded">
             <span class="brand-text fs-5">Angular</span>
         </a>
@@ -15,8 +15,8 @@
     @if (activeMenuView() === 'main') {
     <div class="offcanvas-header px-4 py-3 custom-header-border align-items-center justify-content-between">
         <h5 class="offcanvas-title fw-semibold text-dark fs-6 mb-0 letter-spacing-wide">Menu</h5>
-        <button type="button" class="custom-icon-btn border-0 bg-transparent" aria-label="Close"
-            (click)="offcanvas.dismiss()">
+        <button type="button" class="custom-icon-btn" aria-label="Close"
+            (click)="offcanvas.dismiss()" ngbTooltip="Close" placement="bottom">
             <i class="bi bi-x-lg"></i>
         </button>
     </div>
@@ -67,12 +67,12 @@
 
     @if (activeMenuView() === 'core-concepts') {
     <div class="offcanvas-header px-3 py-3 custom-header-border align-items-center gap-2">
-        <button class="custom-icon-btn border-0 bg-transparent" aria-label="Go Back" (click)="goBack()">
+        <button class="custom-icon-btn" aria-label="Go Back" (click)="goBack()" ngbTooltip="Go Back" placement="bottom">
             <i class="bi bi-arrow-left"></i>
         </button>
         <h5 class="offcanvas-title fw-medium text-dark fs-6 mb-0 me-auto">Core Concepts</h5>
-        <button type="button" class="custom-icon-btn border-0 bg-transparent" aria-label="Close"
-            (click)="offcanvas.dismiss()">
+        <button type="button" class="custom-icon-btn" aria-label="Close"
+            (click)="offcanvas.dismiss()" ngbTooltip="Close" placement="bottom">
             <i class="bi bi-x-lg"></i>
         </button>
     </div>
@@ -124,12 +124,12 @@
 
     @if (activeMenuView() === 'logical-scenarios') {
     <div class="offcanvas-header px-3 py-3 custom-header-border align-items-center gap-2">
-        <button class="custom-icon-btn border-0 bg-transparent" aria-label="Go Back" (click)="goBack()">
+        <button class="custom-icon-btn" aria-label="Go Back" (click)="goBack()" ngbTooltip="Go Back" placement="bottom">
             <i class="bi bi-arrow-left"></i>
         </button>
         <h5 class="offcanvas-title fw-medium text-dark fs-6 mb-0 me-auto">Logical Scenarios</h5>
-        <button type="button" class="custom-icon-btn border-0 bg-transparent" aria-label="Close"
-            (click)="offcanvas.dismiss()">
+        <button type="button" class="custom-icon-btn" aria-label="Close"
+            (click)="offcanvas.dismiss()" ngbTooltip="Close" placement="bottom">
             <i class="bi bi-x-lg"></i>
         </button>
     </div>

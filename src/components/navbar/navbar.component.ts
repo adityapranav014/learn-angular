@@ -1,6 +1,6 @@
 import { Component, inject, TemplateRef, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
+import { NgbOffcanvas, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { take } from 'rxjs/operators';
 import { ScrollActiveDirective } from '../../app/directives/appScrollActive.directive';
 
@@ -12,7 +12,8 @@ import { ScrollActiveDirective } from '../../app/directives/appScrollActive.dire
   imports: [
     RouterLink,
     RouterLinkActive,
-    ScrollActiveDirective
+    ScrollActiveDirective,
+    NgbTooltip
   ]
 })
 export class NavbarComponent {
