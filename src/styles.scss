@@ -149,3 +149,18 @@
     box-shadow: 0 0 0 0.25rem rgba(246, 55, 227, 0.25) !important;
   }
 }
+
+/* Brand Live Solution Card Styles */
+.card-live-solution {
+  border-color: rgba(246, 55, 227, 0.3) !important;
+
+  .card-header-live-solution {
+    background-color: #fdf4ff !important;
+    color: #F637E3 !important;
+    border-bottom: 1px solid rgba(246, 55, 227, 0.15) !important;
+
+    h5, h6, .card-title, i {
+      color: #F637E3 !important;
+    }
+  }
+}
