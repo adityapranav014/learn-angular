@@ -48,6 +48,32 @@
   color: #F637E3;
 }
 
+/* Navbar Brand Hover Effects */
+.navbar-brand {
+  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+
+  img {
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+
+  .brand-text {
+    transition: color 0.25s cubic-bezier(0.4, 0, 0.2, 1), text-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+
+  &:hover {
+    opacity: 0.95 !important;
+
+    img {
+      transform: scale(1.1) rotate(4deg) !important;
+    }
+
+    .brand-text {
+      color: #e02ccb !important;
+      text-shadow: 0 0 8px rgba(246, 55, 227, 0.25) !important;
+    }
+  }
+}
+
 .gradient-animated {
   background: linear-gradient(135deg, #8a2be2, #c41eab, #f5127b);
   background-size: 200% 200%;
