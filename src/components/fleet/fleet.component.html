@@ -1,3 +1,265 @@
-<p>
-  fleet works!
-</p>
+<div class="container pb-4">
+
+  <!-- Header -->
+  <div class="row align-items-center mb-4">
+    <div class="col-auto">
+      <div class="d-flex align-items-center gap-2 brand-text bg-white px-3 py-2 border text-brand rounded-2">
+        <i class="bi bi-car-front-fill fs-5"></i>
+        <span class="vr opacity-25 mx-1"></span>
+        <span class="fw-bold" style="font-size: 0.95rem;">Zoom Car Rental System</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+
+    <!-- Left Column: Task & Code Hint -->
+    <div class="col-lg-4 col-md-12">
+      <div class="d-flex flex-column gap-4 h-100">
+        
+        <!-- Task Card -->
+        <div class="card shadow-sm border-0">
+          <div class="card-header bg-white border-bottom-0 pt-3 pb-2">
+            <h5 class="card-title text-secondary mb-0 fw-bold">
+              <i class="bi bi-clipboard-data-fill me-2 brand-color"></i>Task 1
+            </h5>
+          </div>
+          <div class="card-body bg-white rounded-bottom">
+            <div class="text-center pb-2">
+              <h5 class="fw-bold text-dark">Zoom Car Rental System</h5>
+            </div>
+            <ul class="mb-0 text-muted small">
+              <li class="mb-2"><strong>Admin Panel:</strong> Input Car Name, Rate/Hr, Rate/Day, and add it to the inventory table.</li>
+              <li class="mb-2"><strong>Booking Form:</strong> Choose a car from the inventory and specify the rent type ("Per Day" or "Per Hr").</li>
+              <li class="mb-2"><strong>Dynamic UI:</strong> Render dynamic inputs for Days or Hours depending on the chosen Rent Type.</li>
+              <li class="mb-2"><strong>Bookings List:</strong> Add multiple cars to a rental sheet, remove items, or clear everything.</li>
+              <li><strong>Billing:</strong> Calculate and display the total bill amount dynamically.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Code Hint Card -->
+        <div class="card shadow-sm border-0 bg-dark text-light flex-grow-1">
+          <div class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
+            <h5 class="card-title text-light mb-0 fw-bold">
+              <i class="bi bi-code-slash me-2 text-warning"></i>Code Hint
+            </h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-2">
+              <p class="small text-secondary fw-bold mb-2 tracking-wider"><i class="bi bi-calculator me-1"></i> Cost Calculation (TS)</p>
+              <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary shadow-sm"><code>addBookingItem() &#123;
+  const rate = this.rentType === 'Per Day' 
+    ? car.ratePerDay 
+    : car.ratePerHr;
+
+  const cost = rate * this.duration * this.qty;
+  this.bookingItems.push(&#123;
+    carName: car.name,
+    rentType: this.rentType,
+    duration: this.duration,
+    quantity: this.qty,
+    cost: cost
+  &#125;);
+&#125;</code></pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Right Column: Live Solution -->
+    <div class="col-lg-8 col-md-12">
+      <div class="card h-100 shadow-sm card-live-solution">
+        
+        <div class="card-header card-header-live-solution pt-3 pb-2">
+          <h5 class="card-title mb-0 fw-bold">
+            <i class="bi bi-play-circle me-2"></i>Live Solution
+          </h5>
+        </div>
+
+        <div class="card-body bg-white rounded-bottom p-4">
+          <div class="row g-4">
+
+            <!-- Admin Panel Column -->
+            <div class="col-12 col-md-6 border-end-md">
+              <div class="p-3 bg-light rounded-3 h-100 border">
+                <div class="text-center mb-3 border-bottom pb-2">
+                  <h6 class="fw-bold text-dark mb-0"><i class="bi bi-shield-lock me-1 text-primary"></i>Admin Panel</h6>
+                </div>
+
+                <!-- Admin Inputs -->
+                <div class="row g-2 mb-3">
+                  <div class="col-12">
+                    <input type="text" id="txtCarName" class="form-control form-control-sm" placeholder="Car Name" [(ngModel)]="newCarName">
+                  </div>
+                  <div class="col-6">
+                    <input type="number" id="txtRatePerHr" class="form-control form-control-sm" placeholder="Rate/hr (₹)" [(ngModel)]="newRatePerHr">
+                  </div>
+                  <div class="col-6">
+                    <input type="number" id="txtRatePerDay" class="form-control form-control-sm" placeholder="Rate/Day (₹)" [(ngModel)]="newRatePerDay">
+                  </div>
+                  
+                  @if (adminError) {
+                    <div class="col-12">
+                      <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle me-1"></i>{{ adminError }}</div>
+                    </div>
+                  }
+
+                  <div class="col-12 mt-2">
+                    <button class="btn btn-sm btn-brand w-100 fw-bold" id="btnAdd" (click)="addCar()">
+                      <i class="bi bi-plus-lg me-1"></i>Add Car
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Cars Table -->
+                <div class="table-responsive mt-3">
+                  <table class="table table-sm table-bordered table-hover align-middle mb-0" id="tblCars">
+                    <thead class="table-brand-light">
+                      <tr>
+                        <th class="small text-center">Sr</th>
+                        <th class="small">Car Name</th>
+                        <th class="small text-end">₹ / Hr</th>
+                        <th class="small text-end">₹ / Day</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @for (car of cars; track car.name; let i = $index) {
+                        <tr>
+                          <td class="text-center small text-muted">{{ i + 1 }}</td>
+                          <td class="fw-semibold small text-dark">{{ car.name }}</td>
+                          <td class="text-end small text-secondary">₹{{ car.ratePerHr }}</td>
+                          <td class="text-end small text-success fw-bold">₹{{ car.ratePerDay }}</td>
+                        </tr>
+                      } @empty {
+                        <tr>
+                          <td colspan="4" class="text-center text-muted small py-3">No cars available. Add some above.</td>
+                        </tr>
+                      }
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Booking Form Column -->
+            <div class="col-12 col-md-6">
+              <div class="p-3 rounded-3 h-100">
+                <div class="text-center mb-3 border-bottom pb-2">
+                  <h6 class="fw-bold text-dark mb-0"><i class="bi bi-calendar-check me-1 text-success"></i>Booking Form</h6>
+                </div>
+
+                <!-- Booking Inputs -->
+                <div class="row g-2 mb-3">
+                  <div class="col-6">
+                    <select id="dpdlCar" class="form-select form-select-sm" [(ngModel)]="selectedCarName">
+                      <option value="">Select Car</option>
+                      @for (car of cars; track car.name) {
+                        <option [value]="car.name">{{ car.name }}</option>
+                      }
+                    </select>
+                  </div>
+
+                  <div class="col-6">
+                    <select id="type" class="form-select form-select-sm" [(ngModel)]="rentType">
+                      <option value="">Rent Type</option>
+                      <option value="Per Day">Per Day</option>
+                      <option value="Per Hr">Per Hr</option>
+                    </select>
+                  </div>
+
+                  <!-- Conditional Rent Inputs -->
+                  <div class="col-4">
+                    @if (rentType === 'Per Day') {
+                      <input type="number" class="form-control form-control-sm perDay animate__animated animate__fadeIn" id="perQuantityDay" placeholder="Days" [(ngModel)]="duration">
+                    } @else if (rentType === 'Per Hr') {
+                      <input type="number" class="form-control form-control-sm perHr animate__animated animate__fadeIn" id="perQuantityHr" placeholder="Hours" [(ngModel)]="duration">
+                    } @else {
+                      <input type="text" class="form-control form-control-sm" placeholder="Duration" disabled>
+                    }
+                  </div>
+
+                  <div class="col-4">
+                    <input type="number" class="form-control form-control-sm" id="txtQty" placeholder="Cars Qty" [(ngModel)]="quantity">
+                  </div>
+
+                  <div class="col-4">
+                    <button class="btn btn-sm btn-success w-100 fw-bold" id="btnAddCars" (click)="addBookingItem()">
+                      <i class="bi bi-cart-plus me-1"></i>Add
+                    </button>
+                  </div>
+
+                  @if (bookingError) {
+                    <div class="col-12">
+                      <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle me-1"></i>{{ bookingError }}</div>
+                    </div>
+                  }
+                </div>
+
+                <!-- Booked Items List -->
+                <div class="mt-4">
+                  <h6 class="small fw-bold text-secondary mb-2"><i class="bi bi-list-stars me-1"></i>Rental Sheet</h6>
+                  <div class="booking-list-container border rounded bg-light p-2 mb-3" style="min-height: 100px; max-height: 180px; overflow-y: auto;">
+                    <ul id="selectedCars" class="list-unstyled mb-0 d-flex flex-column gap-2">
+                      @for (item of bookingItems; track item; let i = $index) {
+                        <li class="d-flex justify-content-between align-items-center bg-white p-2 rounded border shadow-xs animate__animated animate__fadeIn">
+                          <div class="d-flex flex-column">
+                            <span class="small fw-bold text-dark">{{ item.quantity }}x {{ item.carName }}</span>
+                            <span class="text-muted" style="font-size: 0.75rem;">
+                              {{ item.rentType }} • {{ item.duration }} {{ item.rentType === 'Per Day' ? 'days' : 'hrs' }}
+                            </span>
+                          </div>
+                          <div class="d-flex align-items-center gap-2">
+                            <span class="badge bg-success-subtle text-success border border-success border-opacity-10 fw-bold">₹{{ item.cost }}</span>
+                            <button class="btn btn-link btn-sm text-danger p-0 border-0" (click)="removeBookingItem(i)" title="Remove item">
+                              <i class="bi bi-trash"></i>
+                            </button>
+                          </div>
+                        </li>
+                      } @empty {
+                        <li class="text-center text-muted small py-4">No items added to rental sheet.</li>
+                      }
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- Footer Buttons -->
+                <div class="row g-2">
+                  <div class="col-6">
+                    <button class="btn btn-sm btn-outline-danger w-100 fw-bold" id="btnClear" (click)="clearBookings()">
+                      <i class="bi bi-x-circle me-1"></i>Clear Sheet
+                    </button>
+                  </div>
+                  <div class="col-6">
+                    <button class="btn btn-sm btn-success w-100 fw-bold" id="btnCal" (click)="calculateBill()">
+                      <i class="bi bi-receipt me-1"></i>Calculate Bill
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Bill Output Section -->
+                @if (showBill && totalBill !== null) {
+                  <div class="row mt-3 animate__animated animate__zoomIn">
+                    <div class="col-12">
+                      <div class="p-3 text-center text-white rounded-3 shadow-sm border border-teal-subtle" id="divBill" style="background: linear-gradient(135deg, #115e59, #0f766e);">
+                        <small class="text-teal-200 text-uppercase tracking-wider">Total Bill Amount</small>
+                        <h4 class="fw-bold mb-0 mt-1" id="btnillAmt">₹{{ totalBill }}</h4>
+                      </div>
+                    </div>
+                  </div>
+                }
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

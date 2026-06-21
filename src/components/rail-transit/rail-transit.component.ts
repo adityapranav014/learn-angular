@@ -2,12 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap/accordion';
-import { NgbCarousel, NgbSlide } from '@ng-bootstrap/ng-bootstrap/carousel';
 
 @Component({
   selector: 'app-rail-transit',
   templateUrl: './rail-transit.component.html',
-  imports: [FormsModule, CommonModule, NgbAccordionModule, NgbCarousel, NgbSlide]
+  imports: [FormsModule, CommonModule, NgbAccordionModule]
 
 })
 export class RailTransitComponent {

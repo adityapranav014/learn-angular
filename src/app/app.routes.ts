@@ -61,9 +61,9 @@ export const routes: Routes = [
         title: 'Movie Ticket',
     },
     {
-        path: 'fleet',
+        path: 'zoom-car-rental',
         component: FleetComponent,
-        title: 'Fleet Telematics',
+        title: 'Zoom Car Rental System',
     },
     {
         path: 'hospitality',
@@ -88,9 +88,9 @@ export const routes: Routes = [
 
     // --- Logical Scenarios: Architecture & State ---
     {
-        path: 'compute',
+        path: 'calculator',
         component: ComputeComponent,
-        title: 'Dynamic Compute Engine',
+        title: 'Calculator',
     },
     {
         path: 'tasks',
