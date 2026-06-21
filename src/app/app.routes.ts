@@ -66,9 +66,9 @@ export const routes: Routes = [
         title: 'Zoom Car Rental System',
     },
     {
-        path: 'hospitality',
+        path: 'hotel-order',
         component: HospitalityComponent,
-        title: 'Hospitality Concierge',
+        title: 'Hotel Order System 🏨',
     },
     {
         path: 'cart',

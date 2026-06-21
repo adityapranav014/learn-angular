@@ -186,12 +186,12 @@
 
                 <li class="nav-item">
                     <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
-                        routerLink="/hospitality" routerLinkActive="active-sub bg-light fw-bold"
+                        routerLink="/hotel-order" routerLinkActive="active-sub bg-light fw-bold"
                         #rla8="routerLinkActive" [appScrollActive]="rla8.isActive && isOffcanvasReady()"
                         (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-buildings]="!rla8.isActive"
-                            [class.bi-buildings-fill]="rla8.isActive" [class.text-primary]="rla8.isActive"></i>
-                        <span>Hospitality Concierge</span>
+                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-bell]="!rla8.isActive"
+                            [class.bi-bell-fill]="rla8.isActive" [class.text-primary]="rla8.isActive"></i>
+                        <span>Hotel Order System</span>
                     </a>
                 </li>
 
