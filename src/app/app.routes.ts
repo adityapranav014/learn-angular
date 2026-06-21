@@ -93,9 +93,9 @@ export const routes: Routes = [
         title: 'Calculator',
     },
     {
-        path: 'tasks',
+        path: 'todo-list',
         component: TasksComponent,
-        title: 'Task Architecture',
+        title: 'To Do List App',
     },
     {
         path: 'kyc',
