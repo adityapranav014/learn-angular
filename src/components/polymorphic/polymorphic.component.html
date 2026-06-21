@@ -1,3 +1,396 @@
-<p>
-  polymorphic works!
-</p>
+<div class="container pb-4 animate__animated animate__fadeIn">
+
+  <!-- Header -->
+  <div class="row align-items-center mb-4">
+    <div class="col-auto">
+      <div class="d-flex align-items-center gap-2 brand-text bg-white px-3 py-2 border text-brand rounded-2">
+        <i class="bi bi-layout-split fs-5"></i>
+        <span class="vr opacity-25 mx-1"></span>
+        <span class="fw-bold" style="font-size: 0.95rem;">Dynamic UI Selection</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+
+    <!-- Left Column: Task & Code Hint -->
+    <div class="col-lg-4 col-md-12">
+      <div class="d-flex flex-column gap-4 h-100">
+
+        <!-- Task Card -->
+        <div class="card shadow-sm border-0">
+          <div class="card-header bg-white border-bottom-0 pt-3 pb-2">
+            <h5 class="card-title text-secondary mb-0 fw-bold">
+              <i class="bi bi-clipboard-data-fill me-2 brand-color"></i>Task 1
+            </h5>
+          </div>
+          <div class="card-body bg-white rounded-bottom">
+            <div class="text-start pb-2">
+              <h5 class="fw-bold text-dark">Dynamic UI Selection</h5>
+            </div>
+            <ul class="mb-0 text-muted small">
+              <li class="mb-2"><strong>Dynamic Top Tabs</strong>: Clicking a category tab at the top (e.g., <em>Personal Details</em>, <em>Job History</em>) must dynamically update the sidebar options and highlight the active tab.</li>
+              <li class="mb-2"><strong>Dynamic Sidebar</strong>: Clicking a sidebar submenu option must toggle and render the matching form panel on the right.</li>
+              <li><strong>Active Selection Highlight</strong>: The selected top tab and active sidebar option must have clear highlight colors to indicate the current state.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Code Hint Card -->
+        <div class="card shadow-sm border-0 bg-dark text-light flex-grow-1">
+          <div
+            class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
+            <h5 class="card-title text-light mb-0 fw-bold">
+              <i class="bi bi-code-slash me-2 text-warning"></i>Code Hint
+            </h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <p class="small text-secondary fw-bold mb-2 tracking-wider"><i class="bi bi-cpu me-1"></i> Active States (TS)</p>
+              <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary shadow-sm"><code>selectTab(tab: string) &#123;
+  this.activeTab = tab;
+  this.activeSubmenu = this.map[tab][0];
+&#125;
+
+selectSubmenu(menu: string) &#123;
+  this.activeSubmenu = menu;
+&#125;</code></pre>
+            </div>
+            <div>
+              <p class="small text-warning fw-bold mb-2 tracking-wider"><i class="bi bi-layout-text-window me-1"></i> HTML Bindings</p>
+              <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary shadow-sm"><code>&lt;button [class.active]="activeTab === tab"
+  (click)="selectTab(tab)"&gt;
+  {{ '{{' }} tab {{ '}}' }}
+&lt;/button&gt;</code></pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Right Column: Live Solution -->
+    <div class="col-lg-8 col-md-12">
+      <div class="card h-100 shadow-sm card-live-solution">
+        <div class="card-header card-header-live-solution pt-3 pb-2">
+          <h5 class="card-title mb-0 fw-bold">
+            <i class="bi bi-play-circle me-2"></i>Live Solution
+          </h5>
+        </div>
+        <div class="card-body bg-white rounded-bottom p-4 d-flex flex-column">
+
+          <!-- Top Dynamic Tabs Header -->
+          <div class="row mb-4">
+            <div class="col-12">
+              <div class="d-flex flex-wrap gap-2 p-1 bg-light rounded-3 shadow-xs">
+                @for (tab of tabs; track tab) {
+                  <button class="btn tab-btn px-4 py-2 border-0 fw-bold transition-all text-secondary"
+                    [class.active-tab]="activeTab === tab"
+                    (click)="selectTab(tab)">
+                    {{ tab }}
+                  </button>
+                }
+              </div>
+            </div>
+          </div>
+
+          <!-- Mid Split Layout (Sidebar + Content) -->
+          <div class="row flex-grow-1 min-vh-50">
+            <!-- Sidebar Menu -->
+            <div class="col-md-3 col-12 border-end pe-md-3 pb-3 pb-md-0">
+              <h6 class="text-uppercase text-secondary fw-semibold letter-spacing-wider small mb-3">Submenu</h6>
+              <div class="d-grid gap-2">
+                @for (submenu of buttonSubmenuMap[activeTab]; track submenu) {
+                  <button class="btn submenu-btn text-start py-2.5 px-3 rounded-2 fw-medium transition-all text-secondary border-0 d-flex align-items-center gap-2"
+                    [class.active-submenu]="activeSubmenu === submenu"
+                    (click)="selectSubmenu(submenu)">
+                    <i class="bi bi-circle-fill dot-indicator"></i>
+                    {{ submenu }}
+                  </button>
+                }
+              </div>
+            </div>
+
+            <!-- Form Content Panel -->
+            <div class="col-md-9 col-12 ps-md-4">
+              <div class="form-container">
+
+                <!-- 1. Personal Details -> Basic Information -->
+                @if (activeTab === 'Personal Details' && activeSubmenu === 'Basic Information') {
+                  <div class="form-panel animate__animated animate__fadeIn">
+                    <h5 class="fw-bold text-dark mb-4 d-flex align-items-center gap-2">
+                      <i class="bi bi-person-badge-fill brand-color"></i> Basic Information
+                    </h5>
+                    <form>
+                      <div class="row g-3">
+                        <div class="col-md-6 col-12">
+                          <label class="form-label text-secondary small fw-semibold">Full Name</label>
+                          <input type="text" name="name" [(ngModel)]="formData.personal.name" class="form-control rounded-2 custom-input" placeholder="e.g. John Doe">
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <label class="form-label text-secondary small fw-semibold">Date of Birth</label>
+                          <input type="date" name="dob" [(ngModel)]="formData.personal.dob" class="form-control rounded-2 custom-input">
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <label class="form-label text-secondary small fw-semibold">Contact Number</label>
+                          <input type="text" name="contact" [(ngModel)]="formData.personal.contact" class="form-control rounded-2 custom-input" placeholder="e.g. +1 555-0199">
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <label class="form-label text-secondary small fw-semibold d-block">Gender</label>
+                          <div class="d-flex gap-4 mt-2">
+                            <label class="d-flex align-items-center gap-2 cursor-pointer text-muted font-medium">
+                              <input type="radio" name="gender" value="Male" [(ngModel)]="formData.personal.gender" class="form-check-input brand-radio">
+                              <span>Male</span>
+                            </label>
+                            <label class="d-flex align-items-center gap-2 cursor-pointer text-muted font-medium">
+                              <input type="radio" name="gender" value="Female" [(ngModel)]="formData.personal.gender" class="form-check-input brand-radio">
+                              <span>Female</span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                }
+
+                <!-- 2. Personal Details -> Address -->
+                @if (activeTab === 'Personal Details' && activeSubmenu === 'Address') {
+                  <div class="form-panel animate__animated animate__fadeIn">
+                    <h5 class="fw-bold text-dark mb-4 d-flex align-items-center gap-2">
+                      <i class="bi bi-geo-alt-fill brand-color"></i> Address Details
+                    </h5>
+                    <form>
+                      <div class="row g-3">
+                        <div class="col-12">
+                          <label class="form-label text-secondary small fw-semibold">Street Address</label>
+                          <textarea name="addressText" [(ngModel)]="formData.address.addressText" rows="3" class="form-control rounded-2 custom-input" placeholder="Enter full address..."></textarea>
+                        </div>
+                        <div class="col-md-4 col-12">
+                          <label class="form-label text-secondary small fw-semibold">City</label>
+                          <input type="text" name="city" [(ngModel)]="formData.address.city" class="form-control rounded-2 custom-input" placeholder="City">
+                        </div>
+                        <div class="col-md-4 col-12">
+                          <label class="form-label text-secondary small fw-semibold">State</label>
+                          <input type="text" name="state" [(ngModel)]="formData.address.state" class="form-control rounded-2 custom-input" placeholder="State">
+                        </div>
+                        <div class="col-md-4 col-12">
+                          <label class="form-label text-secondary small fw-semibold">Pincode</label>
+                          <input type="text" name="pincode" [(ngModel)]="formData.address.pincode" class="form-control rounded-2 custom-input" placeholder="Pincode">
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                }
+
+                <!-- 3. Job History -> Company Details -->
+                @if (activeTab === 'Job History' && activeSubmenu === 'Company Details') {
+                  <div class="form-panel animate__animated animate__fadeIn">
+                    <h5 class="fw-bold text-dark mb-4 d-flex align-items-center gap-2">
+                      <i class="bi bi-building-fill brand-color"></i> Company Details
+                    </h5>
+                    <form>
+                      <div class="row g-3">
+                        <div class="col-md-6 col-12">
+                          <label class="form-label text-secondary small fw-semibold">Company Name</label>
+                          <input type="text" name="companyName" [(ngModel)]="formData.company.name" class="form-control rounded-2 custom-input" placeholder="e.g. Google Inc.">
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <label class="form-label text-secondary small fw-semibold">Location</label>
+                          <input type="text" name="companyLocation" [(ngModel)]="formData.company.location" class="form-control rounded-2 custom-input" placeholder="e.g. Mountain View, CA">
+                        </div>
+                        <div class="col-12">
+                          <label class="form-label text-secondary small fw-semibold">Position / Role</label>
+                          <input type="text" name="companyPosition" [(ngModel)]="formData.company.position" class="form-control rounded-2 custom-input" placeholder="e.g. Lead Software Engineer">
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                }
+
+                <!-- 4. Job History -> Experience -->
+                @if (activeTab === 'Job History' && activeSubmenu === 'Experience') {
+                  <div class="form-panel animate__animated animate__fadeIn">
+                    <h5 class="fw-bold text-dark mb-4 d-flex align-items-center gap-2">
+                      <i class="bi bi-briefcase-fill brand-color"></i> Work Experience
+                    </h5>
+                    <form>
+                      <div class="row g-3">
+                        <div class="col-12">
+                          <label class="form-label text-secondary small fw-semibold">Roles and Responsibilities</label>
+                          <textarea name="experienceRoles" [(ngModel)]="formData.experience.roles" rows="4" class="form-control rounded-2 custom-input" placeholder="List core responsibilities and achievements..."></textarea>
+                        </div>
+                        <div class="col-12">
+                          <label class="form-label text-secondary small fw-semibold">Technologies Used</label>
+                          <input type="text" name="experienceTech" [(ngModel)]="formData.experience.technologies" class="form-control rounded-2 custom-input" placeholder="e.g. Angular 18, TypeScript, Docker">
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                }
+
+                <!-- 5. Project -> Project Details -->
+                @if (activeTab === 'Project' && activeSubmenu === 'Project Details') {
+                  <div class="form-panel animate__animated animate__fadeIn">
+                    <h5 class="fw-bold text-dark mb-4 d-flex align-items-center gap-2">
+                      <i class="bi bi-kanban-fill brand-color"></i> Project Details
+                    </h5>
+                    <form>
+                      <div class="row g-3">
+                        <div class="col-md-6 col-12">
+                          <label class="form-label text-secondary small fw-semibold">Project Name</label>
+                          <input type="text" name="projectName" [(ngModel)]="formData.project.name" class="form-control rounded-2 custom-input" placeholder="e.g. E-Commerce Platform">
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <label class="form-label text-secondary small fw-semibold">Project Duration</label>
+                          <input type="text" name="projectDuration" [(ngModel)]="formData.project.duration" class="form-control rounded-2 custom-input" placeholder="e.g. 6 Months">
+                        </div>
+                        <div class="col-12">
+                          <label class="form-label text-secondary small fw-semibold">Technologies Used</label>
+                          <input type="text" name="projectTech" [(ngModel)]="formData.project.technologies" class="form-control rounded-2 custom-input" placeholder="e.g. Node.js, GraphQL, PostgreSQL">
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                }
+
+                <!-- 6. Project -> Description -->
+                @if (activeTab === 'Project' && activeSubmenu === 'Description') {
+                  <div class="form-panel animate__animated animate__fadeIn">
+                    <h5 class="fw-bold text-dark mb-4 d-flex align-items-center gap-2">
+                      <i class="bi bi-file-text-fill brand-color"></i> Project Description
+                    </h5>
+                    <form>
+                      <div class="row g-3">
+                        <div class="col-12">
+                          <label class="form-label text-secondary small fw-semibold">Project Description</label>
+                          <textarea name="projectDesc" [(ngModel)]="formData.projectDescription.description" rows="5" class="form-control rounded-2 custom-input" placeholder="Describe the application features and problems solved..."></textarea>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                }
+
+                <!-- 7. Project -> Live Link -->
+                @if (activeTab === 'Project' && activeSubmenu === 'Live Link') {
+                  <div class="form-panel animate__animated animate__fadeIn">
+                    <h5 class="fw-bold text-dark mb-4 d-flex align-items-center gap-2">
+                      <i class="bi bi-link-45deg brand-color"></i> Project Live Links
+                    </h5>
+                    <form>
+                      <div class="row g-3">
+                        <div class="col-12">
+                          <label class="form-label text-secondary small fw-semibold">Project Links</label>
+                          <input type="text" name="projectLinks" [(ngModel)]="formData.projectLinks.links" class="form-control rounded-2 custom-input" placeholder="e.g. https://github.com/my-project">
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                }
+
+                <!-- 8. Project -> Skills -->
+                @if (activeTab === 'Project' && activeSubmenu === 'Skills') {
+                  <div class="form-panel animate__animated animate__fadeIn">
+                    <h5 class="fw-bold text-dark mb-4 d-flex align-items-center gap-2">
+                      <i class="bi bi-award-fill brand-color"></i> Project Skills & Roles
+                    </h5>
+                    <form>
+                      <div class="row g-3">
+                        <div class="col-12">
+                          <label class="form-label text-secondary small fw-semibold">Project Skills</label>
+                          <input type="text" name="projectSkills" [(ngModel)]="formData.projectSkills.skills" class="form-control rounded-2 custom-input" placeholder="e.g. CI/CD Pipeline, Firebase Auth">
+                        </div>
+                        <div class="col-12">
+                          <label class="form-label text-secondary small fw-semibold">Project Roles & Responsibilities</label>
+                          <textarea name="projectResp" [(ngModel)]="formData.projectSkills.responsibility" rows="4" class="form-control rounded-2 custom-input" placeholder="Outline your key roles and leadership actions..."></textarea>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                }
+
+                <!-- 9. Domain -> Domain Name -->
+                @if (activeTab === 'Domain' && activeSubmenu === 'Domain Name') {
+                  <div class="form-panel animate__animated animate__fadeIn">
+                    <h5 class="fw-bold text-dark mb-4 d-flex align-items-center gap-2">
+                      <i class="bi bi-globe brand-color"></i> Domain Setup
+                    </h5>
+                    <form>
+                      <div class="row g-3">
+                        <div class="col-md-6 col-12">
+                          <label class="form-label text-secondary small fw-semibold">Domain Name</label>
+                          <input type="text" name="domainName" [(ngModel)]="formData.domainName.name" class="form-control rounded-2 custom-input" placeholder="e.g. myportfolio">
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <label class="form-label text-secondary small fw-semibold">Registrar</label>
+                          <input type="text" name="domainRegistrar" [(ngModel)]="formData.domainName.registrar" class="form-control rounded-2 custom-input" placeholder="e.g. Namecheap">
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <label class="form-label text-secondary small fw-semibold">Expiry Date</label>
+                          <input type="date" name="domainExpiry" [(ngModel)]="formData.domainName.expiryDate" class="form-control rounded-2 custom-input">
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <label class="form-label text-secondary small fw-semibold d-block">Auto Renew</label>
+                          <div class="form-check form-switch mt-2">
+                            <input type="checkbox" name="domainRenew" [(ngModel)]="formData.domainName.autoRenew" class="form-check-input custom-switch" id="domainRenewCheck">
+                            <label class="form-check-label text-muted cursor-pointer" for="domainRenewCheck">Enable auto-renewal</label>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                }
+
+                <!-- 10. Domain -> Type Of Domain -->
+                @if (activeTab === 'Domain' && activeSubmenu === 'Type Of Domain') {
+                  <div class="form-panel animate__animated animate__fadeIn">
+                    <h5 class="fw-bold text-dark mb-4 d-flex align-items-center gap-2">
+                      <i class="bi bi-hdd-network-fill brand-color"></i> Type of Domain
+                    </h5>
+                    <form>
+                      <div class="row g-3">
+                        <div class="col-md-4 col-12">
+                          <label class="form-label text-secondary small fw-semibold">Domain Extension</label>
+                          <select name="domainTld" [(ngModel)]="formData.domainType.tld" class="form-select rounded-2 custom-input">
+                            <option value=".com">.com</option>
+                            <option value=".org">.org</option>
+                            <option value=".net">.net</option>
+                            <option value=".io">.io</option>
+                            <option value=".dev">.dev</option>
+                          </select>
+                        </div>
+                        <div class="col-md-4 col-12">
+                          <label class="form-label text-secondary small fw-semibold">Primary Purpose</label>
+                          <select name="domainPurpose" [(ngModel)]="formData.domainType.purpose" class="form-select rounded-2 custom-input">
+                            <option value="Commercial">Commercial</option>
+                            <option value="Non-profit">Non-profit</option>
+                            <option value="Technology">Technology</option>
+                            <option value="Personal">Personal Portfolio</option>
+                          </select>
+                        </div>
+                        <div class="col-md-4 col-12">
+                          <label class="form-label text-secondary small fw-semibold">Security Level</label>
+                          <select name="domainSecurity" [(ngModel)]="formData.domainType.security" class="form-select rounded-2 custom-input">
+                            <option value="Standard">Standard</option>
+                            <option value="High (DNSSEC)">High (DNSSEC)</option>
+                            <option value="Enterprise (WAF)">Enterprise (WAF)</option>
+                          </select>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                }
+
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

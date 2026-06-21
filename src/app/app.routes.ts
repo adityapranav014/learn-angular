@@ -105,7 +105,7 @@ export const routes: Routes = [
     {
         path: 'polymorphic',
         component: PolymorphicComponent,
-        title: 'Polymorphic Interfaces',
+        title: 'Dynamic UI Selection',
     },
 
     // --- Fallback Route ---

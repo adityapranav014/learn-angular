@@ -267,10 +267,9 @@
                         routerLink="/polymorphic" routerLinkActive="active-sub bg-light fw-bold"
                         #rla17="routerLinkActive" [appScrollActive]="rla17.isActive && isOffcanvasReady()"
                         (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-file-earmark-code]="!rla17.isActive"
-                            [class.bi-file-earmark-code-fill]="rla17.isActive"
+                        <i class="bi me-3 fs-5 opacity-75 transition-all bi-layout-split"
                             [class.text-primary]="rla17.isActive"></i>
-                        <span>Polymorphic Interfaces</span>
+                        <span>Dynamic UI Selection</span>
                     </a>
                 </li>
             </ul>
