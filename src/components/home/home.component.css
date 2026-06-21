@@ -1,0 +1,49 @@
+.home-shell {
+    max-width: 1320px;
+}
+
+.home-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.home-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(17, 24, 39, 0.08) !important;
+}
+
+.home-icon-wrap {
+    color: #4b5563;
+}
+
+.home-link {
+    color: #374151;
+}
+
+.home-card:hover .home-link {
+    color: #c026d3;
+}
+
+.accent-primary {
+    background-color: rgba(59, 130, 246, 0.12);
+    color: #2563eb;
+}
+
+.accent-success {
+    background-color: rgba(16, 185, 129, 0.12);
+    color: #059669;
+}
+
+.accent-warning {
+    background-color: rgba(245, 158, 11, 0.16);
+    color: #d97706;
+}
+
+.accent-brand {
+    background-color: rgba(246, 55, 227, 0.12);
+    color: #f637e3;
+}
+
+.accent-indigo {
+    background-color: rgba(99, 102, 241, 0.12);
+    color: #4f46e5;
+}
