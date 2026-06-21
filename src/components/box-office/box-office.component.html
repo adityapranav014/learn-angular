@@ -1,157 +1,190 @@
 <div class="container pb-4">
 
+  <!-- Header with Pagination -->
   <div class="row align-items-center mb-4">
-    <div class="col-auto">
+    <div class="col-12 col-md-auto mb-3 mb-md-0">
       <div class="d-flex align-items-center gap-2 brand-text bg-white px-3 py-2 border text-brand rounded-2">
         <i class="bi bi-ticket-perforated-fill fs-5"></i>
         <span class="vr opacity-25 mx-1"></span>
         <span class="fw-bold" style="font-size: 0.95rem;">Movie Ticket</span>
       </div>
     </div>
+
+    <!-- Pagination Controls -->
+    <div class="col-12 col-md d-flex flex-wrap gap-2 justify-content-md-end">
+      <button class="btn btn-sm btn-light border" (click)="carousel?.prev()">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+
+      <ng-container *ngFor="let slide of slides; let i = index">
+        <button class="btn btn-sm" [class.btn-brand]="activeIndex === i"
+          [class.btn-outline-secondary]="activeIndex !== i" (click)="carousel?.select('task-' + (i + 1))">
+          {{ i + 1 }}
+        </button>
+      </ng-container>
+
+      <button class="btn btn-sm btn-light border" (click)="carousel?.next()">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
   </div>
 
-  <div class="row g-4">
+  <!-- Task Carousel -->
+  <ngb-carousel #carousel [interval]="0" [showNavigationIndicators]="false" [showNavigationArrows]="false"
+    (slide)="onSlide($event)">
 
-    <div class="col-lg-4 col-md-6">
-      <div class="card h-100 shadow-sm border-0">
-        <div class="card-header bg-white border-bottom-0 pt-3 pb-2">
-          <h5 class="card-title text-secondary mb-0 fw-bold">
-            <i class="bi bi-clipboard-data-fill me-2 brand-color"></i>Task 1
-          </h5>
-        </div>
-        <div class="card-body bg-white rounded-bottom">
-          <ul class="mb-0 text-muted small">
-            <li class="mb-2">Create a movie array of objects (Name, Desc, Rate, Shows).</li>
-            <li class="mb-2">Create dynamic UI by iterating the array.</li>
-            <li class="mb-2">On click of a Movie, highlight the card and show available times below.</li>
-            <li class="mb-2">User should be able to select a show time.</li>
-            <li><strong class="text-dark">Logic:</strong> If only a single show exists, make it default selected.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
+    <!-- Task-1: Box Office Booking -->
+    <ng-template ngbSlide id="task-1">
+      <div class="row g-4">
 
-    <div class="col-lg-4 col-md-6">
-      <div class="card h-100 shadow-sm card-live-solution">
-        <div class="card-header card-header-live-solution pt-3 pb-2">
-          <h5 class="card-title mb-0">
-            <i class="bi bi-play-circle me-2"></i>Live Solution
-          </h5>
-        </div>
-        <div class="card-body d-flex flex-column">
-
-          <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
-            <h6 class="fw-bold text-dark mb-0">Now Showing</h6>
-            <span class="badge bg-danger rounded-pill"><i class="bi bi-fire me-1"></i>Trending</span>
-          </div>
-
-          <div class="row g-2 mb-3">
-            @for (movie of movies; track movie.movieName) {
-            <div class="col-6">
-              <div class="card cursor-pointer transition-all h-100 border-0 shadow-sm"
-                [class.border]="selectedMovie === movie" [class.border-primary]="selectedMovie === movie"
-                [class.border-2]="selectedMovie === movie" [class.bg-primary-subtle]="selectedMovie === movie"
-                (click)="selectMovie(movie)">
-
-                <div class="bg-dark bg-opacity-10 text-center py-3 rounded-top">
-                  <i class="bi bi-film fs-3" [class.text-primary]="selectedMovie === movie"
-                    [class.text-secondary]="selectedMovie !== movie"></i>
-                </div>
-
-                <div class="card-body p-2 d-flex flex-column h-100 bg-white rounded-bottom">
-                  <h6 class="fw-bold small mb-1 text-truncate text-dark">{{ movie.movieName }}</h6>
-
-                  <div class="mb-1 text-warning" style="font-size: 0.7rem;">
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-half"></i>
-                  </div>
-
-                  <p class="text-muted mb-2 flex-grow-1"
-                    style="font-size: 0.7rem; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
-                    {{ movie.desc }}
-                  </p>
-                  <div class="mt-auto border-top pt-2 d-flex justify-content-between align-items-center">
-                    <span class="fw-bold text-success small">₹{{ movie.rate }}</span>
-                    <i class="bi bi-check-circle-fill text-primary" *ngIf="selectedMovie === movie"></i>
-                  </div>
-                </div>
+        <!-- Task Description Card -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-header bg-white border-bottom-0 pt-3 pb-2">
+              <h5 class="card-title text-secondary mb-0 fw-bold">
+                <i class="bi bi-clipboard-data-fill me-2 brand-color"></i>Task 1
+              </h5>
+            </div>
+            <div class="card-body bg-white rounded-bottom">
+              <div class="text-start pb-2">
+                <h5 class="fw-bold text-dark">Ticket Selection & Shows</h5>
               </div>
-            </div>
-            }
-          </div>
-
-          @if (selectedMovie) {
-          <div class="mb-3 animate__animated animate__fadeIn">
-            <h6 class="small fw-bold text-muted mb-2"><i class="bi bi-calendar-event me-1"></i> Select Showtime</h6>
-            <div class="d-flex flex-wrap gap-2">
-              @for (show of selectedMovie.shows; track show) {
-              <button class="btn btn-sm transition-all rounded-pill px-3 shadow-sm"
-                [class.btn-dark]="selectedShow === show" [class.btn-outline-secondary]="selectedShow !== show"
-                [class.bg-white]="selectedShow !== show" (click)="selectShow(show)">
-                <i class="bi bi-clock-fill me-1" [class.text-warning]="selectedShow === show"></i> {{ show }}
-              </button>
-              }
+              <ul class="mb-0 text-muted small">
+                <li class="mb-2">Create a movie array of objects (Name, Desc, Rate, Shows).</li>
+                <li class="mb-2">Create dynamic UI by iterating the array.</li>
+                <li class="mb-2">On click of a Movie, highlight the card and show available times below.</li>
+                <li class="mb-2">User should be able to select a show time.</li>
+                <li><strong class="text-dark">Logic:</strong> If only a single show exists, make it default selected.</li>
+              </ul>
             </div>
           </div>
-          }
+        </div>
 
-          <div class="mt-auto">
-            @if (selectedMovie && selectedShow) {
-            <div class="p-3 bg-white border rounded-4 transition-all shadow-sm">
+        <!-- Live Solution Card -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm card-live-solution">
+            <div class="card-header card-header-live-solution pt-3 pb-2">
+              <h5 class="card-title mb-0 fw-bold">
+                <i class="bi bi-play-circle me-2"></i>Live Solution
+              </h5>
+            </div>
+            <div class="card-body d-flex flex-column bg-white rounded-bottom p-4">
 
-              <div class="row g-2 align-items-center mb-3">
-                <div class="col-8">
-                  <div class="input-group input-group-sm shadow-sm">
-                    <span class="input-group-text bg-light border-end-0"><i
-                        class="bi bi-ticket-perforated text-primary"></i></span>
-                    <input type="number" class="form-control border-start-0 ps-0" placeholder="Number of Tickets"
-                      [(ngModel)]="ticketCount">
+              <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
+                <h6 class="fw-bold text-dark mb-0">Now Showing</h6>
+                <span class="badge bg-danger rounded-pill"><i class="bi bi-fire me-1"></i>Trending</span>
+              </div>
+
+              <div class="row g-2 mb-3">
+                @for (movie of movies; track movie.movieName) {
+                <div class="col-6">
+                  <div class="card cursor-pointer transition-all h-100 border-0 shadow-sm"
+                    [class.border]="selectedMovie === movie" [class.border-primary]="selectedMovie === movie"
+                    [class.border-2]="selectedMovie === movie" [class.bg-primary-subtle]="selectedMovie === movie"
+                    (click)="selectMovie(movie)">
+
+                    <div class="bg-dark bg-opacity-10 text-center py-3 rounded-top">
+                      <i class="bi bi-film fs-3" [class.text-primary]="selectedMovie === movie"
+                        [class.text-secondary]="selectedMovie !== movie"></i>
+                    </div>
+
+                    <div class="card-body p-2 d-flex flex-column h-100 bg-white rounded-bottom">
+                      <h6 class="fw-bold small mb-1 text-truncate text-dark">{{ movie.movieName }}</h6>
+
+                      <div class="mb-1 text-warning" style="font-size: 0.7rem;">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-half"></i>
+                      </div>
+
+                      <p class="text-muted mb-2 flex-grow-1"
+                        style="font-size: 0.7rem; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                        {{ movie.desc }}
+                      </p>
+                      <div class="mt-auto border-top pt-2 d-flex justify-content-between align-items-center">
+                        <span class="fw-bold text-success small">₹{{ movie.rate }}</span>
+                        @if (selectedMovie === movie) {
+                          <i class="bi bi-check-circle-fill text-primary"></i>
+                        }
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div class="col-4">
-                  <button class="btn btn-primary btn-sm w-100 fw-bold shadow-sm rounded-3" (click)="bookTicket()"
-                    [disabled]="!ticketCount || ticketCount <= 0">
-                    Book Now
+                }
+              </div>
+
+              @if (selectedMovie) {
+              <div class="mb-3 animate__animated animate__fadeIn">
+                <h6 class="small fw-bold text-muted mb-2"><i class="bi bi-calendar-event me-1"></i> Select Showtime</h6>
+                <div class="d-flex flex-wrap gap-2">
+                  @for (show of selectedMovie.shows; track show) {
+                  <button class="btn btn-sm transition-all rounded-pill px-3 shadow-sm"
+                    [class.btn-dark]="selectedShow === show" [class.btn-outline-secondary]="selectedShow !== show"
+                    [class.bg-white]="selectedShow !== show" (click)="selectShow(show)">
+                    <i class="bi bi-clock-fill me-1" [class.text-warning]="selectedShow === show"></i> {{ show }}
                   </button>
-                </div>
-              </div>
-
-              @if (isBooked) {
-              <div
-                class="p-2 bg-success bg-opacity-10 border border-success border-opacity-25 rounded-3 small text-dark d-flex gap-2 align-items-start">
-                <i class="bi bi-check-circle-fill text-success fs-5 mt-1"></i>
-                <div>
-                  <div class="mb-1"><strong>{{ selectedMovie.movieName }}</strong> • {{ selectedShow }}</div>
-                  <div>{{ ticketCount }} tickets confirmed. Total: <strong class="text-success fs-6">₹{{ totalCost
-                      }}</strong></div>
+                  }
                 </div>
               </div>
               }
 
+              <div class="mt-auto">
+                @if (selectedMovie && selectedShow) {
+                <div class="p-3 bg-white border rounded-4 transition-all shadow-sm">
+
+                  <div class="row g-2 align-items-center mb-3">
+                    <div class="col-8">
+                      <div class="input-group input-group-sm shadow-sm">
+                        <span class="input-group-text bg-light border-end-0"><i
+                            class="bi bi-ticket-perforated text-primary"></i></span>
+                        <input type="number" class="form-control border-start-0 ps-0" placeholder="Number of Tickets"
+                          [(ngModel)]="ticketCount">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <button class="btn btn-primary btn-sm w-100 fw-bold shadow-sm rounded-3" (click)="bookTicket()"
+                        [disabled]="!ticketCount || ticketCount <= 0">
+                        Book Now
+                      </button>
+                    </div>
+                  </div>
+
+                  @if (isBooked) {
+                  <div
+                    class="p-2 bg-success bg-opacity-10 border border-success border-opacity-25 rounded-3 small text-dark d-flex gap-2 align-items-start">
+                    <i class="bi bi-check-circle-fill text-success fs-5 mt-1"></i>
+                    <div>
+                      <div class="mb-1"><strong>{{ selectedMovie.movieName }}</strong> • {{ selectedShow }}</div>
+                      <div>{{ ticketCount }} tickets confirmed. Total: <strong class="text-success fs-6">₹{{ totalCost
+                          }}</strong></div>
+                    </div>
+                  </div>
+                  }
+
+                </div>
+                }
+              </div>
+
             </div>
-            }
           </div>
-
         </div>
-      </div>
-    </div>
 
-    <div class="col-lg-4 col-md-12">
-      <div class="card h-100 shadow-sm border-0 bg-dark text-light">
-        <div
-          class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
-          <h5 class="card-title text-light mb-0 fw-bold">
-            <i class="bi bi-code-slash me-2 text-warning"></i>Code Hint
-          </h5>
-        </div>
-        <div class="card-body">
-          <div class="mb-3">
-            <p class="small text-secondary fw-bold mb-2 tracking-wider"><i class="bi bi-cpu me-1"></i> Auto-Select Logic
-            </p>
-            <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary shadow-sm"><code>selectMovie(movie: any) &#123;
+        <!-- Code Hint Card -->
+        <div class="col-lg-4 col-md-12">
+          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
+            <div
+              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
+              <h5 class="card-title text-light mb-0 fw-bold">
+                <i class="bi bi-code-slash me-2 text-warning"></i>Code Hint
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="mb-3">
+                <p class="small text-secondary fw-bold mb-2 tracking-wider"><i class="bi bi-cpu me-1"></i> Auto-Select Logic
+                </p>
+                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary shadow-sm"><code>selectMovie(movie: any) &#123;
   this.selectedMovie = movie;
   
   // If only 1 show, auto-select it
@@ -161,20 +194,167 @@
     this.selectedShow = '';
   &#125;
 &#125;</code></pre>
-          </div>
-          <div>
-            <p class="small text-warning fw-bold mb-2 tracking-wider"><i class="bi bi-calculator me-1"></i> Dynamic
-              Calculation</p>
-            <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary shadow-sm"><code>bookTicket() &#123;
+              </div>
+              <div>
+                <p class="small text-warning fw-bold mb-2 tracking-wider"><i class="bi bi-calculator me-1"></i> Dynamic
+                  Calculation</p>
+                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary shadow-sm"><code>bookTicket() &#123;
   if (this.ticketCount) &#123;
     this.totalCost = 
       this.selectedMovie.rate * this.ticketCount;
   &#125;
 &#125;</code></pre>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
 
-  </div>
+      </div>
+    </ng-template>
+
+    <!-- Task-2: Movie Seat Booking -->
+    <ng-template ngbSlide id="task-2">
+      <div class="row g-4">
+
+        <!-- Task Description Card -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-header bg-white border-bottom-0 pt-3 pb-2">
+              <h5 class="card-title text-secondary mb-0 fw-bold">
+                <i class="bi bi-clipboard-data-fill me-2 brand-color"></i>Task 2
+              </h5>
+            </div>
+            <div class="card-body bg-white rounded-bottom">
+              <div class="text-start pb-2">
+                <h5 class="fw-bold text-dark">Movie Seat Booking</h5>
+              </div>
+              <ul class="mb-0 text-muted small">
+                <li class="mb-2">Create dropdown list of movies with ticket prices.</li>
+                <li class="mb-2">Render theater seating screen with dynamic seat classes (N/A, Selected, Occupied).</li>
+                <li class="mb-2">Clicking an available seat selects it. Clicking a selected seat deselects it.</li>
+                <li class="mb-2">Show dynamic real-time totals of selected seats and cost.</li>
+                <li>Add an <strong>Attempt</strong> button to book selected seats and mark them as occupied.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Solution Card -->
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm card-live-solution">
+            <div class="card-header card-header-live-solution pt-3 pb-2">
+              <h5 class="card-title mb-0 fw-bold">
+                <i class="bi bi-play-circle me-2"></i>Live Solution
+              </h5>
+            </div>
+            <div class="card-body bg-white rounded-bottom p-4 d-flex flex-column">
+
+              <!-- Movie selector -->
+              <div class="movie-container">
+                <label for="movie">Pick a movie:</label>
+                <select id="movie" class="form-select border-2 shadow-xs transition-all" [(ngModel)]="selectedSeatMovie">
+                  @for (movie of seatMovies; track movie.name) {
+                    <option [ngValue]="movie">{{ movie.name }} (${{ movie.price }})</option>
+                  }
+                </select>
+              </div>
+
+              <!-- Showcase status keys -->
+              <ul class="showcase">
+                <li>
+                  <div class="seat"></div>
+                  <small>N/A</small>
+                </li>
+                <li>
+                  <div class="seat selected"></div>
+                  <small>Selected</small>
+                </li>
+                <li>
+                  <div class="seat occupied"></div>
+                  <small>Occupied</small>
+                </li>
+              </ul>
+
+              <!-- Theater Seat Layout -->
+              <div class="border rounded-3 p-3 bg-light d-flex flex-column align-items-center mb-3">
+                <div class="screen-wrapper">
+                  <div class="screen"></div>
+                </div>
+
+                <div class="d-flex flex-column gap-1 mb-2">
+                  @for (row of seatRows; track row; let rowIdx = $index) {
+                    <div class="movie-row">
+                      @for (seat of row; track seat; let colIdx = $index) {
+                        <div class="seat" 
+                          [class.selected]="seat.status === 'selected'"
+                          [class.occupied]="seat.status === 'occupied'"
+                          (click)="toggleSeat(rowIdx, colIdx)">
+                        </div>
+                      }
+                    </div>
+                  }
+                </div>
+              </div>
+
+              <!-- Real-time dynamic stats display -->
+              <p class="text-booking-summary">
+                You have selected <span id="count">{{ selectedSeatsCount }}</span> seats for a price of $<span id="total">{{ totalSeatsPrice }}</span>
+              </p>
+
+              <!-- Success Alert Banner -->
+              @if (isSeatBooked) {
+                <div class="p-2 bg-success bg-opacity-10 border border-success border-opacity-25 rounded-3 small text-dark d-flex gap-2 align-items-start mb-3 animate__animated animate__fadeIn">
+                  <i class="bi bi-check-circle-fill text-success fs-5 mt-0.5"></i>
+                  <div>Successfully booked <strong>{{ bookedSeatsCount }}</strong> seats for <strong>${{ bookedSeatsPrice }}</strong>!</div>
+                </div>
+              }
+
+              <!-- Booking Trigger Button -->
+              <div class="attemptbtn mt-auto">
+                <button id="btn1" class="btn btn-attempt shadow-xs" (click)="bookSeats()" [disabled]="selectedSeatsCount === 0">
+                  Attempt
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Hint Card -->
+        <div class="col-lg-4 col-md-12">
+          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
+            <div
+              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
+              <h5 class="card-title text-light mb-0 fw-bold">
+                <i class="bi bi-code-slash me-2 text-warning"></i>Code Hint
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="mb-3">
+                <p class="small text-secondary fw-bold mb-2 tracking-wider"><i class="bi bi-cpu me-1"></i> Interactive Selection (TS)</p>
+                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary shadow-sm"><code>toggleSeat(rowIdx: number, colIdx: number) &#123;
+  const seat = this.seatRows[rowIdx][colIdx];
+  if (seat.status === 'available') &#123;
+    seat.status = 'selected';
+  &#125; else if (seat.status === 'selected') &#123;
+    seat.status = 'available';
+  &#125;
+&#125;</code></pre>
+              </div>
+              <div>
+                <p class="small text-warning fw-bold mb-2 tracking-wider"><i class="bi bi-calculator me-1"></i> Computed Summary</p>
+                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary shadow-sm"><code>get selectedSeatsCount(): number &#123;
+  return this.seatRows.flat()
+    .filter(s => s.status === 'selected').length;
+&#125;</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </ng-template>
+
+  </ngb-carousel>
+
 </div>

@@ -12,7 +12,6 @@ import { FleetComponent } from '../components/fleet/fleet.component';
 import { HospitalityComponent } from '../components/hospitality/hospitality.component';
 import { CartComponent } from '../components/cart/cart.component';
 import { EnrollmentComponent } from '../components/enrollment/enrollment.component';
-import { SeatAllocatorComponent } from '../components/seat-allocator/seat-allocator.component';
 import { ComputeComponent } from '../components/compute/compute.component';
 import { TasksComponent } from '../components/tasks/tasks.component';
 import { KycComponent } from '../components/kyc/kyc.component';
@@ -80,11 +79,7 @@ export const routes: Routes = [
         component: EnrollmentComponent,
         title: 'Student Registration Form',
     },
-    {
-        path: 'seat-allocator',
-        component: SeatAllocatorComponent,
-        title: 'Spatial Seat Allocator',
-    },
+
 
     // --- Logical Scenarios: Architecture & State ---
     {
@@ -100,12 +95,12 @@ export const routes: Routes = [
     {
         path: 'kyc',
         component: KycComponent,
-        title: 'KYC & Biometric Vault',
+        title: 'KYC',
     },
     {
         path: 'tabs',
         component: TabsComponent,
-        title: 'Stateful Fluid Tabs',
+        title: 'Dynamic Tabs',
     },
     {
         path: 'data-selector',

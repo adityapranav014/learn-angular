@@ -199,8 +199,8 @@
                     <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
                         routerLink="/grocery-cart" routerLinkActive="active-sub bg-light fw-bold" #rla9="routerLinkActive"
                         [appScrollActive]="rla9.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-cart4]="!rla9.isActive"
-                            [class.bi-cart4-fill]="rla9.isActive" [class.text-primary]="rla9.isActive"></i>
+                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-cart]="!rla9.isActive"
+                            [class.bi-cart-fill]="rla9.isActive" [class.text-primary]="rla9.isActive"></i>
                         <span>Smart Grocery Cart</span>
                     </a>
                 </li>
@@ -216,16 +216,6 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
-                        routerLink="/seat-allocator" routerLinkActive="active-sub bg-light fw-bold"
-                        #rla11="routerLinkActive" [appScrollActive]="rla11.isActive && isOffcanvasReady()"
-                        (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-grid]="!rla11.isActive"
-                            [class.bi-grid-fill]="rla11.isActive" [class.text-primary]="rla11.isActive"></i>
-                        <span>Spatial Seat Allocator</span>
-                    </a>
-                </li>
             </ul>
 
             <h6 class="docs-section-title text-magenta mb-3 small fw-bold text-uppercase">Architecture & State</h6>
@@ -257,7 +247,7 @@
                         [appScrollActive]="rla14.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
                         <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-shield-lock]="!rla14.isActive"
                             [class.bi-shield-lock-fill]="rla14.isActive" [class.text-primary]="rla14.isActive"></i>
-                        <span>KYC & Biometric Vault</span>
+                        <span>KYC</span>
                     </a>
                 </li>
 
@@ -265,9 +255,9 @@
                     <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
                         routerLink="/tabs" routerLinkActive="active-sub bg-light fw-bold" #rla15="routerLinkActive"
                         [appScrollActive]="rla15.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-folder]="!rla15.isActive"
-                            [class.bi-folder-fill]="rla15.isActive" [class.text-primary]="rla15.isActive"></i>
-                        <span>Stateful Fluid Tabs</span>
+                        <i class="bi me-3 fs-5 opacity-75 transition-all bi-segmented-nav"
+                            [class.text-primary]="rla15.isActive"></i>
+                        <span>Dynamic Tabs</span>
                     </a>
                 </li>
 

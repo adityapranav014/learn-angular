@@ -1,15 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NgbCarousel, NgbSlide, NgbSlideEvent } from '@ng-bootstrap/ng-bootstrap/carousel';
 
 @Component({
   selector: 'app-box-office',
   templateUrl: './box-office.component.html',
   styleUrls: ['./box-office.component.css'],
-  imports: [FormsModule]
+  imports: [FormsModule, CommonModule, NgbCarousel, NgbSlide]
 })
-export class BoxOfficeComponent {
+export class BoxOfficeComponent implements OnInit {
 
-  // --- Task Booking State ---
+  // --- Carousel / Pagination State ---
+  activeIndex = 0;
+  slides = [1, 2];
+
+  @ViewChild('carousel')
+  carousel!: NgbCarousel;
+
+  onSlide(event: NgbSlideEvent) {
+    this.activeIndex = parseInt(event.current.replace('task-', '')) - 1;
+  }
+
+  // --- Task 1: Box Office Booking State ---
   movies = [
     {
       movieName: 'Rocketry',
@@ -43,7 +56,25 @@ export class BoxOfficeComponent {
   totalCost: number = 0;
   isBooked: boolean = false;
 
-  // --- Task Booking Methods ---
+  // --- Task 2: Movie Seat Booking State ---
+  seatMovies = [
+    { name: 'Avengers: Endgame', price: 10 },
+    { name: 'Joker', price: 12 },
+    { name: 'Toy Story 4', price: 8 },
+    { name: 'The Lion King', price: 9 }
+  ];
+
+  selectedSeatMovie = this.seatMovies[0];
+  seatRows: { status: 'available' | 'selected' | 'occupied' }[][] = [];
+  isSeatBooked = false;
+  bookedSeatsCount = 0;
+  bookedSeatsPrice = 0;
+
+  ngOnInit() {
+    this.initializeSeats();
+  }
+
+  // --- Task 1 Methods ---
   selectMovie(movie: any) {
     this.selectedMovie = movie;
     this.isBooked = false; // Reset booking status on new selection
@@ -70,4 +101,63 @@ export class BoxOfficeComponent {
     }
   }
 
+  // --- Task 2 Methods ---
+  initializeSeats() {
+    const layout = [
+      ['available', 'available', 'available', 'available', 'available', 'available', 'occupied', 'occupied'],
+      ['available', 'available', 'available', 'available', 'available', 'available', 'occupied', 'occupied'],
+      ['available', 'available', 'selected', 'selected', 'selected', 'available', 'available', 'available'],
+      ['available', 'available', 'available', 'occupied', 'occupied', 'available', 'available', 'available'],
+      ['available', 'available', 'available', 'available', 'occupied', 'occupied', 'occupied', 'available']
+    ];
+    this.seatRows = layout.map(row => 
+      row.map(status => ({ status: status as 'available' | 'selected' | 'occupied' }))
+    );
+    this.isSeatBooked = false;
+  }
+
+  toggleSeat(rowIndex: number, colIndex: number) {
+    const seat = this.seatRows[rowIndex][colIndex];
+    if (seat.status === 'available') {
+      seat.status = 'selected';
+      this.isSeatBooked = false;
+    } else if (seat.status === 'selected') {
+      seat.status = 'available';
+      this.isSeatBooked = false;
+    }
+  }
+
+  get selectedSeatsCount(): number {
+    let count = 0;
+    for (const row of this.seatRows) {
+      for (const seat of row) {
+        if (seat.status === 'selected') {
+          count++;
+        }
+      }
+    }
+    return count;
+  }
+
+  get totalSeatsPrice(): number {
+    return this.selectedSeatsCount * this.selectedSeatMovie.price;
+  }
+
+  bookSeats() {
+    const count = this.selectedSeatsCount;
+    if (count > 0) {
+      this.bookedSeatsCount = count;
+      this.bookedSeatsPrice = this.totalSeatsPrice;
+      this.isSeatBooked = true;
+
+      // Mark selected seats as occupied
+      for (const row of this.seatRows) {
+        for (const seat of row) {
+          if (seat.status === 'selected') {
+            seat.status = 'occupied';
+          }
+        }
+      }
+    }
+  }
 }

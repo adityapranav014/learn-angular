@@ -1,0 +1,133 @@
+.nav-tabs {
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.nav-tabs .nav-item {
+  margin-bottom: -2px;
+}
+
+.tab-pane {
+  border-color: #e2e8f0 !important;
+}
+
+.nav-tabs .nav-link {
+  color: #64748b;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  transition: all 0.25s ease;
+  border-radius: 0;
+  outline: none;
+}
+
+.nav-tabs .nav-link:hover {
+  color: #e02ccb;
+  border-bottom-color: rgba(246, 55, 227, 0.25);
+  background: transparent;
+}
+
+.nav-tabs .nav-link.active {
+  color: #F637E3;
+  border-bottom: 2px solid #F637E3;
+  background: transparent;
+}
+
+/* Custom Focus Highlight for Input Fields */
+.input-group {
+  border: 1.5px solid #e2e8f0;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease-in-out;
+  overflow: hidden;
+  height: 48px;
+}
+
+.input-group:focus-within {
+  border-color: #F637E3 !important;
+  box-shadow: 0 0 0 3px rgba(246, 55, 227, 0.15);
+}
+
+.input-group-text {
+  background-color: #f8fafc !important;
+  border: none !important;
+  color: #64748b !important;
+  padding-left: 1rem;
+  padding-right: 0.75rem;
+}
+
+.input-group .form-control {
+  border: none !important;
+  padding-left: 0.25rem;
+}
+
+.input-group .form-control:focus {
+  box-shadow: none !important;
+}
+
+/* Range Slider Styling */
+.form-range.range-magenta::-webkit-slider-runnable-track {
+  background: #f1f5f9;
+  height: 6px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+.form-range.range-magenta::-webkit-slider-thumb {
+  background: #F637E3;
+  border: 2px solid #ffffff;
+  width: 20px;
+  height: 20px;
+  margin-top: -8px;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(246, 55, 227, 0.35);
+  cursor: pointer;
+  -webkit-appearance: none;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.form-range.range-magenta::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  background-color: #e02ccb;
+  box-shadow: 0 3px 8px rgba(246, 55, 227, 0.55);
+}
+
+/* Hover effects for cards & database lists */
+.hover-shadow-xs {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-shadow-xs:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.05);
+  border-color: rgba(246, 55, 227, 0.25) !important;
+  background-color: #ffffff !important;
+}
+
+/* Avatar dynamic animations */
+.avatar-relation {
+  transition: transform 0.3s ease;
+}
+
+.hover-shadow-xs:hover .avatar-relation {
+  transform: scale(1.08) rotate(3deg);
+}
+
+/* Standard Attempt button styling */
+.btn-attempt {
+  background-color: #F637E3 !important;
+  border-color: #F637E3 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 10px rgba(246, 55, 227, 0.2) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  border-radius: 0.75rem !important;
+}
+
+.btn-attempt:hover {
+  background-color: #e02ccb !important;
+  border-color: #e02ccb !important;
+  box-shadow: 0 6px 16px rgba(246, 55, 227, 0.35) !important;
+  transform: translateY(-2px);
+}
+
+.btn-attempt:active {
+  transform: translateY(0);
+}
