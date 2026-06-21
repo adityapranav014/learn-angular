@@ -110,12 +110,14 @@
               </h5>
             </div>
             <div class="card-body bg-white rounded-bottom">
-              <ul class="mb-0 text-muted">
-                <li class="mb-2">On "Add City" click, input text should append to the dropdown options.</li>
-                <li class="mb-2">After adding a city, the input field must be cleared.</li>
-                <li class="mb-2">Display the real-time total count of added cities beside the dropdown.</li>
-                <li>If the city is already present in the options list, display an error message.</li>
-              </ul>
+              <div class="text-start pb-2">
+  <h5 class="fw-bold text-dark">Dynamic City Selector</h5>
+</div>
+<ul class="mb-0 text-muted small">
+  <li class="mb-2"><strong>Dynamic Array Operations</strong>: Manage an array of strings in component state.</li>
+  <li class="mb-2"><strong>Input Appends</strong>: Capture text inputs, append values to the array on button click, clear the text field, and validate uniqueness to prevent duplicates.</li>
+  <li><strong>State Counters</strong>: Render the array length property directly in the view to track active totals.</li>
+</ul>
             </div>
           </div>
         </div>
@@ -218,11 +220,13 @@
               </h5>
             </div>
             <div class="card-body bg-white rounded-bottom">
-              <ul class="mb-0 text-muted">
-                <li class="mb-2">Create an Array of strings with 5 Languages.</li>
-                <li class="mb-2">Use the new <code>&#64;for</code> loop to render the languages as buttons.</li>
-                <li>On click, mark the button as selected and change its color to green.</li>
-              </ul>
+              <div class="text-start pb-2">
+  <h5 class="fw-bold text-dark">Language Button Highlights</h5>
+</div>
+<ul class="mb-0 text-muted small">
+  <li class="mb-2"><strong>Array Iteration</strong>: Loop a static array of languages using <code>&#64;for</code> to render action buttons.</li>
+  <li><strong>Active Selection Highlighting</strong>: Store the active language index in state and bind class selectors conditionally to highlight the clicked button.</li>
+</ul>
             </div>
           </div>
         </div>
@@ -304,11 +308,13 @@
               </h5>
             </div>
             <div class="card-body bg-white rounded-bottom">
-              <ul class="mb-0 text-muted">
-                <li class="mb-2">On "Print" button click, show the multiplication table of the entered number in an HTML
-                  table.</li>
-                <li>If the textbox is empty, show an alert telling the user to enter a value.</li>
-              </ul>
+              <div class="text-start pb-2">
+  <h5 class="fw-bold text-dark">Multiplication Table Grid</h5>
+</div>
+<ul class="mb-0 text-muted small">
+  <li class="mb-2"><strong>Input Validation</strong>: Ensure the number textbox is not empty, showing alerts if invalid.</li>
+  <li><strong>Dynamic Matrix Rendering</strong>: Generate a math sequence array dynamically and loop through it using <code>&#64;for</code> to render a multiplication grid.</li>
+</ul>
             </div>
           </div>
         </div>
@@ -422,12 +428,12 @@
               </h5>
             </div>
             <div class="card-body bg-white rounded-bottom">
-              <ul class="mb-0 text-muted">
-                <li class="mb-2">Create a single City Array in TypeScript.</li>
-                <li>Bind that same array to both the "From Station" and "To Station" dropdowns using the modern
-                  <code>&#64;for</code> loop.
-                </li>
-              </ul>
+              <div class="text-start pb-2">
+  <h5 class="fw-bold text-dark">Shared Station Dropdowns</h5>
+</div>
+<ul class="mb-0 text-muted small">
+  <li class="mb-2"><strong>Dual Select Bindings</strong>: Loop a single city list array using <code>&#64;for</code> to populate both 'From' and 'To' dropdown selectors.</li>
+</ul>
             </div>
           </div>
         </div>
@@ -515,14 +521,13 @@
               </h5>
             </div>
             <div class="card-body bg-white rounded-bottom">
-              <ul class="mb-0 text-muted">
-                <li class="mb-2">Create an array of objects with fields URL and Text and display in a table.</li>
-                <li class="mb-2">Show Sr No in the 1st <code>&lt;td&gt;</code> by using the index property.</li>
-                <li class="mb-2 text-success fw-medium">Add success background to the 1st record using the first
-                  property.
-                </li>
-                <li class="text-danger fw-medium">Add danger background to the last record using the last property.</li>
-              </ul>
+              <div class="text-start pb-2">
+  <h5 class="fw-bold text-dark">Student Row Highlights</h5>
+</div>
+<ul class="mb-0 text-muted small">
+  <li class="mb-2"><strong>Loop Property Access</strong>: Render list records in a table using <code>&#64;for</code>.</li>
+  <li><strong>Row Highlights</strong>: Access <code>$index</code> to display item counts, and apply contextual bootstrap styling using <code>$first</code> and <code>$last</code> loop properties.</li>
+</ul>
             </div>
           </div>
         </div>
@@ -625,13 +630,13 @@
               </h5>
             </div>
             <div class="card-body bg-white rounded-bottom">
-              <ul class="mb-0 text-muted">
-                <li class="mb-2">Create City and State Arrays and bind them to Dropdowns.</li>
-                <li class="mb-2">City fields: <code>cityId, cityName</code> & State fields:
-                  <code>stateId, stateName</code>.
-                </li>
-                <li>On "Get Data" button click, show selected city and state ID in a span tag.</li>
-              </ul>
+              <div class="text-start pb-2">
+  <h5 class="fw-bold text-dark">Key-Value Dropdown Bindings</h5>
+</div>
+<ul class="mb-0 text-muted small">
+  <li class="mb-2"><strong>Key-Value Selects</strong>: Bind select options to city/state object keys.</li>
+  <li><strong>Dynamic Interpolation</strong>: Display selected city and state IDs dynamically upon clicking the submit button.</li>
+</ul>
             </div>
           </div>
         </div>

@@ -21,14 +21,15 @@
           </h5>
         </div>
         <div class="card-body bg-white rounded-bottom">
-          <ul class="mb-0 text-muted">
-            <li class="mb-2">Create City Array and bind that to Dropdowns.</li>
-            <li class="mb-2"><strong>Search:</strong> Check if Journey details are provided.</li>
-            <li class="mb-2"><strong>Search:</strong> If "From" & "To" City are same, show an Alert.</li>
-            <li class="mb-2"><strong>Exchange:</strong> Swap "From" & "To" Stations.</li>
-            <li class="mb-2"><strong>Search:</strong> Show Selected Details in a below box.</li>
-            <li><strong>Clear:</strong> Clear Booking Form & Hide Journey Details Info.</li>
-          </ul>
+          <div class="text-start pb-2">
+  <h5 class="fw-bold text-dark">Train Booking Form</h5>
+</div>
+<ul class="mb-0 text-muted small">
+  <li class="mb-2"><strong>Booking Panel Controller</strong>: Loop city dropdowns using <code>&#64;for</code>.</li>
+  <li class="mb-2"><strong>Validation Rules</strong>: Verify station selections and dates, and trigger warning alerts if origin and destination stations match.</li>
+  <li class="mb-2"><strong>Station Exchange</strong>: Swap origin and destination values in state on click of the exchange button.</li>
+  <li><strong>State Purge</strong>: Reset all dropdown properties and hide journey details upon clicking clear.</li>
+</ul>
         </div>
       </div>
     </div>

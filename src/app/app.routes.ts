@@ -71,7 +71,7 @@ export const routes: Routes = [
     {
         path: 'grocery-cart',
         component: CartComponent,
-        title: 'Smart Grocery Cart',
+        title: 'Grocery List Cart',
     },
     {
         path: 'student-registration',
@@ -94,18 +94,18 @@ export const routes: Routes = [
     {
         path: 'kyc',
         component: KycComponent,
-        title: 'KYC',
+        title: 'KYC & Biometric Vault',
     },
     {
         path: 'tabs',
         component: TabsComponent,
-        title: 'Dynamic Tabs',
+        title: 'Dynamic Tab Selection',
     },
 
     {
         path: 'polymorphic',
         component: PolymorphicComponent,
-        title: 'Dynamic UI Selection',
+        title: 'Polymorphic Interfaces',
     },
 
     // --- Fallback Route ---

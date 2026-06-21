@@ -42,7 +42,7 @@
                         <i class="bi me-3 fs-5 text-muted transition-all" [class.bi-layers]="!isCoreConceptActive()"
                             [class.bi-layers-fill]="isCoreConceptActive()"
                             [class.text-primary]="isCoreConceptActive()"></i>
-                        <span [class.fw-bold]="isCoreConceptActive()">Core Concepts</span>
+                        <span [class.fw-bold]="isCoreConceptActive()">Core Directives &amp; Syntax</span>
                     </div>
                     <i class="bi bi-chevron-right fs-6 text-muted opacity-75"></i>
                 </a>
@@ -56,7 +56,7 @@
                         <i class="bi me-3 fs-5 text-muted transition-all" [class.bi-cpu]="!isLogicalScenariosActive()"
                             [class.bi-cpu-fill]="isLogicalScenariosActive()"
                             [class.text-primary]="isLogicalScenariosActive()"></i>
-                        <span [class.fw-bold]="isLogicalScenariosActive()">Logical Scenarios</span>
+                        <span [class.fw-bold]="isLogicalScenariosActive()">Logical Application Labs</span>
                     </div>
                     <i class="bi bi-chevron-right fs-6 text-muted opacity-75"></i>
                 </a>
@@ -137,17 +137,27 @@
     <div class="offcanvas-body px-4 py-4">
         <div class="docs-sub-menu-track">
 
-            <h6 class="docs-section-title text-magenta mb-3 small fw-bold text-uppercase">Commerce & Logistics</h6>
+            <h6 class="docs-section-title text-magenta mb-3 small fw-bold text-uppercase">1. Data Binding &amp; Forms</h6>
 
             <ul class="nav flex-column list-unstyled gap-2 m-0 p-0 mb-4">
                 <li class="nav-item">
                     <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
-                        routerLink="/subscription" routerLinkActive="active-sub bg-light fw-bold"
-                        #rla4="routerLinkActive" [appScrollActive]="rla4.isActive && isOffcanvasReady()"
+                        routerLink="/calculator" routerLinkActive="active-sub bg-light fw-bold" #rla12="routerLinkActive"
+                        [appScrollActive]="rla12.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
+                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-calculator]="!rla12.isActive"
+                            [class.bi-calculator-fill]="rla12.isActive" [class.text-primary]="rla12.isActive"></i>
+                        <span>Calculator</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
+                        routerLink="/student-registration" routerLinkActive="active-sub bg-light fw-bold"
+                        #rla10="routerLinkActive" [appScrollActive]="rla10.isActive && isOffcanvasReady()"
                         (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-patch-check]="!rla4.isActive"
-                            [class.bi-patch-check-fill]="rla4.isActive" [class.text-primary]="rla4.isActive"></i>
-                        <span>Subscriptions</span>
+                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-mortarboard]="!rla10.isActive"
+                            [class.bi-mortarboard-fill]="rla10.isActive" [class.text-primary]="rla10.isActive"></i>
+                        <span>Student Registration Form</span>
                     </a>
                 </li>
 
@@ -163,7 +173,57 @@
                         <span>Train Booking Form</span>
                     </a>
                 </li>
+            </ul>
 
+            <h6 class="docs-section-title text-magenta mb-3 small fw-bold text-uppercase">2. Collection &amp; State Management</h6>
+
+            <ul class="nav flex-column list-unstyled gap-2 m-0 p-0 mb-4">
+                <li class="nav-item">
+                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
+                        routerLink="/todo-list" routerLinkActive="active-sub bg-light fw-bold" #rla13="routerLinkActive"
+                        [appScrollActive]="rla13.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
+                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-check-square]="!rla13.isActive"
+                            [class.bi-check-square-fill]="rla13.isActive" [class.text-primary]="rla13.isActive"></i>
+                        <span>To Do List App</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
+                        routerLink="/grocery-cart" routerLinkActive="active-sub bg-light fw-bold" #rla9="routerLinkActive"
+                        [appScrollActive]="rla9.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
+                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-cart]="!rla9.isActive"
+                            [class.bi-cart-fill]="rla9.isActive" [class.text-primary]="rla9.isActive"></i>
+                        <span>Grocery List Cart</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
+                        routerLink="/hotel-order" routerLinkActive="active-sub bg-light fw-bold"
+                        #rla8="routerLinkActive" [appScrollActive]="rla8.isActive && isOffcanvasReady()"
+                        (click)="offcanvas.dismiss()">
+                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-bell]="!rla8.isActive"
+                            [class.bi-bell-fill]="rla8.isActive" [class.text-primary]="rla8.isActive"></i>
+                        <span>Hotel Order System</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
+                        routerLink="/subscription" routerLinkActive="active-sub bg-light fw-bold"
+                        #rla4="routerLinkActive" [appScrollActive]="rla4.isActive && isOffcanvasReady()"
+                        (click)="offcanvas.dismiss()">
+                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-patch-check]="!rla4.isActive"
+                            [class.bi-patch-check-fill]="rla4.isActive" [class.text-primary]="rla4.isActive"></i>
+                        <span>Subscriptions</span>
+                    </a>
+                </li>
+            </ul>
+
+            <h6 class="docs-section-title text-magenta mb-3 small fw-bold text-uppercase">3. Complex Flows &amp; Dynamic UIs</h6>
+
+            <ul class="nav flex-column list-unstyled gap-2 m-0 p-0">
                 <li class="nav-item">
                     <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
                         routerLink="/box-office" routerLinkActive="active-sub bg-light fw-bold" #rla6="routerLinkActive"
@@ -186,68 +246,11 @@
 
                 <li class="nav-item">
                     <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
-                        routerLink="/hotel-order" routerLinkActive="active-sub bg-light fw-bold"
-                        #rla8="routerLinkActive" [appScrollActive]="rla8.isActive && isOffcanvasReady()"
-                        (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-bell]="!rla8.isActive"
-                            [class.bi-bell-fill]="rla8.isActive" [class.text-primary]="rla8.isActive"></i>
-                        <span>Hotel Order System</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
-                        routerLink="/grocery-cart" routerLinkActive="active-sub bg-light fw-bold" #rla9="routerLinkActive"
-                        [appScrollActive]="rla9.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-cart]="!rla9.isActive"
-                            [class.bi-cart-fill]="rla9.isActive" [class.text-primary]="rla9.isActive"></i>
-                        <span>Smart Grocery Cart</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
-                        routerLink="/student-registration" routerLinkActive="active-sub bg-light fw-bold"
-                        #rla10="routerLinkActive" [appScrollActive]="rla10.isActive && isOffcanvasReady()"
-                        (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-mortarboard]="!rla10.isActive"
-                            [class.bi-mortarboard-fill]="rla10.isActive" [class.text-primary]="rla10.isActive"></i>
-                        <span>Student Registration Form</span>
-                    </a>
-                </li>
-
-            </ul>
-
-            <h6 class="docs-section-title text-magenta mb-3 small fw-bold text-uppercase">Architecture & State</h6>
-
-            <ul class="nav flex-column list-unstyled gap-2 m-0 p-0">
-                <li class="nav-item">
-                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
-                        routerLink="/calculator" routerLinkActive="active-sub bg-light fw-bold" #rla12="routerLinkActive"
-                        [appScrollActive]="rla12.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-calculator]="!rla12.isActive"
-                            [class.bi-calculator-fill]="rla12.isActive" [class.text-primary]="rla12.isActive"></i>
-                        <span>Calculator</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
-                        routerLink="/todo-list" routerLinkActive="active-sub bg-light fw-bold" #rla13="routerLinkActive"
-                        [appScrollActive]="rla13.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-check-square]="!rla13.isActive"
-                            [class.bi-check-square-fill]="rla13.isActive" [class.text-primary]="rla13.isActive"></i>
-                        <span>To Do List App</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
                         routerLink="/kyc" routerLinkActive="active-sub bg-light fw-bold" #rla14="routerLinkActive"
                         [appScrollActive]="rla14.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
                         <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-shield-lock]="!rla14.isActive"
                             [class.bi-shield-lock-fill]="rla14.isActive" [class.text-primary]="rla14.isActive"></i>
-                        <span>KYC</span>
+                        <span>KYC &amp; Biometric Vault</span>
                     </a>
                 </li>
 
@@ -257,10 +260,9 @@
                         [appScrollActive]="rla15.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
                         <i class="bi me-3 fs-5 opacity-75 transition-all bi-segmented-nav"
                             [class.text-primary]="rla15.isActive"></i>
-                        <span>Dynamic Tabs</span>
+                        <span>Dynamic Tab Selection</span>
                     </a>
                 </li>
-
 
                 <li class="nav-item">
                     <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
@@ -269,7 +271,7 @@
                         (click)="offcanvas.dismiss()">
                         <i class="bi me-3 fs-5 opacity-75 transition-all bi-layout-split"
                             [class.text-primary]="rla17.isActive"></i>
-                        <span>Dynamic UI Selection</span>
+                        <span>Polymorphic Interfaces</span>
                     </a>
                 </li>
             </ul>

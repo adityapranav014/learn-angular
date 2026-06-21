@@ -115,10 +115,12 @@
               </h5>
             </div>
             <div class="card-body bg-white rounded-bottom">
-              <ul class="mb-0 text-muted">
-                <li class="mb-2">Create a variable in TypeScript and store a CSS class string into it.</li>
-                <li>On page load, bind that variable to a <code>&lt;div&gt;</code> tag to apply the styles.</li>
-              </ul>
+              <div class="text-start pb-2">
+  <h5 class="fw-bold text-dark">Static Class Binding</h5>
+</div>
+<ul class="mb-0 text-muted small">
+  <li><strong>String Class Binding</strong>: Store a CSS class string in a TS variable and bind it to a <code>&lt;div&gt;</code> element using <code>[class]</code> attribute binding.</li>
+</ul>
             </div>
           </div>
         </div>
@@ -189,14 +191,12 @@
               </h5>
             </div>
             <div class="card-body bg-white rounded-bottom">
-              <ul class="mb-0 text-muted">
-                <li class="mb-2">Create a variable and store a CSS class into it.</li>
-                <li class="mb-2">Create 1 button with the name "Toggle Class".</li>
-                <li>On click of the button, add the <code>bg-success</code> class to a div, and if clicked again, add
-                  the
-                  <code>bg-danger</code> class.
-                </li>
-              </ul>
+              <div class="text-start pb-2">
+  <h5 class="fw-bold text-dark">Dynamic Class Toggle</h5>
+</div>
+<ul class="mb-0 text-muted small">
+  <li><strong>Toggle Class State</strong>: Create a string variable and toggle its class name between <code>bg-success</code> and <code>bg-danger</code> on click of a toggle button.</li>
+</ul>
             </div>
           </div>
         </div>
@@ -275,12 +275,13 @@
               </h5>
             </div>
             <div class="card-body bg-white rounded-bottom">
-              <ul class="mb-0 text-muted">
-                <li class="mb-2">On "Success" button click, add the <code>bg-success</code> class. On "Danger", add the
-                  <code>bg-danger</code> class.
-                </li>
-                <li>Add buttons with a list of languages. On click of a language, mark it as selected.</li>
-              </ul>
+              <div class="text-start pb-2">
+  <h5 class="fw-bold text-dark">Class Highlight Loops</h5>
+</div>
+<ul class="mb-0 text-muted small">
+  <li class="mb-2"><strong>Direct Class Alternators</strong>: Switch background classes by mapping click handlers directly to target CSS values.</li>
+  <li><strong>List Highlighting</strong>: Loop through languages and bind the active state class to the selected item.</li>
+</ul>
             </div>
           </div>
         </div>
@@ -379,14 +380,12 @@
               </h5>
             </div>
             <div class="card-body bg-white rounded-bottom">
-              <ul class="mb-0 text-muted">
-                <li class="mb-2">On <strong>Add</strong> button click, add the <code>col-7</code> class to the first div
-                  and
-                  show the 2nd div.</li>
-                <li>On <strong>Close</strong> button click, add the <code>col-12</code> class to the first div and hide
-                  the
-                  2nd div.</li>
-              </ul>
+              <div class="text-start pb-2">
+  <h5 class="fw-bold text-dark">Dynamic Grid Pane Toggle</h5>
+</div>
+<ul class="mb-0 text-muted small">
+  <li><strong>Layout Pane Toggle</strong>: Implement a split-pane toggle. Click handlers should switch grid container classes (e.g., from <code>col-12</code> to <code>col-7</code>) and toggle the visibility of the side panel.</li>
+</ul>
             </div>
           </div>
         </div>
@@ -495,14 +494,13 @@
               </h5>
             </div>
             <div class="card-body bg-white rounded-bottom">
-              <ul class="mb-0 text-muted">
-                <li class="mb-2">Create an array of students with fields
-                  <code>studId, name, isActive, gender, state</code>.
-                </li>
-                <li class="mb-2">Using <code>&#64;for</code>, show the array in a table.</li>
-                <li class="mb-2">At a time, only one row should be selected.</li>
-                <li>On click of a <code>&lt;tr&gt;</code>, add the <code>table-info</code> class to highlight it.</li>
-              </ul>
+              <div class="text-start pb-2">
+  <h5 class="fw-bold text-dark">Exclusive Row Highlights</h5>
+</div>
+<ul class="mb-0 text-muted small">
+  <li class="mb-2"><strong>Active Row Tracking</strong>: Iterate student arrays inside a table using <code>&#64;for</code>.</li>
+  <li><strong>Exclusive Selection</strong>: Track the selected student ID, and apply the <code>table-info</code> class exclusively to the selected row on click.</li>
+</ul>
             </div>
           </div>
         </div>
@@ -600,13 +598,12 @@ selectStudent(id: number) &#123;
               </h5>
             </div>
             <div class="card-body bg-white rounded-bottom">
-              <ul class="mb-0 text-muted">
-                <li class="mb-2">Create input fields to capture Width, Height, Border-Radius, and Background Color.</li>
-                <li class="mb-2">Create a target <code>&lt;div&gt;</code> that will act as our shape canvas.</li>
-                <li>On "Create Shape" button click, apply the entered values dynamically to the target `div` using
-                  native
-                  Style bindings.</li>
-              </ul>
+              <div class="text-start pb-2">
+  <h5 class="fw-bold text-dark">Shape Canvas Style Editor</h5>
+</div>
+<ul class="mb-0 text-muted small">
+  <li><strong>Dynamic Style Bindings</strong>: Bind inputs (width, height, radius, background) directly to a shape canvas using <code>[style]</code> or <code>[ngStyle]</code> bindings.</li>
+</ul>
             </div>
           </div>
         </div>
@@ -720,11 +717,12 @@ selectStudent(id: number) &#123;
               </h5>
             </div>
             <div class="card-body bg-white rounded-bottom">
-              <ul class="mb-0 text-muted">
-                <li class="mb-2">Create a Bootstrap progress bar.</li>
-                <li class="mb-2">Provide a textbox to capture a percentage value from the user.</li>
-                <li>Dynamically update the width of the progress bar based on the value entered in the textbox.</li>
-              </ul>
+              <div class="text-start pb-2">
+  <h5 class="fw-bold text-dark">Progress Bar Width Binding</h5>
+</div>
+<ul class="mb-0 text-muted small">
+  <li><strong>Inline Style Percentage</strong>: Bind a percentage text input directly to an inner progress element using <code>[style.width.%]</code> style bindings.</li>
+</ul>
             </div>
           </div>
         </div>
@@ -807,12 +805,13 @@ selectStudent(id: number) &#123;
               </h5>
             </div>
             <div class="card-body bg-white rounded-bottom">
-              <ul class="mb-0 text-muted">
-                <li class="mb-2">Create an object in TypeScript with fields: <code>name, personType, gender, age</code>.
-                </li>
-                <li class="mb-2">On "Print" button click, display all the values selected by the user.</li>
-                <li>On "Reset", the form and object should be completely cleared.</li>
-              </ul>
+              <div class="text-start pb-2">
+  <h5 class="fw-bold text-dark">Two-Way Model Binding Form</h5>
+</div>
+<ul class="mb-0 text-muted small">
+  <li class="mb-2"><strong>Two-Way Model Binding</strong>: Bind form inputs to a typed object using <code>[(ngModel)]</code>.</li>
+  <li><strong>State Resets</strong>: Render output fields on click, and clear the form by restoring the object properties to their initial empty states on reset.</li>
+</ul>
             </div>
           </div>
         </div>

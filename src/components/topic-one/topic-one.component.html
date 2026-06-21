@@ -116,11 +116,13 @@
               </h5>
             </div>
             <div class="card-body bg-white rounded-bottom">
-              <ul class="mb-0 text-muted">
-                <li class="mb-2">Create 2 Radio Buttons for male & female</li>
-                <li class="mb-2">If male is selected, show: <br><em>"You Have selected Male"</em></li>
-                <li>If female is selected, show: <br><em>"You Have selected Female"</em></li>
-              </ul>
+              <div class="text-start pb-2">
+  <h5 class="fw-bold text-dark">Gender Selection</h5>
+</div>
+<ul class="mb-0 text-muted small">
+  <li class="mb-2"><strong>Radio Two-Way Binding</strong>: Bind a radio button group to a property (<code>selectedGender</code>) using <code>[(ngModel)]</code>.</li>
+  <li><strong>Conditional View Flow</strong>: Render confirmation text blocks dynamically using Angular's modern <code>&#64;if / &#64;else if</code> control flow based on the selected value.</li>
+</ul>
             </div>
           </div>
         </div>
@@ -204,11 +206,13 @@
               </h5>
             </div>
             <div class="card-body bg-white rounded-bottom">
-              <ul class="mb-0 text-muted">
-                <li class="mb-2">Show Product Category in 3 Div</li>
-                <li class="mb-2">On click of div - store selected category in a variable</li>
-                <li>Show selected Companies of selected category using &#64;if / &#64;else if</li>
-              </ul>
+              <div class="text-start pb-2">
+  <h5 class="fw-bold text-dark">Category Filter</h5>
+</div>
+<ul class="mb-0 text-muted small">
+  <li class="mb-2"><strong>State Selection Handler</strong>: Map clickable category divs to a click handler that stores the selected category string in component state.</li>
+  <li><strong>Conditional Templates</strong>: Render corresponding brand tables conditionally using <code>&#64;if</code> checks matching the active category.</li>
+</ul>
             </div>
           </div>
         </div>
@@ -383,11 +387,13 @@
               </h5>
             </div>
             <div class="card-body bg-white rounded-bottom">
-              <ul class="mb-0 text-muted">
-                <li class="mb-2">Show/Hide <strong>Div 1</strong> on click of Show & Hide buttons</li>
-                <li class="mb-2">Show/Hide <strong>Div 2</strong> on click of Toggle button</li>
-                <li>If you enter the same value in both textboxes, hide <strong>Div 3</strong>, else show it</li>
-              </ul>
+              <div class="text-start pb-2">
+  <h5 class="fw-bold text-dark">Element Visibility Toggles</h5>
+</div>
+<ul class="mb-0 text-muted small">
+  <li class="mb-2"><strong>Boolean State Switches</strong>: Bind buttons to flip boolean variables (<code>isDiv1Visible</code>, <code>isDiv2Visible</code>) controlling element visibility.</li>
+  <li><strong>Inline Expressions</strong>: Use comparison operators directly inside an <code>&#64;if</code> check (e.g. comparing two input properties) to dynamically toggle the warning alert.</li>
+</ul>
             </div>
           </div>
         </div>
@@ -512,11 +518,13 @@
               </h5>
             </div>
             <div class="card-body bg-white rounded-bottom">
-              <ul class="mb-0 text-muted">
-                <li class="mb-2">Create full name dynamically from first name & last name.</li>
-                <li class="mb-2">If State or City "Other" is selected, show an additional textbox.</li>
-                <li>On radio button selection (Teacher, Sport, Musician), show the corresponding form block.</li>
-              </ul>
+              <div class="text-start pb-2">
+  <h5 class="fw-bold text-dark">Conditional Form Blocks</h5>
+</div>
+<ul class="mb-0 text-muted small">
+  <li class="mb-2"><strong>Calculated Getters</strong>: Define a TS getter (<code>fullName</code>) returning string interpolation of first/last name values.</li>
+  <li><strong>Cascading Inputs</strong>: Show optional inputs conditionally when selector bindings match a specific dropdown value (like 'Other') or when radio selections update.</li>
+</ul>
             </div>
           </div>
         </div>
@@ -722,12 +730,13 @@ get fullName(): string &#123;
               </h5>
             </div>
             <div class="card-body bg-white rounded-bottom">
-              <ul class="mb-0 text-muted">
-                <li class="mb-2">Create a student array with name, age, attendance, gender, isIndian fields.</li>
-                <li class="mb-2">Show data in a table format.</li>
-                <li>If age &lt; 50 show "Low". Gender "M" = Male, else Female. isIndian true = Indian, else Foreigner.
-                </li>
-              </ul>
+              <div class="text-start pb-2">
+  <h5 class="fw-bold text-dark">Student Roster Grid</h5>
+</div>
+<ul class="mb-0 text-muted small">
+  <li class="mb-2"><strong>List Iteration</strong>: Loop student records using <code>&#64;for</code> to build a grid layout.</li>
+  <li><strong>Cell Conditional Text</strong>: Use inline ternary expressions to map short codes ('M' / 'F') to readable texts, and apply class highlights dynamically based on student metrics.</li>
+</ul>
             </div>
           </div>
         </div>
