@@ -1,0 +1,84 @@
+<div class="container pb-5">
+  <!-- Page Header Badge -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="d-inline-flex align-items-center gap-2 brand-text bg-white px-3 py-2 border text-brand rounded-2 shadow-sm">
+        <i class="bi fs-5" [class]="activeTopic().icon"></i>
+        <span class="vr opacity-25 mx-1"></span>
+        <span class="fw-bold" style="font-size: 0.95rem;">{{ activeTopic().title }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Main Content Panel (full width) -->
+    <div class="col-12">
+      <div class="card border-0 shadow-sm rounded-4 bg-white p-4">
+
+        <!-- Version Selector Tabs -->
+        @if (availableVersions().length > 1) {
+          <div class="d-flex flex-wrap gap-2 mb-4">
+            @for (v of availableVersions(); track v.version) {
+              <button
+                class="btn btn-sm px-3 py-2 rounded-3"
+                [class.btn-brand]="activeVersion() === v.version"
+                [class.btn-outline-secondary]="activeVersion() !== v.version"
+                (click)="selectVersion(v.version)">
+                {{ v.label }}
+              </button>
+            }
+          </div>
+        }
+
+        <!-- Accordion Content -->
+        @if (activeSections().length > 0) {
+          <div ngbAccordion [closeOthers]="true" class="shadow-sm border-0 rounded-3 overflow-hidden">
+            @for (section of activeSections(); track section.heading; let idx = $index) {
+              <div ngbAccordionItem [collapsed]="idx !== 0">
+                <h2 ngbAccordionHeader>
+                  <button ngbAccordionButton class="fw-bold fs-6">
+                    <i class="bi bi-patch-question-fill me-2 text-magenta opacity-75"></i>
+                    {{ section.heading }}
+                  </button>
+                </h2>
+
+                <div ngbAccordionCollapse>
+                  <div ngbAccordionBody>
+                    <ng-template>
+                      <div class="row g-4">
+                        <!-- Left: Theory Content -->
+                        <div class="col-12" [class.col-lg-6]="section.codeExample">
+                          <div class="study-section-body text-dark" [innerHTML]="section.content"></div>
+                        </div>
+
+                        <!-- Right: Optional Code Example -->
+                        @if (section.codeExample) {
+                          <div class="col-12 col-lg-6">
+                            <div class="card card-live-solution shadow-none border rounded-3 overflow-hidden h-100">
+                              <div class="card-header card-header-live-solution py-2 px-3 d-flex align-items-center justify-content-between">
+                                <span class="small fw-bold"><i class="bi bi-file-code me-2"></i>Code Example ({{ section.language || 'typescript' }})</span>
+                              </div>
+                              <div class="card-body p-0 bg-light" style="max-height: 450px; overflow-y: auto;">
+                                <pre class="m-0 p-3"><code class="text-dark small" style="font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace;">{{ section.codeExample }}</code></pre>
+                              </div>
+                            </div>
+                          </div>
+                        }
+                      </div>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="text-center py-5 border rounded-4 bg-light">
+            <i class="bi bi-info-circle fs-2 text-muted mb-3 d-block"></i>
+            <h6 class="text-dark fw-semibold">No content available</h6>
+            <p class="text-muted small px-3">No study material has been loaded for this topic version yet.</p>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

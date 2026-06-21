@@ -61,7 +61,88 @@
                     <i class="bi bi-chevron-right fs-6 text-muted opacity-75"></i>
                 </a>
             </li>
+
+            <li class="nav-item">
+                <a href="#"
+                    class="nav-link main-menu-link d-flex align-items-center justify-content-between px-4 py-3 text-dark transition-all"
+                    [class.bg-light]="isStudyNotesActive()" (click)="navigateToMenu('study-notes', $event)">
+                    <div class="d-flex align-items-center">
+                        <i class="bi me-3 fs-5 text-muted transition-all" [class.bi-book]="!isStudyNotesActive()"
+                            [class.bi-book-fill]="isStudyNotesActive()"
+                            [class.text-primary]="isStudyNotesActive()"></i>
+                        <span [class.fw-bold]="isStudyNotesActive()">Study Notes &amp; Prep</span>
+                    </div>
+                    <i class="bi bi-chevron-right fs-6 text-muted opacity-75"></i>
+                </a>
+            </li>
         </ul>
+    </div>
+    }
+
+    @if (activeMenuView() === 'study-notes') {
+    <div class="offcanvas-header px-3 py-3 custom-header-border align-items-center gap-2">
+        <button class="custom-icon-btn" aria-label="Go Back" (click)="goBack()" ngbTooltip="Go Back" placement="bottom">
+            <i class="bi bi-arrow-left"></i>
+        </button>
+        <h5 class="offcanvas-title fw-medium text-dark fs-6 mb-0 me-auto">Study Notes</h5>
+        <button type="button" class="custom-icon-btn" aria-label="Close"
+            (click)="offcanvas.dismiss()" ngbTooltip="Close" placement="bottom">
+            <i class="bi bi-x-lg"></i>
+        </button>
+    </div>
+
+    <div class="offcanvas-body px-4 py-4">
+        <div class="docs-sub-menu-track">
+            <h6 class="docs-section-title text-magenta mb-3 small fw-bold text-uppercase">Categories</h6>
+
+            <ul class="nav flex-column list-unstyled gap-2 m-0 p-0">
+                <li class="nav-item">
+                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
+                        routerLink="/study-notes/components-core" routerLinkActive="active-sub bg-light fw-bold" #rlaSN1="routerLinkActive"
+                        [appScrollActive]="rlaSN1.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
+                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-boxes]="!rlaSN1.isActive"
+                            [class.bi-boxes]="rlaSN1.isActive" [class.text-primary]="rlaSN1.isActive"></i>
+                        <span>Components &amp; Core</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
+                        routerLink="/study-notes/reactivity-rxjs" routerLinkActive="active-sub bg-light fw-bold" #rlaSN2="routerLinkActive"
+                        [appScrollActive]="rlaSN2.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
+                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-lightning-charge]="!rlaSN2.isActive"
+                            [class.bi-lightning-charge-fill]="rlaSN2.isActive" [class.text-primary]="rlaSN2.isActive"></i>
+                        <span>Reactivity &amp; RxJS</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
+                        routerLink="/study-notes/routing-forms" routerLinkActive="active-sub bg-light fw-bold" #rlaSN3="routerLinkActive"
+                        [appScrollActive]="rlaSN3.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
+                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-signpost-split]="!rlaSN3.isActive"
+                            [class.bi-signpost-split-fill]="rlaSN3.isActive" [class.text-primary]="rlaSN3.isActive"></i>
+                        <span>Routing &amp; Forms</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
+                        routerLink="/study-notes/services-di" routerLinkActive="active-sub bg-light fw-bold" #rlaSN4="routerLinkActive"
+                        [appScrollActive]="rlaSN4.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
+                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-diagram-3]="!rlaSN4.isActive"
+                            [class.bi-diagram-3-fill]="rlaSN4.isActive" [class.text-primary]="rlaSN4.isActive"></i>
+                        <span>Services &amp; DI</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
+                        routerLink="/study-notes/performance-advanced" routerLinkActive="active-sub bg-light fw-bold" #rlaSN5="routerLinkActive"
+                        [appScrollActive]="rlaSN5.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
+                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-speedometer2]="!rlaSN5.isActive"
+                            [class.bi-speedometer2]="rlaSN5.isActive" [class.text-primary]="rlaSN5.isActive"></i>
+                        <span>Performance &amp; Advanced</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
     }
 

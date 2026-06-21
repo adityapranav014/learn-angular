@@ -19,6 +19,9 @@ import { TabsComponent } from '../components/tabs/tabs.component';
 import { PolymorphicComponent } from '../components/polymorphic/polymorphic.component';
 
 
+import { StudyNotesComponent } from '../components/study-notes/study-notes.component';
+
+
 export const routes: Routes = [
     // --- Core Routes ---
     {
@@ -40,6 +43,16 @@ export const routes: Routes = [
         path: 'three',
         component: TopicThreeComponent,
         title: '*ngClass Directive',
+    },
+    {
+        path: 'study-notes',
+        component: StudyNotesComponent,
+        title: 'Angular Study Notes',
+    },
+    {
+        path: 'study-notes/:topicId',
+        component: StudyNotesComponent,
+        title: 'Angular Study Notes',
     },
 
     // --- Logical Scenarios: Commerce & Logistics ---

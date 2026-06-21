@@ -21,7 +21,7 @@ export class NavbarComponent {
   public router = inject(Router);
 
   // --- Modern State Management (Signals) ---
-  activeMenuView = signal<'main' | 'core-concepts' | 'logical-scenarios'>('main');
+  activeMenuView = signal<'main' | 'core-concepts' | 'logical-scenarios' | 'study-notes'>('main');
   isOffcanvasReady = signal<boolean>(false);
 
   // --- Sidebar Controls ---
@@ -43,7 +43,7 @@ export class NavbarComponent {
   }
 
   // --- Navigation Controls ---
-  navigateToMenu(menuName: 'main' | 'core-concepts' | 'logical-scenarios', event: Event) {
+  navigateToMenu(menuName: 'main' | 'core-concepts' | 'logical-scenarios' | 'study-notes', event: Event) {
     event.preventDefault();
     this.activeMenuView.set(menuName);
   }
@@ -58,6 +58,8 @@ export class NavbarComponent {
       this.activeMenuView.set('core-concepts');
     } else if (this.isLogicalScenariosActive()) {
       this.activeMenuView.set('logical-scenarios');
+    } else if (this.isStudyNotesActive()) {
+      this.activeMenuView.set('study-notes');
     } else {
       this.activeMenuView.set('main');
     }
@@ -80,5 +82,10 @@ export class NavbarComponent {
     return currentPath.startsWith('/one') ||
       currentPath.startsWith('/two') ||
       currentPath.startsWith('/three');
+  }
+
+  isStudyNotesActive(): boolean {
+    const currentPath = this.router.url.split('?')[0].split('#')[0];
+    return currentPath.startsWith('/study-notes');
   }
 }
