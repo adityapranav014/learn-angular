@@ -1,84 +1,115 @@
-<div class="container pb-5">
-  <!-- Page Header Badge -->
-  <div class="row mb-4">
-    <div class="col-12">
-      <div class="d-inline-flex align-items-center gap-2 brand-text bg-white px-3 py-2 border text-brand rounded-2 shadow-sm">
-        <i class="bi fs-5" [class]="activeTopic().icon"></i>
-        <span class="vr opacity-25 mx-1"></span>
-        <span class="fw-bold" style="font-size: 0.95rem;">{{ activeTopic().title }}</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <!-- Main Content Panel (full width) -->
-    <div class="col-12">
-      <div class="card border-0 shadow-sm rounded-4 bg-white p-4">
-
-        <!-- Version Selector Tabs -->
+<div class="container study-notes-page py-3">
+    <div class="row study-notes-main g-3">
         @if (availableVersions().length > 1) {
-          <div class="d-flex flex-wrap gap-2 mb-4">
-            @for (v of availableVersions(); track v.version) {
-              <button
-                class="btn btn-sm px-3 py-2 rounded-3"
-                [class.btn-brand]="activeVersion() === v.version"
-                [class.btn-outline-secondary]="activeVersion() !== v.version"
-                (click)="selectVersion(v.version)">
-                {{ v.label }}
-              </button>
-            }
-          </div>
-        }
+        <aside class="col-12 col-lg-3 col-xl-2">
+            <div class="card h-100 border-0 shadow-sm study-nav-card">
+                <div class="card-body p-3 p-lg-2">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <i class="bi fs-5 text-brand" [class]="activeTopic().icon"></i>
+                        <span class="fw-bold text-dark text-truncate" style="font-size: 0.98rem;">{{ activeTopic().title
+                            }}</span>
+                    </div>
 
-        <!-- Accordion Content -->
-        @if (activeSections().length > 0) {
-          <div ngbAccordion [closeOthers]="true" class="shadow-sm border-0 rounded-3 overflow-hidden">
-            @for (section of activeSections(); track section.heading; let idx = $index) {
-              <div ngbAccordionItem [collapsed]="idx !== 0">
-                <h2 ngbAccordionHeader>
-                  <button ngbAccordionButton class="fw-bold fs-6">
-                    <i class="bi bi-patch-question-fill me-2 text-magenta opacity-75"></i>
-                    {{ section.heading }}
-                  </button>
-                </h2>
-
-                <div ngbAccordionCollapse>
-                  <div ngbAccordionBody>
-                    <ng-template>
-                      <div class="row g-4">
-                        <!-- Left: Theory Content -->
-                        <div class="col-12" [class.col-lg-6]="section.codeExample">
-                          <div class="study-section-body text-dark" [innerHTML]="section.content"></div>
-                        </div>
-
-                        <!-- Right: Optional Code Example -->
-                        @if (section.codeExample) {
-                          <div class="col-12 col-lg-6">
-                            <div class="card card-live-solution shadow-none border rounded-3 overflow-hidden h-100">
-                              <div class="card-header card-header-live-solution py-2 px-3 d-flex align-items-center justify-content-between">
-                                <span class="small fw-bold"><i class="bi bi-file-code me-2"></i>Code Example ({{ section.language || 'typescript' }})</span>
-                              </div>
-                              <div class="card-body p-0 bg-light" style="max-height: 450px; overflow-y: auto;">
-                                <pre class="m-0 p-3"><code class="text-dark small" style="font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace;">{{ section.codeExample }}</code></pre>
-                              </div>
-                            </div>
-                          </div>
+                    <nav class="docs-sub-menu-track study-side-nav" aria-label="Study notes version navigation">
+                        @for (v of availableVersions(); track v.version) {
+                        <button type="button"
+                            class="docs-sub-link study-side-link w-100 d-flex align-items-center justify-content-between text-start"
+                            [class.active-sub]="activeVersion() === v.version" (click)="selectVersion(v.version)"
+                            [attr.aria-current]="activeVersion() === v.version ? 'page' : null">
+                            <span>{{ v.label }}</span>
+                            <i class="bi bi-chevron-right small opacity-50"></i>
+                        </button>
                         }
-                      </div>
-                    </ng-template>
-                  </div>
+                    </nav>
                 </div>
-              </div>
-            }
-          </div>
-        } @else {
-          <div class="text-center py-5 border rounded-4 bg-light">
-            <i class="bi bi-info-circle fs-2 text-muted mb-3 d-block"></i>
-            <h6 class="text-dark fw-semibold">No content available</h6>
-            <p class="text-muted small px-3">No study material has been loaded for this topic version yet.</p>
-          </div>
+            </div>
+        </aside>
         }
-      </div>
+
+        <div class="col-12" [class.col-lg-9]="availableVersions().length > 1"
+            [class.col-xl-10]="availableVersions().length > 1">
+            @if (activeSections().length > 0) {
+            <div class="card border-0 shadow-sm rounded-4 bg-white p-3 p-lg-4 study-content-shell">
+                <div class="study-pagination d-flex align-items-center justify-content-between mb-3">
+                    <button class="btn btn-sm btn-light border rounded-3" (click)="carousel?.prev()">
+                        <i class="bi bi-chevron-left"></i>
+                    </button>
+
+                    <div class="d-flex flex-wrap gap-1 justify-content-center flex-grow-1 mx-2">
+                        @for (section of activeSections(); track section.heading; let i = $index) {
+                        <button class="btn btn-sm study-page-btn" [class.btn-brand]="activeIndex === i"
+                            [class.btn-outline-secondary]="activeIndex !== i" (click)="goToSlide(i)"
+                            [title]="section.heading">
+                            {{ i + 1 }}
+                        </button>
+                        }
+                    </div>
+
+                    <button class="btn btn-sm btn-light border rounded-3" (click)="carousel?.next()">
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
+                </div>
+
+                <ngb-carousel #carousel [interval]="0" [showNavigationIndicators]="false" [showNavigationArrows]="false"
+                    (slide)="onSlide($event)" class="study-carousel">
+
+                    @for (section of activeSections(); track section.heading; let i = $index) {
+                    <ng-template ngbSlide [id]="'slide-' + i">
+                        <div class="row g-3 align-items-stretch">
+                            <div class="col-12 col-xl-6">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-white border-bottom-0 pt-3 pb-2">
+                                        <h5 class="card-title text-secondary mb-0 fw-bold">
+                                            <i class="bi bi-journal-richtext me-2 brand-color"></i>Theory
+                                        </h5>
+                                    </div>
+                                    <div class="card-body bg-white rounded-bottom">
+                                        <div class="d-flex align-items-center gap-2 mb-3">
+                                            <span class="badge bg-magenta rounded-pill">{{ i + 1 }}</span>
+                                            <h5 class="fw-bold text-dark mb-0">{{ section.heading }}</h5>
+                                        </div>
+                                        <div class="study-section-body text-dark" [innerHTML]="section.content"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-xl-6">
+                                <div class="card h-100 shadow-sm border-0 bg-dark text-light">
+                                    <div
+                                        class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex align-items-center justify-content-between">
+                                        <h5 class="card-title text-light mb-0 fw-bold">
+                                            <i class="bi bi-code-slash me-2 text-warning"></i>Code Hint
+                                        </h5>
+                                        <span class="badge bg-secondary-subtle text-dark">{{ section.language ||
+                                            'typescript' }}</span>
+                                    </div>
+                                    <div class="card-body study-code-hint-body">
+                                        @if (section.codeExample) {
+                                        <pre
+                                            class="bg-black text-warning rounded p-3 small mb-0 border border-secondary shadow-sm"><code>{{ section.codeExample }}</code></pre>
+                                        } @else {
+                                        <div class="text-secondary small">
+                                            <p class="mb-2 fw-semibold">No code hint for this concept yet.</p>
+                                            <p class="mb-0">Use the theory card to revise the concept and move to the
+                                                next section.</p>
+                                        </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                    }
+
+                </ngb-carousel>
+            </div>
+            } @else {
+            <div class="text-center py-5 border rounded-4 bg-light">
+                <i class="bi bi-info-circle fs-2 text-muted mb-3 d-block"></i>
+                <h6 class="text-dark fw-semibold">No content available</h6>
+                <p class="text-muted small px-3">No study material has been loaded for this topic version yet.</p>
+            </div>
+            }
+        </div>
     </div>
-  </div>
 </div>

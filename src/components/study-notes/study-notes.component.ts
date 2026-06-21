@@ -1,53 +1,44 @@
-import { Component, inject, signal, computed } from '@angular/core';
+import { Component, inject, signal, computed, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarousel, NgbSlide, NgbSlideEvent } from '@ng-bootstrap/ng-bootstrap';
 import { STUDY_NOTES, StudyNote } from '../../data/study-notes';
 
 @Component({
   selector: 'app-study-notes',
   templateUrl: './study-notes.component.html',
   styleUrls: ['./study-notes.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    NgbAccordionModule
-  ]
+  imports: [CommonModule, NgbCarousel, NgbSlide]
 })
 export class StudyNotesComponent {
   private route = inject(ActivatedRoute);
 
-  // Reactively track selected state using signals
   activeTopic = signal<StudyNote>(STUDY_NOTES[0]);
   activeVersion = signal<string>('fundamentals');
+  activeIndex = 0;
 
-  // Compute available versions for the currently active topic
-  availableVersions = computed(() => {
-    return this.activeTopic().versions;
-  });
+  @ViewChild('carousel') carousel!: NgbCarousel;
 
-  // Compute sections to display based on topic and version selection
+  availableVersions = computed(() => this.activeTopic().versions);
+
   activeSections = computed(() => {
-    const topic = this.activeTopic();
-    const version = this.activeVersion();
-    const match = topic.versions.find(v => v.version === version);
+    const match = this.activeTopic().versions.find(v => v.version === this.activeVersion());
     return match ? match.sections : [];
   });
 
   constructor() {
-    // Synchronize route parameters with selected topic
     this.route.paramMap.subscribe(params => {
       const topicId = params.get('topicId');
       if (topicId) {
         const found = STUDY_NOTES.find(t => t.id === topicId);
         if (found) {
           this.activeTopic.set(found);
-
-          // Reset version to first available if current doesn't exist in new topic
           const hasVersion = found.versions.some(v => v.version === this.activeVersion());
           if (!hasVersion && found.versions.length > 0) {
             this.activeVersion.set(found.versions[0].version);
           }
+          this.activeIndex = 0;
+          setTimeout(() => this.carousel?.select('slide-0'));
         }
       }
     });
@@ -55,5 +46,15 @@ export class StudyNotesComponent {
 
   selectVersion(versionCode: string) {
     this.activeVersion.set(versionCode);
+    this.activeIndex = 0;
+    setTimeout(() => this.carousel?.select('slide-0'));
+  }
+
+  onSlide(event: NgbSlideEvent) {
+    this.activeIndex = parseInt(event.current.replace('slide-', ''));
+  }
+
+  goToSlide(idx: number) {
+    this.carousel?.select('slide-' + idx);
   }
 }

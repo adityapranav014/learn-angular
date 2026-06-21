@@ -1,0 +1,37 @@
+:host {
+    display: block;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+}
+
+.app-shell {
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.app-main {
+    min-height: 0;
+    margin-top: 0 !important;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    overflow: auto;
+}
+
+/* Mobile: release fixed-height shell so content scrolls naturally */
+@media (max-width: 991.98px) {
+    :host {
+        height: auto;
+        overflow: visible;
+    }
+
+    .app-shell {
+        height: auto;
+        overflow: visible;
+    }
+
+    .app-main {
+        overflow: visible;
+    }
+}

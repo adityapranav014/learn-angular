@@ -122,7 +122,9 @@
   box-shadow: 0 2px 4px rgba(246, 55, 227, 0.2) !important;
   transition: all 0.2s ease !important;
 
-  &:hover, &:focus, &:active {
+  &:hover,
+  &:focus,
+  &:active {
     background-color: #e02ccb !important;
     border-color: #e02ccb !important;
     color: #ffffff !important;
@@ -145,8 +147,15 @@
   }
 
   &:focus {
-    border-color: rgba(246, 55, 227, 0.5) !important;
-    box-shadow: 0 0 0 0.25rem rgba(246, 55, 227, 0.25) !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba(246, 55, 227, 0.5) !important;
+    outline-offset: -2px !important;
+    box-shadow: none !important;
   }
 }
 
@@ -159,7 +168,10 @@
     color: #F637E3 !important;
     border-bottom: 1px solid rgba(246, 55, 227, 0.15) !important;
 
-    h5, h6, .card-title, i {
+    h5,
+    h6,
+    .card-title,
+    i {
       color: #F637E3 !important;
     }
   }
