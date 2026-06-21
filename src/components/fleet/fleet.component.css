@@ -1,3 +1,12 @@
+@media (min-width: 992px) {
+  .sticky-lg-top {
+    position: sticky;
+    top: 90px; /* clear sticky navbar */
+    z-index: 10;
+    height: fit-content;
+  }
+}
+
 @media (min-width: 768px) {
   .border-end-md {
     border-right: 1px dashed rgba(0, 0, 0, 0.12);

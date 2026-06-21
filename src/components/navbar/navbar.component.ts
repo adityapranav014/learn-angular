@@ -66,7 +66,7 @@ export class NavbarComponent {
   isLogicalScenariosActive(): boolean {
     const paths = [
       '/subscription', '/rail-transit', '/box-office', '/calculator',
-      '/zoom-car-rental', '/hotel-order', '/cart', '/tasks', '/enrollment',
+      '/zoom-car-rental', '/hotel-order', '/grocery-cart', '/tasks', '/enrollment',
       '/seat-allocator', '/kyc', '/tabs', '/data-selector', '/polymorphic'
     ];
 

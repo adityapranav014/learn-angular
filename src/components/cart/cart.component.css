@@ -1,0 +1,43 @@
+@media (min-width: 992px) {
+  .sticky-lg-top {
+    position: sticky;
+    top: 90px; /* clear the sticky navbar */
+    z-index: 10;
+    height: fit-content;
+  }
+}
+
+.table-brand-light {
+  background-color: #fdf4ff !important;
+  color: #F637E3;
+}
+
+.table-brand-light th {
+  font-weight: 600;
+  border-bottom: 2px solid rgba(246, 55, 227, 0.2) !important;
+}
+
+.font-monospace {
+  font-family: var(--bs-font-monospace);
+}
+
+/* Animations */
+.animate__animated {
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate__fadeIn {
+  animation-name: fadeIn;
+}

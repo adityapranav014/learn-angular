@@ -1,3 +1,12 @@
+@media (min-width: 992px) {
+  .sticky-lg-top {
+    position: sticky;
+    top: 90px; /* clear sticky navbar */
+    z-index: 10;
+    height: fit-content;
+  }
+}
+
 .highlight-card {
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }

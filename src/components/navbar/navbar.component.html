@@ -197,11 +197,11 @@
 
                 <li class="nav-item">
                     <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
-                        routerLink="/cart" routerLinkActive="active-sub bg-light fw-bold" #rla9="routerLinkActive"
+                        routerLink="/grocery-cart" routerLinkActive="active-sub bg-light fw-bold" #rla9="routerLinkActive"
                         [appScrollActive]="rla9.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-basket]="!rla9.isActive"
-                            [class.bi-basket-fill]="rla9.isActive" [class.text-primary]="rla9.isActive"></i>
-                        <span>Smart Cart Automator</span>
+                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-cart4]="!rla9.isActive"
+                            [class.bi-cart4-fill]="rla9.isActive" [class.text-primary]="rla9.isActive"></i>
+                        <span>Smart Grocery Cart</span>
                     </a>
                 </li>
 

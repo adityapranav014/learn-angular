@@ -71,9 +71,9 @@ export const routes: Routes = [
         title: 'Hotel Order System 🏨',
     },
     {
-        path: 'cart',
+        path: 'grocery-cart',
         component: CartComponent,
-        title: 'Smart Cart Automator',
+        title: 'Smart Grocery Cart',
     },
     {
         path: 'enrollment',
