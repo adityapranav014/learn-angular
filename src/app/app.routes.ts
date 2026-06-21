@@ -68,7 +68,7 @@ export const routes: Routes = [
     {
         path: 'hotel-order',
         component: HospitalityComponent,
-        title: 'Hotel Order System 🏨',
+        title: 'Hotel Order System',
     },
     {
         path: 'grocery-cart',
@@ -76,9 +76,9 @@ export const routes: Routes = [
         title: 'Smart Grocery Cart',
     },
     {
-        path: 'enrollment',
+        path: 'student-registration',
         component: EnrollmentComponent,
-        title: 'Campus Enrollment Portal',
+        title: 'Student Registration Form',
     },
     {
         path: 'seat-allocator',
