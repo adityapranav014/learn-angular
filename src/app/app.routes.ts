@@ -16,7 +16,6 @@ import { ComputeComponent } from '../components/compute/compute.component';
 import { TasksComponent } from '../components/tasks/tasks.component';
 import { KycComponent } from '../components/kyc/kyc.component';
 import { TabsComponent } from '../components/tabs/tabs.component';
-import { DataSelectorComponent } from '../components/data-selector/data-selector.component';
 import { PolymorphicComponent } from '../components/polymorphic/polymorphic.component';
 
 
@@ -102,11 +101,7 @@ export const routes: Routes = [
         component: TabsComponent,
         title: 'Dynamic Tabs',
     },
-    {
-        path: 'data-selector',
-        component: DataSelectorComponent,
-        title: 'Relational Data Selector',
-    },
+
     {
         path: 'polymorphic',
         component: PolymorphicComponent,

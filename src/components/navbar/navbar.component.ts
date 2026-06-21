@@ -67,7 +67,7 @@ export class NavbarComponent {
     const paths = [
       '/subscription', '/rail-transit', '/box-office', '/calculator',
       '/zoom-car-rental', '/hotel-order', '/grocery-cart', '/todo-list', '/student-registration',
-      '/kyc', '/tabs', '/data-selector', '/polymorphic'
+      '/kyc', '/tabs', '/polymorphic'
     ];
 
     // Clean the URL of query params and fragments to ensure accurate matching
