@@ -95,7 +95,8 @@
                                             <div class="d-flex align-items-center gap-1">
                                                 <button
                                                     class="btn btn-sm btn-outline-secondary border-0 text-light py-0 px-2"
-                                                    (click)="copyCode(activeFile.code)">
+                                                    [ngbTooltip]="isCopied ? null : 'Copy to clipboard'" placement="left"
+                                                    (click)="copyCode(activeFile.code)" >
                                                     <i class="bi" [class.bi-clipboard]="!isCopied"
                                                         [class.bi-check2-all]="isCopied"
                                                         [class.text-success]="isCopied"></i>
