@@ -83,6 +83,11 @@ $track-color: #e5e7eb;
   ::ng-deep .carousel-item {
     padding: 0.15rem;
   }
+
+  ::ng-deep .card-body {
+    overflow-y: auto;
+    max-height: calc(100dvh - 22rem);
+  }
 }
 
 /* Pagination aligned with shared button design system */
@@ -104,13 +109,17 @@ $track-color: #e5e7eb;
 }
 
 .study-code-hint-body {
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
+  max-height: calc(100dvh - 22rem);
 }
 
 .study-code-hint-body pre {
+  flex: 1 1 0;
   white-space: pre;
   overflow: auto;
-  max-height: 480px;
+  min-height: 0;
 }
 
 .docs-section-title {
@@ -174,9 +183,16 @@ $track-color: #e5e7eb;
 
   .study-code-hint-body {
     max-height: none;
+    overflow: visible;
   }
 
   .study-code-hint-body pre {
+    max-height: none;
+    flex: none;
+  }
+
+  .study-carousel ::ng-deep .card-body {
+    overflow-y: visible;
     max-height: none;
   }
 }
@@ -196,7 +212,6 @@ $track-color: #e5e7eb;
   font-size: 0.975rem;
   line-height: 1.65;
   color: #374151;
-
   p {
     margin-bottom: 1rem;
   }

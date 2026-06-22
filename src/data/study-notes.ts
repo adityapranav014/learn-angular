@@ -2,7 +2,6 @@ export interface Section {
   heading: string;
   content: string;
   codeExample?: string;
-  language?: string;
 }
 
 export interface VersionedContent {
@@ -69,7 +68,6 @@ export class UserProfileComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 }`,
-            language: `typescript`,
           },
           {
             heading: `Content Projection (ng-content)`,
@@ -97,7 +95,6 @@ export class UserProfileComponent implements OnInit, OnChanges, OnDestroy {
 
   <span card-footer>Last updated: June 2025</span>
 </app-card>`,
-            language: `html`,
           },
           {
             heading: `Pipes & Data Transformation`,
@@ -125,7 +122,6 @@ export class ExponentialStrengthPipe implements PipeTransform {
 // {{ today | date:'dd MMM yyyy' }}       →  22 Jun 2025
 // {{ largeObj    | json }}               →  pretty JSON
 // {{ obs$        | async }}              →  auto-subscribes`,
-            language: `typescript`,
           },
           {
             heading: `ViewChild vs ViewChildren`,
@@ -166,7 +162,6 @@ export class ListComponent implements AfterViewInit {
     });
   }
 }`,
-            language: `typescript`,
           },
           {
             heading: `Templates, Data Binding & Directives`,
@@ -203,7 +198,6 @@ export class ListComponent implements AfterViewInit {
 <li *ngFor="let item of items; let i = index; trackBy: trackById">
   {{ i + 1 }}. {{ item.name }}
 </li>`,
-            language: `html`,
           },
           {
             heading: `Component Communication Patterns`,
@@ -245,7 +239,6 @@ export class CartService {
   addItem() { this.itemCount.update(n => n + 1); }
 }
 // Both Sibling A and Sibling B inject CartService and react to count()`,
-            language: `typescript`,
           },
           {
             heading: `Angular Material Integration`,
@@ -288,7 +281,6 @@ export class ParentComponent {
 
 // Inside ConfirmDialogComponent:
 // constructor(@Inject(MAT_DIALOG_DATA) public data: {userId:string, message:string}) {}`,
-            language: `typescript`,
           },
         ],
       },
@@ -329,7 +321,6 @@ export class DashboardComponent {}
 //     provideHttpClient()
 //   ]
 // });`,
-            language: `typescript`,
           },
           {
             heading: `New Built-in Control Flow (&#64;if, &#64;for, &#64;switch)`,
@@ -365,7 +356,6 @@ export class DashboardComponent {}
     <viewer-panel />
   }
 }`,
-            language: `html`,
           },
           {
             heading: `Lifecycle Optimization: afterRender and afterNextRender`,
@@ -407,7 +397,6 @@ export class ChartComponent {
     // Wire up Chart.js or similar library here
   }
 }`,
-            language: `typescript`,
           },
           {
             heading: `Signal-based Inputs and Outputs`,
@@ -449,7 +438,6 @@ export class ProductCardComponent {
 //   [price]="79999"
 //   category="Electronics"
 //   (purchased)="onPurchase($event)" />`,
-            language: `typescript`,
           },
         ],
       },
@@ -486,7 +474,6 @@ export class ProductCardComponent {
     <button (click)="login()">Login</button>
   }
 </div>`,
-            language: `html`,
           },
           {
             heading: `Fallback Content for Content Projection`,
@@ -527,7 +514,6 @@ export class ProductCardComponent {
 <app-dialog>
   <p>Loading your profile...</p>
 </app-dialog>`,
-            language: `html`,
           },
           {
             heading: `View Transitions API Integration`,
@@ -567,7 +553,6 @@ export const appConfig: ApplicationConfig = {
   from { transform: translateX(40px); opacity: 0; }
   to   { transform: translateX(0);    opacity: 1; }
 }`,
-            language: `typescript`,
           },
         ],
       },
@@ -605,7 +590,6 @@ export class TableComponent {
   }
 }
 -->`,
-            language: `html`,
           },
           {
             heading: `Template updates miss role changes`,
@@ -641,7 +625,6 @@ export class RoleDemoComponent {
     // this.user().isAdmin = true;  // ❌ reference unchanged!
   }
 }`,
-            language: `typescript`,
           },
           {
             heading: `Refactoring legacy *ngSwitch to &#64;switch`,
@@ -680,7 +663,6 @@ export class RoleDemoComponent {
     }
   }
 </div>`,
-            language: `html`,
           },
           {
             heading: `Dynamic Edit/View Modes without DOM duplication`,
@@ -723,7 +705,6 @@ export class InlineEditComponent {
     }
   }
 }`,
-            language: `typescript`,
           },
           {
             heading: `Refactoring Bloated Components`,
@@ -769,7 +750,6 @@ export class DashboardComponent {
   userService = inject(UserService);
   ngOnInit() { this.userService.load(); }
 }`,
-            language: `typescript`,
           },
           {
             heading: `Enterprise Component Architecture & Scalability`,
@@ -818,7 +798,6 @@ export const routes: Routes = [
         .then(m => m.DASHBOARD_ROUTES)
   }
 ];`,
-            language: `typescript`,
           },
           {
             heading: `Custom Web Component Bindings`,
@@ -856,7 +835,6 @@ export class WebCompWrapperComponent {
     this.opacity.set(detail.value);
   }
 }`,
-            language: `typescript`,
           },
         ],
       },
@@ -908,7 +886,6 @@ replay$.next(10);
 replay$.next(20);
 replay$.next(30);
 replay$.subscribe(v => console.log('Replay:', v)); // 20, 30`,
-            language: `typescript`,
           },
           {
             heading: `Creating Custom RxJS Operators`,
@@ -942,7 +919,6 @@ of(null, 1, undefined, 2, null, 3).pipe(
   filterNilAndMap(v => v * 10),
   debug('result')
 ).subscribe(); // logs: 10, 20, 30`,
-            language: `typescript`,
           },
           {
             heading: `Observables vs Promises`,
@@ -979,7 +955,6 @@ setTimeout(() => sub.unsubscribe(), 500); // cancels before 3rd value
 // ── Convert Promise ↔ Observable ──────────────────────────
 const fromPromise$ = from(fetch('/api/user').then(r => r.json()));
 const toPromise    = of(42).pipe(take(1)).toPromise();`,
-            language: `typescript`,
           },
           {
             heading: `Memory Leaks & Unsubscription`,
@@ -1028,7 +1003,6 @@ export class MethodTwoComponent implements OnInit {
 // timer$ = interval(1000); // in component class
 // Template: <p>Timer: {{ timer$ | async }}</p>
 // Angular automatically subscribes and unsubscribes!`,
-            language: `typescript`,
           },
         ],
       },
@@ -1080,7 +1054,6 @@ export class CounterComponent {
     this.count.set(0);               // set an explicit value
   }
 }`,
-            language: `typescript`,
           },
           {
             heading: `DestroyRef & Subscription Cleanup`,
@@ -1128,7 +1101,6 @@ export class TimerV2Component implements OnInit {
     ).subscribe(val => this.tick = val);
   }
 }`,
-            language: `typescript`,
           },
           {
             heading: `Router Signals`,
@@ -1177,7 +1149,6 @@ export class ProductDetailComponent {
 // ── Route definition:
 // { path: 'product/:id', component: ProductDetailComponent }
 // URL: /product/42?q=laptop → productId() = '42', searchQuery() = 'laptop'`,
-            language: `typescript`,
           },
         ],
       },
@@ -1223,7 +1194,6 @@ export class ToggleComponent {
 
 // ── parent component class ─────────────────────────────────
 // notificationsEnabled = signal(false);`,
-            language: `typescript`,
           },
           {
             heading: `linkedSignal API`,
@@ -1271,7 +1241,6 @@ export class ProfileEditorComponent {
 
 // Usage: <app-profile-editor userId="42" />
 // When userId changes to "99", username auto-resets to "User_99"`,
-            language: `typescript`,
           },
           {
             heading: `resource API for Async Operations`,
@@ -1324,7 +1293,6 @@ export class ProductDetailsComponent {
     }
   });
 }`,
-            language: `typescript`,
           },
           {
             heading: `Signals vs RxJS Observables`,
@@ -1360,7 +1328,6 @@ const results = toSignal(results$, { initialValue: [] });
 const querySignal = signal('angular');
 const query$ = toObservable(querySignal);
 query$.pipe(debounceTime(400)).subscribe(q => console.log(q));`,
-            language: `typescript`,
           },
         ],
       },
@@ -1415,7 +1382,6 @@ export class LiveDashboardComponent implements OnDestroy {
 
   ngOnDestroy() { this.ws.close(); }
 }`,
-            language: `typescript`,
           },
           {
             heading: `Form validation state with Signals`,
@@ -1466,7 +1432,6 @@ export class LargeFormComponent {
     if (this.isValid()) console.log('Form submitted!');
   }
 }`,
-            language: `typescript`,
           },
           {
             heading: `Computed signal error handling`,
@@ -1518,7 +1483,6 @@ const userContext = computed(() => {
 // Template usage:
 // @if (userContext().success) { <p>Hello {{ userContext().data?.displayName }}</p> }
 // @else { <p class="text-danger">{{ userContext().error }}</p> }`,
-            language: `typescript`,
           },
           {
             heading: `Search-as-you-type with Debounce & Signals`,
@@ -1578,7 +1542,6 @@ export class SearchComponent {
     )
   );
 }`,
-            language: `typescript`,
           },
           {
             heading: `Undo/Redo with Command Pattern and Signals`,
@@ -1626,7 +1589,6 @@ export class StateManager<T> {
 // <button [disabled]="!editorState.canUndo()" (click)="editorState.undo()">↩ Undo</button>
 // <button [disabled]="!editorState.canRedo()" (click)="editorState.redo()">↪ Redo</button>
 // <p>Current: {{ editorState.activeState() }}</p>`,
-            language: `typescript`,
           },
           {
             heading: `Signals vs Redux State Architecture`,
@@ -1685,7 +1647,6 @@ export class UserStore {
 // store = inject(UserStore);
 // ngOnInit() { this.store.loadUser('42'); }
 // Template: {{ store.user()?.name }}  |  @if(store.loading()) { <spinner /> }`,
-            language: `typescript`,
           },
         ],
       },
@@ -1751,7 +1712,6 @@ export class NavComponent {
 // ── app.component.html ─────────────────────────────────────
 // <router-outlet></router-outlet>                    <!-- primary -->
 // <router-outlet name="sidebar"></router-outlet>     <!-- sidebar -->`,
-            language: `typescript`,
           },
           {
             heading: `Forms: Template-driven vs Reactive`,
@@ -1809,7 +1769,6 @@ export class LoginReactiveComponent {
     if (this.form.valid) console.log(this.form.value);
   }
 }`,
-            language: `typescript`,
           },
           {
             heading: `Complex Form Validation`,
@@ -1854,7 +1813,6 @@ export function passwordMatchValidator(group: AbstractControl): ValidationErrors
 //   password:        new FormControl('', Validators.required),
 //   confirmPassword: new FormControl('', Validators.required),
 // }, { validators: passwordMatchValidator });`,
-            language: `typescript`,
           },
           {
             heading: `Route Guards & Resolvers`,
@@ -1903,7 +1861,6 @@ export const productResolver: ResolveFn<Product> = (route) => {
 //   canActivate: [authGuard],
 //   resolve: { product: productResolver }
 // }`,
-            language: `typescript`,
           },
         ],
       },
@@ -1949,7 +1906,6 @@ export const subscriptionGuard: CanActivateFn = () => {
 //   canActivate: [authGuard, subscriptionGuard],
 //   loadComponent: () => import('./admin.component').then(m => m.AdminComponent)
 // }`,
-            language: `typescript`,
           },
         ],
       },
@@ -2005,7 +1961,6 @@ export class ProductViewComponent {
 // }
 // URL: /product/42?category=electronics
 // → id() = '42', category() = 'electronics', title() = 'Product Catalog'`,
-            language: `typescript`,
           },
         ],
       },
@@ -2098,7 +2053,6 @@ export class MultiStepFormComponent {
   prev() { this.currentStep.update(s => Math.max(s - 1, 1)); }
   submit() { if (this.form.valid) console.log(this.form.value); }
 }`,
-            language: `typescript`,
           },
           {
             heading: `Signal binding to template-driven ngModel`,
@@ -2152,7 +2106,6 @@ export class SignalFormComponent {
   // Derived signals — auto-update when source signals change
   charCount = computed(() => this.searchQuery().length);
 }`,
-            language: `typescript`,
           },
           {
             heading: `Preloading strategies in complex routes`,
@@ -2201,7 +2154,6 @@ export const routes: Routes = [
       import('./features/admin/admin.routes').then(m => m.ADMIN_ROUTES)
   }
 ];`,
-            language: `typescript`,
           },
           {
             heading: `Routing Guards with Role-Based Access Control`,
@@ -2250,7 +2202,6 @@ export const roleGuard: CanActivateFn = (route) => {
 //   hasRole(role: string) { return this.userRoles().includes(role); }
 //   isAuthenticated() { return this.userRoles().length > 0; }
 // }`,
-            language: `typescript`,
           },
         ],
       },
@@ -2307,7 +2258,6 @@ export class FormComponent {
   // FormStateService is isolated to this component's subtree
   private state = inject(FormStateService);
 }`,
-            language: `typescript`,
           },
           {
             heading: `HTTP Client & Global Error Interceptors`,
@@ -2359,7 +2309,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 // provideHttpClient(
 //   withInterceptors([authInterceptor, errorInterceptor])
 // )`,
-            language: `typescript`,
           },
         ],
       },
@@ -2417,7 +2366,6 @@ export class ProductsComponent {
   list = createPaginatedList<Product>('/api/products');
   ngOnInit() { this.list.load(); }
 }`,
-            language: `typescript`,
           },
         ],
       },
@@ -2468,7 +2416,6 @@ export class ThirdPartyWidgetComponent {
     });
   }
 }`,
-            language: `typescript`,
           },
         ],
       },
@@ -2515,7 +2462,6 @@ export class WizardComponent {
 
 // Another WizardComponent instance gets its OWN WizardStateService
 // → No shared state pollution between two wizard instances on screen`,
-            language: `typescript`,
           },
           {
             heading: `useValue and useFactory in Service DI`,
@@ -2573,7 +2519,6 @@ export class DataService {
 // export const appConfig: ApplicationConfig = {
 //   providers: [...appProviders, ...loggingProviders, provideHttpClient()]
 // };`,
-            language: `typescript`,
           },
           {
             heading: `Circular Dependencies in DI`,
@@ -2622,7 +2567,6 @@ export class ServiceA {
 
   doSomething() { this.serviceB.helpMethod(); }
 }`,
-            language: `typescript`,
           },
         ],
       },
@@ -2683,7 +2627,6 @@ export class LiveScoreComponent {
   //   this.cdr.markForCheck(); // tell Angular to re-check this component
   // }
 }`,
-            language: `typescript`,
           },
           {
             heading: `SCSS Reusability & Deprecated Deep`,
@@ -2737,7 +2680,6 @@ $breakpoints: (
 
 /* MODERN alternative 2: Global styles.scss override ──────── */
 /* .mat-mdc-button.brand { color: $brand-primary !important; } */`,
-            language: `css`,
           },
           {
             heading: `TypeScript Config & CLI Tools`,
@@ -2774,7 +2716,6 @@ $breakpoints: (
 // ng update @angular/core @angular/cli   (update Angular version)
 // ng add @angular/material                (add Angular Material)
 // ng add @angular/pwa                     (add PWA support)`,
-            language: `typescript`,
           },
           {
             heading: `SCSS mixins & BEM methodology`,
@@ -2832,7 +2773,6 @@ $breakpoints: (
     .card__body  { color: #ccc; }
   }
 }`,
-            language: `css`,
           },
           {
             heading: `Core dependencies & Debugging`,
@@ -2879,7 +2819,6 @@ export class DebugComponent implements DoCheck {
 // localStorage.clear()         — clear cached auth tokens
 // performance.mark('start')    — measure render timings
 // window.performance.memory    — check JS heap size (Chrome)`,
-            language: `typescript`,
           },
         ],
       },
@@ -2931,7 +2870,6 @@ export class DebugComponent implements DoCheck {
 } @placeholder {
   <div class="placeholder-glow"><span class="placeholder col-12"></span></div>
 }`,
-            language: `html`,
           },
           {
             heading: `SSR Hydration improvements`,
@@ -2970,7 +2908,6 @@ import { Component } from '@angular/core';
   template: \`<canvas id="myCanvas"></canvas>\`
 })
 export class CanvasWidgetComponent {}`,
-            language: `typescript`,
           },
           {
             heading: `Accessibility (a11y) improvements`,
@@ -3015,7 +2952,6 @@ export class CanvasWidgetComponent {}`,
 <button (click)="closeModal()" aria-label="Close dialog">
   <i class="bi bi-x-lg" aria-hidden="true"></i>
 </button>`,
-            language: `html`,
           },
         ],
       },
@@ -3073,7 +3009,6 @@ export class CounterComponent {
 // ✓ Smaller bundle (~98KB saved)
 // ✓ Better interoperability with non-Angular code
 // ✓ Required for Signal-based rendering (future Angular direction)`,
-            language: `typescript`,
           },
           {
             heading: `Incremental SSR & Event Replay`,
@@ -3112,7 +3047,6 @@ export const appConfig: ApplicationConfig = {
 // import { CommonEngine } from '@angular/ssr';
 // const engine = new CommonEngine();
 // engine.render({ bootstrap: AppServerModule, ... })`,
-            language: `typescript`,
           },
           {
             heading: `Microfrontends & Module Federation`,
@@ -3158,7 +3092,6 @@ export class SharedCartService {
   items = signal<CartItem[]>([]);
   addItem(item: CartItem) { this.items.update(list => [...list, item]); }
 }`,
-            language: `typescript`,
           },
           {
             heading: `Security (XSS & CSRF Mitigation)`,
@@ -3207,7 +3140,6 @@ import { provideHttpClient, withXsrfConfiguration } from '@angular/common/http';
 // In index.html <head> (strongest XSS protection):
 // <meta http-equiv="Content-Security-Policy"
 //   content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">`,
-            language: `typescript`,
           },
           {
             heading: `PWA & Service Workers`,
@@ -3270,7 +3202,6 @@ export class AppComponent {
     }
   }
 }`,
-            language: `typescript`,
           },
         ],
       },
@@ -3323,7 +3254,6 @@ export class VirtualListComponent {
   // Stable identity function for CDK virtual scroll
   trackById = (_: number, item: { id: number }) => item.id;
 }`,
-            language: `typescript`,
           },
           {
             heading: `Zoneless mode debugging with 3rd-party callbacks`,
@@ -3372,7 +3302,6 @@ export class LegacyChartComponent {
 // onDataUpdate: (newData: any[]) => {
 //   this.dataCount.set(newData.length); // Signal auto-triggers CD
 // }`,
-            language: `typescript`,
           },
           {
             heading: `Memory Leak Diagnosis & Fix`,
@@ -3425,7 +3354,6 @@ export class NoLeakComponent implements OnInit {
     });
   }
 }`,
-            language: `typescript`,
           },
           {
             heading: `Microfrontends (Module Federation) shared state`,
@@ -3472,7 +3400,6 @@ export class GlobalCartStore {
 //   this.cart.addItem({ id: product.id, name: product.name, price: product.price });
 //   // Shell's cart badge updates automatically — Signal reactivity!
 // }`,
-            language: `typescript`,
           },
           {
             heading: `Web Workers for heavy background tasks`,
@@ -3552,7 +3479,6 @@ export class PrimeCalculatorComponent {
     worker.postMessage({ limit: 1_000_000 });
   }
 }`,
-            language: `typescript`,
           },
           {
             heading: `Legacy app migration scenario`,
@@ -3598,7 +3524,6 @@ export class AppModule {
 // → Switch to bootstrapApplication() (standalone)
 // → Remove AngularJS scripts from index.html
 // → Delete angular.module() code`,
-            language: `typescript`,
           },
         ],
       },
