@@ -100,8 +100,7 @@
                     <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
                         routerLink="/study-notes/components-core" routerLinkActive="active-sub bg-light fw-bold" #rlaSN1="routerLinkActive"
                         [appScrollActive]="rlaSN1.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-boxes]="!rlaSN1.isActive"
-                            [class.bi-boxes]="rlaSN1.isActive" [class.text-primary]="rlaSN1.isActive"></i>
+                        <i class="bi bi-boxes me-3 fs-5 opacity-75 transition-all" [class.text-primary]="rlaSN1.isActive"></i>
                         <span>Components &amp; Core</span>
                     </a>
                 </li>
@@ -136,8 +135,7 @@
                     <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
                         routerLink="/study-notes/performance-advanced" routerLinkActive="active-sub bg-light fw-bold" #rlaSN5="routerLinkActive"
                         [appScrollActive]="rlaSN5.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-speedometer2]="!rlaSN5.isActive"
-                            [class.bi-speedometer2]="rlaSN5.isActive" [class.text-primary]="rlaSN5.isActive"></i>
+                        <i class="bi bi-speedometer2 me-3 fs-5 opacity-75 transition-all" [class.text-primary]="rlaSN5.isActive"></i>
                         <span>Performance &amp; Advanced</span>
                     </a>
                 </li>
