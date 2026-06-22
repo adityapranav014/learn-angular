@@ -1,14 +1,14 @@
-import { Component, inject, signal, computed, ViewChild } from '@angular/core';
+import { Component, inject, signal, computed, ViewChild, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { NgbCarousel, NgbSlide, NgbSlideEvent } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarousel, NgbSlide, NgbSlideEvent, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { STUDY_NOTES, StudyNote } from '../../data/study-notes';
 
 @Component({
   selector: 'app-study-notes',
   templateUrl: './study-notes.component.html',
   styleUrls: ['./study-notes.component.scss'],
-  imports: [CommonModule, NgbCarousel, NgbSlide]
+  imports: [CommonModule, NgbCarousel, NgbSlide, NgbTooltip]
 })
 export class StudyNotesComponent {
   private route = inject(ActivatedRoute);
@@ -16,6 +16,7 @@ export class StudyNotesComponent {
   activeTopic = signal<StudyNote>(STUDY_NOTES[0]);
   activeVersion = signal<string>('fundamentals');
   activeIndex = 0;
+  codeFullscreen = false;
 
   @ViewChild('carousel') carousel!: NgbCarousel;
 
@@ -56,5 +57,13 @@ export class StudyNotesComponent {
 
   goToSlide(idx: number) {
     this.carousel?.select('slide-' + idx);
+  }
+
+  // Close full screen on Escape key press
+  @HostListener('document:keydown.escape', ['$event'])
+  handleEscapeKey(event: Event) {
+    if (this.codeFullscreen) {
+      this.codeFullscreen = false;
+    }
   }
 }

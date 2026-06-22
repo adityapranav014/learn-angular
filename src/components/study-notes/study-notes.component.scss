@@ -212,6 +212,7 @@ $track-color: #e5e7eb;
   font-size: 0.975rem;
   line-height: 1.65;
   color: #374151;
+
   p {
     margin-bottom: 1rem;
   }
@@ -249,4 +250,52 @@ pre::-webkit-scrollbar-thumb {
 
 pre::-webkit-scrollbar-thumb:hover {
   background-color: rgba(128, 128, 128, 0.5);
+}
+
+/* Fullscreen Code Hint Functionality */
+.card.code-hint-fullscreen {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 9999 !important;
+  /* Forces it over navbars, sidebars, and carousels */
+  margin: 0 !important;
+  border-radius: 0 !important;
+  display: flex;
+  flex-direction: column;
+
+  .card-header {
+    border-radius: 0 !important;
+    padding: 1rem 1.5rem !important;
+  }
+
+  .study-code-hint-body {
+    flex: 1 1 auto !important;
+    max-height: calc(100vh - 4rem) !important;
+    /* Subtract header space */
+    padding: 1.5rem !important;
+    height: 100% !important;
+
+    pre {
+      height: 100% !important;
+      max-height: none !important;
+    }
+  }
+}
+
+/* Fixes carousel stacking context constraints when fullscreen is active */
+::ng-deep .study-carousel {
+  &:has(.code-hint-fullscreen) {
+    overflow: visible !important;
+
+    .carousel-inner,
+    .carousel-item.active {
+      overflow: visible !important;
+      transform: none !important;
+      /* Prevents container nesting containment */
+      position: static !important;
+    }
+  }
 }

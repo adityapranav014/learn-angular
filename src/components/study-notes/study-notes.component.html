@@ -76,12 +76,20 @@
 
                             <!-- Code Hint -->
                             <div class="col-12 col-xl-6">
-                                <div class="card h-100 shadow-sm border-0 bg-dark text-light">
-                                    <div
-                                        class="card-header bg-dark border-bottom border-secondary pt-3 pb-2">
-                                        <h5 class="card-title text-light mb-0 fw-bold">
-                                            <i class="bi bi-code-slash me-2 text-warning"></i>Code Hint
-                                        </h5>
+                                <div class="card h-100 shadow-sm border-0 bg-dark text-light"
+                                    [class.code-hint-fullscreen]="codeFullscreen">
+                                    <div class="card-header bg-dark border-bottom border-secondary pt-3 pb-2">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <h5 class="card-title text-light mb-0 fw-bold">
+                                                <i class="bi bi-code-slash me-2 text-warning"></i>Code Hint
+                                            </h5>
+                                            <button class="btn btn-sm btn-dark border-0 p-1 lh-1"
+                                                [ngbTooltip]="codeFullscreen ? 'Exit fullscreen' : 'Fullscreen'"
+                                                placement="left"
+                                                (click)="codeFullscreen = !codeFullscreen">
+                                                <i class="bi text-secondary" [class.bi-fullscreen]="!codeFullscreen" [class.bi-fullscreen-exit]="codeFullscreen"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                     <div class="card-body study-code-hint-body">
                                         @if (section.codeExample) {
