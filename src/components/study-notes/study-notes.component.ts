@@ -34,8 +34,7 @@ export class StudyNotesComponent {
         const found = STUDY_NOTES.find(t => t.id === topicId);
         if (found) {
           this.activeTopic.set(found);
-          const hasVersion = found.versions.some(v => v.version === this.activeVersion());
-          if (!hasVersion && found.versions.length > 0) {
+          if (found.versions.length > 0) {
             this.activeVersion.set(found.versions[0].version);
           }
           this.activeIndex = 0;
