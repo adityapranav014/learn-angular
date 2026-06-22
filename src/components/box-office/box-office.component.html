@@ -50,9 +50,11 @@
                 <h5 class="fw-bold text-dark">Ticket Selection & Shows</h5>
               </div>
               <ul class="mb-0 text-muted small">
-  <li class="mb-2"><strong>Showtime Catalog</strong>: Render movie arrays using <code>&#64;for</code>.</li>
-  <li class="mb-2"><strong>Interactive Highlights</strong>: Highlight selected movie cards, display active showtimes, and automatically select the slot if only one is available.</li>
-</ul>
+                <li class="mb-2"><strong>Showtime Catalog</strong>: Render movie arrays using <code>&#64;for</code>.
+                </li>
+                <li class="mb-2"><strong>Interactive Highlights</strong>: Highlight selected movie cards, display active
+                  showtimes, and automatically select the slot if only one is available.</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -103,7 +105,7 @@
                       <div class="mt-auto border-top pt-2 d-flex justify-content-between align-items-center">
                         <span class="fw-bold text-success small">₹{{ movie.rate }}</span>
                         @if (selectedMovie === movie) {
-                          <i class="bi bi-check-circle-fill text-primary"></i>
+                        <i class="bi bi-check-circle-fill text-primary"></i>
                         }
                       </div>
                     </div>
@@ -170,40 +172,7 @@
 
         <!-- Code Hint Card -->
         <div class="col-lg-4 col-md-12">
-          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
-            <div
-              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
-              <h5 class="card-title text-light mb-0 fw-bold">
-                <i class="bi bi-code-slash me-2 text-warning"></i>Code Hint
-              </h5>
-            </div>
-            <div class="card-body">
-              <div class="mb-3">
-                <p class="small text-secondary fw-bold mb-2 tracking-wider"><i class="bi bi-cpu me-1"></i> Auto-Select Logic
-                </p>
-                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary shadow-sm"><code>selectMovie(movie: any) &#123;
-  this.selectedMovie = movie;
-  
-  // If only 1 show, auto-select it
-  if (movie.shows.length === 1) &#123;
-    this.selectedShow = movie.shows[0];
-  &#125; else &#123;
-    this.selectedShow = '';
-  &#125;
-&#125;</code></pre>
-              </div>
-              <div>
-                <p class="small text-warning fw-bold mb-2 tracking-wider"><i class="bi bi-calculator me-1"></i> Dynamic
-                  Calculation</p>
-                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary shadow-sm"><code>bookTicket() &#123;
-  if (this.ticketCount) &#123;
-    this.totalCost = 
-      this.selectedMovie.rate * this.ticketCount;
-  &#125;
-&#125;</code></pre>
-              </div>
-            </div>
-          </div>
+          <app-code-viewer [codeFiles]="codeFiles1" class="h-100"></app-code-viewer>
         </div>
 
       </div>
@@ -226,9 +195,11 @@
                 <h5 class="fw-bold text-dark">Movie Seat Booking</h5>
               </div>
               <ul class="mb-0 text-muted small">
-  <li class="mb-2"><strong>Interactive Seat Grid</strong>: Render seating layouts dynamically using state classes (available, selected, occupied).</li>
-  <li class="mb-2"><strong>Interactive Selections</strong>: Toggle selections on click, calculate totals in real-time, and update occupancy states on booking.</li>
-</ul>
+                <li class="mb-2"><strong>Interactive Seat Grid</strong>: Render seating layouts dynamically using state
+                  classes (available, selected, occupied).</li>
+                <li class="mb-2"><strong>Interactive Selections</strong>: Toggle selections on click, calculate totals
+                  in real-time, and update occupancy states on booking.</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -246,9 +217,10 @@
               <!-- Movie selector -->
               <div class="movie-container">
                 <label for="movie">Pick a movie:</label>
-                <select id="movie" class="form-select border-2 shadow-xs transition-all" [(ngModel)]="selectedSeatMovie">
+                <select id="movie" class="form-select border-2 shadow-xs transition-all"
+                  [(ngModel)]="selectedSeatMovie">
                   @for (movie of seatMovies; track movie.name) {
-                    <option [ngValue]="movie">{{ movie.name }} (${{ movie.price }})</option>
+                  <option [ngValue]="movie">{{ movie.name }} (${{ movie.price }})</option>
                   }
                 </select>
               </div>
@@ -277,35 +249,37 @@
 
                 <div class="d-flex flex-column gap-1 mb-2">
                   @for (row of seatRows; track row; let rowIdx = $index) {
-                    <div class="movie-row">
-                      @for (seat of row; track seat; let colIdx = $index) {
-                        <div class="seat" 
-                          [class.selected]="seat.status === 'selected'"
-                          [class.occupied]="seat.status === 'occupied'"
-                          (click)="toggleSeat(rowIdx, colIdx)">
-                        </div>
-                      }
+                  <div class="movie-row">
+                    @for (seat of row; track seat; let colIdx = $index) {
+                    <div class="seat" [class.selected]="seat.status === 'selected'"
+                      [class.occupied]="seat.status === 'occupied'" (click)="toggleSeat(rowIdx, colIdx)">
                     </div>
+                    }
+                  </div>
                   }
                 </div>
               </div>
 
               <!-- Real-time dynamic stats display -->
               <p class="text-booking-summary">
-                You have selected <span id="count">{{ selectedSeatsCount }}</span> seats for a price of $<span id="total">{{ totalSeatsPrice }}</span>
+                You have selected <span id="count">{{ selectedSeatsCount }}</span> seats for a price of $<span
+                  id="total">{{ totalSeatsPrice }}</span>
               </p>
 
               <!-- Success Alert Banner -->
               @if (isSeatBooked) {
-                <div class="p-2 bg-success bg-opacity-10 border border-success border-opacity-25 rounded-3 small text-dark d-flex gap-2 align-items-start mb-3 animate__animated animate__fadeIn">
-                  <i class="bi bi-check-circle-fill text-success fs-5 mt-0.5"></i>
-                  <div>Successfully booked <strong>{{ bookedSeatsCount }}</strong> seats for <strong>${{ bookedSeatsPrice }}</strong>!</div>
-                </div>
+              <div
+                class="p-2 bg-success bg-opacity-10 border border-success border-opacity-25 rounded-3 small text-dark d-flex gap-2 align-items-start mb-3 animate__animated animate__fadeIn">
+                <i class="bi bi-check-circle-fill text-success fs-5 mt-0.5"></i>
+                <div>Successfully booked <strong>{{ bookedSeatsCount }}</strong> seats for <strong>${{ bookedSeatsPrice
+                    }}</strong>!</div>
+              </div>
               }
 
               <!-- Booking Trigger Button -->
               <div class="attemptbtn mt-auto">
-                <button id="btn1" class="btn btn-attempt shadow-xs" (click)="bookSeats()" [disabled]="selectedSeatsCount === 0">
+                <button id="btn1" class="btn btn-attempt shadow-xs" (click)="bookSeats()"
+                  [disabled]="selectedSeatsCount === 0">
                   Attempt
                 </button>
               </div>
@@ -316,34 +290,7 @@
 
         <!-- Code Hint Card -->
         <div class="col-lg-4 col-md-12">
-          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
-            <div
-              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
-              <h5 class="card-title text-light mb-0 fw-bold">
-                <i class="bi bi-code-slash me-2 text-warning"></i>Code Hint
-              </h5>
-            </div>
-            <div class="card-body">
-              <div class="mb-3">
-                <p class="small text-secondary fw-bold mb-2 tracking-wider"><i class="bi bi-cpu me-1"></i> Interactive Selection (TS)</p>
-                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary shadow-sm"><code>toggleSeat(rowIdx: number, colIdx: number) &#123;
-  const seat = this.seatRows[rowIdx][colIdx];
-  if (seat.status === 'available') &#123;
-    seat.status = 'selected';
-  &#125; else if (seat.status === 'selected') &#123;
-    seat.status = 'available';
-  &#125;
-&#125;</code></pre>
-              </div>
-              <div>
-                <p class="small text-warning fw-bold mb-2 tracking-wider"><i class="bi bi-calculator me-1"></i> Computed Summary</p>
-                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary shadow-sm"><code>get selectedSeatsCount(): number &#123;
-  return this.seatRows.flat()
-    .filter(s => s.status === 'selected').length;
-&#125;</code></pre>
-              </div>
-            </div>
-          </div>
+          <app-code-viewer [codeFiles]="codeFiles2" class="h-100"></app-code-viewer>
         </div>
 
       </div>

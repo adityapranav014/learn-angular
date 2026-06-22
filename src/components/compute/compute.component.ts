@@ -1,14 +1,39 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CodeViewerComponent, CodeFile } from '../code-viewer/code-viewer.component';
 
 @Component({
   selector: 'app-compute',
   templateUrl: './compute.component.html',
   styleUrls: ['./compute.component.css'],
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, CodeViewerComponent]
 })
 export class ComputeComponent {
+
+  codeFiles: CodeFile[] = [
+    {
+      fileName: 'compute.component.ts',
+      language: 'typescript',
+      code: `calculator(type: string, valor: string | number) {
+  if (type === 'action') {
+    if (valor === 'c') {
+      this.resultado = '';
+    } else if (['+', '-', '*', '/', '.'].includes(valor as string)) {
+      this.resultado += valor;
+    } else if (valor === '=') {
+      try {
+        this.resultado = eval(this.resultado);
+      } catch {
+        this.resultado = 'Error';
+      }
+    }
+  } else {
+    this.resultado += valor;
+  }
+}`
+    }
+  ];
   resultado: string = '';
 
   calculator(type: string, valor: string | number) {

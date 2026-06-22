@@ -2,14 +2,67 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbCarousel, NgbSlide, NgbSlideEvent } from '@ng-bootstrap/ng-bootstrap/carousel';
+import { CodeViewerComponent, CodeFile } from '../code-viewer/code-viewer.component';
 
 @Component({
   selector: 'app-box-office',
   templateUrl: './box-office.component.html',
   styleUrls: ['./box-office.component.css'],
-  imports: [FormsModule, CommonModule, NgbCarousel, NgbSlide]
+  imports: [FormsModule, CommonModule, NgbCarousel, NgbSlide, CodeViewerComponent]
 })
 export class BoxOfficeComponent implements OnInit {
+
+  // Task 1 code files
+  codeFiles1: CodeFile[] = [
+    {
+      fileName: 'Auto-Select Logic',
+      language: 'typescript',
+      code: `selectMovie(movie: any) {
+  this.selectedMovie = movie;
+
+  // If only 1 show, auto-select it
+  if (movie.shows.length === 1) {
+    this.selectedShow = movie.shows[0];
+  } else {
+    this.selectedShow = '';
+  }
+}`
+    },
+    {
+      fileName: 'Dynamic Calculation',
+      language: 'typescript',
+      code: `bookTicket() {
+  if (this.ticketCount) {
+    this.totalCost =
+      this.selectedMovie.rate * this.ticketCount;
+  }
+}`
+    }
+  ];
+
+  // Task 2 code files
+  codeFiles2: CodeFile[] = [
+    {
+      fileName: 'Interactive Selection',
+      language: 'typescript',
+      code: `toggleSeat(rowIdx: number, colIdx: number) {
+  const seat = this.seatRows[rowIdx][colIdx];
+  if (seat.status === 'available') {
+    seat.status = 'selected';
+  } else if (seat.status === 'selected') {
+    seat.status = 'available';
+  }
+}`
+    },
+    {
+      fileName: 'Computed Summary',
+      language: 'typescript',
+      code: `get selectedSeatsCount(): number {
+  return this.seatRows.flat()
+    .filter(s => s.status === 'selected').length;
+}`
+    }
+  ];
 
   // --- Carousel / Pagination State ---
   activeIndex = 0;
@@ -110,7 +163,7 @@ export class BoxOfficeComponent implements OnInit {
       ['available', 'available', 'available', 'occupied', 'occupied', 'available', 'available', 'available'],
       ['available', 'available', 'available', 'available', 'occupied', 'occupied', 'occupied', 'available']
     ];
-    this.seatRows = layout.map(row => 
+    this.seatRows = layout.map(row =>
       row.map(status => ({ status: status as 'available' | 'selected' | 'occupied' }))
     );
     this.isSeatBooked = false;

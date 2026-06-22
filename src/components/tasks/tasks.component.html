@@ -29,38 +29,16 @@
               <h5 class="fw-bold text-dark">To Do List App</h5>
             </div>
             <ul class="mb-0 text-muted small">
-  <li class="mb-2"><strong>Task Planner</strong>: Bind a text input to append tasks to a local array, and persist updates in <code>localStorage</code>.</li>
-  <li class="mb-2"><strong>Roster Operations</strong>: Load items on load, toggle status via checkboxes, and support editing/deleting tasks.</li>
-</ul>
+              <li class="mb-2"><strong>Task Planner</strong>: Bind a text input to append tasks to a local array, and
+                persist updates in <code>localStorage</code>.</li>
+              <li class="mb-2"><strong>Roster Operations</strong>: Load items on load, toggle status via checkboxes, and
+                support editing/deleting tasks.</li>
+            </ul>
           </div>
         </div>
 
-        <!-- Code Hint Card -->
-        <div class="card shadow-sm border-0 bg-dark text-light flex-grow-1">
-          <div class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
-            <h5 class="card-title text-light mb-0 fw-bold">
-              <i class="bi bi-code-slash me-2 text-warning"></i>Code Hint
-            </h5>
-          </div>
-          <div class="card-body">
-            <div class="mb-2">
-              <p class="small text-secondary fw-bold mb-2 tracking-wider"><i class="bi bi-cpu me-1"></i> LocalStorage Persistence (TS)</p>
-              <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary shadow-sm"><code>// Save to storage
-saveToLocalStorage() &#123;
-  localStorage.setItem(
-    'todo-list', 
-    JSON.stringify(this.todos)
-  );
-&#125;
-
-// Load from storage
-ngOnInit() &#123;
-  const stored = localStorage.getItem('todo-list');
-  if (stored) this.todos = JSON.parse(stored);
-&#125;</code></pre>
-            </div>
-          </div>
-        </div>
+        <!-- Code Hint Card (Desktop) -->
+        <app-code-viewer [codeFiles]="codeFiles" class="flex-grow-1 d-none d-lg-block"></app-code-viewer>
 
       </div>
     </div>
@@ -76,40 +54,47 @@ ngOnInit() &#123;
         </div>
 
         <div class="card-body bg-white rounded-bottom p-4">
-          
+
           <div class="todo-wrapper border rounded-3 p-3 bg-light">
-            
+
             <!-- Input Task Area -->
             <div class="row g-2 mb-3 align-items-center">
               <div class="col">
                 <div class="input-group">
                   <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-list-task"></i></span>
-                  <input type="text" id="txtName" class="form-control border-start-0" placeholder="Add a new task..." [(ngModel)]="userTask" (keyup.enter)="saveTask()">
+                  <input type="text" id="txtName" class="form-control border-start-0" placeholder="Add a new task..."
+                    [(ngModel)]="userTask" (keyup.enter)="saveTask()">
                 </div>
               </div>
               <div class="col-auto">
                 @if (isEditMode) {
-                  <div class="d-flex gap-1">
-                    <button class="btn btn-success fw-bold px-3 btn-sm" (click)="saveTask()">Update</button>
-                    <button class="btn btn-outline-secondary btn-sm" (click)="cancelEdit()"><i class="bi bi-x-lg"></i></button>
-                  </div>
+                <div class="d-flex gap-1">
+                  <button class="btn btn-success fw-bold px-3 btn-sm" (click)="saveTask()">Update</button>
+                  <button class="btn btn-outline-secondary btn-sm" (click)="cancelEdit()"><i
+                      class="bi bi-x-lg"></i></button>
+                </div>
                 } @else {
-                  <button class="btn btn-brand fw-bold px-4 btn-sm" (click)="saveTask()">Add</button>
+                <button class="btn btn-brand fw-bold px-4 btn-sm" (click)="saveTask()">Add</button>
                 }
               </div>
             </div>
 
             <!-- Validation Error -->
             @if (validationError) {
-              <div class="text-danger small mb-3"><i class="bi bi-exclamation-circle me-1"></i>{{ validationError }}</div>
+            <div class="text-danger small mb-3"><i class="bi bi-exclamation-circle me-1"></i>{{ validationError }}</div>
             }
 
             <!-- Filter Controls -->
             <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
               <div class="d-flex gap-2">
-                <button class="btn btn-xs rounded-pill" [class.btn-dark]="activeFilter === 'all'" [class.btn-outline-secondary]="activeFilter !== 'all'" (click)="setFilter('all')">All</button>
-                <button class="btn btn-xs rounded-pill" [class.btn-dark]="activeFilter === 'pending'" [class.btn-outline-secondary]="activeFilter !== 'pending'" (click)="setFilter('pending')">Pending</button>
-                <button class="btn btn-xs rounded-pill" [class.btn-dark]="activeFilter === 'completed'" [class.btn-outline-secondary]="activeFilter !== 'completed'" (click)="setFilter('completed')">Completed</button>
+                <button class="btn btn-xs rounded-pill" [class.btn-dark]="activeFilter === 'all'"
+                  [class.btn-outline-secondary]="activeFilter !== 'all'" (click)="setFilter('all')">All</button>
+                <button class="btn btn-xs rounded-pill" [class.btn-dark]="activeFilter === 'pending'"
+                  [class.btn-outline-secondary]="activeFilter !== 'pending'"
+                  (click)="setFilter('pending')">Pending</button>
+                <button class="btn btn-xs rounded-pill" [class.btn-dark]="activeFilter === 'completed'"
+                  [class.btn-outline-secondary]="activeFilter !== 'completed'"
+                  (click)="setFilter('completed')">Completed</button>
               </div>
               <span class="text-muted small fw-bold">{{ getFilteredTodos().length }} items</span>
             </div>
@@ -118,28 +103,31 @@ ngOnInit() &#123;
             <div class="task-box-container" style="max-height: 320px; overflow-y: auto;">
               <ul class="task-box list-unstyled mb-0 d-flex flex-column gap-2">
                 @for (todo of getFilteredTodos(); track todo) {
-                  <li class="d-flex align-items-center justify-content-between bg-white border p-3 rounded-3 shadow-xs animate__animated animate__fadeIn">
-                    <div class="d-flex align-items-center gap-2 mb-0">
-                      <input class="form-check-input mt-0 cursor-pointer" type="checkbox" [checked]="todo.status === 'completed'" (change)="toggleStatus(todo)">
-                      <p class="mb-0 text-dark" [class.checked-text]="todo.status === 'completed'">
-                        {{ todo.name }}
-                      </p>
-                    </div>
+                <li
+                  class="d-flex align-items-center justify-content-between bg-white border p-3 rounded-3 shadow-xs animate__animated animate__fadeIn">
+                  <div class="d-flex align-items-center gap-2 mb-0">
+                    <input class="form-check-input mt-0 cursor-pointer" type="checkbox"
+                      [checked]="todo.status === 'completed'" (change)="toggleStatus(todo)">
+                    <p class="mb-0 text-dark" [class.checked-text]="todo.status === 'completed'">
+                      {{ todo.name }}
+                    </p>
+                  </div>
 
-                    <div class="d-flex align-items-center gap-2">
-                      <button class="btn btn-link text-secondary p-0 border-0" (click)="editTask(todo)" title="Edit task">
-                        <i class="bi bi-pencil fs-6 text-primary"></i>
-                      </button>
-                      <button class="btn btn-link text-secondary p-0 border-0" (click)="deleteTask(todo)" title="Delete task">
-                        <i class="bi bi-trash fs-6 text-danger"></i>
-                      </button>
-                    </div>
-                  </li>
+                  <div class="d-flex align-items-center gap-2">
+                    <button class="btn btn-link text-secondary p-0 border-0" (click)="editTask(todo)" title="Edit task">
+                      <i class="bi bi-pencil fs-6 text-primary"></i>
+                    </button>
+                    <button class="btn btn-link text-secondary p-0 border-0" (click)="deleteTask(todo)"
+                      title="Delete task">
+                      <i class="bi bi-trash fs-6 text-danger"></i>
+                    </button>
+                  </div>
+                </li>
                 } @empty {
-                  <li class="text-center py-4 text-muted small">
-                    <i class="bi bi-emoji-smile fs-4 d-block mb-2 opacity-50"></i>
-                    <span>You don't have any task here</span>
-                  </li>
+                <li class="text-center py-4 text-muted small">
+                  <i class="bi bi-emoji-smile fs-4 d-block mb-2 opacity-50"></i>
+                  <span>You don't have any task here</span>
+                </li>
                 }
               </ul>
             </div>
@@ -148,6 +136,11 @@ ngOnInit() &#123;
 
         </div>
       </div>
+    </div>
+
+    <!-- Code Hint Card (Mobile) -->
+    <div class="col-12 d-lg-none">
+      <app-code-viewer [codeFiles]="codeFiles"></app-code-viewer>
     </div>
 
   </div>

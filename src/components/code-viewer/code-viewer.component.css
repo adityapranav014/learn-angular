@@ -1,0 +1,137 @@
+:host {
+    display: block;
+    height: 100%;
+}
+
+/* Fullscreen overlay */
+.code-hint-fullscreen {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 9999 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    display: flex;
+    flex-direction: column;
+}
+
+.code-hint-fullscreen .card-header {
+    border-radius: 0 !important;
+}
+
+.code-hint-fullscreen .study-code-hint-body {
+    flex: 1 1 auto !important;
+    max-height: calc(100vh - 4rem) !important;
+    height: 100% !important;
+}
+
+.code-hint-fullscreen .study-code-hint-body pre {
+    height: 100% !important;
+    max-height: none !important;
+}
+
+/* Code body scrollable */
+.study-code-hint-body {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    max-height: calc(100dvh - 22rem);
+    background: #1e1e1e;
+    border-radius: 0 0 0.375rem 0.375rem;
+}
+
+.study-code-hint-body pre {
+    flex: 1 1 0;
+    white-space: pre;
+    overflow: auto;
+    min-height: 0;
+    background: transparent !important;
+}
+
+/* File tabs */
+.code-tabs-scroll {
+    gap: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    scrollbar-width: none;
+}
+
+.code-tabs-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.code-tab {
+    font-size: 0.8rem;
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    padding: 0.4rem 0.85rem 0;
+    border-bottom: 2px solid transparent !important;
+    opacity: 0.55;
+    transition: opacity 0.15s, border-color 0.15s;
+    white-space: nowrap;
+}
+
+.code-tab.active,
+.code-tab:hover {
+    opacity: 1;
+    border-bottom-color: #f59e0b !important;
+}
+
+/* hljs overrides */
+::ng-deep .hljs {
+    height: 100%;
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    background: transparent !important;
+    border-radius: 0 0 0.375rem 0.375rem;
+}
+
+::ng-deep .hljs::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::ng-deep .hljs::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+::ng-deep .hljs::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.35);
+}
+
+/* Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+}
+
+@media (max-width: 991.98px) {
+    :host {
+        height: auto;
+    }
+
+    .study-code-hint-body {
+        max-height: none;
+        overflow: visible;
+    }
+
+    .study-code-hint-body pre {
+        max-height: none;
+        flex: none;
+    }
+
+    .code-hint-fullscreen {
+        height: 100dvh !important;
+    }
+}

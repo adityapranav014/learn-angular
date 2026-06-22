@@ -29,54 +29,18 @@
               <h5 class="fw-bold text-dark">KYC & Biometric Vault</h5>
             </div>
             <ul class="mb-0 text-muted small">
-  <li class="mb-2"><strong>Secure KYC Identity Vault</strong>: Validate document patterns (12-digit Aadhaar, standard PAN regex).</li>
-  <li class="mb-2"><strong>Biometric Scanner</strong>: Simulate biometric scanner progress using timer intervals with manual change detection triggers.</li>
-  <li><strong>Dashboard Access</strong>: Store verified states in <code>localStorage</code>, and implement lock/unlock utilities.</li>
-</ul>
+              <li class="mb-2"><strong>Secure KYC Identity Vault</strong>: Validate document patterns (12-digit Aadhaar,
+                standard PAN regex).</li>
+              <li class="mb-2"><strong>Biometric Scanner</strong>: Simulate biometric scanner progress using timer
+                intervals with manual change detection triggers.</li>
+              <li><strong>Dashboard Access</strong>: Store verified states in <code>localStorage</code>, and implement
+                lock/unlock utilities.</li>
+            </ul>
           </div>
         </div>
 
-        <!-- Code Hint Card -->
-        <div class="card shadow-sm border-0 bg-dark text-light flex-grow-1">
-          <div
-            class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
-            <h5 class="card-title text-light mb-0 fw-bold">
-              <i class="bi bi-code-slash me-2 text-warning"></i>Code Hint
-            </h5>
-          </div>
-          <div class="card-body">
-            <div class="mb-3">
-              <p class="small text-secondary fw-bold mb-2 tracking-wider"><i class="bi bi-cpu me-1"></i> Biometric Scan
-                (TS)</p>
-              <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary shadow-sm"><code>startBiometricScan() &#123;
-  this.isScanning = true;
-  this.scanProgress = 0;
-  
-  this.scanInterval = setInterval(() => &#123;
-    if (this.scanProgress < 100) &#123;
-      this.scanProgress += 5;
-    &#125; else &#123;
-      clearInterval(this.scanInterval);
-      this.isScanning = false;
-      this.biometricVerified = true;
-    &#125;
-  &#125;, 30);
-&#125;</code></pre>
-            </div>
-            <div>
-              <p class="small text-warning fw-bold mb-2 tracking-wider"><i class="bi bi-shield-check me-1"></i>
-                Verification Check</p>
-              <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary shadow-sm"><code>submitKyc() &#123;
-  if (!this.biometricVerified) &#123;
-    this.validationError = 'Scan biometrics!';
-    return;
-  &#125;
-  // Save verified details...
-  localStorage.setItem('kyc-vault', ...);
-&#125;</code></pre>
-            </div>
-          </div>
-        </div>
+        <!-- Code Hint Card (Desktop) -->
+        <app-code-viewer [codeFiles]="codeFiles" class="flex-grow-1 d-none d-lg-block"></app-code-viewer>
 
       </div>
     </div>
@@ -201,15 +165,15 @@
           <div class="kyc-vault-wrapper animate__animated animate__fadeIn">
             <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
               <h6 class="fw-bold text-dark mb-0">Biometric Identity Vault</h6>
-              <span class="badge bg-success px-3 py-2 rounded-pill"><i class="bi bi-shield-fill-check me-1"></i>Verified</span>
+              <span class="badge bg-success px-3 py-2 rounded-pill"><i
+                  class="bi bi-shield-fill-check me-1"></i>Verified</span>
             </div>
 
             <div class="row g-4 align-items-stretch justify-content-center">
               <div class="col-md-7 col-12 d-flex justify-content-center">
 
                 <!-- Safe Card -->
-                <div class="secure-vault-card position-relative p-4 text-white shadow"
-                  [class.locked]="isLocked">
+                <div class="secure-vault-card position-relative p-4 text-white shadow" [class.locked]="isLocked">
 
                   @if (isLocked) {
                   <div class="lock-overlay d-flex flex-column align-items-center justify-content-center gap-3">
@@ -225,7 +189,8 @@
                   <div class="d-flex justify-content-between align-items-start mb-3">
                     <div>
                       <span class="badge-digital-id mb-2">DIGITAL ID</span>
-                      <h6 class="fw-bold mb-0 text-white tracking-wide text-uppercase" style="font-size: 0.85rem; opacity: 0.9;">Secure Credential</h6>
+                      <h6 class="fw-bold mb-0 text-white tracking-wide text-uppercase"
+                        style="font-size: 0.85rem; opacity: 0.9;">Secure Credential</h6>
                     </div>
                     <i class="bi bi-shield-fill-check vault-shield-icon"></i>
                   </div>
@@ -259,15 +224,17 @@
               <!-- Settings & Control Dashboard -->
               <div class="col-md-5 col-12">
                 <div class="d-flex flex-column justify-content-between h-100 gap-3">
-                  <div class="controls-card p-4 text-center flex-grow-1 d-flex flex-column justify-content-center align-items-center">
+                  <div
+                    class="controls-card p-4 text-center flex-grow-1 d-flex flex-column justify-content-center align-items-center">
                     <i class="bi fs-2 text-secondary mb-3" [class.bi-unlock-fill]="!isLocked"
-                      [class.bi-lock-fill]="isLocked" [class.text-success]="!isLocked" [class.text-danger]="isLocked"></i>
+                      [class.bi-lock-fill]="isLocked" [class.text-success]="!isLocked"
+                      [class.text-danger]="isLocked"></i>
                     <h6 class="fw-bold mb-2">Vault Status</h6>
                     <p class="text-muted small mb-4">Your credentials are {{ isLocked ? 'locked and encrypted' :
                       'unlocked and readable' }}.</p>
 
-                    <button class="btn btn-lock-toggle w-100 fw-bold py-2 shadow-xs" [class.btn-dark]="!isLocked" [class.btn-success]="isLocked"
-                      (click)="toggleLock()">
+                    <button class="btn btn-lock-toggle w-100 fw-bold py-2 shadow-xs" [class.btn-dark]="!isLocked"
+                      [class.btn-success]="isLocked" (click)="toggleLock()">
                       <i class="bi me-1" [class.bi-lock-fill]="!isLocked" [class.bi-unlock-fill]="isLocked"></i>
                       {{ isLocked ? 'Unlock Vault' : 'Lock Vault' }}
                     </button>
@@ -285,6 +252,11 @@
 
         </div>
       </div>
+    </div>
+
+    <!-- Code Hint Card (Mobile) -->
+    <div class="col-12 d-lg-none">
+      <app-code-viewer [codeFiles]="codeFiles"></app-code-viewer>
     </div>
 
   </div>

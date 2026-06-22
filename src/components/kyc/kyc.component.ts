@@ -1,14 +1,48 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CodeViewerComponent, CodeFile } from '../code-viewer/code-viewer.component';
 
 @Component({
   selector: 'app-kyc',
   templateUrl: './kyc.component.html',
   styleUrls: ['./kyc.component.css'],
-  imports: [FormsModule, CommonModule]
+  imports: [FormsModule, CommonModule, CodeViewerComponent]
 })
 export class KycComponent implements OnInit {
+
+  codeFiles: CodeFile[] = [
+    {
+      fileName: 'Biometric Scan',
+      language: 'typescript',
+      code: `startBiometricScan() {
+  this.isScanning = true;
+  this.scanProgress = 0;
+
+  this.scanInterval = setInterval(() => {
+    if (this.scanProgress < 100) {
+      this.scanProgress += 5;
+    } else {
+      clearInterval(this.scanInterval);
+      this.isScanning = false;
+      this.biometricVerified = true;
+    }
+  }, 30);
+}`
+    },
+    {
+      fileName: 'Verification Check',
+      language: 'typescript',
+      code: `submitKyc() {
+  if (!this.biometricVerified) {
+    this.validationError = 'Scan biometrics first!';
+    return;
+  }
+  // Save verified details...
+  localStorage.setItem('kyc-vault', JSON.stringify(data));
+}`
+    }
+  ];
 
   private cdr = inject(ChangeDetectorRef);
 
@@ -103,7 +137,7 @@ export class KycComponent implements OnInit {
     this.verifiedName = this.fullName;
     this.verifiedDob = this.dob;
     this.verifiedIdType = this.idType === 'aadhaar' ? 'Aadhaar Card' : 'PAN Card';
-    
+
     // Mask ID Number
     if (this.idType === 'aadhaar') {
       this.verifiedIdNumber = `XXXX-XXXX-${cleanedId.slice(-4)}`;

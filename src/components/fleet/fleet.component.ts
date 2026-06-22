@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CodeViewerComponent, CodeFile } from '../code-viewer/code-viewer.component';
 
 export interface Car {
   name: string;
@@ -20,9 +21,31 @@ export interface BookingItem {
   selector: 'app-fleet',
   templateUrl: './fleet.component.html',
   styleUrls: ['./fleet.component.css'],
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, CodeViewerComponent]
 })
 export class FleetComponent {
+
+  codeFiles: CodeFile[] = [
+    {
+      fileName: 'fleet.component.ts',
+      language: 'typescript',
+      code: `addBookingItem() {
+  const rate = this.rentType === 'Per Day'
+    ? car.ratePerDay
+    : car.ratePerHr;
+
+  const cost = rate * this.duration * this.qty;
+  this.bookingItems.push({
+    carName: car.name,
+    rentType: this.rentType,
+    duration: this.duration,
+    quantity: this.qty,
+    cost: cost
+  });
+}`
+    }
+  ];
+
   // Admin State
   cars: Car[] = [
     { name: 'Tesla Model Y', ratePerHr: 18, ratePerDay: 130 },

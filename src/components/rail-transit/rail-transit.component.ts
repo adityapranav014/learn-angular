@@ -2,14 +2,39 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap/accordion';
+import { CodeViewerComponent, CodeFile } from '../code-viewer/code-viewer.component';
 
 @Component({
   selector: 'app-rail-transit',
   templateUrl: './rail-transit.component.html',
-  imports: [FormsModule, CommonModule, NgbAccordionModule]
+  imports: [FormsModule, CommonModule, NgbAccordionModule, CodeViewerComponent]
 
 })
 export class RailTransitComponent {
+
+  codeFiles: CodeFile[] = [
+    {
+      fileName: 'Exchange Logic',
+      language: 'typescript',
+      code: `exchangeStations() {
+  // Use a temporary variable to swap
+  const temp = this.bookingForm.fromStation;
+  this.bookingForm.fromStation = this.bookingForm.toStation;
+  this.bookingForm.toStation = temp;
+}`
+    },
+    {
+      fileName: 'Validation Setup',
+      language: 'typescript',
+      code: `searchTrain() {
+  if (this.bookingForm.fromStation === this.bookingForm.toStation) {
+    this.bookingError = 'Origin and destination cannot be the same!';
+    return; // Stop execution
+  }
+  this.journeyDetails = { ...this.bookingForm };
+}`
+    }
+  ];
 
   // --- Task 1 (Booking) State ---
   stations: string[] = ['Pune', 'Mumbai', 'Jalgaon', 'Nagpur', 'Thane'];

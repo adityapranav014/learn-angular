@@ -29,36 +29,16 @@
               <h5 class="fw-bold text-dark">Student Registration Form</h5>
             </div>
             <ul class="mb-0 text-muted small">
-  <li class="mb-2"><strong>Student Registration Form</strong>: Compute full name and registration code properties using getters.</li>
-  <li class="mb-2"><strong>Caste Conditions</strong>: Toggle optional forms using <code>&#64;if</code> based on selection values, and calculate average grades.</li>
-</ul>
+              <li class="mb-2"><strong>Student Registration Form</strong>: Compute full name and registration code
+                properties using getters.</li>
+              <li class="mb-2"><strong>Caste Conditions</strong>: Toggle optional forms using <code>&#64;if</code> based
+                on selection values, and calculate average grades.</li>
+            </ul>
           </div>
         </div>
 
-        <!-- Code Hint Card -->
-        <div class="card shadow-sm border-0 bg-dark text-light flex-grow-1">
-          <div class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
-            <h5 class="card-title text-light mb-0 fw-bold">
-              <i class="bi bi-code-slash me-2 text-warning"></i>Code Hint
-            </h5>
-          </div>
-          <div class="card-body">
-            <div class="mb-2">
-              <p class="small text-secondary fw-bold mb-2 tracking-wider"><i class="bi bi-cpu me-1"></i> Registration Code (TS)</p>
-              <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary shadow-sm"><code>get registrationNo(): string &#123;
-  if (!this.firstName.trim()) return '';
-  const lastFour = this.mobileNo.trim().slice(-4);
-  return `&#123;this.firstName.toLowerCase()&#125;&#123;lastFour&#125;`;
-&#125;
-
-get averagePct(): string &#123;
-  // Calculate dynamic average
-  const total = tenth + twelfth + grad;
-  return (total / 3).toFixed(2);
-&#125;</code></pre>
-            </div>
-          </div>
-        </div>
+        <!-- Code Hint Card (Desktop) -->
+        <app-code-viewer [codeFiles]="codeFiles" class="flex-grow-1 d-none d-lg-block"></app-code-viewer>
 
       </div>
     </div>
@@ -74,22 +54,25 @@ get averagePct(): string &#123;
         </div>
 
         <div class="card-body bg-white rounded-bottom p-4">
-          
+
           <div class="d-flex flex-column gap-3">
-            
+
             <!-- Student Names Input Row -->
             <div class="row g-2">
               <div class="col-4">
                 <label class="form-label small fw-bold text-muted" for="txtFname">First Name</label>
-                <input type="text" class="form-control form-control-sm" id="txtFname" [(ngModel)]="firstName" placeholder="e.g. John">
+                <input type="text" class="form-control form-control-sm" id="txtFname" [(ngModel)]="firstName"
+                  placeholder="e.g. John">
               </div>
               <div class="col-4">
                 <label class="form-label small fw-bold text-muted" for="txtMname">Middle Name</label>
-                <input type="text" class="form-control form-control-sm" id="txtMname" [(ngModel)]="middleName" placeholder="e.g. Fitzgerald">
+                <input type="text" class="form-control form-control-sm" id="txtMname" [(ngModel)]="middleName"
+                  placeholder="e.g. Fitzgerald">
               </div>
               <div class="col-4">
                 <label class="form-label small fw-bold text-muted" for="txtLname">Last Name</label>
-                <input type="text" class="form-control form-control-sm" id="txtLname" [(ngModel)]="lastName" placeholder="e.g. Kennedy">
+                <input type="text" class="form-control form-control-sm" id="txtLname" [(ngModel)]="lastName"
+                  placeholder="e.g. Kennedy">
               </div>
             </div>
 
@@ -97,7 +80,8 @@ get averagePct(): string &#123;
             <div class="row g-2">
               <div class="col-12">
                 <label class="form-label small fw-bold text-muted" for="txtFullname">Full Name</label>
-                <input type="text" disabled class="form-control form-control-sm bg-light fw-semibold text-dark" id="txtFullname" [value]="fullName" placeholder="Full name is compiled automatically">
+                <input type="text" disabled class="form-control form-control-sm bg-light fw-semibold text-dark"
+                  id="txtFullname" [value]="fullName" placeholder="Full name is compiled automatically">
               </div>
             </div>
 
@@ -113,13 +97,14 @@ get averagePct(): string &#123;
                   <option value="other">OTHER</option>
                 </select>
               </div>
-              
+
               <div class="col-12 col-md-6">
                 @if (selectedCaste === 'other') {
-                  <div class="animate__animated animate__fadeIn">
-                    <label class="form-label small fw-bold text-muted" for="txtOtherCaste">Enter Other Caste</label>
-                    <input type="text" class="form-control form-control-sm" id="txtOtherCaste" [(ngModel)]="otherCaste" placeholder="Please specify">
-                  </div>
+                <div class="animate__animated animate__fadeIn">
+                  <label class="form-label small fw-bold text-muted" for="txtOtherCaste">Enter Other Caste</label>
+                  <input type="text" class="form-control form-control-sm" id="txtOtherCaste" [(ngModel)]="otherCaste"
+                    placeholder="Please specify">
+                </div>
                 }
               </div>
             </div>
@@ -128,19 +113,24 @@ get averagePct(): string &#123;
             <div class="row g-2">
               <div class="col-6 col-md-3">
                 <label class="form-label small fw-bold text-muted" for="txttenthth">Enter 10th %</label>
-                <input type="number" class="form-control form-control-sm" id="txttenthth" [(ngModel)]="tenthPct" placeholder="10th %">
+                <input type="number" class="form-control form-control-sm" id="txttenthth" [(ngModel)]="tenthPct"
+                  placeholder="10th %">
               </div>
               <div class="col-6 col-md-3">
                 <label class="form-label small fw-bold text-muted" for="txttewleth">Enter 12th %</label>
-                <input type="number" class="form-control form-control-sm" id="txttewleth" [(ngModel)]="twelfthPct" placeholder="12th %">
+                <input type="number" class="form-control form-control-sm" id="txttewleth" [(ngModel)]="twelfthPct"
+                  placeholder="12th %">
               </div>
               <div class="col-6 col-md-3">
                 <label class="form-label small fw-bold text-muted" for="txtGraduation">Graduation %</label>
-                <input type="number" class="form-control form-control-sm" id="txtGraduation" [(ngModel)]="graduationPct" placeholder="Grad %">
+                <input type="number" class="form-control form-control-sm" id="txtGraduation" [(ngModel)]="graduationPct"
+                  placeholder="Grad %">
               </div>
               <div class="col-6 col-md-3">
                 <label class="form-label small fw-bold text-muted" for="txtAvarage">Average</label>
-                <input type="text" disabled class="form-control form-control-sm bg-light fw-bold text-success font-monospace" id="txtAvarage" [value]="averagePct + '%'" placeholder="Avg %">
+                <input type="text" disabled
+                  class="form-control form-control-sm bg-light fw-bold text-success font-monospace" id="txtAvarage"
+                  [value]="averagePct + '%'" placeholder="Avg %">
               </div>
             </div>
 
@@ -148,31 +138,37 @@ get averagePct(): string &#123;
             <div class="row g-2">
               <div class="col-6 col-md-6">
                 <label class="form-label small fw-bold text-muted" for="txtMobile">Mobile Number</label>
-                <input type="text" class="form-control form-control-sm" id="txtMobile" [(ngModel)]="mobileNo" placeholder="10-digit Mobile">
+                <input type="text" class="form-control form-control-sm" id="txtMobile" [(ngModel)]="mobileNo"
+                  placeholder="10-digit Mobile">
               </div>
               <div class="col-6 col-md-6">
                 <label class="form-label small fw-bold text-muted" for="txtRegistartionNo">Registration No</label>
-                <input type="text" disabled class="form-control form-control-sm bg-light fw-bold text-primary font-monospace" id="txtRegistartionNo" [value]="registrationNo" placeholder="Compiled Registration ID">
+                <input type="text" disabled
+                  class="form-control form-control-sm bg-light fw-bold text-primary font-monospace"
+                  id="txtRegistartionNo" [value]="registrationNo" placeholder="Compiled Registration ID">
               </div>
             </div>
 
             <!-- Error Alerts -->
             @if (validationError) {
-              <div class="alert alert-danger d-flex align-items-center gap-2 py-2 px-3 small border-0 shadow-xs mb-0 animate__animated animate__fadeIn">
-                <i class="bi bi-exclamation-triangle-fill"></i>
-                <span>{{ validationError }}</span>
-              </div>
+            <div
+              class="alert alert-danger d-flex align-items-center gap-2 py-2 px-3 small border-0 shadow-xs mb-0 animate__animated animate__fadeIn">
+              <i class="bi bi-exclamation-triangle-fill"></i>
+              <span>{{ validationError }}</span>
+            </div>
             }
 
             <!-- Success Alert -->
             @if (isSubmitted) {
-              <div class="alert alert-success d-flex align-items-start gap-2 py-2 px-3 small border-0 shadow-xs mb-0 animate__animated animate__fadeIn">
-                <i class="bi bi-check-circle-fill fs-5 mt-0.5"></i>
-                <div>
-                  <div class="fw-bold mb-0.5">Registration Successful!</div>
-                  <div>Student <strong class="text-dark">{{ fullName }}</strong> is registered under ID <strong class="text-primary font-monospace">{{ registrationNo }}</strong>.</div>
-                </div>
+            <div
+              class="alert alert-success d-flex align-items-start gap-2 py-2 px-3 small border-0 shadow-xs mb-0 animate__animated animate__fadeIn">
+              <i class="bi bi-check-circle-fill fs-5 mt-0.5"></i>
+              <div>
+                <div class="fw-bold mb-0.5">Registration Successful!</div>
+                <div>Student <strong class="text-dark">{{ fullName }}</strong> is registered under ID <strong
+                    class="text-primary font-monospace">{{ registrationNo }}</strong>.</div>
               </div>
+            </div>
             }
 
             <!-- Buttons Row -->
@@ -193,6 +189,11 @@ get averagePct(): string &#123;
 
         </div>
       </div>
+    </div>
+
+    <!-- Code Hint Card (Mobile) -->
+    <div class="col-12 d-lg-none">
+      <app-code-viewer [codeFiles]="codeFiles"></app-code-viewer>
     </div>
 
   </div>

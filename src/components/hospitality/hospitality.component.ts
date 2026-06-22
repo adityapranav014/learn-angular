@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CodeViewerComponent, CodeFile } from '../code-viewer/code-viewer.component';
 
 export interface FoodItem {
   name: string;
@@ -20,9 +21,29 @@ export interface OrderItem {
   selector: 'app-hospitality',
   templateUrl: './hospitality.component.html',
   styleUrls: ['./hospitality.component.css'],
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, CodeViewerComponent]
 })
 export class HospitalityComponent {
+
+  codeFiles: CodeFile[] = [
+    {
+      fileName: 'hospitality.component.ts',
+      language: 'typescript',
+      code: `addItem() {
+  const existing = this.orderedItems
+    .findIndex(i => i.name === name);
+
+  if (existing > -1) {
+    this.orderedItems[existing].quantity += qty;
+    this.orderedItems[existing].total =
+      this.orderedItems[existing].quantity * price;
+  } else {
+    this.orderedItems.push({ ... });
+  }
+}`
+    }
+  ];
+
   // Menu list
   menuItems: FoodItem[] = [
     { name: 'Tea', price: 10, emoji: '🍵' },

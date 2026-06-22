@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CodeViewerComponent, CodeFile } from '../code-viewer/code-viewer.component';
 
 export interface Todo {
   name: string;
@@ -11,9 +12,29 @@ export interface Todo {
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.css'],
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, CodeViewerComponent]
 })
 export class TasksComponent implements OnInit {
+
+  codeFiles: CodeFile[] = [
+    {
+      fileName: 'tasks.component.ts',
+      language: 'typescript',
+      code: `// Save to storage
+saveToLocalStorage() {
+  localStorage.setItem(
+    'todo-list',
+    JSON.stringify(this.todos)
+  );
+}
+
+// Load from storage
+ngOnInit() {
+  const stored = localStorage.getItem('todo-list');
+  if (stored) this.todos = JSON.parse(stored);
+}`
+    }
+  ];
   todos: Todo[] = [];
   userTask: string = '';
   activeFilter: 'all' | 'pending' | 'completed' = 'all';

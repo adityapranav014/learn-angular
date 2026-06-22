@@ -16,7 +16,7 @@
     <!-- Left Column: Task & Code Hint -->
     <div class="col-lg-4 col-md-12">
       <div class="d-flex flex-column gap-4 h-100">
-        
+
         <!-- Task Card -->
         <div class="card shadow-sm border-0">
           <div class="card-header bg-white border-bottom-0 pt-3 pb-2">
@@ -29,40 +29,17 @@
               <h5 class="fw-bold text-dark">Zoom Car Rental System</h5>
             </div>
             <ul class="mb-0 text-muted small">
-  <li class="mb-2"><strong>Rental Inventory Sheet</strong>: Manage inventory arrays and rental forms.</li>
-  <li class="mb-2"><strong>Conditional Forms</strong>: Bind inputs conditionally (Hours for hourly rent, Days for daily rent) using <code>&#64;if</code> control flow.</li>
-  <li><strong>Billing & Collection</strong>: Compile billings dynamically, support item deletions, and calculate total values.</li>
-</ul>
+              <li class="mb-2"><strong>Rental Inventory Sheet</strong>: Manage inventory arrays and rental forms.</li>
+              <li class="mb-2"><strong>Conditional Forms</strong>: Bind inputs conditionally (Hours for hourly rent,
+                Days for daily rent) using <code>&#64;if</code> control flow.</li>
+              <li><strong>Billing & Collection</strong>: Compile billings dynamically, support item deletions, and
+                calculate total values.</li>
+            </ul>
           </div>
         </div>
 
-        <!-- Code Hint Card -->
-        <div class="card shadow-sm border-0 bg-dark text-light flex-grow-1">
-          <div class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
-            <h5 class="card-title text-light mb-0 fw-bold">
-              <i class="bi bi-code-slash me-2 text-warning"></i>Code Hint
-            </h5>
-          </div>
-          <div class="card-body">
-            <div class="mb-2">
-              <p class="small text-secondary fw-bold mb-2 tracking-wider"><i class="bi bi-calculator me-1"></i> Cost Calculation (TS)</p>
-              <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary shadow-sm"><code>addBookingItem() &#123;
-  const rate = this.rentType === 'Per Day' 
-    ? car.ratePerDay 
-    : car.ratePerHr;
-
-  const cost = rate * this.duration * this.qty;
-  this.bookingItems.push(&#123;
-    carName: car.name,
-    rentType: this.rentType,
-    duration: this.duration,
-    quantity: this.qty,
-    cost: cost
-  &#125;);
-&#125;</code></pre>
-            </div>
-          </div>
-        </div>
+        <!-- Code Hint Card (Desktop) -->
+        <app-code-viewer [codeFiles]="codeFiles" class="flex-grow-1 d-none d-lg-block"></app-code-viewer>
 
       </div>
     </div>
@@ -70,7 +47,7 @@
     <!-- Right Column: Live Solution -->
     <div class="col-lg-8 col-md-12 sticky-lg-top">
       <div class="card h-100 shadow-sm card-live-solution">
-        
+
         <div class="card-header card-header-live-solution pt-3 pb-2">
           <h5 class="card-title mb-0 fw-bold">
             <i class="bi bi-play-circle me-2"></i>Live Solution
@@ -90,19 +67,23 @@
                 <!-- Admin Inputs -->
                 <div class="row g-2 mb-3">
                   <div class="col-12">
-                    <input type="text" id="txtCarName" class="form-control form-control-sm" placeholder="Car Name" [(ngModel)]="newCarName">
+                    <input type="text" id="txtCarName" class="form-control form-control-sm" placeholder="Car Name"
+                      [(ngModel)]="newCarName">
                   </div>
                   <div class="col-6">
-                    <input type="number" id="txtRatePerHr" class="form-control form-control-sm" placeholder="Rate/hr (₹)" [(ngModel)]="newRatePerHr">
+                    <input type="number" id="txtRatePerHr" class="form-control form-control-sm"
+                      placeholder="Rate/hr (₹)" [(ngModel)]="newRatePerHr">
                   </div>
                   <div class="col-6">
-                    <input type="number" id="txtRatePerDay" class="form-control form-control-sm" placeholder="Rate/Day (₹)" [(ngModel)]="newRatePerDay">
+                    <input type="number" id="txtRatePerDay" class="form-control form-control-sm"
+                      placeholder="Rate/Day (₹)" [(ngModel)]="newRatePerDay">
                   </div>
-                  
+
                   @if (adminError) {
-                    <div class="col-12">
-                      <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle me-1"></i>{{ adminError }}</div>
+                  <div class="col-12">
+                    <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle me-1"></i>{{ adminError }}
                     </div>
+                  </div>
                   }
 
                   <div class="col-12 mt-2">
@@ -125,16 +106,17 @@
                     </thead>
                     <tbody>
                       @for (car of cars; track car.name; let i = $index) {
-                        <tr>
-                          <td class="text-center small text-muted">{{ i + 1 }}</td>
-                          <td class="fw-semibold small text-dark">{{ car.name }}</td>
-                          <td class="text-end small text-secondary">₹{{ car.ratePerHr }}</td>
-                          <td class="text-end small text-success fw-bold">₹{{ car.ratePerDay }}</td>
-                        </tr>
+                      <tr>
+                        <td class="text-center small text-muted">{{ i + 1 }}</td>
+                        <td class="fw-semibold small text-dark">{{ car.name }}</td>
+                        <td class="text-end small text-secondary">₹{{ car.ratePerHr }}</td>
+                        <td class="text-end small text-success fw-bold">₹{{ car.ratePerDay }}</td>
+                      </tr>
                       } @empty {
-                        <tr>
-                          <td colspan="4" class="text-center text-muted small py-3">No cars available. Add some above.</td>
-                        </tr>
+                      <tr>
+                        <td colspan="4" class="text-center text-muted small py-3">No cars available. Add some above.
+                        </td>
+                      </tr>
                       }
                     </tbody>
                   </table>
@@ -147,7 +129,8 @@
             <div class="col-12 col-md-6">
               <div class="p-3 rounded-3 h-100">
                 <div class="text-center mb-3 border-bottom pb-2">
-                  <h6 class="fw-bold text-dark mb-0"><i class="bi bi-calendar-check me-1 text-success"></i>Booking Form</h6>
+                  <h6 class="fw-bold text-dark mb-0"><i class="bi bi-calendar-check me-1 text-success"></i>Booking Form
+                  </h6>
                 </div>
 
                 <!-- Booking Inputs -->
@@ -156,7 +139,7 @@
                     <select id="dpdlCar" class="form-select form-select-sm" [(ngModel)]="selectedCarName">
                       <option value="">Select Car</option>
                       @for (car of cars; track car.name) {
-                        <option [value]="car.name">{{ car.name }}</option>
+                      <option [value]="car.name">{{ car.name }}</option>
                       }
                     </select>
                   </div>
@@ -172,16 +155,19 @@
                   <!-- Conditional Rent Inputs -->
                   <div class="col-4">
                     @if (rentType === 'Per Day') {
-                      <input type="number" class="form-control form-control-sm perDay animate__animated animate__fadeIn" id="perQuantityDay" placeholder="Days" [(ngModel)]="duration">
+                    <input type="number" class="form-control form-control-sm perDay animate__animated animate__fadeIn"
+                      id="perQuantityDay" placeholder="Days" [(ngModel)]="duration">
                     } @else if (rentType === 'Per Hr') {
-                      <input type="number" class="form-control form-control-sm perHr animate__animated animate__fadeIn" id="perQuantityHr" placeholder="Hours" [(ngModel)]="duration">
+                    <input type="number" class="form-control form-control-sm perHr animate__animated animate__fadeIn"
+                      id="perQuantityHr" placeholder="Hours" [(ngModel)]="duration">
                     } @else {
-                      <input type="text" class="form-control form-control-sm" placeholder="Duration" disabled>
+                    <input type="text" class="form-control form-control-sm" placeholder="Duration" disabled>
                     }
                   </div>
 
                   <div class="col-4">
-                    <input type="number" class="form-control form-control-sm" id="txtQty" placeholder="Cars Qty" [(ngModel)]="quantity">
+                    <input type="number" class="form-control form-control-sm" id="txtQty" placeholder="Cars Qty"
+                      [(ngModel)]="quantity">
                   </div>
 
                   <div class="col-4">
@@ -191,34 +177,40 @@
                   </div>
 
                   @if (bookingError) {
-                    <div class="col-12">
-                      <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle me-1"></i>{{ bookingError }}</div>
+                  <div class="col-12">
+                    <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle me-1"></i>{{ bookingError }}
                     </div>
+                  </div>
                   }
                 </div>
 
                 <!-- Booked Items List -->
                 <div class="mt-4">
                   <h6 class="small fw-bold text-secondary mb-2"><i class="bi bi-list-stars me-1"></i>Rental Sheet</h6>
-                  <div class="booking-list-container border rounded bg-light p-2 mb-3" style="min-height: 100px; max-height: 180px; overflow-y: auto;">
+                  <div class="booking-list-container border rounded bg-light p-2 mb-3"
+                    style="min-height: 100px; max-height: 180px; overflow-y: auto;">
                     <ul id="selectedCars" class="list-unstyled mb-0 d-flex flex-column gap-2">
                       @for (item of bookingItems; track item; let i = $index) {
-                        <li class="d-flex justify-content-between align-items-center bg-white p-2 rounded border shadow-xs animate__animated animate__fadeIn">
-                          <div class="d-flex flex-column">
-                            <span class="small fw-bold text-dark">{{ item.quantity }}x {{ item.carName }}</span>
-                            <span class="text-muted" style="font-size: 0.75rem;">
-                              {{ item.rentType }} • {{ item.duration }} {{ item.rentType === 'Per Day' ? 'days' : 'hrs' }}
-                            </span>
-                          </div>
-                          <div class="d-flex align-items-center gap-2">
-                            <span class="badge bg-success-subtle text-success border border-success border-opacity-10 fw-bold">₹{{ item.cost }}</span>
-                            <button class="btn btn-link btn-sm text-danger p-0 border-0" (click)="removeBookingItem(i)" title="Remove item">
-                              <i class="bi bi-trash"></i>
-                            </button>
-                          </div>
-                        </li>
+                      <li
+                        class="d-flex justify-content-between align-items-center bg-white p-2 rounded border shadow-xs animate__animated animate__fadeIn">
+                        <div class="d-flex flex-column">
+                          <span class="small fw-bold text-dark">{{ item.quantity }}x {{ item.carName }}</span>
+                          <span class="text-muted" style="font-size: 0.75rem;">
+                            {{ item.rentType }} • {{ item.duration }} {{ item.rentType === 'Per Day' ? 'days' : 'hrs' }}
+                          </span>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                          <span
+                            class="badge bg-success-subtle text-success border border-success border-opacity-10 fw-bold">₹{{
+                            item.cost }}</span>
+                          <button class="btn btn-link btn-sm text-danger p-0 border-0" (click)="removeBookingItem(i)"
+                            title="Remove item">
+                            <i class="bi bi-trash"></i>
+                          </button>
+                        </div>
+                      </li>
                       } @empty {
-                        <li class="text-center text-muted small py-4">No items added to rental sheet.</li>
+                      <li class="text-center text-muted small py-4">No items added to rental sheet.</li>
                       }
                     </ul>
                   </div>
@@ -240,14 +232,15 @@
 
                 <!-- Bill Output Section -->
                 @if (showBill && totalBill !== null) {
-                  <div class="row mt-3 animate__animated animate__zoomIn">
-                    <div class="col-12">
-                      <div class="p-3 text-center text-white rounded-3 shadow-sm border border-teal-subtle" id="divBill" style="background: linear-gradient(135deg, #115e59, #0f766e);">
-                        <small class="text-teal-200 text-uppercase tracking-wider">Total Bill Amount</small>
-                        <h4 class="fw-bold mb-0 mt-1" id="btnillAmt">₹{{ totalBill }}</h4>
-                      </div>
+                <div class="row mt-3 animate__animated animate__zoomIn">
+                  <div class="col-12">
+                    <div class="p-3 text-center text-white rounded-3 shadow-sm border border-teal-subtle" id="divBill"
+                      style="background: linear-gradient(135deg, #115e59, #0f766e);">
+                      <small class="text-teal-200 text-uppercase tracking-wider">Total Bill Amount</small>
+                      <h4 class="fw-bold mb-0 mt-1" id="btnillAmt">₹{{ totalBill }}</h4>
                     </div>
                   </div>
+                </div>
                 }
 
               </div>
@@ -257,6 +250,11 @@
         </div>
 
       </div>
+    </div>
+
+    <!-- Code Hint Card (Mobile) -->
+    <div class="col-12 d-lg-none">
+      <app-code-viewer [codeFiles]="codeFiles"></app-code-viewer>
     </div>
 
   </div>

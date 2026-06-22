@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CodeViewerComponent, CodeFile } from '../code-viewer/code-viewer.component';
 
 export interface GroceryItem {
   name: string;
@@ -20,9 +21,27 @@ export interface CartItem {
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, CodeViewerComponent]
 })
 export class CartComponent {
+
+  codeFiles: CodeFile[] = [
+    {
+      fileName: 'cart.component.ts',
+      language: 'typescript',
+      code: `const existingIndex = this.cartItems
+  .findIndex(i => i.name === grocery.name);
+
+if (existingIndex > -1) {
+  this.cartItems[existingIndex].quantity += qty;
+  this.cartItems[existingIndex].subtotal =
+    this.cartItems[existingIndex].quantity * price;
+} else {
+  this.cartItems.push({ ... });
+}`
+    }
+  ];
+
   // Grocery list
   groceryList: GroceryItem[] = [
     { name: 'Cooking Oil', price: 120, emoji: '🍾' },

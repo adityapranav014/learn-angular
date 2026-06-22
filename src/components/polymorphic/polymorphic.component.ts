@@ -1,14 +1,40 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CodeViewerComponent, CodeFile } from '../code-viewer/code-viewer.component';
 
 @Component({
   selector: 'app-polymorphic',
   templateUrl: './polymorphic.component.html',
   styleUrls: ['./polymorphic.component.css'],
-  imports: [FormsModule, CommonModule]
+  imports: [FormsModule, CommonModule, CodeViewerComponent]
 })
 export class PolymorphicComponent implements OnInit {
+
+  codeFiles: CodeFile[] = [
+    {
+      fileName: 'Active States (TS)',
+      language: 'typescript',
+      code: `selectTab(tab: string) {
+  this.activeTab = tab;
+  this.activeSubmenu = this.map[tab][0];
+}
+
+selectSubmenu(menu: string) {
+  this.activeSubmenu = menu;
+}`
+    },
+    {
+      fileName: 'HTML Bindings',
+      language: 'xml',
+      code: `<button
+  [class.active]="activeTab === tab"
+  (click)="selectTab(tab)">
+  {{ tab }}
+</button>`
+    }
+  ];
+
   // Top tab configuration
   tabs = ['Personal Details', 'Job History', 'Project', 'Domain'];
 
@@ -88,7 +114,7 @@ export class PolymorphicComponent implements OnInit {
     }
   };
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
   }

@@ -29,35 +29,15 @@
               <h5 class="fw-bold text-dark">Grocery List Cart</h5>
             </div>
             <ul class="mb-0 text-muted small">
-  <li class="mb-2"><strong>Grocery Cart Handler</strong>: Bind items dropdown selection.</li>
-  <li class="mb-2"><strong>Quantity Incrementor</strong>: Append added items to a cart array, update quantities on duplicates, and render items in a table using <code>&#64;for</code> with row indices.</li>
-</ul>
+              <li class="mb-2"><strong>Grocery Cart Handler</strong>: Bind items dropdown selection.</li>
+              <li class="mb-2"><strong>Quantity Incrementor</strong>: Append added items to a cart array, update
+                quantities on duplicates, and render items in a table using <code>&#64;for</code> with row indices.</li>
+            </ul>
           </div>
         </div>
 
-        <!-- Code Hint Card -->
-        <div class="card shadow-sm border-0 bg-dark text-light flex-grow-1">
-          <div class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
-            <h5 class="card-title text-light mb-0 fw-bold">
-              <i class="bi bi-code-slash me-2 text-warning"></i>Code Hint
-            </h5>
-          </div>
-          <div class="card-body">
-            <div class="mb-2">
-              <p class="small text-secondary fw-bold mb-2 tracking-wider"><i class="bi bi-cpu me-1"></i> Duplicate Check (TS)</p>
-              <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary shadow-sm"><code>const existingIndex = this.cartItems
-  .findIndex(i => i.name === grocery.name);
-
-if (existingIndex > -1) &#123;
-  this.cartItems[existingIndex].quantity += qty;
-  this.cartItems[existingIndex].subtotal = 
-    this.cartItems[existingIndex].quantity * price;
-&#125; else &#123;
-  this.cartItems.push(&#123; ... &#125;);
-&#125;</code></pre>
-            </div>
-          </div>
-        </div>
+        <!-- Code Hint Card (Desktop) -->
+        <app-code-viewer [codeFiles]="codeFiles" class="flex-grow-1 d-none d-lg-block"></app-code-viewer>
 
       </div>
     </div>
@@ -80,12 +60,13 @@ if (existingIndex > -1) &#123;
               <select id="dpdlItem" class="form-select selector-font" [(ngModel)]="selectedItemName">
                 <option value="">Select Item</option>
                 @for (item of groceryList; track item.name) {
-                  <option [value]="item.name">{{ item.name }} {{ item.emoji }} (₹{{ item.price }})</option>
+                <option [value]="item.name">{{ item.name }} {{ item.emoji }} (₹{{ item.price }})</option>
                 }
               </select>
             </div>
             <div class="col-8 col-sm-5">
-              <input type="number" id="txtQuantity" class="form-control" placeholder="Enter Quantity" [(ngModel)]="quantity">
+              <input type="number" id="txtQuantity" class="form-control" placeholder="Enter Quantity"
+                [(ngModel)]="quantity">
             </div>
             <div class="col-4 col-sm-2">
               <button class="btn btn-brand w-100 fw-bold" id="btnAdd" (click)="addToCart()">
@@ -94,9 +75,10 @@ if (existingIndex > -1) &#123;
             </div>
 
             @if (validationError) {
-              <div class="col-12">
-                <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle me-1"></i>{{ validationError }}</div>
+            <div class="col-12">
+              <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle me-1"></i>{{ validationError }}
               </div>
+            </div>
             }
           </div>
 
@@ -114,24 +96,25 @@ if (existingIndex > -1) &#123;
               </thead>
               <tbody>
                 @for (item of cartItems; track item.name; let i = $index) {
-                  <tr class="animate__animated animate__fadeIn">
-                    <td class="text-center small text-muted">{{ i + 1 }}</td>
-                    <td class="fw-semibold small text-dark">
-                      <span class="fs-5 me-1.5">{{ item.emoji }}</span> {{ item.name }}
-                      <span class="text-muted fw-normal" style="font-size: 0.75rem;">(₹{{ item.price }})</span>
-                    </td>
-                    <td class="text-center small fw-semibold text-dark">{{ item.quantity }}</td>
-                    <td class="text-end small fw-bold text-success">₹{{ item.subtotal }}</td>
-                    <td class="text-center">
-                      <button class="btn btn-link btn-sm text-danger p-0 border-0" (click)="removeItem(i)" title="Remove item">
-                        <i class="bi bi-trash fs-6"></i>
-                      </button>
-                    </td>
-                  </tr>
+                <tr class="animate__animated animate__fadeIn">
+                  <td class="text-center small text-muted">{{ i + 1 }}</td>
+                  <td class="fw-semibold small text-dark">
+                    <span class="fs-5 me-1.5">{{ item.emoji }}</span> {{ item.name }}
+                    <span class="text-muted fw-normal" style="font-size: 0.75rem;">(₹{{ item.price }})</span>
+                  </td>
+                  <td class="text-center small fw-semibold text-dark">{{ item.quantity }}</td>
+                  <td class="text-end small fw-bold text-success">₹{{ item.subtotal }}</td>
+                  <td class="text-center">
+                    <button class="btn btn-link btn-sm text-danger p-0 border-0" (click)="removeItem(i)"
+                      title="Remove item">
+                      <i class="bi bi-trash fs-6"></i>
+                    </button>
+                  </td>
+                </tr>
                 } @empty {
-                  <tr>
-                    <td class="text-center text-muted small py-4" colspan="5">No Items Added yet</td>
-                  </tr>
+                <tr>
+                  <td class="text-center text-muted small py-4" colspan="5">No Items Added yet</td>
+                </tr>
                 }
               </tbody>
               <tfoot>
@@ -155,6 +138,11 @@ if (existingIndex > -1) &#123;
 
         </div>
       </div>
+    </div>
+
+    <!-- Code Hint Card (Mobile) -->
+    <div class="col-12 d-lg-none">
+      <app-code-viewer [codeFiles]="codeFiles"></app-code-viewer>
     </div>
 
   </div>

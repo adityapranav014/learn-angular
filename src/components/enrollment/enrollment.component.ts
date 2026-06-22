@@ -1,25 +1,45 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CodeViewerComponent, CodeFile } from '../code-viewer/code-viewer.component';
 
 @Component({
   selector: 'app-enrollment',
   templateUrl: './enrollment.component.html',
   styleUrls: ['./enrollment.component.css'],
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, CodeViewerComponent]
 })
 export class EnrollmentComponent {
+
+  codeFiles: CodeFile[] = [
+    {
+      fileName: 'enrollment.component.ts',
+      language: 'typescript',
+      code: `get registrationNo(): string {
+  if (!this.firstName.trim()) return '';
+  const lastFour = this.mobileNo.trim().slice(-4);
+  return \`\${this.firstName.toLowerCase()}\${lastFour}\`;
+}
+
+get averagePct(): string {
+  // Calculate dynamic average
+  const total = tenth + twelfth + grad;
+  return (total / 3).toFixed(2);
+}`
+    }
+  ];
+
   // Form input fields
   firstName: string = '';
   middleName: string = '';
   lastName: string = '';
   selectedCaste: string = '';
   otherCaste: string = '';
-  
+
   tenthPct: number | null = null;
   twelfthPct: number | null = null;
   graduationPct: number | null = null;
-  
+
   mobileNo: string = '';
 
   // Validation & Success Feedback
@@ -38,7 +58,7 @@ export class EnrollmentComponent {
   get averagePct(): string {
     const scores = [this.tenthPct, this.twelfthPct, this.graduationPct]
       .filter((score): score is number => score !== null && score !== undefined && !isNaN(score) && score >= 0);
-    
+
     if (scores.length === 0) {
       return '0.00';
     }
