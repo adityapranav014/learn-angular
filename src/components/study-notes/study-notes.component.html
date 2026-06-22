@@ -13,17 +13,16 @@
 
         @if (activeSections().length > 0) {
         <div class="col-12 col-md d-flex flex-wrap gap-2 justify-content-md-end">
-            <button class="btn btn-sm btn-light border" (click)="carousel?.prev()">
+            <button class="btn btn-sm btn-light border" (click)="carousel.prev()">
                 <i class="bi bi-chevron-left"></i>
             </button>
             @for (section of activeSections(); track section.heading; let i = $index) {
             <button class="btn btn-sm" [class.btn-brand]="activeIndex === i"
-                [class.btn-outline-secondary]="activeIndex !== i" (click)="goToSlide(i)"
-                [title]="section.heading">
+                [class.btn-outline-secondary]="activeIndex !== i" (click)="goToSlide(i)" [title]="section.heading">
                 {{ i + 1 }}
             </button>
             }
-            <button class="btn btn-sm btn-light border" (click)="carousel?.next()">
+            <button class="btn btn-sm btn-light border" (click)="carousel.next()">
                 <i class="bi bi-chevron-right"></i>
             </button>
         </div>
@@ -84,46 +83,87 @@
                             <div class="col-12 col-xl-6">
                                 <div class="card h-100 shadow-sm border-0 bg-dark text-light"
                                     [class.code-hint-fullscreen]="codeFullscreen">
-                                    <div class="card-header bg-dark border-bottom border-secondary pt-3 pb-2">
-                                        <div class="d-flex align-items-center justify-content-between">
+
+                                    @if (section.codeFiles && section.codeFiles.length > 0) {
+                                    @let safeIdx = activeFileIndex < section.codeFiles.length ? activeFileIndex : 0;
+                                        @let activeFile=section.codeFiles[safeIdx]; <div
+                                        class="card-header bg-dark border-bottom border-secondary pt-3 pb-0 px-0">
+                                        <div class="d-flex align-items-center justify-content-between px-3 mb-2">
                                             <h5 class="card-title text-light mb-0 fw-bold">
-                                                <i class="bi bi-code-slash me-2 text-warning"></i>Code Hint
+                                                <i class="bi bi-code-slash me-2 text-warning"></i>Code Example
                                             </h5>
-                                            <button class="btn btn-sm btn-dark border-0 p-1 lh-1"
-                                                [ngbTooltip]="codeFullscreen ? 'Exit fullscreen' : 'Fullscreen'"
-                                                placement="left"
-                                                (click)="codeFullscreen = !codeFullscreen">
-                                                <i class="bi text-secondary" [class.bi-fullscreen]="!codeFullscreen" [class.bi-fullscreen-exit]="codeFullscreen"></i>
-                                            </button>
+                                            <div class="d-flex align-items-center gap-1">
+                                                <button
+                                                    class="btn btn-sm btn-outline-secondary border-0 text-light py-0 px-2"
+                                                    (click)="copyCode(activeFile.code)">
+                                                    <i class="bi" [class.bi-clipboard]="!isCopied"
+                                                        [class.bi-check2-all]="isCopied"
+                                                        [class.text-success]="isCopied"></i>
+                                                    <span class="ms-1 small" *ngIf="isCopied">Copied!</span>
+                                                </button>
+                                                <button class="btn btn-sm btn-dark border-0 p-1 lh-1"
+                                                    [ngbTooltip]="codeFullscreen ? 'Exit fullscreen' : 'Fullscreen'"
+                                                    placement="left" (click)="codeFullscreen = !codeFullscreen">
+                                                    <i class="bi text-secondary" [class.bi-fullscreen]="!codeFullscreen"
+                                                        [class.bi-fullscreen-exit]="codeFullscreen"></i>
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="card-body study-code-hint-body">
-                                        @if (section.codeExample) {
-                                        <pre
-                                            class="bg-black text-warning rounded p-3 small mb-0 border border-secondary shadow-sm"><code>{{ section.codeExample }}</code></pre>
+
+                                        @if (section.codeFiles.length > 1) {
+                                        <div class="d-flex overflow-auto px-2 code-tabs-scroll">
+                                            @for (file of section.codeFiles; track file.fileName; let fIdx = $index) {
+                                            <button class="btn btn-sm rounded-0 border-0 text-light code-tab"
+                                                [class.active]="safeIdx === fIdx" (click)="setActiveFile(fIdx)">
+                                                {{ file.fileName }}
+                                            </button>
+                                            }
+                                        </div>
                                         } @else {
-                                        <div class="text-secondary small">
-                                            <p class="mb-2 fw-semibold">No code hint for this concept yet.</p>
-                                            <p class="mb-0">Use the theory card to revise the concept and move to the
-                                                next section.</p>
+                                        <div
+                                            class="px-3 pb-2 text-secondary small border-top border-secondary pt-2 mt-1">
+                                            {{ activeFile.fileName }}
                                         </div>
                                         }
+                                </div>
+
+                                <div class="card-body study-code-hint-body p-0">
+                                    <pre class="m-0 h-100"><code class="h-100 p-3 custom-scrollbar" 
+                                                    [highlight]="activeFile.code" 
+                                                    [language]="activeFile.language"></code></pre>
+                                </div>
+
+                                } @else {
+                                <div class="card-header bg-dark border-bottom border-secondary pt-3 pb-2">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <h5 class="card-title text-light mb-0 fw-bold">
+                                            <i class="bi bi-code-slash me-2 text-warning"></i>Code Hint
+                                        </h5>
                                     </div>
                                 </div>
+                                <div class="card-body study-code-hint-body">
+                                    <div class="text-secondary small p-4 text-center mt-5">
+                                        <i class="bi bi-code-slash fs-1 opacity-25 d-block mb-3"></i>
+                                        <p class="mb-2 fw-semibold fs-6">No code needed here.</p>
+                                        <p class="mb-0">Focus on the theory card to grasp this concept.</p>
+                                    </div>
+                                </div>
+                                }
                             </div>
                         </div>
-                    </ng-template>
-                    }
-
-                </ngb-carousel>
             </div>
-            } @else {
-            <div class="text-center py-5 border rounded-4 bg-light">
-                <i class="bi bi-info-circle fs-2 text-muted mb-3 d-block"></i>
-                <h6 class="text-dark fw-semibold">No content available</h6>
-                <p class="text-muted small px-3">No study material has been loaded for this topic version yet.</p>
-            </div>
+            </ng-template>
             }
+
+            </ngb-carousel>
         </div>
+        } @else {
+        <div class="text-center py-5 border rounded-4 bg-light">
+            <i class="bi bi-info-circle fs-2 text-muted mb-3 d-block"></i>
+            <h6 class="text-dark fw-semibold">No content available</h6>
+            <p class="text-muted small px-3">No study material has been loaded for this topic version yet.</p>
+        </div>
+        }
     </div>
+</div>
 </div>
