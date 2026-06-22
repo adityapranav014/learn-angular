@@ -104,11 +104,13 @@ $track-color: #e5e7eb;
 }
 
 .study-code-hint-body {
-  overflow-x: auto;
+  overflow: hidden;
 }
 
 .study-code-hint-body pre {
   white-space: pre;
+  overflow: auto;
+  max-height: 480px;
 }
 
 .docs-section-title {
@@ -173,6 +175,10 @@ $track-color: #e5e7eb;
   .study-code-hint-body {
     max-height: none;
   }
+
+  .study-code-hint-body pre {
+    max-height: none;
+  }
 }
 
 /* Border highlighting for mobile inputs */
@@ -217,6 +223,7 @@ $track-color: #e5e7eb;
 
 /* Custom Scrollbar inside elements if needed */
 pre::-webkit-scrollbar {
+  width: 6px;
   height: 6px;
 }
 
