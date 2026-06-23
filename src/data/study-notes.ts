@@ -2874,12 +2874,40 @@ export const routes: Routes = [
     icon: 'bi-diagram-3',
     category: 'Architecture',
     versions: [
+
+      // Fundamentals
       {
         version: 'fundamentals',
         label: 'Fundamentals',
         sections: [
+
+          // Dependency Injection & Providers
           {
             heading: 'Dependency Injection & Providers',
+            mermaidDefinition: `
+  graph TD
+    %% DI Hierarchy Engine
+    Root["Root Injector <br/> (providedIn: 'root')"]
+    CompA["Component A Injector <br/> (providers: [ProductService])"]
+    CompB["Component B Injector <br/> (providers: [ProductService])"]
+
+    %% Singleton vs Isolated Flows (Safely Quoted)
+    Root -- "Provides Singleton <br/> LoggerService" --> CompA
+    Root -- "Provides Singleton <br/> LoggerService" --> CompB
+
+    CompA -- "Creates Isolated <br/> ProductService" --> StateA["Isolated State A"]
+    CompB -- "Creates Isolated <br/> ProductService" --> StateB["Isolated State B"]
+
+    %% UX Designer's Brand Color & Hierarchy Classes
+    classDef default fill:#ffffff,stroke:#e5e7eb,stroke-width:1px,color:#202124;
+    classDef coreEngine fill:#c026d3,stroke:#a21caf,stroke-width:2px,color:#ffffff,font-weight:bold;
+    classDef primaryNode fill:#fdf4ff,stroke:#c026d3,stroke-width:2px,color:#202124,font-weight:bold;
+    classDef isolated fill:#eff6ff,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a;
+
+    class Root coreEngine;
+    class CompA,CompB primaryNode;
+    class StateA,StateB isolated;
+`,
             content: `<p>Angular's DI system creates and delivers dependencies (services, values, factories) to components and other services. You declare what a class needs; Angular injects it.</p><ul><li><strong>providedIn: 'root':</strong> Service is a singleton shared across the entire app. Lazily tree-shaken if unused.</li><li><strong>providedIn: 'any':</strong> A new instance is created per lazy-loaded module. Useful for isolating service state per route.</li><li><strong>Component-level providers:</strong> Each component instance gets its own service instance — useful for isolated state (e.g., a component-scoped form service).</li></ul>`,
             codeFiles: [
               {
@@ -2929,8 +2957,32 @@ export class ProductComponent {
               }
             ]
           },
+
+          // HttpClient & Interceptors
           {
             heading: 'HttpClient & Interceptors',
+            mermaidDefinition: `
+  graph LR
+    %% Interceptor Pipeline Nodes
+    App["Angular App <br/> (http.get)"]
+    ReqInt["Request Interceptor <br/> (Attach Token)"]
+    Server[("Backend API")]
+    ResInt["Response Interceptor <br/> (Catch 401 Error)"]
+
+    %% Safe Label Links
+    App -- "1. Outgoing Request" --> ReqInt
+    ReqInt -- "2. Cloned Request" --> Server
+    Server -- "3. HTTP Response" --> ResInt
+    ResInt -- "4. Data or Error" --> App
+
+    %% Styling Architecture
+    classDef default fill:#ffffff,stroke:#e5e7eb,stroke-width:1px,color:#202124;
+    classDef interceptor fill:#fdf4ff,stroke:#c026d3,stroke-width:2px,color:#202124,font-weight:bold;
+    classDef server fill:#eff6ff,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a;
+
+    class ReqInt,ResInt interceptor;
+    class Server server;
+`,
             content: `<p><code>HttpClient</code> is Angular's built-in HTTP library. It returns Observables and supports typed responses, error handling, and interceptors.</p><ul><li><strong>Interceptors:</strong> Middleware for HTTP requests/responses. Use them for auth token injection, loading spinners, error normalization, and request logging — without modifying each service call.</li><li>Modern interceptors are functions (Angular 15+), not classes.</li></ul>`,
             codeFiles: [
               {
@@ -2980,8 +3032,31 @@ export const appConfig: ApplicationConfig = {
               }
             ]
           },
+
+          // Injection Tokens & InjectionToken
           {
             heading: 'Injection Tokens & InjectionToken',
+            mermaidDefinition: `
+  graph TD
+    %% Token Assembly Engine
+    Factory["Factory Function <br/> (Returns JSON/Object)"]
+    Token["APP_CONFIG <br/> (InjectionToken)"]
+    Injector{"Angular DI Engine"}
+    Service["ApiService <br/> inject(APP_CONFIG)"]
+
+    %% Flow (Safely Quoted)
+    Factory -- "Provides Raw Value" --> Token
+    Token -- "Registered Key" --> Injector
+    Injector -- "Injects Typed Config" --> Service
+
+    %% Styling Architecture
+    classDef default fill:#ffffff,stroke:#e5e7eb,stroke-width:1px,color:#202124;
+    classDef coreEngine fill:#c026d3,stroke:#a21caf,stroke-width:2px,color:#ffffff,font-weight:bold;
+    classDef token fill:#fdf4ff,stroke:#c026d3,stroke-width:2px,color:#202124,font-weight:bold;
+
+    class Injector coreEngine;
+    class Token token;
+`,
             content: `<p>Use <code>InjectionToken</code> to inject non-class values (configuration objects, feature flags, API URLs) into services and components without relying on a class type.</p><ul><li>Avoids ambiguity when injecting the same type from multiple sources.</li><li>Supports <code>factory</code> functions for computing initial values.</li><li>Commonly used for environment-specific config, theming, and feature flags.</li></ul>`,
             codeFiles: [
               {
@@ -3026,12 +3101,43 @@ export class ApiService {
           }
         ]
       },
+
+      // Advanced Patterns
       {
         version: 'advanced',
         label: 'Advanced Patterns',
         sections: [
+
+          // Service with Signal-based State
           {
             heading: 'Service with Signal-based State',
+            mermaidDefinition: `
+  graph TD
+    %% Encapsulation Architecture
+    subgraph Service ["AuthService (Encapsulated State)"]
+      direction TB
+      Private["_user <br/> (Writable Signal)"]
+      Public["user <br/> (.asReadonly)"]
+      Computed["isAdmin <br/> (computed)"]
+
+      Private -- "Creates Safe View" --> Public
+      Private -- "Derives New State" --> Computed
+    end
+
+    Component["Component Template View"]
+
+    Public -- "Synchronous Binding" --> Component
+    Computed -- "Synchronous Binding" --> Component
+
+    %% Styling Architecture
+    classDef default fill:#ffffff,stroke:#e5e7eb,stroke-width:1px,color:#202124;
+    classDef privateState fill:#f8fafc,stroke:#cbd5e1,stroke-width:1px,color:#64748b,stroke-dasharray:4;
+    classDef publicState fill:#fdf4ff,stroke:#c026d3,stroke-width:2px,color:#202124,font-weight:bold;
+
+    class Private privateState;
+    class Public,Computed publicState;
+    style Service fill:#faf5ff,stroke:#e879f9,stroke-width:2px;
+`,
             content: `<p>Replacing <code>BehaviorSubject</code> with Signals in services gives a simpler, synchronous state API that integrates directly into Angular's change detection without needing <code>async</code> pipe or subscriptions.</p>`,
             codeFiles: [
               {
@@ -3068,8 +3174,39 @@ export class AuthService {
               }
             ]
           },
+
+          // Multi-level DI: forwardRef & optional injection
           {
             heading: 'Multi-level DI: forwardRef & optional injection',
+            mermaidDefinition: `
+  graph TD
+    %% Resolution Tree
+    Req["inject(Service)"] --> Engine{"DI Engine Search"}
+    
+    %% Decorator Modifiers
+    Engine -- "@Self" --> Self["Looks ONLY in current element injector"]
+    Engine -- "@SkipSelf" --> Skip["Starts search ONE LEVEL ABOVE"]
+    
+    %% Outcomes
+    Engine -- "Default Resolution" --> Find{"Service Found?"}
+    Find -- "Yes" --> Success["Returns Instance ✅"]
+    Find -- "No" --> Opt{"Is @Optional?"}
+    
+    Opt -- "Yes" --> Null["Returns null 🛡️"]
+    Opt -- "No" --> Err["Throws NullInjectorError ❌"]
+
+    %% Styling Architecture
+    classDef default fill:#ffffff,stroke:#e5e7eb,stroke-width:1px,color:#202124;
+    classDef coreEngine fill:#c026d3,stroke:#a21caf,stroke-width:2px,color:#ffffff,font-weight:bold;
+    classDef success fill:#f0fdf4,stroke:#22c55e,stroke-width:2px,color:#166534;
+    classDef danger fill:#fff1f2,stroke:#f43f5e,stroke-width:2px,color:#881337;
+    classDef modifier fill:#eff6ff,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a;
+
+    class Engine coreEngine;
+    class Success,Null success;
+    class Err danger;
+    class Self,Skip modifier;
+`,
             content: `<p>Advanced DI techniques for handling edge cases:</p><ul><li><strong>forwardRef:</strong> Resolves a circular reference — when Class A needs Class B and Class B needs Class A.</li><li><strong>@Optional():</strong> The dependency is injected as <code>null</code> if not provided, instead of throwing an error. Useful for optional feature modules.</li><li><strong>@Self() / @SkipSelf():</strong> Controls where in the injector hierarchy Angular looks for the dependency.</li></ul>`,
             codeFiles: [
               {
@@ -3103,12 +3240,40 @@ export class ChildService {
           }
         ]
       },
+
+      // Scenario Prep
       {
         version: 'scenarios',
         label: 'Scenario Prep',
         sections: [
+
+          // Avoiding Shared Mutable State in Services
           {
             heading: 'Avoiding Shared Mutable State in Services',
+            mermaidDefinition: `
+  graph TD
+    %% Dangerous Pattern
+    subgraph Bad ["❌ Singleton Risk (providedIn: 'root')"]
+      direction LR
+      C1["Component 1"] -- "Mutates" --> S1["Shared Service State"]
+      S1 -- "Bleeds to" --> C2["Component 2"]
+    end
+
+    %% Safe Pattern
+    subgraph Good ["✅ Component Isolation (providers: [...])"]
+      direction LR
+      C3["Component A"] -- "Injects" --> S2["Isolated Service A"]
+      C4["Component B"] -- "Injects" --> S3["Isolated Service B"]
+    end
+
+    %% Styling Architecture
+    classDef default fill:#ffffff,stroke:#e5e7eb,stroke-width:1px,color:#202124;
+    classDef danger fill:#fff1f2,stroke:#f43f5e,stroke-width:2px,color:#881337;
+    classDef success fill:#f0fdf4,stroke:#22c55e,stroke-width:2px,color:#166534;
+
+    style Bad fill:#fef2f2,stroke:#ef4444,stroke-width:2px,stroke-dasharray:4;
+    style Good fill:#f0fdf4,stroke:#22c55e,stroke-width:2px;
+`,
             content: `<h5>Scenario Question:</h5><p><em>"Two unrelated components inject the same service and one's changes affect the other unexpectedly. How do you prevent this?"</em></p><h5>Answer:</h5><p>This happens when both components share the same singleton instance and one mutates shared state directly. Fixes:</p><ol><li>Use <strong>component-level providers</strong> (<code>providers: [MyService]</code> in <code>@Component</code>) to give each component its own isolated service instance.</li><li>Design the service with <strong>immutable Signal updates</strong> — always use <code>.set()</code> or <code>.update()</code> rather than mutating nested objects directly.</li></ol>`,
             codeFiles: [
               {
@@ -3140,8 +3305,31 @@ export class ProductFiltersComponent {
               }
             ]
           },
+
+          // Injecting Config without Environment Files
           {
             heading: 'Injecting Config without Environment Files',
+            mermaidDefinition: `
+  graph TD
+    %% Boot Sequence
+    Boot["main.ts Bootstrap"] --> Init["APP_INITIALIZER Factory"]
+    
+    %% Async Configuration
+    Init -- "1. HTTP GET /config.json" --> Server[("Static Assets <br/> (Runtime Config)")]
+    Server -- "2. JSON Object" --> Token["Store in APP_CONFIG Token"]
+    Token -- "3. Resolves Promise" --> Render["App Renders"]
+    Render -- "4. Components inject(APP_CONFIG)" --> UI["Dynamic Configured UI"]
+
+    %% Styling Architecture
+    classDef default fill:#ffffff,stroke:#e5e7eb,stroke-width:1px,color:#202124;
+    classDef coreEngine fill:#c026d3,stroke:#a21caf,stroke-width:2px,color:#ffffff,font-weight:bold;
+    classDef server fill:#eff6ff,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a;
+    classDef success fill:#f0fdf4,stroke:#22c55e,stroke-width:2px,color:#166534;
+
+    class Init,Token coreEngine;
+    class Server server;
+    class UI success;
+`,
             content: `<h5>Scenario Question:</h5><p><em>"How would you make your Angular service configurable at runtime (e.g., per-client API URL) without rebuilding the app?"</em></p><h5>Answer:</h5><p>Load a <code>config.json</code> file at bootstrap time using <code>APP_INITIALIZER</code>, store the config in a service, and inject it anywhere via an <code>InjectionToken</code>. This avoids baking config into the compiled bundle.</p>`,
             codeFiles: [
               {
@@ -3180,7 +3368,6 @@ export const appConfig: ApplicationConfig = {
       }
     ]
   },
-
 
   // Performance & Advanced
   {
