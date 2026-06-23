@@ -25,6 +25,8 @@ export interface StudyNote {
 }
 
 export const STUDY_NOTES: StudyNote[] = [
+
+  // Reactivity & RxJS
   {
     id: 'reactivity-rxjs',
     title: 'Reactivity & RxJS',
@@ -393,6 +395,9 @@ export class TypeaheadComponent {
       }
     ]
   },
+
+
+  // Core Concepts  
   {
     id: 'components-core',
     title: 'Components & Core',
@@ -1189,6 +1194,9 @@ export class InlineEditComponent {
       }
     ]
   },
+
+
+  // Routing & Forms
   {
     id: 'routing-forms',
     title: 'Routing & Forms',
@@ -1201,7 +1209,51 @@ export class InlineEditComponent {
         sections: [
           {
             heading: 'Router Setup & Route Definition',
-            content: `<p>Angular's router maps URL paths to components. Routes are defined as an array and provided to the app via <code>provideRouter(routes)</code>.</p><ul><li><strong>Static routes:</strong> Direct path-to-component mapping.</li><li><strong>Parameterized routes:</strong> Use <code>:param</code> syntax to capture URL segments (e.g., <code>/products/:id</code>).</li><li><strong>Wildcard route:</strong> <code>**</code> catches all unmatched paths — always place it last.</li><li><strong>Lazy loading:</strong> Load a component or route subtree only when navigated to, reducing initial bundle size.</li></ul>`,
+            content: `
+<p class="mb-4">Angular's router maps URL paths to components. Routes are defined as an array and provided to the app via <code>provideRouter(routes)</code>.</p>
+
+<div class="row g-3 mb-2">
+  <div class="col-12 col-md-6">
+    <div class="p-3 border rounded-3 bg-light h-100 shadow-sm border-start border-4 border-primary">
+      <div class="d-flex align-items-center mb-2">
+        <i class="bi bi-signpost-split fs-4 text-primary me-2"></i>
+        <h6 class="mb-0 fw-bold">Static Routes</h6>
+      </div>
+      <p class="small text-muted mb-0">Direct path-to-component mapping (e.g., <code>/about</code>).</p>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <div class="p-3 border rounded-3 bg-light h-100 shadow-sm border-start border-4 border-success">
+      <div class="d-flex align-items-center mb-2">
+        <i class="bi bi-link-45deg fs-4 text-success me-2"></i>
+        <h6 class="mb-0 fw-bold">Parameterized Routes</h6>
+      </div>
+      <p class="small text-muted mb-0">Use <code>:param</code> syntax to capture URL segments (e.g., <code>/products/:id</code>).</p>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <div class="p-3 border rounded-3 bg-light h-100 shadow-sm border-start border-4 border-warning">
+      <div class="d-flex align-items-center mb-2">
+        <i class="bi bi-box-seam fs-4 text-warning me-2"></i>
+        <h6 class="mb-0 fw-bold">Lazy Loading</h6>
+      </div>
+      <p class="small text-muted mb-0">Load a component subtree only when navigated to, reducing initial bundle size.</p>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <div class="p-3 border rounded-3 bg-light h-100 shadow-sm border-start border-4 border-danger">
+      <div class="d-flex align-items-center mb-2">
+        <i class="bi bi-asterisk fs-4 text-danger me-2"></i>
+        <h6 class="mb-0 fw-bold">Wildcard Route</h6>
+      </div>
+      <p class="small text-muted mb-0"><code>**</code> catches all unmatched paths (e.g., 404 pages) — <strong>always place it last</strong>.</p>
+    </div>
+  </div>
+</div>
+`,
             codeFiles: [
               {
                 fileName: 'app.routes.ts',
@@ -1609,6 +1661,9 @@ export const routes: Routes = [
       }
     ]
   },
+
+
+  // Services & DI
   {
     id: 'services-di',
     title: 'Services & DI',
@@ -1921,6 +1976,9 @@ export const appConfig: ApplicationConfig = {
       }
     ]
   },
+
+
+  // Performance & Advanced
   {
     id: 'performance-advanced',
     title: 'Performance & Advanced',
