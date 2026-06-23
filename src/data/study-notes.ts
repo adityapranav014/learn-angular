@@ -1218,6 +1218,36 @@ bootstrapApplication(AppComponent, {
           {
             heading: 'Lifecycle Optimization: afterRender and afterNextRender',
             content: `<p>Angular 17 introduced two new lifecycle hooks for executing operations safely in browser environments, particularly helpful when using Server-Side Rendering (SSR):</p><ul><li><strong>afterRender:</strong> Runs after every change detection cycle has finished rendering the page. Useful for DOM manipulation or measuring elements.</li><li><strong>afterNextRender:</strong> Runs exactly once after the next rendering cycle completes. Best for initializing third-party libraries that need access to the browser DOM.</li></ul>`,
+            mermaidDefinition: `
+  graph TD
+    CD["Change Detection Cycle Finishes"] --> Env{"Is Environment Browser?"}
+    
+    %% SSR Route
+    Env -->|No: Node.js / SSR Server| SSR["Skip Hooks Safely <br/> (Prevents DOM 'undefined' errors)"]
+    
+    %% Browser Route
+    Env -->|Yes: Client Browser| DOM["Render Layout & Paint DOM"]
+    
+    %% Split Hooks
+    DOM --> HookNext["afterNextRender()"]
+    DOM --> HookEvery["afterRender()"]
+    
+    %% Hook Descriptions
+    HookNext --> NextDesc["Fires ONCE after next cycle <br/> <b>Best for:</b> 3rd-party library setup <br/> (e.g., Chart.js initialization)"]
+    HookEvery --> EveryDesc["Fires EVERY change cycle <br/> <b>Best for:</b> Active DOM tracking <br/> (e.g., measuring canvas resize)"]
+
+    %% UX Designer's Brand Color & Hierarchy Classes
+    classDef core fill:#fdf4ff,stroke:#c026d3,stroke-width:2px,color:#202124,font-weight:bold;
+    classDef ssr fill:#f8fafc,stroke:#cbd5e1,stroke-width:1px,color:#64748b,stroke-dasharray:4;
+    classDef hook fill:#c026d3,stroke:#a21caf,stroke-width:2px,color:#ffffff,font-weight:bold;
+    classDef detail fill:#ffffff,stroke:#e5e7eb,stroke-width:1px,color:#202124;
+
+    %% Class Assignments
+    class CD,Env,DOM core;
+    class SSR ssr;
+    class HookNext,HookEvery hook;
+    class NextDesc,EveryDesc detail;
+`,
             codeFiles: [
               {
                 fileName: 'chart.component.ts',
@@ -1266,6 +1296,52 @@ export class ChartComponent {
           {
             heading: 'Signal-based Inputs and Outputs',
             content: `<p>Angular 17 introduced signal-based component communication, making inputs and outputs fully reactive primitives.</p><ul><li><strong>Signal Inputs:</strong> Declared via <code>input()</code> or <code>input.required()</code>. They return a read-only Signal.</li><li><strong>Signal Outputs:</strong> Declared via <code>output()</code> or <code>outputFromObservable()</code>. Serves as a streamlined replacement for <code>@Output() EventEmitter</code>.</li></ul>`,
+            mermaidDefinition: `
+  graph TD
+    %% Invisible link forces vertical stacking to prevent width squishing
+    Legacy ~~~ Modern
+
+    subgraph Legacy ["Legacy API (Decorators)"]
+      direction LR
+      P_Leg["Parent Component"] -->|"[property]"| In_Leg["@Input()"]
+      Out_Leg["@Output() <br/> EventEmitter"] -->|"(event)"| P_Leg
+    end
+
+    subgraph Modern ["Signal-based API (Angular 17+)"]
+      direction LR
+      P_Mod["Parent Component"] -->|"[property]"| In_Mod["input() / input.required() <br/> (Read-only Signal)"]
+      
+      %% Reactive chain based on the computed() example
+      In_Mod -.->|"Reactive <br/> Dependency"| Comp_Mod["computed() <br/> (Derived State)"]
+      
+      Out_Mod["output() <br/> (Streamlined Emit)"] -->|"(event)"| P_Mod
+    end
+
+    %% UX Designer's Brand Color & Hierarchy Classes
+    classDef default fill:#ffffff,stroke:#e5e7eb,stroke-width:1px,color:#202124;
+    
+    %% Legacy Pathway (Faded / De-emphasized)
+    classDef legacy fill:#f8fafc,stroke:#cbd5e1,stroke-width:1px,color:#64748b,stroke-dasharray:4;
+    
+    %% Modern Container/Parent
+    classDef modern fill:#fdf4ff,stroke:#c026d3,stroke-width:2px,color:#202124,font-weight:bold;
+    
+    %% Core Signal Primitives (Deep Contrast Layer)
+    classDef signalCore fill:#c026d3,stroke:#a21caf,stroke-width:2px,color:#ffffff,font-weight:bold;
+    
+    %% Computed/Derived (Reactive styling)
+    classDef reactive fill:#faf5ff,stroke:#8b5cf6,stroke-width:2px,color:#202124,stroke-dasharray:4;
+
+    %% Class Assignments
+    class P_Leg,In_Leg,Out_Leg legacy;
+    class P_Mod modern;
+    class In_Mod,Out_Mod signalCore;
+    class Comp_Mod reactive;
+
+    %% Subgraph specific styling
+    style Legacy fill:#f1f5f9,stroke:#e2e8f0,stroke-dasharray:4;
+    style Modern fill:#faf5ff,stroke:#e879f9,stroke-width:2px;
+`,
             codeFiles: [
               {
                 fileName: 'product-card.component.ts',
@@ -1321,16 +1397,63 @@ export class ProductCardComponent {
         version: 'v18_v19',
         label: 'Angular 18 & 19',
         sections: [
+
+          // Local Template Variables (@let)
           {
-            heading: 'Local Template Variables (&#64;let)',
-            content: `<p>Angular 18 introduced the <code>&#64;let</code> declaration syntax in templates, allowing developers to declare variables locally inside component views.</p><ul><li><strong>Local Scope:</strong> Avoids repeating complex computations or async pipe bindings.</li><li><strong>Reactive binding:</strong> Safely stores intermediate results of expressions.</li><li><strong>Improved Type Safety:</strong> Type checking is fully supported by the Angular language service.</li></ul>`,
+            heading: 'Local Template Variables (@let)',
+            content: `<p>Angular 18 introduced the <code>@let</code> declaration syntax directly inside component templates, revolutionizing how local view state is managed.</p><ul><li><strong>Eliminates Stream Duplication:</strong> Solves the classic limitation where developers had to use heavy structural directives (like <code>*ngIf="..." as user</code>) just to capture an async value.</li><li><strong>Local Scope Block:</strong> Variables are scoped to the current template block and its children, preventing state bleeding.</li><li><strong>Strict Type Inference:</strong> Fully compatible with the Angular Language Service, giving students real-time IDE type checking and auto-completion.</li></ul>`,
+            mermaidDefinition: `
+  graph TD
+    %% Invisible link forces vertical stacking to prevent width squishing
+    Legacy ~~~ Modern
+
+    subgraph Legacy ["Legacy State Capture (Pre-v18)"]
+      direction LR
+      L1["Observable Stream"] --> L2["Forced Nesting: <br/> *ngIf='stream$ | async as user'"]
+      L2 --> L3["Deep HTML Indentation <br/> to maintain variable scope"]
+      L3 --> L4["Duplicate async pipes <br/> if used outside structural block"]
+    end
+
+    subgraph Modern ["Modern Template Variables (Angular 18+)"]
+      direction LR
+      M1["Observable Stream"] --> M2["@let user = userProfile$ | async;"]
+      M2 --> M3["Derived States: <br/> @let fullName = ... <br/> @let isAdmin = ..."]
+      M3 --> M4["Flat template layout <br/> with active type-inference"]
+    end
+
+    %% UX Designer's Brand Color & Hierarchy Classes
+    classDef default fill:#ffffff,stroke:#e5e7eb,stroke-width:1px,color:#202124;
+    
+    %% Legacy Pathway (Faded / De-emphasized)
+    classDef legacy fill:#f8fafc,stroke:#cbd5e1,stroke-width:1px,color:#64748b,stroke-dasharray:4;
+    
+    %% Modern Container/Parent
+    classDef modern fill:#fdf4ff,stroke:#c026d3,stroke-width:2px,color:#202124,font-weight:bold;
+    
+    %% Core Feature Primitives (Deep Contrast Layer)
+    classDef featureCore fill:#c026d3,stroke:#a21caf,stroke-width:2px,color:#ffffff,font-weight:bold;
+    
+    %% Success/Automated routing
+    classDef auto fill:#f0fdf4,stroke:#22c55e,stroke-width:2px,color:#166534;
+
+    %% Class Assignments
+    class L1,L2,L3,L4 legacy;
+    class M1 modern;
+    class M2 featureCore;
+    class M3,M4 auto;
+
+    %% Subgraph specific styling
+    style Legacy fill:#f1f5f9,stroke:#e2e8f0,stroke-dasharray:4;
+    style Modern fill:#faf5ff,stroke:#e879f9,stroke-width:2px;
+`,
+
             codeFiles: [
               {
                 fileName: 'legacy-approach.component.html',
                 language: 'xml',
                 code: `<div *ngIf="(userProfile$ | async) as user">
-  <h3>{{ (userProfile$ | async)?.firstName }}</h3>
-  <p>{{ (userProfile$ | async)?.email }}</p>
+  <h3>{{ user.firstName }}</h3>
+  <p>{{ user.email }}</p>
 </div>`
               },
               {
@@ -1357,9 +1480,56 @@ export class ProductCardComponent {
               }
             ]
           },
+
+          // Fallback Content for Content Projection
           {
             heading: 'Fallback Content for Content Projection',
-            content: `<p>Angular 18 added built-in support for fallback content in <code>&lt;ng-content&gt;</code>. If no content is projected into the slot, the fallback content defined inside the tags will render.</p>`,
+            content: `<p>Angular 18 added native fallback capabilities directly to the <code>&lt;ng-content&gt;</code> tag, removing complex workaround logic for empty states.</p><ul><li><strong>Zero Component Logic:</strong> No need to write component-level conditional checks (like <code>@if</code> with ElementRef queries) to verify if a parent provided projection data.</li><li><strong>Native Slots:</strong> Standard HTML and child components placed inside <code>&lt;ng-content&gt;</code> act automatically as default placeholders.</li><li><strong>Multi-Slot Support:</strong> Operates perfectly across both default slots and targeted attribute selectors (e.g., <code>select="[dialog-title]"</code>).</li></ul>`,
+            mermaidDefinition: `
+  graph TD
+    %% Invisible link forces vertical stacking to prevent width squishing
+    Legacy ~~~ Modern
+
+    subgraph Legacy ["Legacy Workaround (Pre-v18)"]
+      direction LR
+      L1["Parent Component"] --> L2["@ContentChild() <br/> or ElementRef queries"]
+      L2 --> L3["Manual TS Logic: <br/> check if content exists"]
+      L3 --> L4["@if (hasContent) { &lt;ng-content&gt; } <br/> @else { Fallback UI }"]
+    end
+
+    subgraph Modern ["Native Fallback API (Angular 18+)"]
+      direction LR
+      M1["Parent Component"] --> M2["&lt;ng-content select='[dialog-title]'&gt; <br/> &lt;h5&gt;Default Header&lt;/h5&gt; <br/> &lt;/ng-content&gt;"]
+      
+      M2 -->|Slot is Empty| M3["Auto-render Fallback <br/> (Zero TS Logic required)"]
+      M2 -->|Content Provided| M4["Render Parent Content <br/> (Overrides inner HTML)"]
+    end
+
+    %% UX Designer's Brand Color & Hierarchy Classes
+    classDef default fill:#ffffff,stroke:#e5e7eb,stroke-width:1px,color:#202124;
+    
+    %% Legacy Pathway (Faded / De-emphasized)
+    classDef legacy fill:#f8fafc,stroke:#cbd5e1,stroke-width:1px,color:#64748b,stroke-dasharray:4;
+    
+    %% Modern Container/Parent
+    classDef modern fill:#fdf4ff,stroke:#c026d3,stroke-width:2px,color:#202124,font-weight:bold;
+    
+    %% Core Feature Primitives (Deep Contrast Layer)
+    classDef featureCore fill:#c026d3,stroke:#a21caf,stroke-width:2px,color:#ffffff,font-weight:bold;
+    
+    %% Success/Automated routing
+    classDef auto fill:#f0fdf4,stroke:#22c55e,stroke-width:2px,color:#166534;
+
+    %% Class Assignments
+    class L1,L2,L3,L4 legacy;
+    class M1 modern;
+    class M2 featureCore;
+    class M3,M4 auto;
+
+    %% Subgraph specific styling
+    style Legacy fill:#f1f5f9,stroke:#e2e8f0,stroke-dasharray:4;
+    style Modern fill:#faf5ff,stroke:#e879f9,stroke-width:2px;
+`,
             codeFiles: [
               {
                 fileName: 'dialog.component.html',
@@ -1367,7 +1537,7 @@ export class ProductCardComponent {
                 code: `<div class="modal-dialog">
   <div class="modal-header">
     <ng-content select="[dialog-title]">
-      <h5 class="modal-title">Dialog</h5>
+      <h5 class="modal-title">Default Dialog Header</h5>
     </ng-content>
   </div>
 
@@ -1395,44 +1565,99 @@ export class ProductCardComponent {
 </app-dialog>
 
 <app-dialog>
-  <p>Loading your profile...</p>
+  <p>Loading your profile... (Header and Footer fallbacks will render here)</p>
 </app-dialog>`
               }
             ]
           },
+
+          // View Transitions API Integration
           {
             heading: 'View Transitions API Integration',
-            content: `<p>Angular 19 introduced built-in support for the browser's native View Transitions API, enabling smooth page-to-page animated transitions during route navigation.</p><p>Enable it in <code>app.config.ts</code> by declaring <code>withViewTransitions()</code> inside <code>provideRouter</code>. In CSS, customize transitions using the <code>::view-transition-old</code> and <code>::view-transition-new</code> selectors.</p>`,
+            content: `<p>Angular natively integrates with the browser's native <strong>View Transitions API</strong>, offering smooth, hardware-accelerated animated transitions during router navigation.</p><ul><li><strong>Native Hooking:</strong> Enabled globally in your routing setup via the <code>withViewTransitions()</code> feature provider.</li><li><strong>Automatic State Capturing:</strong> The framework automatically orchestrates taking DOM screenshots before and after navigation transitions occur.</li><li><strong>CSS Pseudo-Element Customization:</strong> Allows students to hook straight into CSS standard animations via the pseudo-elements <code>::view-transition-old()</code> and <code>::view-transition-new()</code>.</li></ul>`,
+            mermaidDefinition: `
+  graph TD
+    %% Invisible link forces vertical stacking to prevent width squishing
+    Legacy ~~~ Modern
+
+    subgraph Legacy ["Standard Routing (Pre-v17 / Default)"]
+      direction LR
+      L1["Router Navigation"] --> L2["Destroy Old Component"]
+      L2 --> L3["Render New Component"]
+      L3 --> L4["Abrupt visual flash <br/> (Requires manual @angular/animations)"]
+    end
+
+    subgraph Modern ["Native View Transitions API (Angular 18+)"]
+      direction LR
+      M1["Router Navigation"] --> M2["withViewTransitions() <br/> intercepts routing"]
+      
+      M2 --> M3["1. Snapshot Old DOM <br/> (::view-transition-old)"]
+      M3 --> M4["2. Render New DOM <br/> (::view-transition-new)"]
+      M4 --> M5["3. Hardware-Accelerated <br/> CSS Animation"]
+    end
+
+    %% UX Designer's Brand Color & Hierarchy Classes
+    classDef default fill:#ffffff,stroke:#e5e7eb,stroke-width:1px,color:#202124;
+    
+    %% Legacy Pathway (Faded / De-emphasized)
+    classDef legacy fill:#f8fafc,stroke:#cbd5e1,stroke-width:1px,color:#64748b,stroke-dasharray:4;
+    
+    %% Modern Container/Parent
+    classDef modern fill:#fdf4ff,stroke:#c026d3,stroke-width:2px,color:#202124,font-weight:bold;
+    
+    %% Core Feature Primitives (Deep Contrast Layer)
+    classDef featureCore fill:#c026d3,stroke:#a21caf,stroke-width:2px,color:#ffffff,font-weight:bold;
+    
+    %% Browser native / CSS layer
+    classDef cssLayer fill:#eff6ff,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a;
+    
+    %% Success/Automated routing
+    classDef auto fill:#f0fdf4,stroke:#22c55e,stroke-width:2px,color:#166534;
+
+    %% Class Assignments
+    class L1,L2,L3,L4 legacy;
+    class M1 modern;
+    class M2 featureCore;
+    class M3,M4 cssLayer;
+    class M5 auto;
+
+    %% Subgraph specific styling
+    style Legacy fill:#f1f5f9,stroke:#e2e8f0,stroke-dasharray:4;
+    style Modern fill:#faf5ff,stroke:#e879f9,stroke-width:2px;
+`,
+
             codeFiles: [
               {
                 fileName: 'app.config.ts',
                 language: 'typescript',
-                code: `// ── app.config.ts — Enable View Transitions ───────────────
-import { ApplicationConfig } from '@angular/core';
+                code: `import { ApplicationConfig } from '@angular/core';
 import { provideRouter, withViewTransitions } from '@angular/router';
 import { routes } from './app.routes';
-
+// ── app.config.ts — Native View Transitions Setup ───────────────
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(
       routes,
       withViewTransitions({
-        // Optional: skip transition on first navigation
+        // Optional configuration: avoids rendering flashes during full layout paint
         skipInitialTransition: true
       })
     )
   ]
 };`
               },
+
               {
                 fileName: 'styles.scss',
                 language: 'css',
-                code: `/* ── styles.scss — Customize the animation ────────────────── */
-/* Fade-out old page view */
+                code: `/* ── styles.scss — Custom CSS Transition Targets ────────────────── */
+
+/* Target the outgoing screen snapshot */
 ::view-transition-old(root) {
   animation: 200ms ease-in fade-out;
 }
-/* Slide-in new page view */
+
+/* Target the incoming screen layout */
 ::view-transition-new(root) {
   animation: 300ms ease-out slide-in-from-right;
 }
@@ -1441,190 +1666,337 @@ export const appConfig: ApplicationConfig = {
   from { opacity: 1; }
   to   { opacity: 0; }
 }
+
 @keyframes slide-in-from-right {
   from { transform: translateX(40px); opacity: 0; }
   to   { transform: translateX(0);    opacity: 1; }
 }`
               }
             ]
-          }
+          },
         ]
       },
 
 
       // Scenario Prep
       {
-        version: 'scenarios',
+        version: 'scenario_prep',
         label: 'Scenario Prep',
         sections: [
+
+          // Race Condition Mitigation (Typeahead Search)
           {
-            heading: 'Sorting Flicker in Lists',
-            content: `<h5>Scenario Question:</h5><p><em>"Your &#64;for loop renders a table, but sorting or rearranging elements causes flickering in the UI. How do you optimize it?"</em></p><h5>Answer:</h5><p>Flickering happens when Angular cannot match DOM elements with array items, causing it to destroy and recreate DOM nodes instead of moving them. To fix this:</p><ol><li>Ensure the <code>track</code> expression points to a unique identifier (like <code>item.id</code>) rather than the loop index or the entire object.</li><li>Avoid using index <code>$index</code> as a track key if the list items can be re-ordered, filtered, or sorted, as the indices will map to different data objects, forcing DOM recreation.</li></ol>`,
+            heading: 'Race Condition Mitigation (Typeahead Search)',
+            content: `<p class="mb-3">A classic production bug occurs when asynchronous network responses arrive out of order, overriding the UI with stale data. Resolving this requires understanding RxJS flattening operators within user-driven streams.</p><ul><li><strong>The Vulnerability:</strong> Using <code>mergeMap</code> or <code>switchMap</code> incorrectly can result in a slow network request from a previous keystroke resolving *after* a faster, newer request, corrupting the results.</li><li><strong>The Remedy (switchMap):</strong> <code>switchMap</code> acts as an execution broker—the moment a new emission arrives from the source stream, it immediately cancels (unsubscribes from) the previous active inner observable search request.</li><li><strong>Stream Resiliency:</strong> Always catch errors *inside* the inner observable stream. Catching errors on the outer stream will cause the entire user search input listener to break permanently upon the first API failure.</li></ul>`,
+            mermaidDefinition: `
+  graph TD
+    %% Main Pipeline Flow
+    Input["User Input Stream <br/> (valueChanges)"] --> Pipe1["debounceTime(300) <br/> (Pauses for keystroke bursts)"]
+    Pipe1 --> Pipe2["distinctUntilChanged() <br/> (Ignores identical queries)"]
+    
+    %% The core switchMap broker
+    Pipe2 --> Broker["switchMap( ... ) Broker <br/> ⚡ Auto-cancels previous pending requests"]
+    
+    %% Inner Observable execution
+    subgraph Inner ["Inner Network Request (Isolated Scope)"]
+      direction TB
+      HTTP["http.get( ... )"] -.->|If API Fails| Catch["catchError() <br/> Traps error & returns of([ ])"]
+      Catch --> Safe["🛡️ Prevents Outer Stream Death"]
+    end
+
+    Broker --> HTTP
+    HTTP -->|If API Succeeds| UI["Update results$ in UI"]
+    Safe --> UI
+
+    %% UX Designer's Brand Color & Hierarchy Classes
+    classDef default fill:#ffffff,stroke:#e5e7eb,stroke-width:1px,color:#202124;
+    
+    %% Standard stream pathway
+    classDef stream fill:#f8fafc,stroke:#cbd5e1,stroke-width:2px,color:#0f172a;
+    
+    %% Core Operator (Deep Contrast Layer)
+    classDef broker fill:#c026d3,stroke:#a21caf,stroke-width:2px,color:#ffffff,font-weight:bold;
+    
+    %% Network operations
+    classDef network fill:#eff6ff,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a;
+    
+    %% Resiliency / Safety mechanisms
+    classDef shield fill:#f0fdf4,stroke:#22c55e,stroke-width:2px,color:#166534,font-weight:bold;
+
+    %% Assign classes
+    class Input,Pipe1,Pipe2 stream;
+    class Broker broker;
+    class HTTP network;
+    class Catch,Safe shield;
+    class UI default;
+    
+    %% Subgraph specific styling
+    style Inner fill:#faf5ff,stroke:#e879f9,stroke-width:2px,stroke-dasharray:4;
+`,
             codeFiles: [
               {
-                fileName: 'table.component.html',
-                language: 'xml',
-                code: `@for (row of tableData; track $index) {
-  <tr><td>{{ row.name }}</td><td>{{ row.score }}</td></tr>
-}
-
-@for (row of tableData; track row.id) {
-  <tr><td>{{ row.name }}</td><td>{{ row.score }}</td></tr>
-}`
-              },
-              {
-                fileName: 'table.component.ts',
+                fileName: 'search-broker.component.ts',
                 language: 'typescript',
-                code: `// ── Component class ────────────────────────────────────────
-import { Component, signal } from '@angular/core';
-
-export class TableComponent {
-  tableData = signal([
-    { id: 'u1', name: 'Alice', score: 95 },
-    { id: 'u2', name: 'Bob',   score: 72 },
-    { id: 'u3', name: 'Carol', score: 88 },
-  ]);
-
-  sortByScore() {
-    // Assign new array reference — Angular reconciles by id
-    this.tableData.set([...this.tableData()].sort((a, b) => b.score - a.score));
-    // With track row.id → Angular MOVES DOM nodes (no flicker)
-    // With track $index → Angular DESTROYS + RECREATES (flicker!)
-  }
-}`
-              }
-            ]
-          },
-          {
-            heading: 'Template updates miss role changes',
-            content: `<h5>Scenario Question:</h5><p><em>"An &#64;if condition checks user.isAdmin, but the template doesn't update when the user role changes. How do you fix this?"</em></p><h5>Answer:</h5><p>If <code>user</code> is a standard mutable object, modifying its properties (e.g., <code>user.isAdmin = true</code>) does not trigger change detection in <code>OnPush</code> components since the object reference remains the same. Fixes:</p><ol><li>Use a <strong>Signal</strong> for the user state (e.g., <code>user = signal&lt;User&gt;(initialUser)</code>) and trigger updates via <code>user.set(...)</code> or <code>user.update(...)</code>.</li><li>If using standard fields, assign a new object reference to trigger change detection: <code>this.user = { ...this.user, isAdmin: true }</code>.</li></ol>`,
-            codeFiles: [
-              {
-                fileName: 'role-demo.component.ts',
-                language: 'typescript',
-                code: `import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
-
-interface User { name: string; isAdmin: boolean; }
+                code: `import { Component, OnInit } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { debounceTime, distinctUntilChanged, switchMap, catchError, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { AsyncModule } from '@angular/common';
 
 @Component({
-  selector: 'app-role-demo',
+  selector: 'app-search-broker',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush, // strict mode
+  imports: [ReactiveFormsModule, AsyncModule],
   template: \`
-    @if (user().isAdmin) {
-      <span class="badge bg-danger">Admin Panel</span>
-    } @else {
-      <span class="badge bg-secondary">Viewer</span>
-    }
-    <button (click)="promoteToAdmin()">Promote</button>
-  \`
-})
-export class RoleDemoComponent {
-  user = signal<User>({ name: 'Alice', isAdmin: false });
-
-  promoteToAdmin() {
-    // ── Fix 1: Use signal.update() — triggers OnPush ──────
-    this.user.update(u => ({ ...u, isAdmin: true }));
-
-    // ── Fix 2 (plain object): New reference — triggers OnPush
-    // this.user = { ...this.user, isAdmin: true };
-
-    // ── WRONG: Mutation — OnPush won't detect this ─────────
-    // this.user().isAdmin = true;  // ❌ reference unchanged!
-  }
-}`
-              }
-            ]
-          },
-          {
-            heading: 'Refactoring legacy *ngSwitch to &#64;switch',
-            content: `<h5>Scenario Question:</h5><p><em>"How would you refactor a legacy *ngSwitch to Angular 19's &#64;switch while preserving accessibility (ARIA labels)?"</em></p><h5>Answer:</h5><p>Modern control flow syntax (<code>&#64;switch</code>) is a direct structural replacement. Simply remove the outer <code>[ngSwitch]</code> binding and rewrite using the block format. ARIA attributes or roles remain untouched on container divs:</p>`,
-            codeFiles: [
-              {
-                fileName: 'legacy-switch.component.html',
-                language: 'xml',
-                code: `<div [ngSwitch]="status" role="status" aria-live="polite">
-  <p *ngSwitchCase="'loading'" aria-busy="true">
-    <span class="spinner"></span> Loading...
-  </p>
-  <p *ngSwitchCase="'error'" class="text-danger">
-    Something went wrong.
-  </p>
-  <p *ngSwitchCase="'empty'" class="text-muted">
-    No data found.
-  </p>
-  <p *ngSwitchDefault class="text-success">
-    Data loaded successfully!
-  </p>
-</div>`
-              },
-              {
-                fileName: 'modern-switch.component.html',
-                language: 'xml',
-                code: `<div role="status" aria-live="polite">
-  @switch (status) {
-    @case ('loading') {
-      <p aria-busy="true"><span class="spinner"></span> Loading...</p>
-    }
-    @case ('error') {
-      <p class="text-danger">Something went wrong.</p>
-    }
-    @case ('empty') {
-      <p class="text-muted">No data found.</p>
-    }
-    @default {
-      <p class="text-success">Data loaded successfully!</p>
-    }
-  }
-</div>`
-              }
-            ]
-          },
-          {
-            heading: 'Dynamic Edit/View Modes without DOM duplication',
-            content: `<h5>Scenario Question:</h5><p><em>"Design a template that toggles between edit and view modes using Signals without duplicating DOM elements or inputs."</em></p><h5>Answer:</h5><p>Avoid duplicating form elements inside separate <code>&#64;if</code> blocks. Instead, use a single input, bind its read-only status dynamically to a signal, and style it conditionally using active classes:</p>`,
-            codeFiles: [
-              {
-                fileName: 'inline-edit.component.ts',
-                language: 'typescript',
-                code: `import { Component, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-
-@Component({
-  selector: 'app-inline-edit',
-  standalone: true,
-  imports: [FormsModule],
-  template: \`
-    <div class="form-group">
-      <label class="fw-bold">Username</label>
-
-      <input
-        [readonly]="isViewMode()"
-        [class.form-control-plaintext]="isViewMode()"
-        [class.form-control]="!isViewMode()"
-        [(ngModel)]="username"
-        class="mb-2" />
-
-      <button class="btn btn-sm btn-outline-primary" (click)="toggleMode()">
-        <i [class]="isViewMode() ? 'bi bi-pencil' : 'bi bi-check-lg'"></i>
-        {{ isViewMode() ? 'Edit' : 'Save' }}
-      </button>
+    <div class="search-container">
+      <input [formControl]="searchQuery" type="text" placeholder="Search secure engine ledger..." />
+      
+      @if (results$ | async; as productList) {
+        <ul class="results-grid">
+          @for (item of productList; track item.id) {
+            <li>{{ item.name }} — ₹{{ item.price }}</li>
+          } @empty {
+            <li class="no-results">No active matching nodes found.</li>
+          }
+        </ul>
+      }
     </div>
   \`
 })
-export class InlineEditComponent {
-  isViewMode = signal(true);
-  username = 'AdityaPranav';
+export class SearchBrokerComponent implements OnInit {
+  searchQuery = new FormControl('');
+  results$!: Observable<any[]>;
+  isLoading = false;
 
-  toggleMode() {
-    this.isViewMode.update(mode => !mode);
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    this.results$ = this.searchQuery.valueChanges.pipe(
+      debounceTime(300),          // 1. Wait out keypress bursts to minimize server pressure
+      distinctUntilChanged(),     // 2. Suppress duplicate values if navigation modifiers were hit
+      tap(() => this.isLoading = true),
+      switchMap(query => {
+        if (!query?.trim()) {
+          this.isLoading = false;
+          return of([]);          // Short-circuit empty strings cleanly
+        }
+        
+        // 3. switchMap cancels this request automatically if the user types a new letter
+        return this.http.get<any[]>(\`https://api.ledger.internal/search?q=\${query}\`).pipe(
+          tap(() => this.isLoading = false),
+          catchError(error => {
+            console.error('Inner network frame caught exception cleanly:', error);
+            this.isLoading = false;
+            return of([]);        // ✅ CRITICAL: Returning an empty array keeps the parent stream alive!
+          })
+        );
+      })
+    );
+  }
+}`
+              }
+            ]
+          },
+
+          // Performance Optimization with OnPush & Signals
+          {
+            heading: 'Performance Optimization with OnPush & Signals',
+            content: `<p class="mb-3">By default, Angular runs change detection across the entire component tree whenever an event fires. For heavy enterprise dashboards, this causes significant UI lag.</p><ul><li><strong>ChangeDetectionStrategy.OnPush:</strong> Instructs the rendering engine to completely skip checking this component unless its <code>@Input()</code> reference alters, an event directly originates inside it, or an observable stream explicitly fires via the <code>AsyncPipe</code>.</li><li><strong>Signals as Fine-Grained Trackers:</strong> Modern Angular Signals provide explicit micro-updates. They inform the framework precisely *where* a value is used in the DOM, allowing parts of the template to re-render without executing macro-level zone evaluations.</li></ul>`,
+            mermaidDefinition: `
+  graph TD
+    %% Invisible link forces vertical stacking to prevent width squishing
+    Legacy ~~~ Modern
+
+    subgraph Legacy ["Default Change Detection (Zone.js)"]
+      direction LR
+      L1["Any Event Fires <br/> (Click, HTTP, Timer)"] --> L2["Framework traverses & dirty-checks <br/> ENTIRE Component Tree"]
+      L2 --> L3["Macro-level DOM re-renders <br/> ⚠️ Causes UI Lag at scale"]
+    end
+
+    subgraph Modern ["Optimized: OnPush + Signals"]
+      direction LR
+      M1["signal.set(value)"] --> M2["🛡️ OnPush Strategy blocks <br/> top-down tree traversal"]
+      M2 --> M3["Fine-Grained Tracking: <br/> Framework knows exact UI target"]
+      M3 --> M4["Surgical Micro-Update <br/> ⚡ Zero wasted rendering"]
+    end
+
+    %% UX Designer's Brand Color & Hierarchy Classes
+    classDef default fill:#ffffff,stroke:#e5e7eb,stroke-width:1px,color:#202124;
+    
+    %% Legacy Pathway (Faded / De-emphasized / Warning)
+    classDef legacy fill:#f8fafc,stroke:#cbd5e1,stroke-width:1px,color:#64748b,stroke-dasharray:4;
+    classDef lag fill:#fff1f2,stroke:#f43f5e,stroke-width:2px,color:#881337;
+    
+    %% Modern Container/Parent
+    classDef modern fill:#fdf4ff,stroke:#c026d3,stroke-width:2px,color:#202124,font-weight:bold;
+    
+    %% Core Feature Primitives (Deep Contrast Layer)
+    classDef featureCore fill:#c026d3,stroke:#a21caf,stroke-width:2px,color:#ffffff,font-weight:bold;
+    
+    %% Shields / Protections
+    classDef shield fill:#f0fdf4,stroke:#22c55e,stroke-width:2px,color:#166534,font-weight:bold;
+    
+    %% Success/Automated routing
+    classDef auto fill:#eff6ff,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a,font-weight:bold;
+
+    %% Class Assignments
+    class L1,L2 legacy;
+    class L3 lag;
+    class M1 featureCore;
+    class M2 shield;
+    class M3 default;
+    class M4 auto;
+
+    %% Subgraph specific styling
+    style Legacy fill:#f1f5f9,stroke:#e2e8f0,stroke-dasharray:4;
+    style Modern fill:#faf5ff,stroke:#e879f9,stroke-width:2px;
+`,
+            codeFiles: [
+              {
+                fileName: 'high-frequency-dashboard.component.ts',
+                language: 'typescript',
+                code: `import { Component, ChangeDetectionStrategy, signal, computed, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-high-freq-dashboard',
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush, // 1. Deactivates aggressive continuous checking
+  template: \`
+    <div class="metrics-panel">
+      <h3>Data Frame Cluster: {{ nodeClusterId }}</h3>
+      
+      <div class="stat-row">
+        <span>Raw Feed Input:</span>
+        <strong>{{ activeMetric() }} data/sec</strong>
+      </div>
+
+      <div class="stat-row highlight">
+        <span>Computed Processing Load Factor:</span>
+        <strong>{{ processedLoadFactor() }}%</strong>
+      </div>
+
+      <button (click)="simulateDataSpike()">Trigger Simulated Telemetry Spike</button>
+    </div>
+  \`
+})
+export class HighFrequencyDashboardComponent {
+  @Input() nodeClusterId = 'CLUSTER_X_90';
+
+  // 2. Signals serve as localized fine-grained data tracks
+  activeMetric = signal<number>(120);
+
+  // 3. Memoized calculation updates dynamically only when activeMetric changes
+  processedLoadFactor = computed(() => {
+    return Math.min(100, Math.floor(this.activeMetric() * 0.385));
+  });
+
+  simulateDataSpike() {
+    // Component view repaints smoothly and precisely without disturbing surrounding template trees
+    this.activeMetric.set(Math.floor(Math.random() * 150) + 100);
+  }
+}`
+              }
+            ]
+          },
+
+          // Memory Leak Prevention in Async Tasks
+          {
+            heading: 'Memory Leak Prevention in Async Tasks',
+            content: `<p class="mb-3">Dangling continuous stream subscriptions are the leading cause of memory leaks in SPA architectures, eventually causing the browser tab to slow down or crash.</p><ul><li><strong>The Danger Mode:</strong> Standard component-level <code>.subscribe()</code> calls without an unsubscribe handler will remain active in the browser heap long after the component has been unmounted from the DOM tree.</li><li><strong>takeUntilDestroyed Operator:</strong> A modern Angular operator that ties the pipeline lifetime straight to the framework lifecycle provider, cleaning up the link automatically during the component unmounting sequence.</li></ul>`,
+            mermaidDefinition: `
+  graph TD
+    %% Invisible link forces vertical stacking to prevent width squishing
+    Legacy ~~~ Modern
+
+    subgraph Legacy ["Legacy Danger (Unmanaged Subscriptions)"]
+      direction LR
+      L1["interval().subscribe(...) <br/> (Continuous RxJS Stream)"] --> L2["Component Unmounted <br/> (e.g., User navigates away)"]
+      L2 -->|No manual unsubscribe| L3["Orphaned Stream <br/> keeps firing in background"]
+      L3 --> L4["Browser Memory Leak ⚠️ <br/> Performance Degradation"]
+    end
+
+    subgraph Modern ["Modern Prevention (Angular 16+)"]
+      direction LR
+      M1["interval().pipe(...)"] --> M2["takeUntilDestroyed(destroyRef) <br/> 🔗 Links to Component Lifecycle"]
+      M2 --> M3["Component Unmounted"]
+      M3 -->|Framework auto-triggers cleanup| M4["Stream Safely Terminated 🛡️ <br/> Zero Memory Bleed"]
+    end
+
+    %% UX Designer's Brand Color & Hierarchy Classes
+    classDef default fill:#ffffff,stroke:#e5e7eb,stroke-width:1px,color:#202124;
+    
+    %% Legacy Pathway (Faded / De-emphasized)
+    classDef legacy fill:#f8fafc,stroke:#cbd5e1,stroke-width:1px,color:#64748b,stroke-dasharray:4;
+    
+    %% Danger / Memory Leak layer
+    classDef danger fill:#fff1f2,stroke:#f43f5e,stroke-width:2px,color:#881337,font-weight:bold;
+    
+    %% Modern Container/Parent
+    classDef modern fill:#fdf4ff,stroke:#c026d3,stroke-width:2px,color:#202124,font-weight:bold;
+    
+    %% Core Feature Primitives (Deep Contrast Layer)
+    classDef featureCore fill:#c026d3,stroke:#a21caf,stroke-width:2px,color:#ffffff,font-weight:bold;
+    
+    %% Shields / Protections / Success
+    classDef shield fill:#f0fdf4,stroke:#22c55e,stroke-width:2px,color:#166534,font-weight:bold;
+
+    %% Class Assignments
+    class L1,L2,L3 legacy;
+    class L4 danger;
+    class M1,M3 default;
+    class M2 featureCore;
+    class M4 shield;
+
+    %% Subgraph specific styling
+    style Legacy fill:#f1f5f9,stroke:#e2e8f0,stroke-dasharray:4;
+    style Modern fill:#faf5ff,stroke:#e879f9,stroke-width:2px;
+`,
+            codeFiles: [
+              {
+                fileName: 'telemetry-monitor.component.ts',
+                language: 'typescript',
+                code: `import { Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { interval } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+@Component({
+  selector: 'app-telemetry-monitor',
+  standalone: true,
+  template: \`
+    <div class="monitor-card">
+      <h4>System Telemetry Status Panel</h4>
+      <p class="status-active">Pulse stream connection linked directly to component lifetime matrix.</p>
+    </div>
+  \`
+})
+export class TelemetryMonitorComponent implements OnInit {
+  // 1. Inject modern global cleanup hook token reference
+  private destroyRef = inject(DestroyRef);
+
+  ngOnInit() {
+    // 2. High-frequency continuous generation ticker simulation
+    interval(1000).pipe(
+      tap(tick => console.log('Continuous telemetry pulse ping:', tick)),
+      
+      // 3. ✅ CRITICAL: Ties this stream down directly to this instance's DOM life span
+      takeUntilDestroyed(this.destroyRef) 
+    ).subscribe({
+      next: (val) => this.processSystemTelemetryFrame(val),
+      error: (err) => console.error('Pulse collection encountered system exception:', err)
+    });
+  }
+
+  private processSystemTelemetryFrame(frameId: number) {
+    // Executing internal background calculations smoothly
   }
 }`
               }
             ]
           }
         ]
-      }
+      },
     ]
   },
 
@@ -1636,12 +2008,17 @@ export class InlineEditComponent {
     icon: 'bi-signpost-split',
     category: 'Navigation & Input',
     versions: [
+
+      // fundamentals
       {
         version: 'fundamentals',
         label: 'Fundamentals',
         sections: [
+
+          // Router Setup & Route Definition
           {
             heading: 'Router Setup & Route Definition',
+            content: `<p>The Angular Router is a powerful service that maps browser URLs to specific components, enabling SPA navigation. It supports static, dynamic, and lazy-loaded routes.</p><ul><li><strong>Route Config:</strong> An array of objects defining the path, component, and optional guards or lazy-loading logic.</li><li><strong>Order Matters:</strong> Angular matches routes top-down. The wildcard (<code>**</code>) must always be the last entry to catch undefined paths.</li><li><strong>Preloading:</strong> Use <code>withPreloading(PreloadAllModules)</code> to optimize performance by fetching lazy chunks in the background after the initial app load.</li></ul>`,
             mermaidDefinition: `
   graph TD
     %% Entry Point & Core Engine
@@ -1680,7 +2057,6 @@ export class InlineEditComponent {
     class Wild fallbackNode;
     class S_Ex,P_Ex,L_Ex,W_Ex contextNote;
 `,
-
             codeFiles: [
               {
                 fileName: 'app.routes.ts',
@@ -1727,8 +2103,30 @@ export const appConfig: ApplicationConfig = {
               }
             ]
           },
+
+          // Reading Route Params & Query Strings
           {
             heading: 'Reading Route Params & Query Strings',
+            mermaidDefinition: `
+  graph TD
+    URL(https://www.quora.com/When-does-a-CPG-have-to-change-the-UPC-for-a-product) --> Strat{Reading Strategy}
+    
+    Strat -->|Snapshot| Snap[route.snapshot.paramMap]
+    Strat -->|Observable| Obs[route.paramMap.pipe...]
+    
+    Snap --> Fail[⚠️ Component doesn't reload <br/> UI shows stale data]
+    Obs --> Success[✅ Stream emits new value <br/> UI updates reactively]
+
+    classDef default fill:#ffffff,stroke:#e5e7eb,stroke-width:1px,color:#202124;
+    classDef engine fill:#c026d3,stroke:#a21caf,stroke-width:2px,color:#ffffff,font-weight:bold;
+    classDef danger fill:#fff1f2,stroke:#f43f5e,stroke-width:2px,color:#881337;
+    classDef success fill:#f0fdf4,stroke:#22c55e,stroke-width:2px,color:#166534;
+    
+    class Strat engine;
+    class Fail danger;
+    class Success success;
+    class URL,Snap,Obs default;
+`,
             content: `<p>Use <code>ActivatedRoute</code> to read URL parameters and query strings in a component. Angular 16+ provides a signal-based alternative via <code>inject(ActivatedRoute)</code>:</p><ul><li><strong>Snapshot:</strong> Read a single value at component creation. Fast but misses changes if the route updates without destroying the component (e.g., <code>/products/1</code> → <code>/products/2</code>).</li><li><strong>Observable <code>paramMap</code>:</strong> Reactively re-reads whenever the URL changes — correct approach for re-usable detail pages.</li><li><strong>Query params:</strong> Key-value pairs after <code>?</code> in the URL, e.g., <code>/products?sort=price&amp;page=2</code>.</li></ul>`,
             codeFiles: [
               {
@@ -1768,8 +2166,30 @@ export class ProductDetailComponent {
               }
             ]
           },
+
+          // Route Guards (canActivate, canDeactivate)
           {
             heading: 'Route Guards (canActivate, canDeactivate)',
+            mermaidDefinition: `
+  graph TD
+    Nav([Router Navigation Started]) --> CA{canActivate}
+    
+    CA -->|Returns false / UrlTree| Reject[Redirect to Login / Cancel]
+    CA -->|Returns true| Load[Render Component]
+    
+    Leave([User attempts to leave page]) --> CD{canDeactivate}
+    CD -->|Returns false| Stay[Block Navigation <br/> e.g. Unsaved Changes]
+    CD -->|Returns true| Exit[Unmount & Navigate]
+
+    classDef default fill:#ffffff,stroke:#e5e7eb,stroke-width:1px,color:#202124;
+    classDef engine fill:#c026d3,stroke:#a21caf,stroke-width:2px,color:#ffffff,font-weight:bold;
+    classDef danger fill:#fff1f2,stroke:#f43f5e,stroke-width:2px,color:#881337;
+    classDef success fill:#f0fdf4,stroke:#22c55e,stroke-width:2px,color:#166534;
+    
+    class CA,CD engine;
+    class Reject,Stay danger;
+    class Load,Exit success;
+`,
             content: `<p>Guards are functions that control whether a route can be activated or exited.</p><ul><li><strong>canActivate:</strong> Runs before a route loads. Return <code>true</code>/<code>false</code> or a <code>UrlTree</code> to redirect. Used to protect authenticated routes.</li><li><strong>canDeactivate:</strong> Runs before leaving a route. Useful for prompting "Unsaved changes — leave anyway?" when a form is dirty.</li><li>Modern guards are plain functions (Angular 15+), not classes.</li></ul>`,
             codeFiles: [
               {
@@ -1812,8 +2232,32 @@ export const unsavedChangesGuard: CanDeactivateFn<HasUnsavedChanges> =
               }
             ]
           },
+
+          // Template-Driven vs Reactive Forms
           {
             heading: 'Template-Driven vs Reactive Forms',
+            mermaidDefinition: `
+  graph TD
+    Forms([Angular Forms Core]) --> TD[Template-Driven Forms]
+    Forms --> RF[Reactive Forms]
+    
+    TD --> T1[Defined in HTML <br/> ngModel Directives]
+    TD --> T2[Two-Way Data Binding <br/> Mutable State]
+    TD --> T3[Harder to Unit Test]
+    
+    RF --> R1[Defined in TypeScript <br/> FormGroup/FormBuilder]
+    RF --> R2[Unidirectional Data Flow <br/> Observable Streams]
+    RF --> R3[Highly Testable & Scalable]
+
+    classDef default fill:#ffffff,stroke:#e5e7eb,stroke-width:1px,color:#202124;
+    classDef header fill:#c026d3,stroke:#a21caf,stroke-width:2px,color:#ffffff,font-weight:bold;
+    classDef legacy fill:#f8fafc,stroke:#cbd5e1,stroke-width:1px,color:#64748b,stroke-dasharray:4;
+    classDef modern fill:#fdf4ff,stroke:#c026d3,stroke-width:2px,color:#202124,font-weight:bold;
+    
+    class Forms header;
+    class TD,T1,T2,T3 legacy;
+    class RF,R1,R2,R3 modern;
+`,
             content: `<p>Angular provides two approaches for handling user input through forms:</p><ul><li><strong>Template-Driven:</strong> Defined in the HTML template using directives (<code>ngModel</code>, <code>ngForm</code>). Simple and quick for small forms. Two-way binding, less testable.</li><li><strong>Reactive (Model-Driven):</strong> Defined programmatically in the component class using <code>FormBuilder</code>, <code>FormGroup</code>, and <code>FormControl</code>. Explicit, fully testable, supports complex validation logic and dynamic forms.</li></ul><table class="table table-bordered mt-2 small"><thead><tr><th>Feature</th><th>Template-Driven</th><th>Reactive</th></tr></thead><tbody><tr><td>Setup</td><td>HTML directives</td><td>FormBuilder in class</td></tr><tr><td>Validation</td><td>HTML attributes</td><td>Validator functions</td></tr><tr><td>Testing</td><td>Harder (DOM-coupled)</td><td>Easy (plain objects)</td></tr><tr><td>Dynamic fields</td><td>Limited</td><td>Full support</td></tr></tbody></table>`,
             codeFiles: [
               {
@@ -1849,7 +2293,7 @@ export class CheckoutFormComponent {
 
   form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
-    phone: ['', [Validators.pattern(/^[6-9]\d{9}$/)]],
+    phone: ['', [Validators.pattern(/^[6-9]\\d{9}$/)]],
     address: this.fb.group({
       city: ['', Validators.required],
       pin:  ['', [Validators.required, Validators.minLength(6)]]
@@ -1867,12 +2311,17 @@ export class CheckoutFormComponent {
           }
         ]
       },
+
+      // advanced
       {
         version: 'advanced',
         label: 'Advanced',
         sections: [
+
+          // Lazy Loading & Code Splitting
           {
             heading: 'Lazy Loading & Code Splitting',
+            content: `<p>Lazy loading is a design pattern that defers the initialization of resources until they are actually needed, significantly reducing the initial bundle size and improving "Time to Interactive" (TTI).</p><ul><li><strong>loadComponent:</strong> Ideal for loading a single standalone component only when the user navigates to a specific route.</li><li><strong>loadChildren:</strong> Used to load a bundle containing multiple routes and their associated sub-components, common for large features like an <code>/admin</code> dashboard.</li><li><strong>Preloading:</strong> A strategy where Angular fetches non-essential route chunks in the background while the user is idle, ensuring subsequent navigation feels instantaneous.</li></ul>`,
             mermaidDefinition: `
   graph TD
     %% Entry Trigger & Core Decider
@@ -1909,7 +2358,6 @@ export class CheckoutFormComponent {
     class Preload backgroundTask;
     class C_Details,M_Details,P_Details contextNote;
 `,
-
             codeFiles: [
               {
                 fileName: 'app.routes.ts',
@@ -1938,8 +2386,21 @@ export const routes: Routes = [
               }
             ]
           },
+
+          // Dynamic Forms with FormArray
           {
             heading: 'Dynamic Forms with FormArray',
+            mermaidDefinition: `graph LR
+    FG[FormGroup - Entire Form] --> FA[FormArray - Dynamic Array Tracker]
+    FA -->|push| C1[FormControl 0 - Angular]
+    FA -->|push| C2[FormControl 1 - TypeScript]
+    FA -.->|removeAt| C2
+
+    classDef parent fill:#fdf4ff,stroke:#c026d3,stroke-width:2px,color:#202124,font-weight:bold;
+    classDef child fill:#eff6ff,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a;
+
+    class FG,FA parent;
+    class C1,C2 child;`,
             content: `<p><code>FormArray</code> manages a dynamic list of form controls or groups. It's useful when the user can add or remove items, such as a list of phone numbers, skills, or line items.</p>`,
             codeFiles: [
               {
@@ -1984,8 +2445,28 @@ export class SkillsFormComponent {
               }
             ]
           },
+
+          // Custom Validators
           {
             heading: 'Custom Validators',
+            mermaidDefinition: `
+  graph TD
+    Input([User Types Value]) --> FC[FormControl Update Event]
+    
+    FC --> Sync[Sync Validator <br/> Executes Immediately]
+    FC --> Async[Async Validator <br/> Debounced API Call]
+    
+    Sync -->|Checks Regex| Res1{Is Valid?}
+    Async -->|Sends HTTP GET| API[(Backend Server)]
+    API -->|JSON Response| Res2{Is Valid?}
+
+    classDef default fill:#ffffff,stroke:#e5e7eb,stroke-width:1px,color:#202124;
+    classDef engine fill:#c026d3,stroke:#a21caf,stroke-width:2px,color:#ffffff,font-weight:bold;
+    classDef network fill:#eff6ff,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a;
+    
+    class Sync,Async engine;
+    class API network;
+`,
             content: `<p>Custom validators are plain functions that accept a <code>FormControl</code> and return a <code>ValidationErrors</code> object if invalid, or <code>null</code> if valid.</p><ul><li><strong>Sync validators:</strong> Return errors immediately.</li><li><strong>Async validators:</strong> Return a <code>Promise</code> or <code>Observable</code> of errors. Useful for checking if a username is taken via an API call.</li><li><strong>Cross-field validators:</strong> Applied to a <code>FormGroup</code> to compare multiple controls (e.g., password confirmation).</li></ul>`,
             codeFiles: [
               {
@@ -1998,7 +2479,7 @@ import { map, debounceTime, switchMap, catchError, of } from 'rxjs';
 
 // ── Sync validator — no spaces allowed ───────────────────
 export function noSpaces(control: AbstractControl): ValidationErrors | null {
-  return /\s/.test(control.value) ? { noSpaces: true } : null;
+  return /\\s/.test(control.value) ? { noSpaces: true } : null;
 }
 
 // ── Async validator — check username availability ─────────
@@ -2024,12 +2505,34 @@ export function passwordsMatch(group: AbstractControl): ValidationErrors | null 
           }
         ]
       },
+
+      // Scenario Prep
       {
         version: 'scenarios',
         label: 'Scenario Prep',
         sections: [
           {
             heading: 'Preserving Form State on Back Navigation',
+            mermaidDefinition: `
+  graph TD
+    Form[User fills Form] --> Nav([Navigates to new Route])
+    
+    Nav --> Destroy[ngOnDestroy lifecycle hook]
+    Destroy --> Store[Save form.value to Singleton Service]
+    
+    Back([User clicks Browser Back]) --> Init[ngOnInit triggers]
+    Init --> Read[Read state from Service cache]
+    Read --> Patch[form.patchValue restores UI data]
+
+    classDef default fill:#ffffff,stroke:#e5e7eb,stroke-width:1px,color:#202124;
+    classDef event fill:#f8fafc,stroke:#64748b,stroke-width:1px,color:#0f172a,stroke-dasharray:4;
+    classDef service fill:#fdf4ff,stroke:#c026d3,stroke-width:2px,color:#202124,font-weight:bold;
+    classDef success fill:#f0fdf4,stroke:#22c55e,stroke-width:2px,color:#166534;
+    
+    class Nav,Back event;
+    class Store,Read service;
+    class Patch success;
+`,
             content: `<h5>Scenario Question:</h5><p><em>"A user fills in a multi-step form, navigates away to check something, and returns. The form is blank. How do you fix this?"</em></p><h5>Answer:</h5><p>Persist the form value in a service (not the component). Since services are singletons, they survive navigation. Restore the form value in <code>ngOnInit</code>.</p>`,
             codeFiles: [
               {
@@ -2088,6 +2591,28 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           },
           {
             heading: 'Route-based Code Splitting for Performance',
+            mermaidDefinition: `
+  graph TD
+    Boot[Initial Load] --> Main[main.js <br/> Minimal Core + Home]
+    Main --> View[Home Page Loads instantly ⚡]
+    
+    View --> Idle[Browser detected Idle State]
+    Idle -->|withPreloading| Fetch[Background Fetch: <br/> settings-chunk.js]
+    
+    View --> Nav([User clicks 'Settings'])
+    Nav --> Cache{Chunk already <br/> preloaded?}
+    Cache -->|Yes| Instant[Instant Route Transition]
+    Cache -->|No| Wait[UI block waiting <br/> for Network]
+
+    classDef default fill:#ffffff,stroke:#e5e7eb,stroke-width:1px,color:#202124;
+    classDef fast fill:#f0fdf4,stroke:#22c55e,stroke-width:2px,color:#166534,font-weight:bold;
+    classDef slow fill:#fff1f2,stroke:#f43f5e,stroke-width:2px,color:#881337;
+    classDef engine fill:#c026d3,stroke:#a21caf,stroke-width:2px,color:#ffffff,font-weight:bold;
+    
+    class Main,View,Instant fast;
+    class Wait slow;
+    class Fetch,Cache engine;
+`,
             content: `<h5>Scenario Question:</h5><p><em>"Your app bundle is 3 MB and initial load is slow. How would you reduce it using the router?"</em></p><h5>Answer:</h5><p>Audit bundle with <code>ng build --stats-json</code> and webpack-bundle-analyzer. Then lazy-load every route that isn't needed on first paint using <code>loadComponent</code>. Combine with <code>withPreloading</code> to background-load the rest after bootstrap:</p>`,
             codeFiles: [
               {
