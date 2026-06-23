@@ -6,8 +6,9 @@ export interface CodeFile {
 
 export interface Section {
   heading: string;
-  content: string;
+  content?: string;
   codeFiles?: CodeFile[];
+  mermaidDefinition?: string;
 }
 
 export interface VersionedContent {
@@ -410,7 +411,58 @@ export class TypeaheadComponent {
         sections: [
           {
             heading: 'Component Lifecycle Hooks',
-            content: `<p>Angular components go through a lifecycle from creation to destruction. Implementing lifecycle interfaces hooks into these key moments:</p><ul><li><strong>ngOnChanges:</strong> Called before <code>ngOnInit</code> and when one or more data-bound input properties change. Receives a <code>SimpleChanges</code> object.</li><li><strong>ngOnInit:</strong> Initialize the component after Angular first displays the data-bound properties. Best place for initial data fetching.</li><li><strong>ngDoCheck:</strong> Detect and act upon changes that Angular can't or won't detect on its own.</li><li><strong>ngAfterContentInit / ngAfterContentChecked:</strong> Respond after Angular projects external content into the component's view.</li><li><strong>ngAfterViewInit / ngAfterViewChecked:</strong> Respond after Angular initializes the component's views and child views.</li><li><strong>ngOnDestroy:</strong> Cleanup just before Angular destroys the component. Unsubscribe from Observables, detach event handlers to prevent memory leaks.</li></ul><table class="table table-bordered mt-2 small"><thead><tr><th>Hook</th><th>Timing</th><th>Use Case / Comparison</th></tr></thead><tbody><tr><td><code>ngOnInit</code></td><td>After inputs are bound</td><td>Data fetching / Initial setup</td></tr><tr><td><code>ngAfterViewInit</code></td><td>After template renders</td><td>Accessing child DOM elements / jQuery / Charts</td></tr></tbody></table>`,
+
+            mermaidDefinition: `
+  graph TD
+    %% Chronological Lifecycle Flow
+    Start([Component Initialized]) --> OnChanges[ngOnChanges]
+    OnChanges -->|1. Inputs Bound| OnInit[ngOnInit]
+    
+    %% The Runtime Change Detection Loop Canvas
+    OnInit --> DoCheck[ngDoCheck]
+    
+    subgraph ContentPhase [External Content Projection Layer]
+      ContentInit[ngAfterContentInit] --> ContentChecked[ngAfterContentChecked]
+    end
+    DoCheck -->|2. Processes External Content| ContentInit
+    
+    subgraph ViewPhase [Internal View Rendering Layer]
+      ViewInit[ngAfterViewInit] --> ViewChecked[ngAfterViewChecked]
+    end
+    ContentChecked -->|3. Processes Template DOM| ViewInit
+    
+    %% Lifecycle State Decider Loop
+    ViewChecked --> StateCheck{Active State?}
+    StateCheck -->|Component Mutated| DoCheck
+    StateCheck -->|Component Unmounted| Destroy[ngOnDestroy]
+    Destroy --> End([Memory Cleaned & Freed])
+
+    %% Crucial Student Learning Context Pointers (Dotted side-flags)
+    OnInit -.-> O_Note>Use Case: Initial HTTP Data Fetching]
+    ViewInit -.-> V_Note>Use Case: Access Child DOM elements & Charts]
+    Destroy -.-> D_Note>Use Case: Unsubscribe Observables to prevent Memory Leaks]
+
+    %% UX Designer's Brand Color & Hierarchy Classes
+    classDef default fill:#ffffff,stroke:#e5e7eb,stroke-width:1px,color:#202124;
+    
+    %% Core Strategic Milestones (Deep Contrast Layer)
+    classDef coreMilestone fill:#c026d3,stroke:#a21caf,stroke-width:2px,color:#ffffff,font-weight:bold;
+    
+    %% Elevated First-Time Setup Phase (Light Magenta Layer)
+    classDef setupHook fill:#fdf4ff,stroke:#c026d3,stroke-width:2px,color:#202124,font-weight:bold;
+    
+    %% Continuous Background Check System (De-emphasized Base Layer)
+    classDef loopCheck fill:#f3f4f6,stroke:#cbd5e1,stroke-width:1px,color:#5f6368;
+    
+    %% Semantic Information Notes
+    classDef contextNote fill:#f8fafc,stroke:#e2e8f0,stroke-dasharray: 4 4,color:#475569,font-size:12px;
+
+    %% Class Attachments
+    class OnInit,Destroy coreMilestone;
+    class OnChanges,ContentInit,ViewInit setupHook;
+    class DoCheck,ContentChecked,ViewChecked loopCheck;
+    class O_Note,V_Note,D_Note contextNote;
+`,
             codeFiles: [
               {
                 fileName: 'user-profile.component.ts',
@@ -1209,51 +1261,45 @@ export class InlineEditComponent {
         sections: [
           {
             heading: 'Router Setup & Route Definition',
-            content: `
-<p class="mb-4">Angular's router maps URL paths to components. Routes are defined as an array and provided to the app via <code>provideRouter(routes)</code>.</p>
+            mermaidDefinition: `
+  graph TD
+    %% Entry Point & Core Engine
+    Request([Browser URL]) --> Router{Angular Router}
+    
+    %% Route Processing Flow
+    Router -->|1. Exact Match| Static[Static Route]
+    Router -->|2. Dynamic Segment| Param[Parameterized Route]
+    Router -->|3. On Demand| Lazy[Lazy Loaded Route]
+    Router -->|4. No Match Found| Wild[Wildcard Route]
 
-<div class="row g-3 mb-2">
-  <div class="col-12 col-md-6">
-    <div class="p-3 border rounded-3 bg-light h-100 shadow-sm border-start border-4 border-primary">
-      <div class="d-flex align-items-center mb-2">
-        <i class="bi bi-signpost-split fs-4 text-primary me-2"></i>
-        <h6 class="mb-0 fw-bold">Static Routes</h6>
-      </div>
-      <p class="small text-muted mb-0">Direct path-to-component mapping (e.g., <code>/about</code>).</p>
-    </div>
-  </div>
+    %% Examples & Context (Attached via dotted lines)
+    Static -.-> S_Ex>Example: /about]
+    Param -.-> P_Ex>Example: /products/:id]
+    Lazy -.-> L_Ex>Benefit: Reduces initial bundle size]
+    Wild -.-> W_Ex>Always placed LAST: **]
 
-  <div class="col-12 col-md-6">
-    <div class="p-3 border rounded-3 bg-light h-100 shadow-sm border-start border-4 border-success">
-      <div class="d-flex align-items-center mb-2">
-        <i class="bi bi-link-45deg fs-4 text-success me-2"></i>
-        <h6 class="mb-0 fw-bold">Parameterized Routes</h6>
-      </div>
-      <p class="small text-muted mb-0">Use <code>:param</code> syntax to capture URL segments (e.g., <code>/products/:id</code>).</p>
-    </div>
-  </div>
+    %% UX Designer's Brand Color & Hierarchy Classes
+    classDef default fill:#ffffff,stroke:#e5e7eb,stroke-width:1px,color:#202124;
+    
+    %% Core Engine (Highest Contrast)
+    classDef coreEngine fill:#c026d3,stroke:#a21caf,stroke-width:2px,color:#ffffff,font-weight:bold;
+    
+    %% Primary High-Value Elements (Elevated Lightness)
+    classDef primaryNode fill:#fdf4ff,stroke:#c026d3,stroke-width:2px,color:#202124,font-weight:bold;
+    
+    %% De-emphasized Base Elements (Bottom Canvas)
+    classDef fallbackNode fill:#f3f4f6,stroke:#cbd5e1,stroke-width:1px,color:#5f6368;
+    
+    %% Contextual Notes (Subtle)
+    classDef contextNote fill:#f8fafc,stroke:#e2e8f0,stroke-dasharray: 4 4,color:#475569,font-size:12px;
 
-  <div class="col-12 col-md-6">
-    <div class="p-3 border rounded-3 bg-light h-100 shadow-sm border-start border-4 border-warning">
-      <div class="d-flex align-items-center mb-2">
-        <i class="bi bi-box-seam fs-4 text-warning me-2"></i>
-        <h6 class="mb-0 fw-bold">Lazy Loading</h6>
-      </div>
-      <p class="small text-muted mb-0">Load a component subtree only when navigated to, reducing initial bundle size.</p>
-    </div>
-  </div>
-
-  <div class="col-12 col-md-6">
-    <div class="p-3 border rounded-3 bg-light h-100 shadow-sm border-start border-4 border-danger">
-      <div class="d-flex align-items-center mb-2">
-        <i class="bi bi-asterisk fs-4 text-danger me-2"></i>
-        <h6 class="mb-0 fw-bold">Wildcard Route</h6>
-      </div>
-      <p class="small text-muted mb-0"><code>**</code> catches all unmatched paths (e.g., 404 pages) — <strong>always place it last</strong>.</p>
-    </div>
-  </div>
-</div>
+    %% Apply Classes
+    class Router coreEngine;
+    class Static,Param,Lazy primaryNode;
+    class Wild fallbackNode;
+    class S_Ex,P_Ex,L_Ex,W_Ex contextNote;
 `,
+
             codeFiles: [
               {
                 fileName: 'app.routes.ts',
@@ -1446,7 +1492,43 @@ export class CheckoutFormComponent {
         sections: [
           {
             heading: 'Lazy Loading & Code Splitting',
-            content: `<p>Lazy loading defers the download of a component or route's JavaScript bundle until the user navigates to that route. This dramatically reduces initial load time.</p><ul><li><strong>loadComponent:</strong> Lazily loads a standalone component (Angular 15+).</li><li><strong>loadChildren:</strong> Lazily loads a child route configuration file.</li><li><strong>withPreloading:</strong> After the initial load, Angular quietly preloads lazy routes in the background so they feel instant when navigated to.</li></ul>`,
+            mermaidDefinition: `
+  graph TD
+    %% Entry Trigger & Core Decider
+    Nav([User Navigates to Lazy Route]) --> Engine{Lazy Load Engine}
+    
+    %% Async Strategy Execution Branches
+    Engine -->|Loads Single View| Comp[loadComponent]
+    Engine -->|Loads Subtree Module| Child[loadChildren]
+    Engine -->|Background Sync| Preload[withPreloading]
+
+    %% Context Details & Student Reminders (Attached via dotted links)
+    Comp -.-> C_Details>Angular 15+ · Loads Standalone Views]
+    Child -.-> M_Details>Loads Entire Sub-Route Configuration Files]
+    Preload -.-> P_Details>Quietly fetches remaining chunks after initial page boots]
+
+    %% UX Designer's Brand Color & Hierarchy Classes
+    classDef default fill:#ffffff,stroke:#e5e7eb,stroke-width:1px,color:#202124;
+    
+    %% Core Engine (Highest Contrast Layer)
+    classDef coreEngine fill:#c026d3,stroke:#a21caf,stroke-width:2px,color:#ffffff,font-weight:bold;
+    
+    %% Primary Active Code Nodes (Elevated Lightness Layer)
+    classDef primaryNode fill:#fdf4ff,stroke:#c026d3,stroke-width:2px,color:#202124,font-weight:bold;
+    
+    %% De-emphasized Background Operations (Bottom Canvas Layer)
+    classDef backgroundTask fill:#f3f4f6,stroke:#cbd5e1,stroke-width:1px,color:#5f6368;
+    
+    %% Semantic Context Notes
+    classDef contextNote fill:#f8fafc,stroke:#e2e8f0,stroke-dasharray: 4 4,color:#475569,font-size:12px;
+
+    %% Assigning Classes to Nodes
+    class Engine coreEngine;
+    class Comp,Child primaryNode;
+    class Preload backgroundTask;
+    class C_Details,M_Details,P_Details contextNote;
+`,
+
             codeFiles: [
               {
                 fileName: 'app.routes.ts',

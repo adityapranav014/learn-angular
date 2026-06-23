@@ -229,3 +229,147 @@ pre::-webkit-scrollbar-thumb {
 pre::-webkit-scrollbar-thumb:hover {
   background-color: rgba(128, 128, 128, 0.5);
 }
+
+/* ═══════════════════════════════════════════════
+   FOCUS MODE — Page-level immersive environment
+   ═══════════════════════════════════════════════ */
+
+$focus-hdr: 3.5rem;
+
+.focus-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1040;
+  background: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  &.focus-resizing {
+    cursor: col-resize;
+    user-select: none;
+  }
+}
+
+.focus-header {
+  height: $focus-hdr;
+  min-height: $focus-hdr;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 1rem;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+/* ── Panels container ── */
+.focus-panels {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  overflow: hidden;
+}
+
+.focus-panel {
+  overflow: hidden;
+}
+
+/* ── Left panel — content carousel ── */
+.focus-panel-left {
+  padding: 0.75rem;
+
+  /* Override the normal-mode max-height constraint so the card body
+     fills the taller focus-mode viewport gracefully */
+  .study-carousel ::ng-deep .card-body {
+    max-height: calc(100dvh - #{$focus-hdr} - 9rem) !important;
+    overflow-y: auto;
+  }
+
+  /* Mermaid diagram: allow it to grow larger in focus mode */
+  ::ng-deep .mermaid-render-shell svg {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* ── Right panel — code viewer ── */
+.focus-panel-right {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0.75rem;
+
+  /* Lift the hard max-height from the code body so it fills the panel */
+  ::ng-deep .study-code-hint-body {
+    max-height: calc(100dvh - #{$focus-hdr} - 8rem) !important;
+  }
+}
+
+/* ── Resize divider (desktop) ── */
+.focus-divider {
+  width: 5px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  cursor: col-resize;
+  background: #e5e7eb;
+  transition: background 0.15s;
+
+  &:hover,
+  &.focus-divider--active {
+    background: rgba(192, 38, 211, 0.35);
+  }
+}
+
+.focus-divider-grip {
+  width: 3px;
+  height: 32px;
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: 2px;
+}
+
+/* ── Mobile focus mode: stacked, naturally scrollable ── */
+@media (max-width: 991.98px) {
+  .focus-overlay {
+    overflow-y: auto;
+  }
+
+  .focus-header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+
+  .focus-panels {
+    flex-direction: column;
+    overflow: visible;
+    height: auto;
+    flex: none;
+  }
+
+  .focus-panel {
+    overflow: visible;
+  }
+
+  .focus-panel-left {
+    width: 100% !important;
+    flex: none;
+
+    .study-carousel ::ng-deep .card-body {
+      max-height: 55dvh !important;
+      overflow-y: auto !important;
+    }
+  }
+
+  .focus-panel-right {
+    width: 100%;
+    flex: none;
+    height: 60dvh;
+    padding-top: 0;
+
+    ::ng-deep .study-code-hint-body {
+      max-height: calc(60dvh - 3.5rem) !important;
+    }
+  }
+}

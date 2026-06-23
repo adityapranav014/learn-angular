@@ -1,6 +1,7 @@
+@if (!isFocusedMode()) {
 <div class="container study-notes-page py-3">
 
-    <!-- Header -->
+    <!-- Title & Pagination -->
     <div class="row align-items-center mb-4">
 
         <div class="col-12 col-md-auto mb-3 mb-md-0">
@@ -12,8 +13,8 @@
         </div>
 
         @if (activeSections().length > 0) {
-        <div class="col-12 col-md d-flex flex-wrap gap-2 justify-content-md-end">
-            <button class="btn btn-sm btn-light border" (click)="carousel.prev()">
+        <div class="col-12 col-md d-flex flex-wrap gap-2 justify-content-md-end align-items-center">
+            <button class="btn btn-sm btn-light border" (click)="prevSlide()">
                 <i class="bi bi-chevron-left"></i>
             </button>
             @for (section of activeSections(); track section.heading; let i = $index) {
@@ -22,8 +23,12 @@
                 {{ i + 1 }}
             </button>
             }
-            <button class="btn btn-sm btn-light border" (click)="carousel.next()">
+            <button class="btn btn-sm btn-light border" (click)="nextSlide()">
                 <i class="bi bi-chevron-right"></i>
+            </button>
+            <span class="vr opacity-25 d-none d-md-block"></span>
+            <button class="btn btn-sm btn-light border" (click)="enterFocusMode()" title="Enter focus mode">
+                <i class="bi bi-arrows-fullscreen"></i>
             </button>
         </div>
         }
@@ -31,6 +36,8 @@
     </div>
 
     <div class="row study-notes-main g-3">
+
+        <!-- Version Navigation Side Panel -->
         @if (availableVersions().length > 1) {
         <aside class="col-12 col-lg-3 col-xl-2">
             <div class="card h-100 border-0 shadow-sm study-nav-card">
@@ -62,7 +69,6 @@
                     <ng-template ngbSlide [id]="'slide-' + i">
                         <div class="row g-3 align-items-stretch">
 
-                            <!-- Theory Card -->
                             <div class="col-12 col-xl-6">
                                 <div class="card h-100 border-0 shadow-sm">
                                     <div class="card-header bg-white border-bottom-0 pt-3 pb-2">
@@ -74,27 +80,146 @@
                                         <div class="d-flex align-items-center gap-2 mb-3">
                                             <h5 class="fw-bold text-dark mb-0" [innerHTML]="section.heading"></h5>
                                         </div>
-                                        <div class="study-section-body text-dark" [innerHTML]="section.content"></div>
+
+                                        <div class="study-section-body text-dark mb-3" [innerHTML]="section.content">
+                                        </div>
+
+                                        @if (section.mermaidDefinition) {
+                                        <div class="mt-4 pt-3 border-top border-light">
+                                            <div class="d-flex align-items-center gap-2 mb-2 text-magenta small fw-bold tracking-wide text-uppercase"
+                                                style="letter-spacing: 0.05em; font-size: 0.8rem;">
+                                                <i class="bi bi-diagram-3-fill"></i> Architectural Concept Map
+                                            </div>
+                                            <app-mermaid-viewer
+                                                [definition]="section.mermaidDefinition"></app-mermaid-viewer>
+                                        </div>
+                                        }
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Code Hint -->
                             <div class="col-12 col-xl-6">
                                 <app-code-viewer [codeFiles]="section.codeFiles ?? []" class="h-100"></app-code-viewer>
                             </div>
                         </div>
-            </ng-template>
+                    </ng-template>
+                    }
+
+                </ngb-carousel>
+            </div>
+            } @else {
+            <div class="text-center py-5 border rounded-4 bg-light">
+                <i class="bi bi-info-circle fs-2 text-muted mb-3 d-block"></i>
+                <h6 class="text-dark fw-semibold">No content available</h6>
+                <p class="text-muted small px-3">No study material has been loaded for this topic version yet.</p>
+            </div>
             }
+        </div>
+    </div>
+</div>
+}
+
+<!-- ═══════════════════════════ FOCUS MODE ═══════════════════════════ -->
+@if (isFocusedMode()) {
+<div class="focus-overlay" [class.focus-resizing]="isResizing">
+
+    <!-- Focus Header -->
+    <div class="focus-header">
+        <div class="d-flex align-items-center gap-2 flex-shrink-0 me-2">
+            <i class="bi fs-5 flex-shrink-0" [class]="activeTopic().icon" style="color:#F637E3"></i>
+            <span class="vr opacity-25"></span>
+            <span class="fw-bold text-truncate" style="font-size:0.95rem;max-width:16rem;">{{ activeTopic().title }}</span>
+        </div>
+
+        @if (availableVersions().length > 1) {
+        <div class="d-none d-md-flex gap-1 flex-shrink-0">
+            @for (v of availableVersions(); track v.version) {
+            <button class="btn btn-sm" [class.btn-brand]="activeVersion() === v.version"
+                [class.btn-outline-secondary]="activeVersion() !== v.version"
+                (click)="selectVersion(v.version)">{{ v.label }}</button>
+            }
+        </div>
+        }
+
+        <div class="flex-fill"></div>
+
+        @if (activeSections().length > 0) {
+        <div class="d-flex gap-1 align-items-center flex-shrink-0">
+            <button class="btn btn-sm btn-light border" (click)="prevSlide()" title="Previous">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+            <!-- Mobile: compact counter -->
+            <span class="text-muted small d-flex d-sm-none px-1" style="min-width:3rem;text-align:center;">
+                {{ activeIndex + 1 }}&thinsp;/&thinsp;{{ activeSections().length }}
+            </span>
+            <!-- Tablet/Desktop: numbered buttons -->
+            @for (section of activeSections(); track section.heading; let i = $index) {
+            <button class="btn btn-sm d-none d-sm-inline-flex" [class.btn-brand]="activeIndex === i"
+                [class.btn-outline-secondary]="activeIndex !== i" (click)="goToSlide(i)"
+                [title]="section.heading">{{ i + 1 }}</button>
+            }
+            <button class="btn btn-sm btn-light border" (click)="nextSlide()" title="Next">
+                <i class="bi bi-chevron-right"></i>
+            </button>
+        </div>
+        }
+
+        <button class="btn btn-sm btn-light border ms-2 flex-shrink-0" (click)="exitFocusMode()"
+            title="Exit focus mode (Esc)">
+            <i class="bi bi-fullscreen-exit"></i>
+        </button>
+    </div>
+
+    <!-- Resizable Panels -->
+    <div class="focus-panels" #focusPanels>
+
+        <!-- Left: Content Carousel -->
+        <div class="focus-panel focus-panel-left" [style.width.%]="splitPercent()">
+            <ngb-carousel #carousel [interval]="0" [showNavigationIndicators]="false" [showNavigationArrows]="false"
+                (slide)="onSlide($event)" class="study-carousel focus-carousel">
+
+                @for (section of activeSections(); track section.heading; let i = $index) {
+                <ng-template ngbSlide [id]="'slide-' + i">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-header bg-white border-bottom-0 pt-3 pb-2">
+                            <h5 class="card-title text-secondary mb-0 fw-bold">
+                                <i class="bi bi-clipboard-data-fill me-2 brand-color"></i>Topic {{ i + 1 }}
+                            </h5>
+                        </div>
+                        <div class="card-body bg-white rounded-bottom">
+                            <div class="d-flex align-items-center gap-2 mb-3">
+                                <h5 class="fw-bold text-dark mb-0" [innerHTML]="section.heading"></h5>
+                            </div>
+                            <div class="study-section-body text-dark mb-3" [innerHTML]="section.content"></div>
+                            @if (section.mermaidDefinition) {
+                            <div class="mt-4 pt-3 border-top border-light">
+                                <div class="d-flex align-items-center gap-2 mb-2 text-magenta small fw-bold text-uppercase"
+                                    style="letter-spacing:0.05em;font-size:0.8rem;">
+                                    <i class="bi bi-diagram-3-fill"></i> Architectural Concept Map
+                                </div>
+                                <app-mermaid-viewer [definition]="section.mermaidDefinition"></app-mermaid-viewer>
+                            </div>
+                            }
+                        </div>
+                    </div>
+                </ng-template>
+                }
 
             </ngb-carousel>
         </div>
-        } @else {
-        <div class="text-center py-5 border rounded-4 bg-light">
-            <i class="bi bi-info-circle fs-2 text-muted mb-3 d-block"></i>
-            <h6 class="text-dark fw-semibold">No content available</h6>
-            <p class="text-muted small px-3">No study material has been loaded for this topic version yet.</p>
+
+        <!-- Resize Divider (desktop only) -->
+        <div class="focus-divider d-none d-lg-flex" (mousedown)="startResize($event)"
+            [class.focus-divider--active]="isResizing">
+            <div class="focus-divider-grip"></div>
         </div>
-        }
+
+        <!-- Right: Code Viewer -->
+        <div class="focus-panel focus-panel-right">
+            <app-code-viewer [codeFiles]="activeSections()[activeIndex]?.codeFiles ?? []"
+                class="h-100"></app-code-viewer>
+        </div>
+
     </div>
-</div>
+</div>
+}

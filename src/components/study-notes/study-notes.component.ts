@@ -1,15 +1,16 @@
-import { Component, inject, signal, computed, ViewChild } from '@angular/core';
+import { Component, inject, signal, computed, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { NgbCarousel, NgbSlide, NgbSlideEvent } from '@ng-bootstrap/ng-bootstrap';
 import { STUDY_NOTES, StudyNote } from '../../data/study-notes';
 import { CodeViewerComponent } from '../code-viewer/code-viewer.component';
+import { MermaidViewerComponent } from '../mermaid-viewer/mermaid-viewer.component';
 
 @Component({
   selector: 'app-study-notes',
   templateUrl: './study-notes.component.html',
   styleUrls: ['./study-notes.component.scss'],
-  imports: [CommonModule, NgbCarousel, NgbSlide, CodeViewerComponent]
+  imports: [CommonModule, NgbCarousel, NgbSlide, CodeViewerComponent, MermaidViewerComponent]
 })
 export class StudyNotesComponent {
   private route = inject(ActivatedRoute);
@@ -17,8 +18,15 @@ export class StudyNotesComponent {
   activeTopic = signal<StudyNote>(STUDY_NOTES[0]);
   activeVersion = signal<string>('fundamentals');
   activeIndex = 0;
+  isFocusedMode = signal(false);
+  splitPercent = signal(50);
+  isResizing = false;
 
-  @ViewChild('carousel') carousel!: NgbCarousel;
+  private resizeStartX = 0;
+  private resizeStartPercent = 50;
+
+  @ViewChild('carousel') carousel?: NgbCarousel;
+  @ViewChild('focusPanels') focusPanelsRef?: ElementRef<HTMLElement>;
 
   availableVersions = computed(() => this.activeTopic().versions);
 
@@ -38,6 +46,7 @@ export class StudyNotesComponent {
             this.activeVersion.set(found.versions[0].version);
           }
           this.activeIndex = 0;
+          this.isFocusedMode.set(false);
           setTimeout(() => this.carousel?.select('slide-0'));
         }
       }
@@ -56,5 +65,50 @@ export class StudyNotesComponent {
 
   goToSlide(idx: number) {
     this.carousel?.select('slide-' + idx);
+  }
+
+  prevSlide() { this.carousel?.prev(); }
+  nextSlide() { this.carousel?.next(); }
+
+  enterFocusMode() {
+    const idx = this.activeIndex;
+    this.isFocusedMode.set(true);
+    setTimeout(() => this.carousel?.select('slide-' + idx));
+  }
+
+  exitFocusMode() {
+    const idx = this.activeIndex;
+    this.isFocusedMode.set(false);
+    setTimeout(() => this.carousel?.select('slide-' + idx));
+  }
+
+  startResize(event: MouseEvent) {
+    this.isResizing = true;
+    this.resizeStartX = event.clientX;
+    this.resizeStartPercent = this.splitPercent();
+    event.preventDefault();
+  }
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(event: MouseEvent) {
+    if (!this.isResizing) return;
+    const container = this.focusPanelsRef?.nativeElement;
+    if (!container) return;
+    const rect = container.getBoundingClientRect();
+    const delta = event.clientX - this.resizeStartX;
+    const deltaPercent = (delta / rect.width) * 100;
+    this.splitPercent.set(
+      Math.min(75, Math.max(25, Math.round((this.resizeStartPercent + deltaPercent) * 10) / 10))
+    );
+  }
+
+  @HostListener('document:mouseup')
+  onMouseUp() {
+    this.isResizing = false;
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape() {
+    if (this.isFocusedMode()) this.exitFocusMode();
   }
 }
