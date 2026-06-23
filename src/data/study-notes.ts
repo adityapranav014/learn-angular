@@ -2886,47 +2886,54 @@ export const routes: Routes = [
             heading: 'Dependency Injection & Providers',
             mermaidDefinition: `
   graph TD
-    %% DI Hierarchy Engine
-    Root["Root Injector <br/> (providedIn: 'root')"]
-    CompA["Component A Injector <br/> (providers: [ProductService])"]
-    CompB["Component B Injector <br/> (providers: [ProductService])"]
+    %% Global Hierarchy Layer
+    Root["Root Environment Injector"]
+    Logger["LoggerService <br/> (Shared Singleton Instance)"]
 
-    %% Singleton vs Isolated Flows (Safely Quoted)
-    Root -- "Provides Singleton <br/> LoggerService" --> CompA
-    Root -- "Provides Singleton <br/> LoggerService" --> CompB
+    %% UI Component Layer
+    Comp1["ProductComponent 1"]
+    Comp2["ProductComponent 2"]
 
-    CompA -- "Creates Isolated <br/> ProductService" --> StateA["Isolated State A"]
-    CompB -- "Creates Isolated <br/> ProductService" --> StateB["Isolated State B"]
+    %% Local State Layer
+    Prod1["ProductService <br/> (Isolated Instance A)"]
+    Prod2["ProductService <br/> (Isolated Instance B)"]
 
-    %% UX Designer's Brand Color & Hierarchy Classes
+    %% Registration Definitions (Solid lines)
+    Root -- "providedIn: 'root'" --> Logger
+    Comp1 -- "providers: [ProductService]" --> Prod1
+    Comp2 -- "providers: [ProductService]" --> Prod2
+
+    %% Resolution/Lookup Behavior (Dotted lines)
+    Comp1 -. "inject(LoggerService) <br/> Looks up tree" .-> Logger
+    Comp2 -. "inject(LoggerService) <br/> Looks up tree" .-> Logger
+
+    %% Styling Architecture
     classDef default fill:#ffffff,stroke:#e5e7eb,stroke-width:1px,color:#202124;
-    classDef coreEngine fill:#c026d3,stroke:#a21caf,stroke-width:2px,color:#ffffff,font-weight:bold;
-    classDef primaryNode fill:#fdf4ff,stroke:#c026d3,stroke-width:2px,color:#202124,font-weight:bold;
-    classDef isolated fill:#eff6ff,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a;
+    classDef rootNode fill:#fdf4ff,stroke:#c026d3,stroke-width:2px,color:#202124,font-weight:bold;
+    classDef singleton fill:#c026d3,stroke:#a21caf,stroke-width:2px,color:#ffffff,font-weight:bold;
+    classDef isolated fill:#eff6ff,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a,font-weight:bold;
 
-    class Root coreEngine;
-    class CompA,CompB primaryNode;
-    class StateA,StateB isolated;
+    class Root rootNode;
+    class Logger singleton;
+    class Prod1,Prod2 isolated;
 `,
-            content: `<p>Angular's DI system creates and delivers dependencies (services, values, factories) to components and other services. You declare what a class needs; Angular injects it.</p><ul><li><strong>providedIn: 'root':</strong> Service is a singleton shared across the entire app. Lazily tree-shaken if unused.</li><li><strong>providedIn: 'any':</strong> A new instance is created per lazy-loaded module. Useful for isolating service state per route.</li><li><strong>Component-level providers:</strong> Each component instance gets its own service instance — useful for isolated state (e.g., a component-scoped form service).</li></ul>`,
+            content: `<p>Angular's Dependency Injection (DI) system is hierarchical. When a component asks for a service, Angular looks at the component's own injector first, then traverses up the DOM tree until it finds the provider at the Root.</p><ul><li><strong>Root Level (<code>providedIn: 'root'</code>):</strong> Creates a single, global instance of the service. Both Component 1 and Component 2 will receive the exact same memory reference. Perfect for shared state, like user authentication or logging.</li><li><strong>Component Level (<code>providers: [...]</code>):</strong> Creates a brand new, isolated instance of the service specifically for that component and its children. Perfect for managing local state, like a specific product's details or a temporary form draft.</li></ul>`,
             codeFiles: [
               {
                 fileName: 'logger.service.ts',
                 language: 'typescript',
                 code: `import { Injectable } from '@angular/core';
 
-// ── Singleton — one instance for the entire app ───────────
+// ── Singleton: Provided globally at the Root ─────────────
 @Injectable({ providedIn: 'root' })
 export class LoggerService {
   private logs: string[] = [];
 
-  log(message: string, level: 'info' | 'warn' | 'error' = 'info') {
-    const entry = \`[\${level.toUpperCase()}] \${new Date().toISOString()} — \${message}\`;
+  log(message: string) {
+    const entry = \`[INFO] \${new Date().toISOString()} — \${message}\`;
     this.logs.push(entry);
     console.log(entry);
   }
-
-  getLogs() { return [...this.logs]; }
 }`
               },
               {
@@ -2939,19 +2946,22 @@ import { ProductService } from './product.service';
 @Component({
   selector: 'app-product',
   standalone: true,
-  // Component-level provider: each instance of this component
-  // gets its OWN ProductService (isolated state)
+  // ── Isolated: Every <app-product> gets its own ProductService instance
   providers: [ProductService],
   template: \`<p>{{ product()?.name }}</p>\`
 })
 export class ProductComponent {
-  private logger = inject(LoggerService);   // singleton (from root)
-  private products = inject(ProductService); // isolated (per component)
+  // Resolves up the tree -> grabs the SINGLETON instance
+  private logger = inject(LoggerService);  
+  
+  // Resolves locally -> grabs the ISOLATED instance defined in providers array
+  private products = inject(ProductService); 
 
   product = this.products.selected;
 
   constructor() {
-    this.logger.log('ProductComponent initialized');
+    // Because Logger is a singleton, all product components push to the same log array
+    this.logger.log('ProductComponent instance initialized');
   }
 }`
               }
