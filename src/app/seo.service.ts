@@ -18,7 +18,6 @@ export class SeoService {
   private readonly defaultDesc = 'An interactive educational platform designed to learn Angular architecture, core concepts, directives, reactivity, and advanced patterns through hands-on practice labs.';
   private readonly defaultKeywords = 'Angular, Angular Architecture, RxJS, Signals, Directives, Web Development, Tutorial, Education, Learn Angular';
   private readonly defaultImage = 'https://opensource.google/images/projects/os-projects-angular_thumbnail.png';
-  private readonly baseUrl = 'https://angular-aditya.vercel.app';
 
   /**
    * Initializes the SEO tracking. Listens to router events to dynamically update page metadata.
@@ -49,7 +48,9 @@ export class SeoService {
       const title = titleFromRoute 
         ? `${titleFromRoute} | Learn Angular` 
         : this.defaultTitle;
-      const currentUrl = `${this.baseUrl}${this.router.url.split('?')[0].split('#')[0]}`;
+      
+      const currentOrigin = window.location.origin;
+      const currentUrl = `${currentOrigin}${this.router.url.split('?')[0].split('#')[0]}`;
 
       // 1. Update Title and standard description/keywords
       this.titleService.setTitle(title);
