@@ -63,18 +63,21 @@
   font-weight: 300;
   text-align: center;
   color: #ffffff;
-  line-height: 1.4;
+  line-height: 1.5; // Slightly more breathable line-height for mobile
   letter-spacing: -0.02em;
   user-select: none;
   margin: 0;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.8); // High contrast against background
   
-  // Font sizes: clamp(22px, 4vw, 42px)
-  font-size: clamp(20px, 4.5vw, 38px);
+  // Font sizes: increased base size for better legibility on mobile
+  font-size: clamp(18px, 5vw, 38px);
   max-width: 56rem;
-  padding: 1rem 1rem; // Added vertical padding to prevent 3D clipping
+  width: 100%; // Guarantee full width usage
+  padding: 1rem 1rem; // Slight horizontal padding so it doesn't hug the edge
 
   @media (min-width: 576px) {
     font-size: clamp(24px, 4vw, 42px);
     padding: 1rem 2rem;
+    line-height: 1.4;
   }
 }

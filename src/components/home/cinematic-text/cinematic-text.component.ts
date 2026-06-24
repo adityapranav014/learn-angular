@@ -21,30 +21,38 @@ export class CinematicTextComponent implements OnInit, OnDestroy {
     // Run scroll listener outside Angular zone to prevent triggering change detection on every pixel scroll
     this.ngZone.runOutsideAngular(() => {
       this.scrollContainer = document.querySelector('.app-main');
+      this.scrollListener = () => this.checkScroll();
+      
+      // Attach to app-main for desktop, window for mobile
       if (this.scrollContainer) {
-        this.scrollListener = () => this.checkScroll();
         this.scrollContainer.addEventListener('scroll', this.scrollListener, { passive: true });
-        
-        // Initial trigger
-        setTimeout(() => this.checkScroll(), 100);
       }
+      window.addEventListener('scroll', this.scrollListener, { passive: true });
+      
+      // Initial trigger
+      setTimeout(() => this.checkScroll(), 100);
     });
   }
 
   ngOnDestroy() {
-    if (this.scrollContainer && this.scrollListener) {
-      this.scrollContainer.removeEventListener('scroll', this.scrollListener);
+    if (this.scrollListener) {
+      if (this.scrollContainer) {
+        this.scrollContainer.removeEventListener('scroll', this.scrollListener);
+      }
+      window.removeEventListener('scroll', this.scrollListener);
     }
   }
 
   private checkScroll() {
-    if (!this.scrollContainer) return;
-
     const rect = this.el.nativeElement.getBoundingClientRect();
-    const containerHeight = this.scrollContainer.clientHeight;
     
-    // progress is 0 when the top of the element is at the bottom of the container,
-    // and 1 when the bottom of the element is at the top of the container.
+    // Fallback to window.innerHeight if scrollContainer is missing or behaves like body
+    const containerHeight = this.scrollContainer && window.innerWidth >= 992 
+      ? this.scrollContainer.clientHeight 
+      : window.innerHeight;
+    
+    // progress is 0 when the top of the element is at the bottom of the viewport,
+    // and 1 when the bottom of the element is at the top of the viewport.
     const elementHeight = rect.height;
     const scrollStart = containerHeight;
     const scrollEnd = -elementHeight;

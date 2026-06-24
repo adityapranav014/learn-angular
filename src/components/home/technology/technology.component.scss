@@ -77,11 +77,12 @@
 
 .tech-summary {
   font-family: 'Space Mono', monospace;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.85); // Dramatically increased contrast
   font-size: 13px;
   line-height: 1.65;
   max-width: 20rem;
   margin: 0;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.9); // Added shadow for readability
 
   opacity: 0;
   transform: translateY(20px);
@@ -110,12 +111,16 @@
 
 .tech-bottom-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr; // Switched to 1 column on small mobile screens to prevent text squishing
   gap: 2rem;
   margin-top: 3rem;
 
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(4, 1fr);
+  @media (min-width: 576px) {
+    grid-template-columns: repeat(2, 1fr); // 2 columns on tablet
+  }
+
+  @media (min-width: 992px) {
+    grid-template-columns: repeat(4, 1fr); // 4 columns on large desktop
     gap: 1.5rem;
     margin-top: 0;
   }
@@ -140,24 +145,26 @@
 .tech-card-title {
   font-family: 'Space Mono', monospace;
   color: #ffffff;
-  font-size: 14px;
+  font-size: 16px; // Increased slightly for mobile readability
   font-weight: 500;
   margin: 0;
   letter-spacing: 0.02em;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.9); // Text shadow for contrast
 
   @media (min-width: 576px) {
-    font-size: 16px;
+    font-size: 17px;
   }
 }
 
 .tech-card-desc {
   font-family: 'Space Mono', monospace;
-  color: rgba(255, 255, 255, 0.4);
-  font-size: 12px;
-  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.75); // Drastically increased brightness
+  font-size: 13px; // Slight bump
+  line-height: 1.6;
   margin: 0;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.9); // Text shadow for contrast against glowing lines
 
   @media (min-width: 576px) {
-    font-size: 13px;
+    font-size: 14px;
   }
 }
