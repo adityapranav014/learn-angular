@@ -1,11 +1,10 @@
 <nav class="navbar navbar-light bg-white border-bottom py-2 mb-4 sticky-top">
-    <div class="container-fluid px-3">
-        <button class="custom-icon-btn order-2 order-md-1" type="button" (click)="openSidebar(content)"
+    <div class="container-fluid px-3 d-flex align-items-center justify-content-start gap-3">
+        <button class="custom-icon-btn" type="button" (click)="openSidebar(content)"
             aria-label="Open Menu" ngbTooltip="Menu" placement="bottom">
             <i class="bi bi-list"></i>
         </button>
-        <a class="navbar-brand fw-bolder d-flex align-items-center gap-2 order-1 order-md-2 me-auto ms-0 ms-md-3"
-            href="#">
+        <a class="navbar-brand fw-bolder d-flex align-items-center gap-2" href="#">
             <img src="favicon.ico" alt="Logo" width="30" height="30" class="d-inline-block align-text-top rounded">
             <span class="brand-text fs-5">Angular</span>
         </a>
@@ -13,364 +12,332 @@
 </nav>
 
 <ng-template #content let-offcanvas>
-
-    @if (activeMenuView() === 'main') {
+    <!-- Unified Header -->
     <div class="offcanvas-header px-4 py-3 custom-header-border align-items-center justify-content-between">
-        <h5 class="offcanvas-title fw-semibold text-dark fs-6 mb-0 letter-spacing-wide">Menu</h5>
+        @if (activeMenuView() === 'main') {
+            <h5 class="offcanvas-title fw-semibold text-dark fs-6 mb-0 letter-spacing-wide">Menu</h5>
+        } @else {
+            <button type="button" class="back-nav-btn d-flex align-items-center gap-2 border-0 bg-transparent p-0 text-dark fw-semibold fs-6 transition-all" (click)="goBack()">
+                <i class="bi bi-chevron-left fs-5"></i>
+                <span>{{ getSubMenuTitle() }}</span>
+            </button>
+        }
         <button type="button" class="custom-icon-btn" aria-label="Close" (click)="offcanvas.dismiss()"
             ngbTooltip="Close" placement="bottom">
             <i class="bi bi-x-lg"></i>
         </button>
     </div>
 
-    <div class="offcanvas-body p-0 py-2">
-        <ul class="nav flex-column list-unstyled">
+    <!-- Unified Body with Horizontal Slider -->
+    <div class="offcanvas-body p-0 overflow-x-hidden position-relative">
+        <div class="menu-slider" [class.slide-active]="activeMenuView() !== 'main'">
+            
+            <!-- Pane 1: Main Menu -->
+            <div class="menu-pane main-pane py-2">
+                <ul class="nav flex-column list-unstyled">
+                    <li class="nav-item">
+                        <a class="nav-link main-menu-link d-flex align-items-center px-4 py-3 text-dark" routerLink="/"
+                            routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" #rlaHome="routerLinkActive"
+                            (click)="offcanvas.dismiss()">
+                            <i class="bi me-3 fs-5 text-muted transition-all" [class.bi-house]="!rlaHome.isActive"
+                                [class.bi-house-fill]="rlaHome.isActive" [class.text-primary]="rlaHome.isActive"></i>
+                            <span [class.fw-bold]="rlaHome.isActive">Home</span>
+                        </a>
+                    </li>
 
-            <li class="nav-item">
-                <a class="nav-link main-menu-link d-flex align-items-center px-4 py-3 text-dark" routerLink="/"
-                    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" #rlaHome="routerLinkActive"
-                    (click)="offcanvas.dismiss()">
-                    <i class="bi me-3 fs-5 text-muted transition-all" [class.bi-house]="!rlaHome.isActive"
-                        [class.bi-house-fill]="rlaHome.isActive" [class.text-primary]="rlaHome.isActive"></i>
-                    <span [class.fw-bold]="rlaHome.isActive">Home</span>
-                </a>
-            </li>
+                    <li class="nav-item">
+                        <a href="#"
+                            class="nav-link main-menu-link d-flex align-items-center justify-content-between px-4 py-3 text-dark transition-all"
+                            [class.bg-light]="isStudyNotesActive()" (click)="navigateToMenu('study-notes', $event)">
+                            <div class="d-flex align-items-center">
+                                <i class="bi me-3 fs-5 text-muted transition-all" [class.bi-book]="!isStudyNotesActive()"
+                                    [class.bi-book-fill]="isStudyNotesActive()" [class.text-primary]="isStudyNotesActive()"></i>
+                                <span [class.fw-bold]="isStudyNotesActive()">Study Notes &amp; Prep</span>
+                            </div>
+                            <i class="bi bi-chevron-right fs-6 text-muted opacity-75"></i>
+                        </a>
+                    </li>
 
-            <li class="nav-item">
-                <a href="#"
-                    class="nav-link main-menu-link d-flex align-items-center justify-content-between px-4 py-3 text-dark transition-all"
-                    [class.bg-light]="isStudyNotesActive()" (click)="navigateToMenu('study-notes', $event)">
-                    <div class="d-flex align-items-center">
-                        <i class="bi me-3 fs-5 text-muted transition-all" [class.bi-book]="!isStudyNotesActive()"
-                            [class.bi-book-fill]="isStudyNotesActive()" [class.text-primary]="isStudyNotesActive()"></i>
-                        <span [class.fw-bold]="isStudyNotesActive()">Study Notes &amp; Prep</span>
+                    <li class="nav-item mt-1">
+                        <a href="#"
+                            class="nav-link main-menu-link d-flex align-items-center justify-content-between px-4 py-3 text-dark transition-all"
+                            [class.bg-light]="isCoreConceptActive()" (click)="navigateToMenu('core-concepts', $event)">
+                            <div class="d-flex align-items-center">
+                                <i class="bi me-3 fs-5 text-muted transition-all" [class.bi-layers]="!isCoreConceptActive()"
+                                    [class.bi-layers-fill]="isCoreConceptActive()"
+                                    [class.text-primary]="isCoreConceptActive()"></i>
+                                <span [class.fw-bold]="isCoreConceptActive()">Core Directives &amp; Syntax</span>
+                            </div>
+                            <i class="bi bi-chevron-right fs-6 text-muted opacity-75"></i>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="#"
+                            class="nav-link main-menu-link d-flex align-items-center justify-content-between px-4 py-3 text-dark transition-all"
+                            [class.bg-light]="isLogicalScenariosActive()" (click)="navigateToMenu('logical-scenarios', $event)">
+                            <div class="d-flex align-items-center">
+                                <i class="bi me-3 fs-5 text-muted transition-all" [class.bi-cpu]="!isLogicalScenariosActive()"
+                                    [class.bi-cpu-fill]="isLogicalScenariosActive()"
+                                    [class.text-primary]="isLogicalScenariosActive()"></i>
+                                <span [class.fw-bold]="isLogicalScenariosActive()">Logical Scenarios</span>
+                            </div>
+                            <i class="bi bi-chevron-right fs-6 text-muted opacity-75"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Pane 2: Sub Menu views -->
+            <div class="menu-pane sub-pane py-3 px-4">
+                
+                <!-- Study Notes sub-menu -->
+                @if (activeSubMenu() === 'study-notes') {
+                    <div class="docs-sub-menu-track">
+                        <ul class="nav flex-column list-unstyled gap-2 m-0 p-0">
+                            <li class="nav-item">
+                                <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
+                                    routerLink="/study-notes/components-core" routerLinkActive="active-sub bg-light fw-bold"
+                                    #rlaSN1="routerLinkActive" [appScrollActive]="rlaSN1.isActive && isOffcanvasReady()"
+                                    (click)="offcanvas.dismiss()">
+                                    <i class="bi bi-boxes me-3 fs-5 opacity-75 transition-all"
+                                        [class.text-primary]="rlaSN1.isActive"></i>
+                                    <span>Components &amp; Core</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
+                                    routerLink="/study-notes/reactivity-rxjs" routerLinkActive="active-sub bg-light fw-bold"
+                                    #rlaSN2="routerLinkActive" [appScrollActive]="rlaSN2.isActive && isOffcanvasReady()"
+                                    (click)="offcanvas.dismiss()">
+                                    <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-lightning-charge]="!rlaSN2.isActive"
+                                        [class.bi-lightning-charge-fill]="rlaSN2.isActive"
+                                        [class.text-primary]="rlaSN2.isActive"></i>
+                                    <span>Reactivity &amp; RxJS</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
+                                    routerLink="/study-notes/routing-forms" routerLinkActive="active-sub bg-light fw-bold"
+                                    #rlaSN3="routerLinkActive" [appScrollActive]="rlaSN3.isActive && isOffcanvasReady()"
+                                    (click)="offcanvas.dismiss()">
+                                    <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-signpost-split]="!rlaSN3.isActive"
+                                        [class.bi-signpost-split-fill]="rlaSN3.isActive" [class.text-primary]="rlaSN3.isActive"></i>
+                                    <span>Routing &amp; Forms</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
+                                    routerLink="/study-notes/services-di" routerLinkActive="active-sub bg-light fw-bold"
+                                    #rlaSN4="routerLinkActive" [appScrollActive]="rlaSN4.isActive && isOffcanvasReady()"
+                                    (click)="offcanvas.dismiss()">
+                                    <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-diagram-3]="!rlaSN4.isActive"
+                                        [class.bi-diagram-3-fill]="rlaSN4.isActive" [class.text-primary]="rlaSN4.isActive"></i>
+                                    <span>Services &amp; DI</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
+                                    routerLink="/study-notes/performance-advanced" routerLinkActive="active-sub bg-light fw-bold"
+                                    #rlaSN5="routerLinkActive" [appScrollActive]="rlaSN5.isActive && isOffcanvasReady()"
+                                    (click)="offcanvas.dismiss()">
+                                    <i class="bi bi-speedometer2 me-3 fs-5 opacity-75 transition-all"
+                                        [class.text-primary]="rlaSN5.isActive"></i>
+                                    <span>Performance &amp; Advanced</span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                    <i class="bi bi-chevron-right fs-6 text-muted opacity-75"></i>
-                </a>
-            </li>
+                }
 
-            <li class="nav-item mt-1">
-                <a href="#"
-                    class="nav-link main-menu-link d-flex align-items-center justify-content-between px-4 py-3 text-dark transition-all"
-                    [class.bg-light]="isCoreConceptActive()" (click)="navigateToMenu('core-concepts', $event)">
-                    <div class="d-flex align-items-center">
-                        <i class="bi me-3 fs-5 text-muted transition-all" [class.bi-layers]="!isCoreConceptActive()"
-                            [class.bi-layers-fill]="isCoreConceptActive()"
-                            [class.text-primary]="isCoreConceptActive()"></i>
-                        <span [class.fw-bold]="isCoreConceptActive()">Core Directives &amp; Syntax</span>
+                <!-- Core Concepts sub-menu -->
+                @if (activeSubMenu() === 'core-concepts') {
+                    <div class="docs-sub-menu-track">
+                        <ul class="nav flex-column list-unstyled gap-2 m-0 p-0">
+                            <li class="nav-item">
+                                <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
+                                    routerLink="/one" routerLinkActive="active-sub bg-light fw-bold" #rla1="routerLinkActive"
+                                    [appScrollActive]="rla1.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
+                                    <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-1-circle]="!rla1.isActive"
+                                        [class.bi-1-circle-fill]="rla1.isActive" [class.text-primary]="rla1.isActive"></i>
+                                    <span>*ngIf & &#64;if</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link docs-sub-link d-flex align-items-center justify-content-between transition-all px-3 py-2 text-dark"
+                                    routerLink="/two" routerLinkActive="active-sub bg-light fw-bold" #rla2="routerLinkActive"
+                                    [appScrollActive]="rla2.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-2-circle]="!rla2.isActive"
+                                            [class.bi-2-circle-fill]="rla2.isActive" [class.text-primary]="rla2.isActive"></i>
+                                        <span>*ngFor & &#64;for</span>
+                                    </div>
+                                    <span class="badge bg-primary bg-opacity-10 text-primary">New</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link docs-sub-link d-flex align-items-center justify-content-between transition-all px-3 py-2 text-dark"
+                                    routerLink="/three" routerLinkActive="active-sub bg-light fw-bold" #rla3="routerLinkActive"
+                                    [appScrollActive]="rla3.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-3-circle]="!rla3.isActive"
+                                            [class.bi-3-circle-fill]="rla3.isActive" [class.text-primary]="rla3.isActive"></i>
+                                        <span>*ngClass & *ngStyle</span>
+                                    </div>
+                                    <span class="badge bg-primary bg-opacity-10 text-primary">New</span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                    <i class="bi bi-chevron-right fs-6 text-muted opacity-75"></i>
-                </a>
-            </li>
+                }
 
-            <li class="nav-item">
-                <a href="#"
-                    class="nav-link main-menu-link d-flex align-items-center justify-content-between px-4 py-3 text-dark transition-all"
-                    [class.bg-light]="isLogicalScenariosActive()" (click)="navigateToMenu('logical-scenarios', $event)">
-                    <div class="d-flex align-items-center">
-                        <i class="bi me-3 fs-5 text-muted transition-all" [class.bi-cpu]="!isLogicalScenariosActive()"
-                            [class.bi-cpu-fill]="isLogicalScenariosActive()"
-                            [class.text-primary]="isLogicalScenariosActive()"></i>
-                        <span [class.fw-bold]="isLogicalScenariosActive()">Logical Scenarios</span>
+                <!-- Logical Scenarios sub-menu -->
+                @if (activeSubMenu() === 'logical-scenarios') {
+                    <div class="docs-sub-menu-track">
+                        <h6 class="docs-section-title text-magenta mb-3 small fw-bold text-uppercase">1. Data Binding &amp; Forms</h6>
+                        <ul class="nav flex-column list-unstyled gap-2 m-0 p-0 mb-4">
+                            <li class="nav-item">
+                                <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
+                                    routerLink="/calculator" routerLinkActive="active-sub bg-light fw-bold"
+                                    #rla12="routerLinkActive" [appScrollActive]="rla12.isActive && isOffcanvasReady()"
+                                    (click)="offcanvas.dismiss()">
+                                    <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-calculator]="!rla12.isActive"
+                                        [class.bi-calculator-fill]="rla12.isActive" [class.text-primary]="rla12.isActive"></i>
+                                    <span>Calculator</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
+                                    routerLink="/student-registration" routerLinkActive="active-sub bg-light fw-bold"
+                                    #rla10="routerLinkActive" [appScrollActive]="rla10.isActive && isOffcanvasReady()"
+                                    (click)="offcanvas.dismiss()">
+                                    <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-mortarboard]="!rla10.isActive"
+                                        [class.bi-mortarboard-fill]="rla10.isActive" [class.text-primary]="rla10.isActive"></i>
+                                    <span>Student Registration Form</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
+                                    routerLink="/rail-transit" routerLinkActive="active-sub bg-light fw-bold"
+                                    #rla5="routerLinkActive" [appScrollActive]="rla5.isActive && isOffcanvasReady()"
+                                    (click)="offcanvas.dismiss()">
+                                    <i class="bi me-3 fs-5 opacity-75 transition-all"
+                                        [class.bi-train-freight-front]="!rla5.isActive"
+                                        [class.bi-train-freight-front-fill]="rla5.isActive"
+                                        [class.text-primary]="rla5.isActive"></i>
+                                    <span>Train Booking Form</span>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <h6 class="docs-section-title text-magenta mb-3 small fw-bold text-uppercase">2. Collection &amp; State Management</h6>
+                        <ul class="nav flex-column list-unstyled gap-2 m-0 p-0 mb-4">
+                            <li class="nav-item">
+                                <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
+                                    routerLink="/todo-list" routerLinkActive="active-sub bg-light fw-bold" #rla13="routerLinkActive"
+                                    [appScrollActive]="rla13.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
+                                    <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-check-square]="!rla13.isActive"
+                                        [class.bi-check-square-fill]="rla13.isActive" [class.text-primary]="rla13.isActive"></i>
+                                    <span>To Do List App</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
+                                    routerLink="/grocery-cart" routerLinkActive="active-sub bg-light fw-bold"
+                                    #rla9="routerLinkActive" [appScrollActive]="rla9.isActive && isOffcanvasReady()"
+                                    (click)="offcanvas.dismiss()">
+                                    <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-cart]="!rla9.isActive"
+                                        [class.bi-cart-fill]="rla9.isActive" [class.text-primary]="rla9.isActive"></i>
+                                    <span>Grocery List Cart</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
+                                    routerLink="/hotel-order" routerLinkActive="active-sub bg-light fw-bold"
+                                    #rla8="routerLinkActive" [appScrollActive]="rla8.isActive && isOffcanvasReady()"
+                                    (click)="offcanvas.dismiss()">
+                                    <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-bell]="!rla8.isActive"
+                                        [class.bi-bell-fill]="rla8.isActive" [class.text-primary]="rla8.isActive"></i>
+                                    <span>Hotel Order System</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
+                                    routerLink="/subscription" routerLinkActive="active-sub bg-light fw-bold"
+                                    #rla4="routerLinkActive" [appScrollActive]="rla4.isActive && isOffcanvasReady()"
+                                    (click)="offcanvas.dismiss()">
+                                    <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-patch-check]="!rla4.isActive"
+                                        [class.bi-patch-check-fill]="rla4.isActive" [class.text-primary]="rla4.isActive"></i>
+                                    <span>Subscriptions</span>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <h6 class="docs-section-title text-magenta mb-3 small fw-bold text-uppercase">3. Complex Flows &amp; Dynamic UIs</h6>
+                        <ul class="nav flex-column list-unstyled gap-2 m-0 p-0">
+                            <li class="nav-item">
+                                <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
+                                    routerLink="/box-office" routerLinkActive="active-sub bg-light fw-bold" #rla6="routerLinkActive"
+                                    [appScrollActive]="rla6.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
+                                    <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-ticket-perforated]="!rla6.isActive"
+                                        [class.bi-ticket-perforated-fill]="rla6.isActive" [class.text-primary]="rla6.isActive"></i>
+                                    <span>Movie Ticket</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
+                                    routerLink="/zoom-car-rental" routerLinkActive="active-sub bg-light fw-bold"
+                                    #rla7="routerLinkActive" [appScrollActive]="rla7.isActive && isOffcanvasReady()"
+                                    (click)="offcanvas.dismiss()">
+                                    <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-car-front]="!rla7.isActive"
+                                        [class.bi-car-front-fill]="rla7.isActive" [class.text-primary]="rla7.isActive"></i>
+                                    <span>Zoom Car Rental System</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
+                                    routerLink="/kyc" routerLinkActive="active-sub bg-light fw-bold" #rla14="routerLinkActive"
+                                    [appScrollActive]="rla14.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
+                                    <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-shield-lock]="!rla14.isActive"
+                                        [class.bi-shield-lock-fill]="rla14.isActive" [class.text-primary]="rla14.isActive"></i>
+                                    <span>KYC &amp; Biometric Vault</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
+                                    routerLink="/tabs" routerLinkActive="active-sub bg-light fw-bold" #rla15="routerLinkActive"
+                                    [appScrollActive]="rla15.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
+                                    <i class="bi me-3 fs-5 opacity-75 transition-all bi-segmented-nav"
+                                        [class.text-primary]="rla15.isActive"></i>
+                                    <span>Dynamic Tab Selection</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
+                                    routerLink="/polymorphic" routerLinkActive="active-sub bg-light fw-bold"
+                                    #rla17="routerLinkActive" [appScrollActive]="rla17.isActive && isOffcanvasReady()"
+                                    (click)="offcanvas.dismiss()">
+                                    <i class="bi me-3 fs-5 opacity-75 transition-all bi-layout-split"
+                                        [class.text-primary]="rla17.isActive"></i>
+                                    <span>Polymorphic Interfaces</span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                    <i class="bi bi-chevron-right fs-6 text-muted opacity-75"></i>
-                </a>
-            </li>
-        </ul>
-    </div>
-    }
+                }
 
-    @if (activeMenuView() === 'study-notes') {
-    <div class="offcanvas-header px-3 py-3 custom-header-border align-items-center gap-2">
-        <button class="custom-icon-btn" aria-label="Go Back" (click)="goBack()" ngbTooltip="Go Back" placement="bottom">
-            <i class="bi bi-arrow-left"></i>
-        </button>
-        <h5 class="offcanvas-title fw-medium text-dark fs-6 mb-0 me-auto">Study Notes</h5>
-        <button type="button" class="custom-icon-btn" aria-label="Close" (click)="offcanvas.dismiss()"
-            ngbTooltip="Close" placement="bottom">
-            <i class="bi bi-x-lg"></i>
-        </button>
-    </div>
-
-    <div class="offcanvas-body px-4 py-4">
-        <div class="docs-sub-menu-track">
-            <h6 class="docs-section-title text-magenta mb-3 small fw-bold text-uppercase">Categories</h6>
-
-            <ul class="nav flex-column list-unstyled gap-2 m-0 p-0">
-                <li class="nav-item">
-                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
-                        routerLink="/study-notes/components-core" routerLinkActive="active-sub bg-light fw-bold"
-                        #rlaSN1="routerLinkActive" [appScrollActive]="rlaSN1.isActive && isOffcanvasReady()"
-                        (click)="offcanvas.dismiss()">
-                        <i class="bi bi-boxes me-3 fs-5 opacity-75 transition-all"
-                            [class.text-primary]="rlaSN1.isActive"></i>
-                        <span>Components &amp; Core</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
-                        routerLink="/study-notes/reactivity-rxjs" routerLinkActive="active-sub bg-light fw-bold"
-                        #rlaSN2="routerLinkActive" [appScrollActive]="rlaSN2.isActive && isOffcanvasReady()"
-                        (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-lightning-charge]="!rlaSN2.isActive"
-                            [class.bi-lightning-charge-fill]="rlaSN2.isActive"
-                            [class.text-primary]="rlaSN2.isActive"></i>
-                        <span>Reactivity &amp; RxJS</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
-                        routerLink="/study-notes/routing-forms" routerLinkActive="active-sub bg-light fw-bold"
-                        #rlaSN3="routerLinkActive" [appScrollActive]="rlaSN3.isActive && isOffcanvasReady()"
-                        (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-signpost-split]="!rlaSN3.isActive"
-                            [class.bi-signpost-split-fill]="rlaSN3.isActive" [class.text-primary]="rlaSN3.isActive"></i>
-                        <span>Routing &amp; Forms</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
-                        routerLink="/study-notes/services-di" routerLinkActive="active-sub bg-light fw-bold"
-                        #rlaSN4="routerLinkActive" [appScrollActive]="rlaSN4.isActive && isOffcanvasReady()"
-                        (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-diagram-3]="!rlaSN4.isActive"
-                            [class.bi-diagram-3-fill]="rlaSN4.isActive" [class.text-primary]="rlaSN4.isActive"></i>
-                        <span>Services &amp; DI</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
-                        routerLink="/study-notes/performance-advanced" routerLinkActive="active-sub bg-light fw-bold"
-                        #rlaSN5="routerLinkActive" [appScrollActive]="rlaSN5.isActive && isOffcanvasReady()"
-                        (click)="offcanvas.dismiss()">
-                        <i class="bi bi-speedometer2 me-3 fs-5 opacity-75 transition-all"
-                            [class.text-primary]="rlaSN5.isActive"></i>
-                        <span>Performance &amp; Advanced</span>
-                    </a>
-                </li>
-            </ul>
+            </div>
         </div>
     </div>
-    }
-
-    @if (activeMenuView() === 'core-concepts') {
-    <div class="offcanvas-header px-3 py-3 custom-header-border align-items-center gap-2">
-        <button class="custom-icon-btn" aria-label="Go Back" (click)="goBack()" ngbTooltip="Go Back" placement="bottom">
-            <i class="bi bi-arrow-left"></i>
-        </button>
-        <h5 class="offcanvas-title fw-medium text-dark fs-6 mb-0 me-auto">Core Concepts</h5>
-        <button type="button" class="custom-icon-btn" aria-label="Close" (click)="offcanvas.dismiss()"
-            ngbTooltip="Close" placement="bottom">
-            <i class="bi bi-x-lg"></i>
-        </button>
-    </div>
-
-    <div class="offcanvas-body px-4 py-4">
-        <div class="docs-sub-menu-track">
-            <h6 class="docs-section-title text-magenta mb-3 small fw-bold text-uppercase">Overview</h6>
-
-            <ul class="nav flex-column list-unstyled gap-2 m-0 p-0">
-                <li class="nav-item">
-                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
-                        routerLink="/one" routerLinkActive="active-sub bg-light fw-bold" #rla1="routerLinkActive"
-                        [appScrollActive]="rla1.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-1-circle]="!rla1.isActive"
-                            [class.bi-1-circle-fill]="rla1.isActive" [class.text-primary]="rla1.isActive"></i>
-                        <span>*ngIf & &#64;if</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link docs-sub-link d-flex align-items-center justify-content-between transition-all px-3 py-2 text-dark"
-                        routerLink="/two" routerLinkActive="active-sub bg-light fw-bold" #rla2="routerLinkActive"
-                        [appScrollActive]="rla2.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
-                        <div class="d-flex align-items-center">
-                            <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-2-circle]="!rla2.isActive"
-                                [class.bi-2-circle-fill]="rla2.isActive" [class.text-primary]="rla2.isActive"></i>
-                            <span>*ngFor & &#64;for</span>
-                        </div>
-                        <span class="badge bg-primary bg-opacity-10 text-primary">New</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link docs-sub-link d-flex align-items-center justify-content-between transition-all px-3 py-2 text-dark"
-                        routerLink="/three" routerLinkActive="active-sub bg-light fw-bold" #rla3="routerLinkActive"
-                        [appScrollActive]="rla3.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
-                        <div class="d-flex align-items-center">
-                            <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-3-circle]="!rla3.isActive"
-                                [class.bi-3-circle-fill]="rla3.isActive" [class.text-primary]="rla3.isActive"></i>
-                            <span>*ngClass & *ngStyle</span>
-                        </div>
-                        <span class="badge bg-primary bg-opacity-10 text-primary">New</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    }
-
-    @if (activeMenuView() === 'logical-scenarios') {
-    <div class="offcanvas-header px-3 py-3 custom-header-border align-items-center gap-2">
-        <button class="custom-icon-btn" aria-label="Go Back" (click)="goBack()" ngbTooltip="Go Back" placement="bottom">
-            <i class="bi bi-arrow-left"></i>
-        </button>
-        <h5 class="offcanvas-title fw-medium text-dark fs-6 mb-0 me-auto">Logical Scenarios</h5>
-        <button type="button" class="custom-icon-btn" aria-label="Close" (click)="offcanvas.dismiss()"
-            ngbTooltip="Close" placement="bottom">
-            <i class="bi bi-x-lg"></i>
-        </button>
-    </div>
-
-    <div class="offcanvas-body px-4 py-4">
-        <div class="docs-sub-menu-track">
-
-            <h6 class="docs-section-title text-magenta mb-3 small fw-bold text-uppercase">1. Data Binding &amp; Forms
-            </h6>
-
-            <ul class="nav flex-column list-unstyled gap-2 m-0 p-0 mb-4">
-                <li class="nav-item">
-                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
-                        routerLink="/calculator" routerLinkActive="active-sub bg-light fw-bold"
-                        #rla12="routerLinkActive" [appScrollActive]="rla12.isActive && isOffcanvasReady()"
-                        (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-calculator]="!rla12.isActive"
-                            [class.bi-calculator-fill]="rla12.isActive" [class.text-primary]="rla12.isActive"></i>
-                        <span>Calculator</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
-                        routerLink="/student-registration" routerLinkActive="active-sub bg-light fw-bold"
-                        #rla10="routerLinkActive" [appScrollActive]="rla10.isActive && isOffcanvasReady()"
-                        (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-mortarboard]="!rla10.isActive"
-                            [class.bi-mortarboard-fill]="rla10.isActive" [class.text-primary]="rla10.isActive"></i>
-                        <span>Student Registration Form</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
-                        routerLink="/rail-transit" routerLinkActive="active-sub bg-light fw-bold"
-                        #rla5="routerLinkActive" [appScrollActive]="rla5.isActive && isOffcanvasReady()"
-                        (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all"
-                            [class.bi-train-freight-front]="!rla5.isActive"
-                            [class.bi-train-freight-front-fill]="rla5.isActive"
-                            [class.text-primary]="rla5.isActive"></i>
-                        <span>Train Booking Form</span>
-                    </a>
-                </li>
-            </ul>
-
-            <h6 class="docs-section-title text-magenta mb-3 small fw-bold text-uppercase">2. Collection &amp; State
-                Management</h6>
-
-            <ul class="nav flex-column list-unstyled gap-2 m-0 p-0 mb-4">
-                <li class="nav-item">
-                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
-                        routerLink="/todo-list" routerLinkActive="active-sub bg-light fw-bold" #rla13="routerLinkActive"
-                        [appScrollActive]="rla13.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-check-square]="!rla13.isActive"
-                            [class.bi-check-square-fill]="rla13.isActive" [class.text-primary]="rla13.isActive"></i>
-                        <span>To Do List App</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
-                        routerLink="/grocery-cart" routerLinkActive="active-sub bg-light fw-bold"
-                        #rla9="routerLinkActive" [appScrollActive]="rla9.isActive && isOffcanvasReady()"
-                        (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-cart]="!rla9.isActive"
-                            [class.bi-cart-fill]="rla9.isActive" [class.text-primary]="rla9.isActive"></i>
-                        <span>Grocery List Cart</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
-                        routerLink="/hotel-order" routerLinkActive="active-sub bg-light fw-bold"
-                        #rla8="routerLinkActive" [appScrollActive]="rla8.isActive && isOffcanvasReady()"
-                        (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-bell]="!rla8.isActive"
-                            [class.bi-bell-fill]="rla8.isActive" [class.text-primary]="rla8.isActive"></i>
-                        <span>Hotel Order System</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
-                        routerLink="/subscription" routerLinkActive="active-sub bg-light fw-bold"
-                        #rla4="routerLinkActive" [appScrollActive]="rla4.isActive && isOffcanvasReady()"
-                        (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-patch-check]="!rla4.isActive"
-                            [class.bi-patch-check-fill]="rla4.isActive" [class.text-primary]="rla4.isActive"></i>
-                        <span>Subscriptions</span>
-                    </a>
-                </li>
-            </ul>
-
-            <h6 class="docs-section-title text-magenta mb-3 small fw-bold text-uppercase">3. Complex Flows &amp; Dynamic
-                UIs</h6>
-
-            <ul class="nav flex-column list-unstyled gap-2 m-0 p-0">
-                <li class="nav-item">
-                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
-                        routerLink="/box-office" routerLinkActive="active-sub bg-light fw-bold" #rla6="routerLinkActive"
-                        [appScrollActive]="rla6.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-ticket-perforated]="!rla6.isActive"
-                            [class.bi-ticket-perforated-fill]="rla6.isActive" [class.text-primary]="rla6.isActive"></i>
-                        <span>Movie Ticket</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
-                        routerLink="/zoom-car-rental" routerLinkActive="active-sub bg-light fw-bold"
-                        #rla7="routerLinkActive" [appScrollActive]="rla7.isActive && isOffcanvasReady()"
-                        (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-car-front]="!rla7.isActive"
-                            [class.bi-car-front-fill]="rla7.isActive" [class.text-primary]="rla7.isActive"></i>
-                        <span>Zoom Car Rental System</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
-                        routerLink="/kyc" routerLinkActive="active-sub bg-light fw-bold" #rla14="routerLinkActive"
-                        [appScrollActive]="rla14.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all" [class.bi-shield-lock]="!rla14.isActive"
-                            [class.bi-shield-lock-fill]="rla14.isActive" [class.text-primary]="rla14.isActive"></i>
-                        <span>KYC &amp; Biometric Vault</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
-                        routerLink="/tabs" routerLinkActive="active-sub bg-light fw-bold" #rla15="routerLinkActive"
-                        [appScrollActive]="rla15.isActive && isOffcanvasReady()" (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all bi-segmented-nav"
-                            [class.text-primary]="rla15.isActive"></i>
-                        <span>Dynamic Tab Selection</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link docs-sub-link d-flex align-items-center transition-all px-3 py-2 text-dark"
-                        routerLink="/polymorphic" routerLinkActive="active-sub bg-light fw-bold"
-                        #rla17="routerLinkActive" [appScrollActive]="rla17.isActive && isOffcanvasReady()"
-                        (click)="offcanvas.dismiss()">
-                        <i class="bi me-3 fs-5 opacity-75 transition-all bi-layout-split"
-                            [class.text-primary]="rla17.isActive"></i>
-                        <span>Polymorphic Interfaces</span>
-                    </a>
-                </li>
-            </ul>
-
-        </div>
-    </div>
-    }
 </ng-template>

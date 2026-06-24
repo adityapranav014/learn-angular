@@ -22,6 +22,7 @@ export class NavbarComponent {
 
   // --- Modern State Management (Signals) ---
   activeMenuView = signal<'main' | 'core-concepts' | 'logical-scenarios' | 'study-notes'>('main');
+  activeSubMenu = signal<'core-concepts' | 'logical-scenarios' | 'study-notes' | null>(null);
   isOffcanvasReady = signal<boolean>(false);
 
   // --- Sidebar Controls ---
@@ -46,20 +47,39 @@ export class NavbarComponent {
   navigateToMenu(menuName: 'main' | 'core-concepts' | 'logical-scenarios' | 'study-notes', event: Event) {
     event.preventDefault();
     this.activeMenuView.set(menuName);
+    if (menuName !== 'main') {
+      this.activeSubMenu.set(menuName);
+    }
   }
 
   goBack() {
     this.activeMenuView.set('main');
   }
 
+  getSubMenuTitle(): string {
+    switch (this.activeMenuView()) {
+      case 'study-notes':
+        return 'Study Notes & Prep';
+      case 'core-concepts':
+        return 'Core Directives & Syntax';
+      case 'logical-scenarios':
+        return 'Logical Scenarios';
+      default:
+        return '';
+    }
+  }
+
   // --- Active Route Tracking ---
   private determineActiveMenu() {
     if (this.isCoreConceptActive()) {
       this.activeMenuView.set('core-concepts');
+      this.activeSubMenu.set('core-concepts');
     } else if (this.isLogicalScenariosActive()) {
       this.activeMenuView.set('logical-scenarios');
+      this.activeSubMenu.set('logical-scenarios');
     } else if (this.isStudyNotesActive()) {
       this.activeMenuView.set('study-notes');
+      this.activeSubMenu.set('study-notes');
     } else {
       this.activeMenuView.set('main');
     }

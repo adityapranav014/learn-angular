@@ -24,11 +24,30 @@ export class ScrollActiveDirective implements OnChanges {
   }
 
   private scrollToElement(): void {
-    // Encapsulated DOM access using ElementRef. No global document queries.
-    this.el.nativeElement.scrollIntoView({
-      behavior: 'smooth',
-      block: 'center',
-      inline: 'nearest'
-    });
+    const element = this.el.nativeElement;
+    const parent = element.closest('.offcanvas-body');
+    
+    if (parent) {
+      const elementRect = element.getBoundingClientRect();
+      const parentRect = parent.getBoundingClientRect();
+      
+      // Calculate top position of target element relative to its scrollable container
+      const relativeTop = elementRect.top - parentRect.top + parent.scrollTop;
+      
+      // Center the element vertically
+      const targetScrollTop = relativeTop - (parentRect.height / 2) + (elementRect.height / 2);
+      
+      parent.scrollTo({
+        top: targetScrollTop,
+        behavior: 'smooth'
+      });
+    } else {
+      // Fallback if not inside .offcanvas-body
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'nearest'
+      });
+    }
   }
 }

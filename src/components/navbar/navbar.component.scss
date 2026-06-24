@@ -1,5 +1,5 @@
 /* Core Variables */
-$ng-magenta: #c026d3;
+$ng-magenta: #F637E3;
 $text-dark: #202124;
 $text-muted: #5f6368;
 $track-color: #e5e7eb;
@@ -128,39 +128,91 @@ $track-color: #e5e7eb;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 38px;
-    height: 38px;
-    border: 1px solid #dee2e6;
-    background-color: #ffffff;
-    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    border-radius: 50%;
     color: #4b5563;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     outline: none;
 
     i {
-        font-size: 1.2rem;
+        font-size: 1.55rem;
         line-height: 1;
         pointer-events: none;
-        transition: transform 0.2s ease;
+        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), color 0.25s ease;
     }
 
     /* Soft hover state */
     &:hover {
-        background-color: #fcf8fd;
-        color: #F637E3;
-        border-color: #F637E3;
-        box-shadow: 0 4px 12px rgba(246, 55, 227, 0.12);
+        background-color: #fdf4ff;
+        color: $ng-magenta;
 
         i {
-            transform: scale(1.1);
+            transform: scale(1.08);
+            
+            &.bi-x-lg {
+                transform: scale(1.08) rotate(90deg);
+            }
         }
     }
 
     /* Micro-interaction on click */
     &:active {
-        background-color: #e5e7eb;
+        background-color: #f3e8ff;
         transform: scale(0.92);
+    }
+}
+
+/* Unified Body and Slider Layout */
+.offcanvas-body {
+    overflow-x: hidden !important;
+    overflow-y: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-slider {
+    display: flex;
+    width: 200%;
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    align-items: flex-start;
+
+    &.slide-active {
+        transform: translateX(-50%);
+    }
+}
+
+.menu-pane {
+    width: 50%;
+    flex-shrink: 0;
+    box-sizing: border-box;
+}
+
+/* Premium Back Navigation Button */
+.back-nav-btn {
+    color: $text-dark;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    i {
+        font-size: 1.1rem;
+        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    &:hover {
+        color: $ng-magenta !important;
+        
+        i {
+            transform: translateX(-3px);
+        }
+    }
+    
+    &:active {
+        transform: scale(0.97);
     }
 }
