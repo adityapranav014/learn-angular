@@ -178,3 +178,370 @@
     }
   }
 }
+
+/* ==========================================================================
+   Mermaid.js Diagram Custom Premium Themes & Styling overrides
+   ========================================================================== */
+
+.mermaid-render-shell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.75rem;
+  background-color: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02), 0 8px 24px rgba(148, 163, 184, 0.04);
+}
+
+/* 1. Remove drop-shadow filter from root SVG to prevent blurry text and arrows */
+.mermaid-render-shell svg {
+  max-width: 100%;
+  height: auto;
+  filter: none !important;
+  font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif !important;
+}
+
+/* 2. Soft premium drop-shadow applied ONLY to the node background shapes */
+.mermaid-render-shell svg .node rect,
+.mermaid-render-shell svg .node polygon,
+.mermaid-render-shell svg .node circle,
+.mermaid-render-shell svg .node ellipse,
+.mermaid-render-shell svg .node path {
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.05)) drop-shadow(0 4px 6px rgba(192, 38, 211, 0.015)) !important;
+  transition: filter 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s ease;
+}
+
+/* Subtle hover scale + shadow enhancement on the cards */
+.mermaid-render-shell svg .node:hover rect,
+.mermaid-render-shell svg .node:hover polygon,
+.mermaid-render-shell svg .node:hover circle,
+.mermaid-render-shell svg .node:hover ellipse,
+.mermaid-render-shell svg .node:hover path {
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.07)) drop-shadow(0 8px 16px rgba(246, 55, 227, 0.04)) !important;
+}
+
+/* 3. Professional slate-grey connecting lines instead of harsh magenta/black */
+.mermaid-render-shell svg .edgePath .path {
+  stroke: #94a3b8 !important;
+  stroke-width: 1.5px !important;
+}
+.mermaid-render-shell svg .edgePath .arrowheadPath {
+  fill: #94a3b8 !important;
+  stroke: #94a3b8 !important;
+}
+
+/* Dotted/dashed connector lines styling */
+.mermaid-render-shell svg .edgePath .path[style*="stroke-dasharray"],
+.mermaid-render-shell svg .edgePath .path[class*="edge-dashed"] {
+  stroke: #cbd5e1 !important;
+  stroke-width: 1.5px !important;
+}
+
+/* Link labels (labels on connections) */
+.mermaid-render-shell svg .edgeLabel text,
+.mermaid-render-shell svg .edgeLabel .label {
+  color: #64748b !important;
+  fill: #64748b !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  background-color: #ffffff !important;
+  text-shadow: 
+    -2px -2px 0 #ffffff,  
+     2px -2px 0 #ffffff,
+    -2px  2px 0 #ffffff,
+     2px  2px 0 #ffffff,
+     0px -2px 0 #ffffff,
+     0px  2px 0 #ffffff,
+    -2px  0px 0 #ffffff,
+     2px  0px 0 #ffffff !important;
+}
+
+/* 4. Subgraphs (clusters) rounded, clean card style */
+.mermaid-render-shell svg .cluster rect {
+  fill: #fafbfc !important;
+  stroke: #e2e8f0 !important;
+  stroke-width: 1px !important;
+  rx: 8px !important;
+  ry: 8px !important;
+}
+.mermaid-render-shell svg .cluster .label text,
+.mermaid-render-shell svg .cluster .label span {
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  color: #64748b !important;
+  fill: #64748b !important;
+  text-shadow: 
+    -3px -3px 0 #fafbfc,  
+     3px -3px 0 #fafbfc,
+    -3px  3px 0 #fafbfc,
+     3px  3px 0 #fafbfc,
+     0px -3px 0 #fafbfc,
+     0px  3px 0 #fafbfc,
+    -3px  0px 0 #fafbfc,
+     3px  0px 0 #fafbfc !important;
+}
+.mermaid-render-shell svg .cluster .label {
+  transform: translateY(-8px) !important; /* Shift label slightly upwards away from inner nodes */
+}
+
+/* 5. Typography globally applied to node labels */
+.mermaid-render-shell svg .node foreignObject {
+  overflow: visible !important;
+}
+.mermaid-render-shell svg .node foreignObject > div {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+}
+.mermaid-render-shell svg .node .label {
+  font-family: 'Outfit', 'Inter', system-ui, sans-serif !important;
+  font-size: 13.5px !important;
+  line-height: 1.4 !important;
+  text-align: center !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+}
+.mermaid-render-shell svg .node .label div,
+.mermaid-render-shell svg .node .label span {
+  text-align: center !important;
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.mermaid-render-shell svg .node text {
+  font-family: 'Outfit', 'Inter', system-ui, sans-serif !important;
+  text-anchor: middle !important; /* Center SVG <text> elements horizontally */
+}
+.mermaid-render-shell svg .node span,
+.mermaid-render-shell svg .node div {
+  font-family: 'Outfit', 'Inter', system-ui, sans-serif !important;
+}
+
+/* ==========================================
+   GLOBAL OVERRIDES FOR MERMAID CLASSDEF STYLES
+   ========================================== */
+
+/* Core Brand Solid nodes: coreEngine, engine, coreMilestone */
+.mermaid-render-shell svg .node.coreEngine rect,
+.mermaid-render-shell svg .node.coreEngine polygon,
+.mermaid-render-shell svg .node.coreEngine circle,
+.mermaid-render-shell svg .node.coreEngine path,
+.mermaid-render-shell svg .node.engine rect,
+.mermaid-render-shell svg .node.engine polygon,
+.mermaid-render-shell svg .node.engine circle,
+.mermaid-render-shell svg .node.engine path,
+.mermaid-render-shell svg .node.coreMilestone rect,
+.mermaid-render-shell svg .node.coreMilestone polygon,
+.mermaid-render-shell svg .node.coreMilestone circle,
+.mermaid-render-shell svg .node.coreMilestone path {
+  fill: #F637E3 !important;
+  stroke: #d916c6 !important;
+  stroke-width: 1.5px !important;
+}
+.mermaid-render-shell svg .node.coreEngine .label,
+.mermaid-render-shell svg .node.coreEngine text,
+.mermaid-render-shell svg .node.engine .label,
+.mermaid-render-shell svg .node.engine text,
+.mermaid-render-shell svg .node.coreMilestone .label,
+.mermaid-render-shell svg .node.coreMilestone text {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+/* Brand Light highlights: primaryNode, modern, reactive, sig, derived */
+.mermaid-render-shell svg .node.primaryNode rect,
+.mermaid-render-shell svg .node.primaryNode polygon,
+.mermaid-render-shell svg .node.primaryNode circle,
+.mermaid-render-shell svg .node.primaryNode path,
+.mermaid-render-shell svg .node.modern rect,
+.mermaid-render-shell svg .node.modern polygon,
+.mermaid-render-shell svg .node.modern circle,
+.mermaid-render-shell svg .node.modern path,
+.mermaid-render-shell svg .node.reactive rect,
+.mermaid-render-shell svg .node.reactive polygon,
+.mermaid-render-shell svg .node.reactive circle,
+.mermaid-render-shell svg .node.reactive path,
+.mermaid-render-shell svg .node.sig rect,
+.mermaid-render-shell svg .node.sig polygon,
+.mermaid-render-shell svg .node.sig circle,
+.mermaid-render-shell svg .node.sig path,
+.mermaid-render-shell svg .node.derived rect,
+.mermaid-render-shell svg .node.derived polygon,
+.mermaid-render-shell svg .node.derived circle,
+.mermaid-render-shell svg .node.derived path {
+  fill: #fdf4ff !important;
+  stroke: #F637E3 !important;
+  stroke-width: 1.5px !important;
+}
+.mermaid-render-shell svg .node.primaryNode .label,
+.mermaid-render-shell svg .node.primaryNode text,
+.mermaid-render-shell svg .node.modern .label,
+.mermaid-render-shell svg .node.modern text,
+.mermaid-render-shell svg .node.reactive .label,
+.mermaid-render-shell svg .node.reactive text,
+.mermaid-render-shell svg .node.sig .label,
+.mermaid-render-shell svg .node.sig text,
+.mermaid-render-shell svg .node.derived .label,
+.mermaid-render-shell svg .node.derived text {
+  color: #202124 !important;
+  fill: #202124 !important;
+  font-weight: 500 !important;
+}
+
+/* Neutral / Legacy nodes: legacy, backgroundTask, loopCheck, impureBranch, default */
+.mermaid-render-shell svg .node.legacy rect,
+.mermaid-render-shell svg .node.legacy polygon,
+.mermaid-render-shell svg .node.legacy circle,
+.mermaid-render-shell svg .node.legacy path,
+.mermaid-render-shell svg .node.backgroundTask rect,
+.mermaid-render-shell svg .node.backgroundTask polygon,
+.mermaid-render-shell svg .node.backgroundTask circle,
+.mermaid-render-shell svg .node.backgroundTask path,
+.mermaid-render-shell svg .node.loopCheck rect,
+.mermaid-render-shell svg .node.loopCheck polygon,
+.mermaid-render-shell svg .node.loopCheck circle,
+.mermaid-render-shell svg .node.loopCheck path,
+.mermaid-render-shell svg .node.impureBranch rect,
+.mermaid-render-shell svg .node.impureBranch polygon,
+.mermaid-render-shell svg .node.impureBranch circle,
+.mermaid-render-shell svg .node.impureBranch path,
+.mermaid-render-shell svg .node.default rect,
+.mermaid-render-shell svg .node.default polygon,
+.mermaid-render-shell svg .node.default circle,
+.mermaid-render-shell svg .node.default path {
+  fill: #f8fafc !important;
+  stroke: #cbd5e1 !important;
+  stroke-width: 1px !important;
+}
+.mermaid-render-shell svg .node.legacy .label,
+.mermaid-render-shell svg .node.legacy text,
+.mermaid-render-shell svg .node.backgroundTask .label,
+.mermaid-render-shell svg .node.backgroundTask text,
+.mermaid-render-shell svg .node.loopCheck .label,
+.mermaid-render-shell svg .node.loopCheck text,
+.mermaid-render-shell svg .node.impureBranch .label,
+.mermaid-render-shell svg .node.impureBranch text,
+.mermaid-render-shell svg .node.default .label,
+.mermaid-render-shell svg .node.default text {
+  color: #4b5563 !important;
+  fill: #4b5563 !important;
+  font-weight: 400 !important;
+}
+
+/* Context Note: contextNote */
+.mermaid-render-shell svg .node.contextNote rect,
+.mermaid-render-shell svg .node.contextNote polygon,
+.mermaid-render-shell svg .node.contextNote circle,
+.mermaid-render-shell svg .node.contextNote path {
+  fill: #f8fafc !important;
+  stroke: #e2e8f0 !important;
+  stroke-dasharray: 4 4 !important;
+  stroke-width: 1px !important;
+  filter: none !important;
+}
+.mermaid-render-shell svg .node.contextNote .label,
+.mermaid-render-shell svg .node.contextNote text {
+  color: #64748b !important;
+  fill: #64748b !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+}
+
+/* Success / Safe: success, effect, ready, pureBranch */
+.mermaid-render-shell svg .node.success rect,
+.mermaid-render-shell svg .node.success polygon,
+.mermaid-render-shell svg .node.success circle,
+.mermaid-render-shell svg .node.success path,
+.mermaid-render-shell svg .node.effect rect,
+.mermaid-render-shell svg .node.effect polygon,
+.mermaid-render-shell svg .node.effect circle,
+.mermaid-render-shell svg .node.effect path,
+.mermaid-render-shell svg .node.ready rect,
+.mermaid-render-shell svg .node.ready polygon,
+.mermaid-render-shell svg .node.ready circle,
+.mermaid-render-shell svg .node.ready path,
+.mermaid-render-shell svg .node.pureBranch rect,
+.mermaid-render-shell svg .node.pureBranch polygon,
+.mermaid-render-shell svg .node.pureBranch circle,
+.mermaid-render-shell svg .node.pureBranch path {
+  fill: #f0fdf4 !important;
+  stroke: #22c55e !important;
+  stroke-width: 1.5px !important;
+}
+.mermaid-render-shell svg .node.success .label,
+.mermaid-render-shell svg .node.success text,
+.mermaid-render-shell svg .node.effect .label,
+.mermaid-render-shell svg .node.effect text,
+.mermaid-render-shell svg .node.ready .label,
+.mermaid-render-shell svg .node.ready text,
+.mermaid-render-shell svg .node.pureBranch .label,
+.mermaid-render-shell svg .node.pureBranch text {
+  color: #15803d !important;
+  fill: #15803d !important;
+  font-weight: 500 !important;
+}
+
+/* Danger / Warning: danger, warn, block */
+.mermaid-render-shell svg .node.danger rect,
+.mermaid-render-shell svg .node.danger polygon,
+.mermaid-render-shell svg .node.danger circle,
+.mermaid-render-shell svg .node.danger path,
+.mermaid-render-shell svg .node.warn rect,
+.mermaid-render-shell svg .node.warn polygon,
+.mermaid-render-shell svg .node.warn circle,
+.mermaid-render-shell svg .node.warn path,
+.mermaid-render-shell svg .node.block rect,
+.mermaid-render-shell svg .node.block polygon,
+.mermaid-render-shell svg .node.block circle,
+.mermaid-render-shell svg .node.block path {
+  fill: #fff1f2 !important;
+  stroke: #f43f5e !important;
+  stroke-width: 1.5px !important;
+}
+.mermaid-render-shell svg .node.danger .label,
+.mermaid-render-shell svg .node.danger text,
+.mermaid-render-shell svg .node.warn .label,
+.mermaid-render-shell svg .node.warn text,
+.mermaid-render-shell svg .node.block .label,
+.mermaid-render-shell svg .node.block text {
+  color: #9f1239 !important;
+  fill: #9f1239 !important;
+  font-weight: 500 !important;
+}
+
+/* Blue / Informational: network, rx, api */
+.mermaid-render-shell svg .node.network rect,
+.mermaid-render-shell svg .node.network polygon,
+.mermaid-render-shell svg .node.network circle,
+.mermaid-render-shell svg .node.network path,
+.mermaid-render-shell svg .node.rx rect,
+.mermaid-render-shell svg .node.rx polygon,
+.mermaid-render-shell svg .node.rx circle,
+.mermaid-render-shell svg .node.rx path,
+.mermaid-render-shell svg .node.api rect,
+.mermaid-render-shell svg .node.api polygon,
+.mermaid-render-shell svg .node.api circle,
+.mermaid-render-shell svg .node.api path {
+  fill: #eff6ff !important;
+  stroke: #3b82f6 !important;
+  stroke-width: 1.5px !important;
+}
+.mermaid-render-shell svg .node.network .label,
+.mermaid-render-shell svg .node.network text,
+.mermaid-render-shell svg .node.rx .label,
+.mermaid-render-shell svg .node.rx text,
+.mermaid-render-shell svg .node.api .label,
+.mermaid-render-shell svg .node.api text {
+  color: #1e3a8a !important;
+  fill: #1e3a8a !important;
+  font-weight: 500 !important;
+}

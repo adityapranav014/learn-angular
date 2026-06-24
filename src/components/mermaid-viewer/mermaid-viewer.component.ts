@@ -12,20 +12,6 @@ import mermaid from 'mermaid';
       display: block;
       width: 100%;
     }
-    .mermaid-render-shell {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 1.5rem;
-      background-color: #fafbfe; /* Base background shade */
-      border-radius: 8px;
-    }
-    /* Injecting your designer's light-source mapping concept natively into the SVG container */
-    ::ng-deep .mermaid-render-shell svg {
-      max-width: 100%;
-      height: auto;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.06)) drop-shadow(0 4px 12px rgba(192, 38, 211, 0.03));
-    }
   `]
 })
 export class MermaidViewerComponent implements AfterViewInit, OnChanges {
@@ -41,12 +27,21 @@ export class MermaidViewerComponent implements AfterViewInit, OnChanges {
       theme: 'base',
       securityLevel: 'loose',
       themeVariables: {
-        primaryColor: '#fdf4ff',       // Lightest brand tint for important layers
-        primaryTextColor: '#202124',   // Dark high-contrast text
-        primaryBorderColor: '#f5d0fe', // Subtle magenta separation
-        lineColor: '#c026d3',          // Brand Magenta for structural connector vectors
-        secondaryColor: '#f3f4f6',     // De-emphasized bottom canvas pieces
-        tertiaryColor: '#ffffff'       // Crisp white cards
+        primaryColor: '#fdf4ff',
+        primaryTextColor: '#202124',
+        primaryBorderColor: '#fcc8f8',
+        lineColor: '#cbd5e1',
+        secondaryColor: '#f8fafc',
+        tertiaryColor: '#ffffff',
+        fontFamily: '"Outfit", "Inter", system-ui, -apple-system, sans-serif'
+      },
+      flowchart: {
+        htmlLabels: true,
+        padding: 15,
+        diagramPadding: 8,
+        nodeSpacing: 65, /* Increased spacing between nodes horizontally */
+        rankSpacing: 75, /* Increased spacing between ranks vertically */
+        curve: 'basis' /* Premium smooth curved connectors */
       }
     });
   }
