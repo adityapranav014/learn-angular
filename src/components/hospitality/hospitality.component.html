@@ -116,11 +116,11 @@
               <ul id="ulItems" class="list-unstyled mb-0 d-flex flex-column gap-2">
                 @for (order of orderedItems; track order.name; let i = $index) {
                 <li
-                  class="d-flex justify-content-between align-items-center bg-white p-2.5 rounded-3 border shadow-xs animate__animated animate__fadeIn">
+                  class="d-flex justify-content-between align-items-center bg-white p-3 rounded-3 border shadow-xs animate__animated animate__fadeIn">
                   <div class="d-flex align-items-center gap-2">
                     <span class="fs-4">{{ order.emoji }}</span>
                     <div class="d-flex flex-column">
-                      <span class="small fw-bold text-dark">{{ order.name }}</span>
+                      <span class="small fw-bold text-dark responsive-item-title">{{ order.name }}</span>
                       <span class="text-muted" style="font-size: 0.75rem;">
                         ₹{{ order.price }} × {{ order.quantity }}
                       </span>
@@ -128,7 +128,7 @@
                   </div>
                   <div class="d-flex align-items-center gap-3">
                     <span
-                      class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-10 fw-bold px-2.5 py-1.5">₹{{
+                      class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-10 fw-bold px-3 py-1">₹{{
                       order.total }}</span>
                     <button class="btn btn-link btn-sm text-danger p-0 border-0" (click)="removeItem(i)"
                       title="Remove item">

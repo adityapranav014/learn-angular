@@ -87,3 +87,10 @@
 .animate__zoomIn {
   animation-name: zoomIn;
 }
+
+/* Make font-size 12px only on mobile viewports */
+@media (max-width: 575.98px) {
+  .responsive-item-title {
+    font-size: 12px !important;
+  }
+}

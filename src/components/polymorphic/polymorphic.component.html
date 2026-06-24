@@ -77,7 +77,7 @@
               <div class="d-grid gap-2">
                 @for (submenu of buttonSubmenuMap[activeTab]; track submenu) {
                 <button
-                  class="btn submenu-btn text-start py-2.5 px-3 rounded-2 fw-medium transition-all text-secondary border-0 d-flex align-items-center gap-2"
+                  class="btn submenu-btn text-start py-2 px-3 rounded-2 fw-medium transition-all text-secondary border-0 d-flex align-items-center gap-2"
                   [class.active-submenu]="activeSubmenu === submenu" (click)="selectSubmenu(submenu)">
                   <i class="bi bi-circle-fill dot-indicator"></i>
                   {{ submenu }}
