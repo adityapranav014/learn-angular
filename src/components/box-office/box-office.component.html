@@ -133,9 +133,9 @@
                 @if (selectedMovie && selectedShow) {
                 <div class="p-3 bg-white border rounded-4 transition-all shadow-sm">
 
-                  <div class="row g-2 align-items-center mb-3">
+                  <div class="row g-2 align-items-center">
                     <div class="col-8">
-                      <div class="input-group input-group-sm shadow-sm">
+                      <div class="input-group input-group-sm">
                         <span class="input-group-text bg-light border-end-0"><i
                             class="bi bi-ticket-perforated text-primary"></i></span>
                         <input type="number" class="form-control border-start-0 ps-0" placeholder="Number of Tickets"
@@ -152,7 +152,7 @@
 
                   @if (isBooked) {
                   <div
-                    class="p-2 bg-success bg-opacity-10 border border-success border-opacity-25 rounded-3 small text-dark d-flex gap-2 align-items-start">
+                    class="p-2 bg-success bg-opacity-10 border border-success border-opacity-25 rounded-3 small text-dark d-flex gap-2 align-items-start mt-3">
                     <i class="bi bi-check-circle-fill text-success fs-5 mt-1"></i>
                     <div>
                       <div class="mb-1"><strong>{{ selectedMovie.movieName }}</strong> • {{ selectedShow }}</div>
@@ -280,7 +280,7 @@
               <div class="attemptbtn mt-auto">
                 <button id="btn1" class="btn btn-attempt shadow-xs" (click)="bookSeats()"
                   [disabled]="selectedSeatsCount === 0">
-                  Attempt
+                  Book Seats
                 </button>
               </div>
 

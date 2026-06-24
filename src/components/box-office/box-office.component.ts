@@ -159,7 +159,7 @@ export class BoxOfficeComponent implements OnInit {
     const layout = [
       ['available', 'available', 'available', 'available', 'available', 'available', 'occupied', 'occupied'],
       ['available', 'available', 'available', 'available', 'available', 'available', 'occupied', 'occupied'],
-      ['available', 'available', 'selected', 'selected', 'selected', 'available', 'available', 'available'],
+      ['available', 'available', 'available', 'available', 'available', 'available', 'available', 'available'],
       ['available', 'available', 'available', 'occupied', 'occupied', 'available', 'available', 'available'],
       ['available', 'available', 'available', 'available', 'occupied', 'occupied', 'occupied', 'available']
     ];
