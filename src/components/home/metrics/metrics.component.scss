@@ -38,13 +38,15 @@
 
 .metrics-subtitle {
   font-family: 'Space Mono', monospace;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.85); // Increased from 0.4
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   margin-bottom: 5rem;
   text-align: center;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.9); // Deep shadow for readability
+  
   opacity: 0;
   transform: translateY(10px);
   transition: opacity 1.2s ease, transform 1.2s ease;
@@ -96,15 +98,17 @@
   letter-spacing: -0.04em;
   line-height: 1;
   font-size: clamp(48px, 10vw, 96px);
+  text-shadow: 0 4px 12px rgba(0,0,0,0.8); // Ensure numbers pop against bright spots
 }
 
 .metric-label {
   font-family: 'Space Mono', monospace;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.85); // Significantly brighter
   font-size: 13px;
   margin-top: 1rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.9); // Deep shadow for readability
 
   @media (min-width: 576px) {
     font-size: 14px;
