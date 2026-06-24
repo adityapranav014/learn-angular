@@ -39,6 +39,7 @@ export class NavbarComponent {
     // 4. Wait for the open animation to finish, then trigger the scroll directive
     // take(1) guarantees the subscription dies instantly, preventing memory leaks
     offcanvasRef.shown.pipe(take(1)).subscribe(() => {
+      this.resetMenuScroll();
       this.isOffcanvasReady.set(true);
     });
   }
@@ -50,10 +51,21 @@ export class NavbarComponent {
     if (menuName !== 'main') {
       this.activeSubMenu.set(menuName);
     }
+    this.resetMenuScroll();
   }
 
   goBack() {
     this.activeMenuView.set('main');
+    this.resetMenuScroll();
+  }
+
+  private resetMenuScroll() {
+    if (typeof document !== 'undefined') {
+      const parent = document.querySelector('.offcanvas-body');
+      if (parent) {
+        parent.scrollTop = 0;
+      }
+    }
   }
 
   getSubMenuTitle(): string {
