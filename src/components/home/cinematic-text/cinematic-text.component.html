@@ -1,0 +1,31 @@
+<section class="cinematic-section" aria-label="Framework Philosophy">
+  
+  <!-- ── Autoplay Video Background ─────────────────────────────────── -->
+  <video
+    class="cinematic-video"
+    src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260622_092455_089c54f8-3b03-4966-9df1-e9746063d0ef.mp4"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+    aria-hidden="true">
+  </video>
+
+  <!-- ── Top Gradient Overlay ────────────────────────────────────── -->
+  <div class="top-overlay" aria-hidden="true"></div>
+
+  <!-- ── 3D Text Content Wrapper ──────────────────────────────────── -->
+  <div class="cinematic-content">
+    <div 
+      class="perspective-container"
+      [style.opacity]="opacity()"
+      [style.transform]="'perspective(400px) rotateX(24deg) translateY(' + translateY() + 'px) translateZ(15px)'">
+      
+      <p class="cinematic-paragraph">
+        Architect the future of the modern web. We immerse you in Angular's latest paradigm shifts—from the raw performance of fine-grained Signals to the elegance of the built-in Control Flow. Master standalone ecosystems, deferrable views, and hydration to distill complex systems into clean, production-ready code.
+      </p>
+
+    </div>
+  </div>
+</section>

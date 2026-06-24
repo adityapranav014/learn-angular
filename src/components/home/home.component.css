@@ -1,49 +1,392 @@
+/* --- Redesigned Futuristic Dark Directory Section --- */
+.directory-section {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 6rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.directory-dot-grid {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+    z-index: 0;
+}
+
 .home-shell {
+    position: relative;
+    z-index: 1;
     max-width: 1320px;
 }
 
-.home-card {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+.directory-title {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(24px, 5vw, 42px);
+    color: #ffffff;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
 }
 
-.home-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(17, 24, 39, 0.08) !important;
+.directory-subtitle {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.4);
+    line-height: 1.6;
+    margin: 0;
+
+    @media (min-width: 576px) {
+        font-size: 14px;
+    }
 }
 
-.home-icon-wrap {
-    color: #4b5563;
+.directory-cat-section {
+    margin-bottom: 5rem;
 }
 
-.home-link {
-    color: #374151;
+.directory-cat-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 18px;
+    color: #ffffff;
+    font-weight: 500;
+    margin: 0 0 0.35rem 0;
 }
 
-.home-card:hover .home-link {
-    color: #c026d3;
+.directory-cat-desc {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.4);
+    margin: 0;
 }
 
+.directory-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    padding: 0.2rem 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+}
+
+/* Glassmorphic card design */
+.directory-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    text-decoration: none;
+    display: block;
+}
+
+.directory-card:hover, 
+.directory-card--hovered {
+    background: rgba(255, 255, 255, 0.04);
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+}
+
+.directory-card-body {
+    padding: 2.25rem 2rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* Icons with subtle glows */
+.directory-icon-wrap {
+    width: 48px;
+    height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 1.45rem;
+    margin-bottom: 1.5rem;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.directory-card:hover .directory-icon-wrap {
+    transform: scale(1.08);
+}
+
+.directory-card-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 17px;
+    font-weight: 500;
+    color: #ffffff;
+    margin: 0 0 0.75rem 0;
+}
+
+.directory-card-desc-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.45);
+    line-height: 1.6;
+    margin: 0 0 2rem 0;
+    flex-grow: 1;
+}
+
+/* Link alignment */
+.directory-card-link {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.5);
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.25s ease;
+}
+
+.directory-card:hover .directory-card-link {
+    color: #ffffff;
+}
+
+.link-arrow {
+    transition: transform 0.25s ease;
+}
+
+.directory-card:hover .link-arrow {
+    transform: translateX(4px);
+}
+
+/* Category Accent Styles */
 .accent-primary {
-    background-color: rgba(59, 130, 246, 0.12);
-    color: #2563eb;
+    background-color: rgba(59, 130, 246, 0.08);
+    color: #3b82f6;
+    border: 1px solid rgba(59, 130, 246, 0.12);
+}
+
+.directory-card:hover .accent-primary {
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+    border-color: rgba(59, 130, 246, 0.4);
 }
 
 .accent-success {
-    background-color: rgba(16, 185, 129, 0.12);
-    color: #059669;
+    background-color: rgba(16, 185, 129, 0.08);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.12);
+}
+
+.directory-card:hover .accent-success {
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+    border-color: rgba(16, 185, 129, 0.4);
 }
 
 .accent-warning {
-    background-color: rgba(245, 158, 11, 0.16);
-    color: #d97706;
+    background-color: rgba(245, 158, 11, 0.08);
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.12);
+}
+
+.directory-card:hover .accent-warning {
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+    border-color: rgba(245, 158, 11, 0.4);
 }
 
 .accent-brand {
-    background-color: rgba(246, 55, 227, 0.12);
+    background-color: rgba(246, 55, 227, 0.08);
     color: #f637e3;
+    border: 1px solid rgba(246, 55, 227, 0.12);
+}
+
+.directory-card:hover .accent-brand {
+    box-shadow: 0 0 15px rgba(246, 55, 227, 0.3);
+    border-color: rgba(246, 55, 227, 0.4);
 }
 
 .accent-indigo {
-    background-color: rgba(99, 102, 241, 0.12);
-    color: #4f46e5;
+    background-color: rgba(99, 102, 241, 0.08);
+    color: #6366f1;
+    border: 1px solid rgba(99, 102, 241, 0.12);
+}
+
+.directory-card:hover .accent-indigo {
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+    border-color: rgba(99, 102, 241, 0.4);
+}
+
+/* --- Dashboard Layout Additions --- */
+.directory-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    z-index: 0;
+    filter: brightness(0.22) contrast(1.1) saturate(0.8);
+}
+
+.directory-watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Anton SC', sans-serif;
+    font-size: clamp(80px, 20vw, 350px);
+    text-transform: uppercase;
+    letter-spacing: -2px;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.04;
+    background: radial-gradient(circle, rgba(142, 127, 148, 0) 0%, #8E7F94 70%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
+.directory-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* Category Sidebar */
+.category-sidebar {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+    
+    @media (min-width: 992px) {
+        flex-direction: column;
+        overflow-x: visible;
+        padding-bottom: 0;
+        position: sticky;
+        top: 100px;
+    }
+}
+
+.category-sidebar::-webkit-scrollbar {
+    height: 4px;
+}
+.category-sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+.category-tab {
+    display: flex;
+    align-items: center;
+    padding: 1.25rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 260px;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    
+    @media (min-width: 992px) {
+        min-width: 100%;
+    }
+}
+
+.category-tab:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.category-tab.active {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.category-tab-indicator {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: rgba(255, 255, 255, 0.5);
+    transform: scaleY(0);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    transform-origin: center;
+}
+
+.category-tab.active .category-tab-indicator {
+    transform: scaleY(1);
+    background: #ffffff;
+}
+
+.category-tab:nth-child(1).active .category-tab-indicator { background: #3b82f6; box-shadow: 0 0 10px #3b82f6; }
+.category-tab:nth-child(2).active .category-tab-indicator { background: #f637e3; box-shadow: 0 0 10px #f637e3; }
+.category-tab:nth-child(3).active .category-tab-indicator { background: #6366f1; box-shadow: 0 0 10px #6366f1; }
+
+.category-tab-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-left: 0.5rem;
+}
+
+.category-tab-number {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 0.1em;
+}
+
+.category-tab-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 15px;
+    color: #ffffff;
+    font-weight: 500;
+    margin: 0;
+    white-space: nowrap;
+}
+
+.category-tab-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    align-self: flex-start;
+    margin-top: 0.25rem;
+}
+
+/* Card Grid Animations */
+.cards-grid {
+    position: relative;
+}
+
+@keyframes fadeSlideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card-entrance {
+    animation: fadeSlideUp 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+    animation-delay: var(--stagger-delay, 0s);
+    opacity: 0;
+}
+
+.directory-card {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
 }

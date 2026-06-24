@@ -1,0 +1,68 @@
+<section
+  class="hero-section"
+  [class.hero-entrance-done]="entranceComplete()"
+  aria-label="Welcome to Angular Aditya">
+
+  <!-- ── Background Video (Mouse-Scrubbed) ────────────────────────── -->
+  <video
+    #heroVideo
+    class="hero-video"
+    src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260622_083515_290e5a10-0b95-41af-a5e2-32b6389baa4d.mp4"
+    muted
+    playsinline
+    preload="auto"
+    aria-hidden="true">
+  </video>
+
+  <!-- ── Dot Grid Overlay ─────────────────────────────────────────── -->
+  <div class="hero-dot-grid" aria-hidden="true"></div>
+
+  <!-- ── Large Watermark Text ──────────────────────────────────────── -->
+  <div class="hero-watermark" aria-hidden="true">ANGULAR</div>
+
+  <!-- ── Hero Content Layer ───────────────────────────────────────── -->
+  <div class="hero-content">
+    
+    <!-- Spacer pushes content to the bottom -->
+    <div class="hero-spacer"></div>
+
+    <!-- ── Bottom Row ──────────────────────────────────────────────── -->
+    <div class="hero-bottom-row">
+      
+      <!-- Left Column -->
+      <div class="hero-col-left">
+        <h1 class="hero-heading">
+          <app-scramble-in [text]="'Learn'" [delay]="200" [triggered]="triggered()"></app-scramble-in>
+          <br>
+          <app-scramble-in [text]="'Angular'" [delay]="500" [triggered]="triggered()"></app-scramble-in>
+        </h1>
+        
+        <p class="hero-desc">
+          Behind every flawless interface is a story of meticulous architecture. 
+          We strip away the noise and invite you into the very core of Angular. 
+          Here, you won't just write code—you will orchestrate reactivity, 
+          command state, and sculpt the modern web.
+        </p>
+      </div>
+
+      <!-- Right Column -->
+      <div class="hero-col-right">
+        <h1 class="hero-heading hero-heading--right">
+          <app-scramble-in [text]="'The'" [delay]="700" [triggered]="triggered()"></app-scramble-in>
+          <br>
+          <app-scramble-in [text]="'Framework'" [delay]="1000" [triggered]="triggered()"></app-scramble-in>
+        </h1>
+      </div>
+
+    </div>
+
+    <!-- ── Interactive Scroll Indicator ────────────────────────────── -->
+    <div class="hero-scroll-indicator" (click)="scrollDown()">
+      <div class="mouse-icon">
+        <div class="wheel-icon"></div>
+      </div>
+      <span class="scroll-text">Begin The Journey</span>
+    </div>
+
+  </div>
+</section>

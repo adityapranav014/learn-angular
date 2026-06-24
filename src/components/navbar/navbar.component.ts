@@ -20,6 +20,10 @@ export class NavbarComponent {
   private offcanvasService = inject(NgbOffcanvas);
   public router = inject(Router);
 
+  isHome(): boolean {
+    return this.router.url === '/';
+  }
+
   // --- Modern State Management (Signals) ---
   activeMenuView = signal<'main' | 'core-concepts' | 'logical-scenarios' | 'study-notes'>('main');
   activeSubMenu = signal<'core-concepts' | 'logical-scenarios' | 'study-notes' | null>(null);

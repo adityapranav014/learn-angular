@@ -15,13 +15,32 @@ interface HomeLinkSection {
   items: HomeLinkItem[];
 }
 
+import { HeroComponent } from '../hero/hero.component';
+import { CinematicTextComponent } from './cinematic-text/cinematic-text.component';
+import { MetricsComponent } from './metrics/metrics.component';
+import { TechnologyComponent } from './technology/technology.component';
+import { ScrambleTextComponent } from '../scramble-text/scramble-text.component';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  imports: [RouterLink]
+  imports: [
+    RouterLink, 
+    HeroComponent,
+    CinematicTextComponent,
+    MetricsComponent,
+    TechnologyComponent,
+    ScrambleTextComponent
+  ]
 })
 export class HomeComponent {
+  hoveredCard: string | null = null;
+  selectedCategoryIndex: number = 0;
+
+  selectCategory(index: number) {
+    this.selectedCategoryIndex = index;
+  }
   sections: HomeLinkSection[] = [
     {
       title: 'Core Concepts',

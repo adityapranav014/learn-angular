@@ -1,0 +1,79 @@
+<section class="technology-section" aria-label="Framework Features">
+  
+  <!-- ── Autoplay Video Background ─────────────────────────────────── -->
+  <video
+    class="technology-video"
+    src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260622_095750_32a52ce0-2005-45c9-9093-41f03fde9530.mp4"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+    aria-hidden="true">
+  </video>
+
+  <!-- ── Grid Content Wrapper ────────────────────────────────────── -->
+  <div class="technology-content">
+    
+    <!-- Top Area -->
+    <div class="tech-top-area">
+      <h2 
+        class="tech-heading"
+        [class.animate-fade-up]="inView()">
+        Modern<br>Architecture
+      </h2>
+      
+      <p 
+        class="tech-summary"
+        [class.animate-fade-up]="inView()"
+        style="--stagger-delay: 0.2s">
+        The platform breaks down compiler pipelines, reactive signals, and routing mechanisms in real-time so you can master them instantly.
+      </p>
+    </div>
+
+    <!-- Spacer -->
+    <div class="tech-spacer"></div>
+
+    <!-- Bottom Grid -->
+    <div class="tech-bottom-grid">
+      
+      <!-- Tech Item 1 -->
+      <div 
+        class="tech-card"
+        [class.animate-fade-up]="inView()"
+        style="--stagger-delay: 0.3s">
+        <h3 class="tech-card-title">Signal Reactivity</h3>
+        <p class="tech-card-desc">Learn how Angular's fine-grained reactivity tracks dependencies automatically.</p>
+      </div>
+
+      <!-- Tech Item 2 -->
+      <div 
+        class="tech-card"
+        [class.animate-fade-up]="inView()"
+        style="--stagger-delay: 0.4s">
+        <h3 class="tech-card-title">Control Flow</h3>
+        <p class="tech-card-desc">Master modern &#64;if and &#64;for blocks for ultra-performant template rendering.</p>
+      </div>
+
+      <!-- Tech Item 3 -->
+      <div 
+        class="tech-card"
+        [class.animate-fade-up]="inView()"
+        style="--stagger-delay: 0.5s">
+        <h3 class="tech-card-title">Lazy Loading</h3>
+        <p class="tech-card-desc">Optimize bundle size using defer blocks and route-level code splitting.</p>
+      </div>
+
+      <!-- Tech Item 4 -->
+      <div 
+        class="tech-card"
+        [class.animate-fade-up]="inView()"
+        style="--stagger-delay: 0.6s">
+        <h3 class="tech-card-title">Dependency Injection</h3>
+        <p class="tech-card-desc">Understand hierarchical injection contexts and token-based resolution.</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>

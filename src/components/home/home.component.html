@@ -1,44 +1,101 @@
-<div class="container py-5 home-shell">
-    <div class="row mb-4">
-        <div class="col-12 text-start">
-            <h2 class="fw-bolder text-dark mb-2 tracking-tight">Angular Mastery Directory</h2>
-            <p class="text-muted mb-0">Browse every module currently available in the app from a single index.</p>
-        </div>
+<app-hero></app-hero>
+<app-cinematic-text></app-cinematic-text>
+<app-metrics></app-metrics>
+<app-technology></app-technology>
+
+<div class="directory-section" aria-label="Angular Mastery Labs Directory">
+  <!-- ── Background Video ─────────────────────────────────────────── -->
+  <video
+    class="directory-video"
+    src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260508_064209_0cb7d815-ff61-4caa-a6d5-bbff145ab272.mp4"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+    aria-hidden="true">
+  </video>
+
+  <!-- Dot Grid Overlay -->
+  <div class="directory-dot-grid" aria-hidden="true"></div>
+
+  <div class="container py-5 home-shell directory-content">
+    
+    <div class="row mb-5">
+      <div class="col-12 text-start">
+        <h2 class="directory-title">Angular Mastery Directory</h2>
+        <p class="directory-subtitle">Browse every module currently available in the app from a single index.</p>
+      </div>
     </div>
 
-    @for (section of sections; track section.title) {
-    <section class="mb-5">
-        <div class="d-flex align-items-center justify-content-between mb-3 px-1">
-            <div>
-                <h4 class="fw-bold text-dark mb-1">{{ section.title }}</h4>
-                <p class="text-muted small mb-0">{{ section.subtitle }}</p>
+    <div class="row layout-dashboard">
+      <!-- ── Left Pane: Category Selector ────────────────────────────── -->
+      <div class="col-12 col-lg-3 mb-4 mb-lg-0">
+        <div class="category-sidebar">
+          @for (section of sections; track section.title; let i = $index) {
+          <div 
+            class="category-tab"
+            [class.active]="selectedCategoryIndex === i"
+            (click)="selectCategory(i)">
+            
+            <div class="category-tab-indicator"></div>
+            
+            <div class="category-tab-content">
+              <span class="category-tab-number">0{{ i + 1 }} //</span>
+              <h4 class="category-tab-title">{{ section.title }}</h4>
+              <span class="category-tab-badge">{{ section.items.length }} LABS</span>
             </div>
-            <span class="badge bg-light text-secondary border fw-semibold">{{ section.items.length }} pages</span>
+            
+          </div>
+          }
+        </div>
+      </div>
+
+      <!-- ── Right Pane: Active Category Cards ───────────────────────── -->
+      <div class="col-12 col-lg-9">
+        <div class="active-category-header mb-4 pb-2 border-bottom border-secondary border-opacity-10 px-1">
+          <div>
+            <h4 class="directory-cat-title">{{ sections[selectedCategoryIndex].title }}</h4>
+            <p class="directory-cat-desc">{{ sections[selectedCategoryIndex].subtitle }}</p>
+          </div>
         </div>
 
-        <div class="row g-3">
-            @for (item of section.items; track item.path) {
-            <div class="col-12 col-md-6 col-xl-4">
-                <div class="card h-100 border-0 shadow-sm rounded-3 position-relative bg-white home-card"
-                    style="cursor: pointer;">
-                    <div class="card-body p-4 d-flex flex-column">
-                        <div class="home-icon-wrap d-inline-flex align-items-center justify-content-center rounded-3 mb-3"
-                            [class]="item.accentClass" style="width: 50px; height: 50px;">
-                            <i class="bi fs-4" [class]="item.icon"></i>
-                        </div>
-
-                        <h5 class="fw-bold text-dark mb-2">{{ item.title }}</h5>
-                        <p class="text-muted small mb-4 flex-grow-1">{{ item.description }}</p>
-
-                        <a [routerLink]="item.path"
-                            class="home-link fw-bold text-decoration-none stretched-link d-flex align-items-center">
-                            Open Page <i class="bi bi-arrow-right ms-2"></i>
-                        </a>
-                    </div>
+        <div class="row g-4 cards-grid">
+          @for (item of sections[selectedCategoryIndex].items; track item.path) {
+          <div class="col-12 col-md-6 col-xl-4 card-entrance" [style.--stagger-delay]="($index * 0.1) + 's'">
+            <div 
+              class="directory-card h-100"
+              (mouseenter)="hoveredCard = item.path"
+              (mouseleave)="hoveredCard = null"
+              [class.directory-card--hovered]="hoveredCard === item.path"
+              [routerLink]="item.path">
+              
+              <div class="directory-card-body">
+                
+                <!-- Icon with custom halo / border glow -->
+                <div class="directory-icon-wrap" [class]="item.accentClass">
+                  <i class="bi" [class]="item.icon"></i>
                 </div>
+
+                <h5 class="directory-card-title">{{ item.title }}</h5>
+                <p class="directory-card-desc-text">{{ item.description }}</p>
+
+                <!-- Futuristic animated arrow link -->
+                <div class="directory-card-link">
+                  <app-scramble-text 
+                    [text]="'Launch Lab'" 
+                    [isHovered]="hoveredCard === item.path">
+                  </app-scramble-text>
+                  <i class="bi bi-arrow-right ms-2 link-arrow"></i>
+                </div>
+
+              </div>
             </div>
-            }
+          </div>
+          }
         </div>
-    </section>
-    }
+      </div>
+    </div>
+
+  </div>
 </div>

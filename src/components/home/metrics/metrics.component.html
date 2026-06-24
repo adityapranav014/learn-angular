@@ -1,0 +1,56 @@
+<section class="metrics-section" aria-label="Performance Metrics">
+  
+  <!-- ── Autoplay Video Background ─────────────────────────────────── -->
+  <video
+    class="metrics-video"
+    src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260622_095810_ecea3dd2-fc5e-4e41-8696-4219290b6589.mp4"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+    aria-hidden="true">
+  </video>
+
+  <!-- ── Grid Content Wrapper ────────────────────────────────────── -->
+  <div class="metrics-content">
+    
+    <span 
+      class="metrics-subtitle"
+      [class.animate-fade-in]="inView()">
+      The Path to Mastery
+    </span>
+
+    <div class="metrics-grid">
+      
+      <!-- Metric 1 -->
+      <div 
+        class="metric-card" 
+        [class.animate-fade-up]="inView()" 
+        style="--stagger-delay: 0.15s">
+        <span class="metric-value">3</span>
+        <span class="metric-label">Foundational Pillars</span>
+      </div>
+
+      <!-- Metric 2 -->
+      <div 
+        class="metric-card" 
+        [class.animate-fade-up]="inView()" 
+        style="--stagger-delay: 0.3s">
+        <span class="metric-value">6</span>
+        <span class="metric-label">Architecture Tracks</span>
+      </div>
+
+      <!-- Metric 3 -->
+      <div 
+        class="metric-card" 
+        [class.animate-fade-up]="inView()" 
+        style="--stagger-delay: 0.45s">
+        <span class="metric-value">12</span>
+        <span class="metric-label">Immersive Simulations</span>
+      </div>
+
+    </div>
+
+  </div>
+</section>

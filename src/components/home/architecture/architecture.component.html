@@ -1,0 +1,54 @@
+<section class="arch-section" aria-label="Learning Architecture">
+  <div class="arch-content">
+    
+    <!-- Heading Block -->
+    <div 
+      class="arch-heading-block"
+      [class.animate-fade-up]="inView()">
+      
+      <span class="arch-subtitle">Architecture</span>
+      
+      <h2 class="arch-heading">Three layers.<br>Zero friction.</h2>
+      
+      <p class="arch-desc">
+        Learn templates, master reactivity, and deploy clean enterprise architectures with confidence.
+      </p>
+
+    </div>
+
+    <!-- Stacked Layer Cards -->
+    <div 
+      class="arch-cards"
+      [class.animate-fade-in]="inView()">
+      
+      <!-- Card 1 -->
+      <div 
+        class="arch-card"
+        [class.animate-fade-up]="inView()"
+        style="--stagger-delay: 0.2s">
+        <span class="arch-card-left">Layer 1</span>
+        <span class="arch-card-right">Templates &amp; Directives</span>
+      </div>
+
+      <!-- Card 2 -->
+      <div 
+        class="arch-card"
+        [class.animate-fade-up]="inView()"
+        style="--stagger-delay: 0.4s">
+        <span class="arch-card-left">Layer 2</span>
+        <span class="arch-card-right">Signals &amp; Reactivity</span>
+      </div>
+
+      <!-- Card 3 -->
+      <div 
+        class="arch-card"
+        [class.animate-fade-up]="inView()"
+        style="--stagger-delay: 0.6s">
+        <span class="arch-card-left">Layer 3</span>
+        <span class="arch-card-right">Services &amp; DI</span>
+      </div>
+
+    </div>
+
+  </div>
+</section>

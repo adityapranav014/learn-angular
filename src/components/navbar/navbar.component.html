@@ -1,4 +1,10 @@
-<nav class="navbar navbar-light bg-white border-bottom py-2 mb-4 sticky-top">
+<nav class="navbar navbar-light py-2 transition-all"
+     [class.bg-white]="!isHome()"
+     [class.border-bottom]="!isHome()"
+     [class.mb-4]="!isHome()"
+     [class.navbar-home]="isHome()"
+     [class.sticky-top]="!isHome()"
+     [class.absolute-top]="isHome()">
     <div class="container-fluid px-3 d-flex align-items-center justify-content-start gap-3">
         <button class="custom-icon-btn" type="button" (click)="openSidebar(content)"
             aria-label="Open Menu" ngbTooltip="Menu" placement="bottom">

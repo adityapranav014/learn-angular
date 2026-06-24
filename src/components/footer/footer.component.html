@@ -1,7 +1,40 @@
-<footer class="gradient-animated text-white py-2 mt-auto">
+@if (isHome()) {
+  <footer class="cinematic-footer" aria-label="Footer">
+    <div class="footer-layout">
+      <!-- Left Column: Video -->
+      <div class="footer-col-video">
+        <video
+          class="footer-video"
+          src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260622_080203_fd7f4f85-3a86-4837-8192-85e7bfe68e75.mp4"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="auto"
+          aria-hidden="true">
+        </video>
+      </div>
+
+      <!-- Right Column: Info -->
+      <div class="footer-col-info">
+        <div class="footer-info-top">
+          <div class="footer-brand">
+            <span class="footer-brand-name" style="font-size: 18px; color: #fff;">Master Angular</span>
+          </div>
+          <p class="footer-brand-desc" style="color: rgba(255, 255, 255, 0.7); font-size: 15px;">
+            Stop writing boilerplate and start engineering the web. Dive deep into reactive programming, embrace strict type safety, and transform yourself into an elite frontend architect. The journey to excellence starts with a single component.
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+}
+
+<!-- Gradient footer rendered universally on ALL pages -->
+<footer class="gradient-animated text-white py-2 w-100 mt-auto">
   <div class="container text-center">
     <small class="mb-0">
-      © {{ currentYear }} Copyright: <a href="https://www.aditya-pranav.com/" target="_blank" class="text-white text-decoration-none custom-footer-link">Aditya Pranav</a>
+      © {{ currentYear }} <a href="https://www.aditya-pranav.com/" target="_blank" rel="noopener noreferrer" class="text-white text-decoration-none custom-footer-link">Aditya Pranav</a>
     </small>
   </div>
 </footer>

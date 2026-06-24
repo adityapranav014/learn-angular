@@ -15,8 +15,13 @@
     min-height: 0;
     margin-top: 0 !important;
     padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding-bottom: 0;
     overflow: auto;
+
+    &.home-main {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
 }
 
 /* Mobile: release fixed-height shell so content scrolls naturally */
@@ -34,4 +39,12 @@
     .app-main {
         overflow: visible;
     }
+}
+
+.absolute-top {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
 }
