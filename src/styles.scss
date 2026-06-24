@@ -545,3 +545,40 @@
   fill: #1e3a8a !important;
   font-weight: 500 !important;
 }
+
+/* ==========================================================================
+   Premium Swap/Exchange Stations Button
+   ========================================================================== */
+.custom-swap-btn {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  background-color: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04) !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.custom-swap-btn:hover {
+  border-color: #fcc8f8 !important;
+  background-color: #fdf4ff !important;
+  transform: scale(1.08) rotate(180deg) !important;
+  box-shadow: 0 4px 12px rgba(246, 55, 227, 0.1) !important;
+}
+
+.custom-swap-btn:hover i {
+  color: #F637E3 !important;
+}
+
+.custom-swap-btn:active {
+  transform: scale(0.94) rotate(180deg) !important;
+}
+
+.custom-swap-btn i {
+  font-size: 0.85rem !important;
+  transition: color 0.25s ease !important;
+}
