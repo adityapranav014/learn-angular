@@ -459,3 +459,30 @@ $focus-hdr: 3.5rem;
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
+
+/* Topic fullscreen overlay matching Code Example */
+.topic-fullscreen {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 9999 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff !important;
+
+  .card-header {
+    border-radius: 0 !important;
+    border-bottom: 1px solid #e5e7eb !important;
+  }
+
+  .card-body {
+    flex: 1 1 auto !important;
+    max-height: calc(100vh - 4rem) !important;
+    height: 100% !important;
+    overflow-y: auto !important;
+  }
+}

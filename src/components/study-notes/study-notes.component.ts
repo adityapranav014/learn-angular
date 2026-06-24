@@ -1,7 +1,7 @@
 import { Component, inject, signal, computed, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { NgbCarousel, NgbSlide, NgbSlideEvent } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarousel, NgbSlide, NgbSlideEvent, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { STUDY_NOTES, StudyNote } from '../../data/study-notes';
 import { CodeViewerComponent } from '../code-viewer/code-viewer.component';
 import { MermaidViewerComponent } from '../mermaid-viewer/mermaid-viewer.component';
@@ -10,7 +10,7 @@ import { MermaidViewerComponent } from '../mermaid-viewer/mermaid-viewer.compone
   selector: 'app-study-notes',
   templateUrl: './study-notes.component.html',
   styleUrls: ['./study-notes.component.scss'],
-  imports: [CommonModule, NgbCarousel, NgbSlide, CodeViewerComponent, MermaidViewerComponent]
+  imports: [CommonModule, NgbCarousel, NgbSlide, NgbTooltip, CodeViewerComponent, MermaidViewerComponent]
 })
 export class StudyNotesComponent {
   private route = inject(ActivatedRoute);
@@ -21,12 +21,24 @@ export class StudyNotesComponent {
   isFocusedMode = signal(true);
   splitPercent = signal(50);
   isResizing = false;
+  isTopicFullscreen = signal(false);
 
   private resizeStartX = 0;
   private resizeStartPercent = 50;
 
   @ViewChild('carousel') carousel?: NgbCarousel;
   @ViewChild('focusPanels') focusPanelsRef?: ElementRef<HTMLElement>;
+
+  toggleTopicFullscreen() {
+    this.isTopicFullscreen.update(f => !f);
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape() {
+    if (this.isTopicFullscreen()) {
+      this.isTopicFullscreen.set(false);
+    }
+  }
 
   availableVersions = computed(() => this.activeTopic().versions);
 
