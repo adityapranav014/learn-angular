@@ -58,7 +58,7 @@
           <!-- Top Dynamic Tabs Header -->
           <div class="row mb-4">
             <div class="col-12">
-              <div class="d-flex flex-wrap gap-2 p-1 bg-light rounded-3 shadow-xs">
+              <div class="d-flex flex-wrap gap-2 p-1 bg-light rounded-3 shadow-xs polymorphic-tabs">
                 @for (tab of tabs; track tab) {
                 <button class="btn tab-btn px-4 py-2 border-0 fw-bold transition-all text-secondary"
                   [class.active-tab]="activeTab === tab" (click)="selectTab(tab)">
