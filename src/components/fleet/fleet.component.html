@@ -127,7 +127,7 @@
 
             <!-- Booking Form Column -->
             <div class="col-12 col-md-6">
-              <div class="p-3 rounded-3 h-100">
+              <div class="p-3 bg-light rounded-3 h-100 border">
                 <div class="text-center mb-3 border-bottom pb-2">
                   <h6 class="fw-bold text-dark mb-0"><i class="bi bi-calendar-check me-1 text-success"></i>Booking Form
                   </h6>
@@ -135,7 +135,7 @@
 
                 <!-- Booking Inputs -->
                 <div class="row g-2 mb-3">
-                  <div class="col-6">
+                  <div class="col-12 col-sm-6">
                     <select id="dpdlCar" class="form-select form-select-sm" [(ngModel)]="selectedCarName">
                       <option value="">Select Car</option>
                       @for (car of cars; track car.name) {
@@ -144,7 +144,7 @@
                     </select>
                   </div>
 
-                  <div class="col-6">
+                  <div class="col-12 col-sm-6">
                     <select id="type" class="form-select form-select-sm" [(ngModel)]="rentType">
                       <option value="">Rent Type</option>
                       <option value="Per Day">Per Day</option>
@@ -153,7 +153,7 @@
                   </div>
 
                   <!-- Conditional Rent Inputs -->
-                  <div class="col-4">
+                  <div class="col-12 col-sm-4">
                     @if (rentType === 'Per Day') {
                     <input type="number" class="form-control form-control-sm perDay animate__animated animate__fadeIn"
                       id="perQuantityDay" placeholder="Days" [(ngModel)]="duration">
@@ -165,12 +165,12 @@
                     }
                   </div>
 
-                  <div class="col-4">
+                  <div class="col-12 col-sm-4">
                     <input type="number" class="form-control form-control-sm" id="txtQty" placeholder="Cars Qty"
                       [(ngModel)]="quantity">
                   </div>
 
-                  <div class="col-4">
+                  <div class="col-12 col-sm-4">
                     <button class="btn btn-sm btn-success w-100 fw-bold" id="btnAddCars" (click)="addBookingItem()">
                       <i class="bi bi-cart-plus me-1"></i>Add
                     </button>
@@ -220,12 +220,12 @@
                 <div class="row g-2">
                   <div class="col-6">
                     <button class="btn btn-sm btn-outline-danger w-100 fw-bold" id="btnClear" (click)="clearBookings()">
-                      <i class="bi bi-x-circle me-1"></i>Clear Sheet
+                      <i class="bi bi-x-circle me-1"></i>Clear
                     </button>
                   </div>
                   <div class="col-6">
                     <button class="btn btn-sm btn-success w-100 fw-bold" id="btnCal" (click)="calculateBill()">
-                      <i class="bi bi-receipt me-1"></i>Calculate Bill
+                      <i class="bi bi-receipt me-1"></i>Get Bill
                     </button>
                   </div>
                 </div>
