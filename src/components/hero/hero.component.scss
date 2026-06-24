@@ -136,9 +136,7 @@
 }
 
 .hero-col-right {
-  @media (min-width: 768px) {
-    text-align: right;
-  }
+  text-align: right;
 }
 
 // Typographical details
@@ -161,11 +159,7 @@
 }
 
 .hero-heading--right {
-  text-align: left;
-  
-  @media (min-width: 768px) {
-    text-align: right;
-  }
+  text-align: right;
 }
 
 .hero-desc {
