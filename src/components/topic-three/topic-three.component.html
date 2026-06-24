@@ -38,8 +38,8 @@
 
     <!-- Theory -->
     <ng-template ngbSlide id="task-1">
-      <div class="row">
-        <div class="col-12">
+      <div class="row g-4">
+        <div class="col-lg-8 col-md-12">
           <div ngbAccordion class="shadow-sm">
             <div ngbAccordionItem="difference-panel" [collapsed]="false">
 
@@ -98,6 +98,9 @@
             </div>
           </div>
         </div>
+        <div class="col-lg-4 col-md-12">
+          <app-code-viewer [codeFiles]="codeFiles1" class="h-100"></app-code-viewer>
+        </div>
       </div>
     </ng-template>
 
@@ -145,33 +148,7 @@
 
         <!-- Code Hint Column -->
         <div class="col-lg-4 col-md-12">
-          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
-            <div
-              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
-              <h5 class="card-title text-light mb-0">
-                <i class="bi bi-code-slash me-2"></i>Code Hint
-              </h5>
-            </div>
-            <div class="card-body">
-
-              <div class="mb-3">
-                <p class="small text-secondary fw-bold mb-2 tracking-wider">Legacy Syntax ([ngClass])</p>
-                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Requires importing NgClass --&gt;
-&lt;div [ngClass]="dynamicCssClass"&gt;
-  Dynamic Styles
-&lt;/div&gt;</code></pre>
-              </div>
-
-              <div>
-                <p class="small text-warning fw-bold mb-2 tracking-wider">Modern Syntax ([class])</p>
-                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Native binding, automatically merges classes --&gt;
-&lt;div [class]="dynamicCssClass"&gt;
-  Dynamic Styles
-&lt;/div&gt;</code></pre>
-              </div>
-
-            </div>
-          </div>
+          <app-code-viewer [codeFiles]="codeFiles2" class="h-100"></app-code-viewer>
         </div>
 
       </div>
@@ -226,37 +203,7 @@
 
         <!-- Code Hint Column -->
         <div class="col-lg-4 col-md-12">
-          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
-            <div
-              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
-              <h5 class="card-title text-light mb-0">
-                <i class="bi bi-code-slash me-2"></i>Code Hint
-              </h5>
-            </div>
-            <div class="card-body">
-
-              <div class="mb-3">
-                <p class="small text-secondary fw-bold mb-2 tracking-wider">String Toggle (Task Method)</p>
-                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Swapping the whole string --&gt;
-&lt;div [class]="toggleBgClass"&gt;...&lt;/div&gt;
-
-&lt;button (click)="toggle()"&gt;Toggle&lt;/button&gt;</code></pre>
-              </div>
-
-              <div>
-                <p class="small text-warning fw-bold mb-2 tracking-wider">Boolean Toggle (Industry Standard)</p>
-                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Using a boolean: isSuccess = true --&gt;
-&lt;div [class.bg-success]="isSuccess" 
-     [class.bg-danger]="!isSuccess"&gt;
-&lt;/div&gt;
-
-&lt;button (click)="isSuccess = !isSuccess"&gt;
-  Toggle
-&lt;/button&gt;</code></pre>
-              </div>
-
-            </div>
-          </div>
+          <app-code-viewer [codeFiles]="codeFiles3" class="h-100"></app-code-viewer>
         </div>
       </div>
     </ng-template>
@@ -330,37 +277,7 @@
 
         <!-- Code Hint Column -->
         <div class="col-lg-4 col-md-12">
-          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
-            <div
-              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
-              <h5 class="card-title text-light mb-0">
-                <i class="bi bi-code-slash me-2"></i>Code Hint
-              </h5>
-            </div>
-            <div class="card-body">
-
-              <div class="mb-3">
-                <p class="small text-secondary fw-bold mb-2 tracking-wider">Dynamic String Binding</p>
-                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Swaps the entire class string --&gt;
-&lt;div [class]="activeColor"&gt;Div - 1&lt;/div&gt;
-
-&lt;button (click)="changeColor('bg-success')"&gt;
-  Success
-&lt;/button&gt;</code></pre>
-              </div>
-
-              <div>
-                <p class="small text-warning fw-bold mb-2 tracking-wider">Dynamic Boolean Binding</p>
-                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Toggles specific classes independently --&gt;
-&lt;button 
-  [class.btn-success]="selectedLang === lang"
-  [class.btn-secondary]="selectedLang !== lang"&gt;
-  {{ '{{' }} lang {{ '}}' }}
-&lt;/button&gt;</code></pre>
-              </div>
-
-            </div>
-          </div>
+          <app-code-viewer [codeFiles]="codeFiles4" class="h-100"></app-code-viewer>
         </div>
 
       </div>
@@ -446,36 +363,7 @@
 
         <!-- Code Hint Column -->
         <div class="col-lg-4 col-md-12">
-          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
-            <div
-              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
-              <h5 class="card-title text-light mb-0">
-                <i class="bi bi-code-slash me-2"></i>Code Hint
-              </h5>
-            </div>
-            <div class="card-body">
-
-              <div class="mb-3">
-                <p class="small text-secondary fw-bold mb-2 tracking-wider">Dynamic Layout ([class])</p>
-                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Swaps grid classes smoothly --&gt;
-&lt;div [class.col-12]="!isSidePanelOpen" 
-     [class.col-7]="isSidePanelOpen"&gt;
-  Main Div
-&lt;/div&gt;</code></pre>
-              </div>
-
-              <div>
-                <p class="small text-warning fw-bold mb-2 tracking-wider">Conditional Rendering (&#64;if)</p>
-                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Renders the side panel --&gt;
-&#64;if (isSidePanelOpen) &#123;
-  &lt;div class="col-5"&gt;
-    Side Div
-  &lt;/div&gt;
-&#125;</code></pre>
-              </div>
-
-            </div>
-          </div>
+          <app-code-viewer [codeFiles]="codeFiles5" class="h-100"></app-code-viewer>
         </div>
       </div>
     </ng-template>
@@ -549,36 +437,7 @@
 
         <!-- Code Hint Column -->
         <div class="col-lg-4 col-md-12">
-          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
-            <div
-              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
-              <h5 class="card-title text-light mb-0">
-                <i class="bi bi-code-slash me-2"></i>Code Hint
-              </h5>
-            </div>
-            <div class="card-body">
-
-              <div class="mb-3">
-                <p class="small text-secondary fw-bold mb-2 tracking-wider">Dynamic Row Highlight</p>
-                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>&lt;tr 
-  [class.table-info]="selectedStudId === stud.studId"
-  (click)="selectStudent(stud.studId)"&gt;
-  ...
-&lt;/tr&gt;</code></pre>
-              </div>
-
-              <div>
-                <p class="small text-info fw-bold mb-2 tracking-wider">State Management (TS)</p>
-                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>// Keeps track of ONE active item
-selectedStudId: number | null = null;
-
-selectStudent(id: number) &#123;
-  this.selectedStudId = id;
-&#125;</code></pre>
-              </div>
-
-            </div>
-          </div>
+          <app-code-viewer [codeFiles]="codeFiles6" class="h-100"></app-code-viewer>
         </div>
 
       </div>
@@ -669,35 +528,7 @@ selectStudent(id: number) &#123;
 
         <!-- Code Hint Column -->
         <div class="col-lg-4 col-md-12">
-          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
-            <div
-              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
-              <h5 class="card-title text-light mb-0">
-                <i class="bi bi-code-slash me-2"></i>Code Hint
-              </h5>
-            </div>
-            <div class="card-body">
-
-              <div class="mb-3">
-                <p class="small text-secondary fw-bold mb-2 tracking-wider">Legacy Syntax ([ngStyle])</p>
-                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Requires object syntax & string concat --&gt;
-&lt;div [ngStyle]="&#123; 
-  'width': width + 'px', 
-  'border-radius': radius + 'px' 
-&#125;"&gt;&lt;/div&gt;</code></pre>
-              </div>
-
-              <div>
-                <p class="small text-warning fw-bold mb-2 tracking-wider">Modern Syntax ([style.prop])</p>
-                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Native binding, automatically adds 'px' --&gt;
-&lt;div [style.width.px]="width"
-     [style.border-radius.px]="radius"
-     [style.background-color]="bgColor"&gt;
-&lt;/div&gt;</code></pre>
-              </div>
-
-            </div>
-          </div>
+          <app-code-viewer [codeFiles]="codeFiles7" class="h-100"></app-code-viewer>
         </div>
 
       </div>
@@ -759,33 +590,7 @@ selectStudent(id: number) &#123;
 
         <!-- Code Hint Column -->
         <div class="col-lg-4 col-md-12">
-          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
-            <div
-              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
-              <h5 class="card-title text-light mb-0">
-                <i class="bi bi-code-slash me-2"></i>Code Hint
-              </h5>
-            </div>
-            <div class="card-body">
-
-              <div class="mb-3">
-                <p class="small text-secondary fw-bold mb-2 tracking-wider">Legacy Syntax ([ngStyle])</p>
-                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Required string concatenation --&gt;
-&lt;div class="progress-bar" 
-     [ngStyle]="&#123; 'width': progressValue + '%' &#125;"&gt;
-&lt;/div&gt;</code></pre>
-              </div>
-
-              <div>
-                <p class="small text-warning fw-bold mb-2 tracking-wider">Modern Syntax ([style.width.%])</p>
-                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Angular automatically handles the % unit --&gt;
-&lt;div class="progress-bar" 
-     [style.width.%]="progressValue"&gt;
-&lt;/div&gt;</code></pre>
-              </div>
-
-            </div>
-          </div>
+          <app-code-viewer [codeFiles]="codeFiles8" class="h-100"></app-code-viewer>
         </div>
 
       </div>
@@ -948,35 +753,7 @@ selectStudent(id: number) &#123;
 
         <!-- Code Hint Column -->
         <div class="col-lg-4 col-md-12">
-          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
-            <div
-              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
-              <h5 class="card-title text-light mb-0">
-                <i class="bi bi-code-slash me-2"></i>Code Hint
-              </h5>
-            </div>
-            <div class="card-body">
-
-              <div class="mb-3">
-                <p class="small text-secondary fw-bold mb-2 tracking-wider">Dynamic Select Cards</p>
-                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Bind class directly to object property --&gt;
-&lt;div class="card" 
-  [class.border-primary]="form.type === 'Teacher'"
-  (click)="setType('Teacher')"&gt;
-  ...
-&lt;/div&gt;</code></pre>
-              </div>
-
-              <div>
-                <p class="small text-warning fw-bold mb-2 tracking-wider">JSON Pipe (Template)</p>
-                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Renders object as formatted JSON --&gt;
-&lt;pre&gt;
-  {{ '{{' }} personForm | json {{ '}}' }}
-&lt;/pre&gt;</code></pre>
-              </div>
-
-            </div>
-          </div>
+          <app-code-viewer [codeFiles]="codeFiles9" class="h-100"></app-code-viewer>
         </div>
 
       </div>

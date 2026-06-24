@@ -38,8 +38,8 @@
 
     <!-- Theory -->
     <ng-template ngbSlide id="task-1">
-      <div class="row">
-        <div class="col-12">
+      <div class="row g-4">
+        <div class="col-lg-8 col-md-12">
           <div ngbAccordion class="shadow-sm">
             <div ngbAccordionItem="difference-panel" [collapsed]="false">
 
@@ -92,6 +92,9 @@
 
             </div>
           </div>
+        </div>
+        <div class="col-lg-4 col-md-12">
+          <app-code-viewer [codeFiles]="codeFiles1" class="h-100"></app-code-viewer>
         </div>
       </div>
     </ng-template>
@@ -175,33 +178,7 @@
 
         <!-- Code Hint Column -->
         <div class="col-lg-4 col-md-12">
-          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
-            <div
-              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
-              <h5 class="card-title text-light mb-0">
-                <i class="bi bi-code-slash me-2"></i>Code Hint
-              </h5>
-            </div>
-            <div class="card-body">
-
-              <div class="mb-3">
-                <p class="small text-secondary fw-bold mb-2 tracking-wider">Dynamic Option Loops (&#64;for)</p>
-                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&#64;for (city of cityList; track city) &#123;
-  &lt;option&gt;{{ '{{' }} city {{ '}}' }}&lt;/option&gt;
-&#125;</code></pre>
-              </div>
-
-              <div>
-                <p class="small text-warning fw-bold mb-2 tracking-wider">Validation Messaging (&#64;if)</p>
-                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&#64;if (cityError) &#123;
-  &lt;div class="text-danger"&gt;
-    {{ '{{' }} cityError {{ '}}' }}
-  &lt;/div&gt;
-&#125;</code></pre>
-              </div>
-
-            </div>
-          </div>
+          <app-code-viewer [codeFiles]="codeFiles2" class="h-100"></app-code-viewer>
         </div>
       </div>
     </ng-template>
@@ -262,34 +239,7 @@
 
         <!-- Code Hint Column -->
         <div class="col-lg-4 col-md-12">
-          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
-            <div
-              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
-              <h5 class="card-title text-light mb-0">
-                <i class="bi bi-code-slash me-2"></i>Code Hint
-              </h5>
-            </div>
-            <div class="card-body">
-
-              <div class="mb-3">
-                <p class="small text-secondary fw-bold mb-2 tracking-wider">Legacy Syntax (*ngFor)</p>
-                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>&lt;button *ngFor="let lang of languages"
-  [class.btn-success]="selectedLanguage === lang"&gt;
-  {{ '{{' }} lang {{ '}}' }}
-&lt;/button&gt;</code></pre>
-              </div>
-
-              <div>
-                <p class="small text-warning fw-bold mb-2 tracking-wider">Modern Syntax (&#64;for)</p>
-                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&#64;for (lang of languages; track lang) &#123;
-  &lt;button [class.btn-success]="selected === lang"&gt;
-    {{ '{{' }} lang {{ '}}' }}
-  &lt;/button&gt;
-&#125;</code></pre>
-              </div>
-
-            </div>
-          </div>
+          <app-code-viewer [codeFiles]="codeFiles3" class="h-100"></app-code-viewer>
         </div>
       </div>
     </ng-template>
@@ -381,35 +331,7 @@
 
         <!-- Code Hint Column -->
         <div class="col-lg-4 col-md-12">
-          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
-            <div
-              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
-              <h5 class="card-title text-light mb-0">
-                <i class="bi bi-code-slash me-2"></i>Code Hint
-              </h5>
-            </div>
-            <div class="card-body">
-
-              <div class="mb-3">
-                <p class="small text-secondary fw-bold mb-2 tracking-wider">Math in Template (&#64;for)</p>
-                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&#64;for (i of multipliers; track i) &#123;
-  &lt;tr&gt;
-    &lt;!-- Angular does the math instantly! --&gt;
-    &lt;td&gt;{{ '{{' }} activeNum * i {{ '}}' }}&lt;/td&gt;
-  &lt;/tr&gt;
-&#125;</code></pre>
-              </div>
-
-              <div>
-                <p class="small text-warning fw-bold mb-2 tracking-wider">Native Alert (Typescript)</p>
-                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>if (!this.inputNumber) &#123;
-  alert('Please enter a value');
-  return; // Stop function execution
-&#125;</code></pre>
-              </div>
-
-            </div>
-          </div>
+          <app-code-viewer [codeFiles]="codeFiles4" class="h-100"></app-code-viewer>
         </div>
       </div>
     </ng-template>
@@ -478,31 +400,7 @@
 
         <!-- Code Hint Column -->
         <div class="col-lg-4 col-md-12">
-          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
-            <div
-              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
-              <h5 class="card-title text-light mb-0">
-                <i class="bi bi-code-slash me-2"></i>Code Hint
-              </h5>
-            </div>
-            <div class="card-body">
-
-              <div class="mb-3">
-                <p class="small text-warning fw-bold mb-2 tracking-wider">Reusable Data Binding (&#64;for)</p>
-                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&lt;select [(ngModel)]="toStation"&gt;
-  &lt;option value="" disabled&gt;Select Station&lt;/option&gt;
-  
-  &#64;for (station of stations; track station) &#123;
-    &lt;option [value]="station"&gt;
-      {{ '{{' }} station {{ '}}' }}
-    &lt;/option&gt;
-  &#125;
-
-&lt;/select&gt;</code></pre>
-              </div>
-
-            </div>
-          </div>
+          <app-code-viewer [codeFiles]="codeFiles5" class="h-100"></app-code-viewer>
         </div>
       </div>
     </ng-template>
@@ -580,38 +478,7 @@
 
         <!-- Code Hint Column -->
         <div class="col-lg-4 col-md-12">
-          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
-            <div
-              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
-              <h5 class="card-title text-light mb-0">
-                <i class="bi bi-code-slash me-2"></i>Code Hint
-              </h5>
-            </div>
-            <div class="card-body">
-
-              <div class="mb-3">
-                <p class="small text-secondary fw-bold mb-2 tracking-wider">Legacy Syntax (*ngFor)</p>
-                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Required defining every variable manually --&gt;
-&lt;tr *ngFor="let item of links; let i = index; let isFirst = first; let isLast = last"
-  [class.table-success]="isFirst"
-  [class.table-danger]="isLast"&gt;
-  &lt;td&gt;{{ '{{' }} i + 1 {{ '}}' }}&lt;/td&gt;
-&lt;/tr&gt;</code></pre>
-              </div>
-
-              <div>
-                <p class="small text-warning fw-bold mb-2 tracking-wider">Modern Context Variables (&#64;for)</p>
-                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- $index, $first, and $last are native! --&gt;
-&#64;for (item of links; track item.text) &#123;
-  &lt;tr [class.table-success]="$first"
-      [class.table-danger]="$last"&gt;
-    &lt;td&gt;{{ '{{' }} $index + 1 {{ '}}' }}&lt;/td&gt;
-  &lt;/tr&gt;
-&#125;</code></pre>
-              </div>
-
-            </div>
-          </div>
+          <app-code-viewer [codeFiles]="codeFiles6" class="h-100"></app-code-viewer>
         </div>
       </div>
     </ng-template>
@@ -706,37 +573,7 @@
 
         <!-- Code Hint Column -->
         <div class="col-lg-4 col-md-12">
-          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
-            <div
-              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
-              <h5 class="card-title text-light mb-0">
-                <i class="bi bi-code-slash me-2"></i>Code Hint
-              </h5>
-            </div>
-            <div class="card-body">
-
-              <div class="mb-3">
-                <p class="small text-warning fw-bold mb-2 tracking-wider">Object Binding (&#64;for)</p>
-                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&lt;select [(ngModel)]="selectedStateId"&gt;
-  &#64;for (state of states; track state.stateId) &#123;
-    &lt;option [value]="state.stateId"&gt;
-      {{ '{{' }} state.stateName {{ '}}' }}
-    &lt;/option&gt;
-  &#125;
-&lt;/select&gt;</code></pre>
-              </div>
-
-              <div>
-                <p class="small text-info fw-bold mb-2 tracking-wider">Action Method (Typescript)</p>
-                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>// Update display values only on click
-getData() &#123;
-  this.displayStateId = this.selectedStateId;
-  this.displayCityId = this.selectedCityId;
-&#125;</code></pre>
-              </div>
-
-            </div>
-          </div>
+          <app-code-viewer [codeFiles]="codeFiles7" class="h-100"></app-code-viewer>
         </div>
       </div>
     </ng-template>

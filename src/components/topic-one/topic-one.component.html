@@ -43,8 +43,8 @@
 
     <!-- Theory -->
     <ng-template ngbSlide id="task-1">
-      <div class="row">
-        <div class="col-12">
+      <div class="row g-4">
+        <div class="col-lg-8 col-md-12">
           <div ngbAccordion class="shadow-sm">
             <div ngbAccordionItem="difference-panel" [collapsed]="false">
 
@@ -99,6 +99,9 @@
 
             </div>
           </div>
+        </div>
+        <div class="col-lg-4 col-md-12">
+          <app-code-viewer [codeFiles]="codeFiles1" class="h-100"></app-code-viewer>
         </div>
       </div>
     </ng-template>
@@ -164,30 +167,7 @@
 
         <!-- Code Hint Column -->
         <div class="col-lg-4 col-md-12">
-          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
-            <div
-              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
-              <h5 class="card-title text-light mb-0">
-                <i class="bi bi-code-slash me-2"></i>Code Hint
-              </h5>
-            </div>
-            <div class="card-body">
-
-              <div class="mb-3">
-                <p class="small text-secondary fw-bold mb-2 tracking-wider">Legacy Syntax (*ngIf)</p>
-                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>&lt;h6 *ngIf="selectedGender"&gt;
-  You selected &#123;&#123; selectedGender &#125;&#125;
-&lt;/h6&gt;</code></pre>
-              </div>
-
-              <div>
-                <p class="small text-warning fw-bold mb-2 tracking-wider">Modern Syntax (&#64;if)</p>
-                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&#64;if (selectedGender) &#123;
-  &lt;h6&gt;You selected &#123;&#123; selectedGender &#125;&#125;&lt;/h6&gt;
-&#125;</code></pre>
-              </div>
-            </div>
-          </div>
+          <app-code-viewer [codeFiles]="codeFiles2" class="h-100"></app-code-viewer>
         </div>
       </div>
     </ng-template>
@@ -339,36 +319,7 @@
 
         <!-- Code Hint Column -->
         <div class="col-lg-4 col-md-12">
-          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
-            <div
-              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
-              <h5 class="card-title text-light mb-0">
-                <i class="bi bi-code-slash me-2"></i>Code Hint
-              </h5>
-            </div>
-            <div class="card-body">
-
-              <div class="mb-3">
-                <p class="small text-secondary fw-bold mb-2 tracking-wider">Legacy Syntax (Chaining ngIf)</p>
-                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>&lt;div *ngIf="cat === 'tech'; else autoBlock"&gt;
-  Apple, Google
-&lt;/div&gt;
-&lt;ng-template #autoBlock&gt;
-  &lt;div *ngIf="cat === 'auto'"&gt;...&lt;/div&gt;
-&lt;/ng-template&gt;</code></pre>
-              </div>
-
-              <div>
-                <p class="small text-warning fw-bold mb-2 tracking-wider">Modern Syntax (&#64;else if)</p>
-                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&#64;if (cat === 'tech') &#123;
-  &lt;div&gt;Apple, Google&lt;/div&gt;
-&#125; &#64;else if (cat === 'auto') &#123;
-  &lt;div&gt;Tesla, Ford&lt;/div&gt;
-&#125;</code></pre>
-              </div>
-
-            </div>
-          </div>
+          <app-code-viewer [codeFiles]="codeFiles3" class="h-100"></app-code-viewer>
         </div>
       </div>
     </ng-template>
@@ -471,35 +422,7 @@
 
         <!-- Code Hint Column -->
         <div class="col-lg-4 col-md-12">
-          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
-            <div
-              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
-              <h5 class="card-title text-light mb-0">
-                <i class="bi bi-code-slash me-2"></i>Code Hint
-              </h5>
-            </div>
-            <div class="card-body">
-
-              <div class="mb-3">
-                <p class="small text-secondary fw-bold mb-2 tracking-wider">Inline Event Binding</p>
-                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Toggle a boolean directly in HTML --&gt;
-&lt;button (click)="isVisible = !isVisible"&gt;
-  Toggle Div
-&lt;/button&gt;</code></pre>
-              </div>
-
-              <div>
-                <p class="small text-warning fw-bold mb-2 tracking-wider">Conditional Logic (&#64;if)</p>
-                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Evaluate component variables --&gt;
-&#64;if (value1 === value2 && value1 !== '') &#123;
-  &lt;!-- Hidden --&gt;
-&#125; &#64;else &#123;
-  &lt;div&gt;Div 3&lt;/div&gt;
-&#125;</code></pre>
-              </div>
-
-            </div>
-          </div>
+          <app-code-viewer [codeFiles]="codeFiles4" class="h-100"></app-code-viewer>
         </div>
       </div>
     </ng-template>
@@ -683,34 +606,7 @@
 
         <!-- Code Hint Column -->
         <div class="col-lg-4 col-md-12">
-          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
-            <div
-              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
-              <h5 class="card-title text-light mb-0">
-                <i class="bi bi-code-slash me-2"></i>Code Hint
-              </h5>
-            </div>
-            <div class="card-body">
-
-              <div class="mb-3">
-                <p class="small text-secondary fw-bold mb-2 tracking-wider">Dynamic Property (Typescript)</p>
-                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>// Auto-updates when inputs change
-get fullName(): string &#123;
-  return this.firstName + ' ' + this.lastName;
-&#125;</code></pre>
-              </div>
-
-              <div>
-                <p class="small text-warning fw-bold mb-2 tracking-wider">Dependent Dropdowns (&#64;if)</p>
-                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&lt;select [(ngModel)]="selectedState"&gt;...&lt;/select&gt;
-
-&#64;if (selectedState === 'Other') &#123;
-  &lt;input type="text" placeholder="Specify State"&gt;
-&#125;</code></pre>
-              </div>
-
-            </div>
-          </div>
+          <app-code-viewer [codeFiles]="codeFiles5" class="h-100"></app-code-viewer>
         </div>
 
       </div>
@@ -801,34 +697,7 @@ get fullName(): string &#123;
 
         <!-- Code Hint Column -->
         <div class="col-lg-4 col-md-12">
-          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
-            <div
-              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
-              <h5 class="card-title text-light mb-0">
-                <i class="bi bi-code-slash me-2"></i>Code Hint
-              </h5>
-            </div>
-            <div class="card-body">
-
-              <div class="mb-3">
-                <p class="small text-secondary fw-bold mb-2 tracking-wider">Legacy Array Index</p>
-                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>&lt;tr *ngFor="let stud of students; let i = index"&gt;
-  &lt;td&gt;{{ '{{' }} i + 1 {{ '}}' }}&lt;/td&gt;
-&lt;/tr&gt;</code></pre>
-              </div>
-
-              <div>
-                <p class="small text-warning fw-bold mb-2 tracking-wider">Modern Syntax ($index & Ternary)</p>
-                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&#64;for (stud of students; track stud.name; let i = $index) &#123;
-  &lt;tr&gt;
-    &lt;td&gt;{{ '{{' }} i + 1 {{ '}}' }}&lt;/td&gt;
-    &lt;td&gt;{{ '{{' }} stud.isIndian ? 'Indian' : 'Foreigner' {{ '}}' }}&lt;/td&gt;
-  &lt;/tr&gt;
-&#125;</code></pre>
-              </div>
-
-            </div>
-          </div>
+          <app-code-viewer [codeFiles]="codeFiles6" class="h-100"></app-code-viewer>
         </div>
 
       </div>
