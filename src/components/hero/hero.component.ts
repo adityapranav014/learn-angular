@@ -45,8 +45,44 @@ export class HeroComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     const video = this.heroVideoRef.nativeElement;
+
+    // Check if the device is a touch device (mobile/tablet)
+    const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+    if (isTouchDevice) {
+      // On mobile, the user wants the video paused at the very end frame.
+      video.pause();
+      
+      const setEndFrame = () => {
+        if (video.duration) {
+          // Set to just before the absolute end to ensure a frame is rendered
+          video.currentTime = Math.max(0, video.duration - 0.1);
+        }
+      };
+
+      if (video.readyState >= 1) {
+        setEndFrame();
+      } else {
+        video.onloadedmetadata = setEndFrame;
+      }
+      return; // Exit early so we don't attach mouse listeners
+    }
+
+    // --- Desktop / Mouse Behavior ---
     video.pause();
-    video.currentTime = 0;
+    // Default to center frame so it looks perfect before the user moves their mouse
+    const setCenterFrame = () => {
+      if (video.duration) {
+        this.targetTime = video.duration / 2;
+        video.currentTime = video.duration / 2;
+      }
+    };
+
+    if (video.readyState >= 1) {
+      setCenterFrame();
+    } else {
+      video.onloadedmetadata = setCenterFrame;
+    }
 
     // Run outside Angular to avoid triggering Change Detection continuously
     this.ngZone.runOutsideAngular(() => {
@@ -64,15 +100,11 @@ export class HeroComponent implements OnInit, AfterViewInit, OnDestroy {
         });
 
       // 2. Throttled Scrubbing Loop
-      // Setting video.currentTime at 60fps can cause decoding lag in browsers.
-      // We throttle the assignments to ~30fps (33ms) to let the decoder breathe,
-      // while using a strong lerp factor (0.4) so it stays extremely snappy.
       this.scrubSub = interval(33).subscribe(() => {
         if (!video.duration) return;
         
         const diff = this.targetTime - video.currentTime;
         
-        // Threshold prevents micro-stutters when it's extremely close to target
         if (Math.abs(diff) > 0.05) {
           video.currentTime += diff * 0.4;
         }
