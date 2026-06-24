@@ -194,48 +194,108 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02), 0 8px 24px rgba(148, 163, 184, 0.04);
 }
 
-/* 1. Remove drop-shadow filter from root SVG to prevent blurry text and arrows */
+/* 1. Remove drop-shadow filter from root SVG and apply premium entrance fade-in & slide-up */
+@keyframes mermaidFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.995);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 .mermaid-render-shell svg {
   max-width: 100%;
   height: auto;
   filter: none !important;
   font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif !important;
+  animation: mermaidFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
 }
 
-/* 2. Soft premium drop-shadow applied ONLY to the node background shapes */
+/* 2. Soft premium drop-shadow applied ONLY to the node background shapes with smooth transitions */
 .mermaid-render-shell svg .node rect,
 .mermaid-render-shell svg .node polygon,
 .mermaid-render-shell svg .node circle,
 .mermaid-render-shell svg .node ellipse,
 .mermaid-render-shell svg .node path {
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.05)) drop-shadow(0 4px 6px rgba(192, 38, 211, 0.015)) !important;
-  transition: filter 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s ease;
+  transition: filter 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              stroke 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              stroke-width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              fill 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
 }
 
-/* Subtle hover scale + shadow enhancement on the cards */
+/* Subtle hover shadow enhancement & brand stroke highlight on the cards */
 .mermaid-render-shell svg .node:hover rect,
 .mermaid-render-shell svg .node:hover polygon,
 .mermaid-render-shell svg .node:hover circle,
 .mermaid-render-shell svg .node:hover ellipse,
 .mermaid-render-shell svg .node:hover path {
   filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.07)) drop-shadow(0 8px 16px rgba(246, 55, 227, 0.04)) !important;
+  stroke: #F637E3 !important;
+  stroke-width: 1.75px !important;
 }
 
-/* 3. Professional slate-grey connecting lines instead of harsh magenta/black */
-.mermaid-render-shell svg .edgePath .path {
+/* 3. Professional slate-grey connecting lines with premium flowing path animation */
+@keyframes mermaidDashFlow {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -28;
+  }
+}
+
+.mermaid-render-shell svg .edgePath .path,
+.mermaid-render-shell svg .flowchart-link,
+.mermaid-render-shell svg .edge-paths .edge-path,
+.mermaid-render-shell svg path.path,
+.mermaid-render-shell svg .transition,
+.mermaid-render-shell svg g.edgePaths path {
   stroke: #94a3b8 !important;
   stroke-width: 1.5px !important;
+  stroke-dasharray: 8 6 !important;
+  animation: mermaidDashFlow 1.6s linear infinite !important;
+  transition: stroke 0.25s ease, stroke-width 0.25s ease !important;
 }
-.mermaid-render-shell svg .edgePath .arrowheadPath {
+
+.mermaid-render-shell svg .edgePath .arrowheadPath,
+.mermaid-render-shell svg .arrowheadPath,
+.mermaid-render-shell svg marker path,
+.mermaid-render-shell svg .marker {
   fill: #94a3b8 !important;
   stroke: #94a3b8 !important;
+  transition: fill 0.25s ease, stroke 0.25s ease !important;
 }
 
-/* Dotted/dashed connector lines styling */
+/* Dotted/dashed connector lines styling with faster & tighter flow animation */
 .mermaid-render-shell svg .edgePath .path[style*="stroke-dasharray"],
-.mermaid-render-shell svg .edgePath .path[class*="edge-dashed"] {
+.mermaid-render-shell svg .edgePath .path[class*="edge-dashed"],
+.mermaid-render-shell svg .flowchart-link[style*="stroke-dasharray"],
+.mermaid-render-shell svg .flowchart-link[class*="edge-dashed"],
+.mermaid-render-shell svg path[style*="stroke-dasharray"],
+.mermaid-render-shell svg path[class*="edge-dashed"] {
   stroke: #cbd5e1 !important;
   stroke-width: 1.5px !important;
+  stroke-dasharray: 4 4 !important;
+  animation: mermaidDashFlow 1.1s linear infinite !important;
+}
+
+/* Interactive connection line hover states */
+.mermaid-render-shell svg .edgePath:hover .path,
+.mermaid-render-shell svg .flowchart-link:hover,
+.mermaid-render-shell svg g.edgePaths path:hover {
+  stroke: #F637E3 !important;
+  stroke-width: 2.2px !important;
+  animation-duration: 0.8s !important; /* speed up flow to indicate active connection */
+}
+
+.mermaid-render-shell svg .edgePath:hover .arrowheadPath,
+.mermaid-render-shell svg marker path:hover {
+  fill: #F637E3 !important;
+  stroke: #F637E3 !important;
 }
 
 /* Link labels (labels on connections) */
