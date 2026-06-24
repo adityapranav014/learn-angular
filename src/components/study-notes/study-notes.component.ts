@@ -42,6 +42,17 @@ export class StudyNotesComponent {
 
   availableVersions = computed(() => this.activeTopic().versions);
 
+  activeVersionLabel = computed(() => {
+    const match = this.activeTopic().versions.find(v => v.version === this.activeVersion());
+    return match ? match.label : '';
+  });
+
+  activeTopicIconFill = computed(() => {
+    const icon = this.activeTopic().icon;
+    if (icon === 'bi-speedometer2') return 'bi-speedometer2';
+    return icon.endsWith('-fill') ? icon : `${icon}-fill`;
+  });
+
   activeSections = computed(() => {
     const match = this.activeTopic().versions.find(v => v.version === this.activeVersion());
     return match ? match.sections : [];

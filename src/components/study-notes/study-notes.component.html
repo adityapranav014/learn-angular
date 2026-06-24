@@ -75,8 +75,12 @@
                     <div class="focus-panel focus-panel-left" [style.width.%]="splitPercent()">
                         <div class="card h-100 border-0 shadow-sm" [class.topic-fullscreen]="isTopicFullscreen()">
                             <div class="card-header bg-white border-bottom-0 pt-3 pb-2 d-flex align-items-center justify-content-between">
-                                <h5 class="card-title text-secondary mb-0 fw-bold">
-                                    <i class="bi bi-clipboard-data-fill me-2 brand-color"></i>Topic {{ i + 1 }}
+                                <h5 class="card-title text-secondary mb-0 fw-bold d-flex align-items-center">
+                                    <i class="bi me-2 brand-color" [class]="activeTopicIconFill()"></i>
+                                    <span>{{ activeVersionLabel() }}</span>
+                                    <span class="badge rounded-pill ms-2" style="font-size: 0.75rem; font-weight: 600; background-color: #fdf4ff; color: #c026d3; border: 1px solid rgba(192, 38, 211, 0.15); padding: 0.25em 0.6em;">
+                                        {{ i + 1 }} of {{ activeSections().length }}
+                                    </span>
                                 </h5>
                                 <button class="btn btn-sm btn-light border-0 p-1 lh-1" type="button"
                                     [ngbTooltip]="isTopicFullscreen() ? 'Exit fullscreen' : 'Fullscreen'" placement="left"
