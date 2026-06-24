@@ -1,19 +1,11 @@
 @media (min-width: 992px) {
   .sticky-lg-top {
     position: sticky;
-    top: 90px; /* clear sticky navbar */
+    top: 90px;
+    /* clear sticky navbar */
     z-index: 10;
     height: fit-content;
   }
-}
-
-.highlight-card {
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.highlight-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
 }
 
 .card-tea {
@@ -69,6 +61,7 @@
     opacity: 0;
     transform: translateY(5px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -84,6 +77,7 @@
     opacity: 0;
     transform: scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: scale(1);

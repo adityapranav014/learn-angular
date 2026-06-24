@@ -3,12 +3,13 @@ import { Component, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap/accordion';
 import { NgbCarousel, NgbSlide, NgbSlideEvent } from '@ng-bootstrap/ng-bootstrap/carousel';
+import { CodeViewerComponent, CodeFile } from '../code-viewer/code-viewer.component';
 
 
 @Component({
   selector: 'app-topic-two',
   templateUrl: './topic-two.component.html',
-  imports: [NgbAccordionModule, CommonModule, FormsModule, NgbCarousel, NgbSlide]
+  imports: [NgbAccordionModule, CommonModule, FormsModule, NgbCarousel, NgbSlide, CodeViewerComponent]
 })
 export class TopicTwoComponent {
 
@@ -22,6 +23,161 @@ export class TopicTwoComponent {
   onSlide(event: NgbSlideEvent) {
     this.activeIndex = parseInt(event.current.replace('task-', '')) - 1;
   }
+
+
+  // Slide 1: Theory
+  codeFiles1: CodeFile[] = [
+    {
+      fileName: 'Legacy Syntax (*ngFor)',
+      language: 'html',
+      code: `<ul>
+  <li *ngFor="let item of items; let i = index; trackBy: trackById">
+    {{ i + 1 }}. {{ item.name }}
+  </li>
+</ul>`
+    },
+    {
+      fileName: 'Modern Syntax (@for)',
+      language: 'html',
+      code: `<ul>
+  @for (item of items; track item.id; let i = $index) {
+    <li>{{ i + 1 }}. {{ item.name }}</li>
+  } @empty {
+    <li>No items found.</li>
+  }
+</ul>`
+    }
+  ];
+
+  // Task 1 (slide task-2): @for options + @if validation
+  codeFiles2: CodeFile[] = [
+    {
+      fileName: 'Dynamic Options (@for)',
+      language: 'html',
+      code: `@for (city of cityList; track city) {
+  <option>{{ city }}</option>
+}`
+    },
+    {
+      fileName: 'Validation Messaging (@if)',
+      language: 'html',
+      code: `@if (cityError) {
+  <div class="text-danger">
+    {{ cityError }}
+  </div>
+}`
+    }
+  ];
+
+  // Task 2 (slide task-3): *ngFor vs @for
+  codeFiles3: CodeFile[] = [
+    {
+      fileName: '*ngFor (Legacy)',
+      language: 'html',
+      code: `<button *ngFor="let lang of languages"
+  [class.btn-success]="selectedLanguage === lang">
+  {{ lang }}
+</button>`
+    },
+    {
+      fileName: '@for (Modern)',
+      language: 'html',
+      code: `@for (lang of languages; track lang) {
+  <button [class.btn-success]="selected === lang">
+    {{ lang }}
+  </button>
+}`
+    }
+  ];
+
+  // Task 3 (slide task-4): math in template + alert
+  codeFiles4: CodeFile[] = [
+    {
+      fileName: 'Math in Template (@for)',
+      language: 'html',
+      code: `@for (i of multipliers; track i) {
+  <tr>
+    <!-- Angular does the math instantly! -->
+    <td>{{ activeNum * i }}</td>
+  </tr>
+}`
+    },
+    {
+      fileName: 'Native Alert (TS)',
+      language: 'typescript',
+      code: `if (!this.inputNumber) {
+  alert('Please enter a value');
+  return; // Stop function execution
+}`
+    }
+  ];
+
+  // Task 4 (slide task-5): reusable @for for dropdowns
+  codeFiles5: CodeFile[] = [
+    {
+      fileName: 'Reusable Data Binding (@for)',
+      language: 'html',
+      code: `<select [(ngModel)]="toStation">
+  <option value="" disabled>Select Station</option>
+  
+  @for (station of stations; track station) {
+    <option [value]="station">
+      {{ station }}
+    </option>
+  }
+
+</select>`
+    }
+  ];
+
+  // Task 5 (slide task-6): $first, $last, $index
+  codeFiles6: CodeFile[] = [
+    {
+      fileName: '*ngFor (Legacy)',
+      language: 'html',
+      code: `<!-- Required defining every variable manually --&gt;
+<tr *ngFor="let item of links; let i = index; let isFirst = first; let isLast = last"
+  [class.table-success]="isFirst"
+  [class.table-danger]="isLast">
+  <td>{{ i + 1 }}</td>
+</tr>`
+    },
+    {
+      fileName: 'Context Variables (@for)',
+      language: 'html',
+      code: `<!-- $index, $first, and $last are native! -->
+@for (item of links; track item.text) {
+  <tr [class.table-success]="$first"
+      [class.table-danger]="$last">
+    <td>{{ $index + 1 }}</td>
+  </tr>
+}`
+    }
+  ];
+
+  // Task 6 (slide task-7): object binding + getData
+  codeFiles7: CodeFile[] = [
+    {
+      fileName: 'Object Binding (@for)',
+      language: 'html',
+      code: `<select [(ngModel)]="selectedStateId">
+  @for (state of states; track state.stateId) {
+    <option [value]="state.stateId">
+      {{ state.stateName }}
+    </option>
+  }
+</select>`
+    },
+    {
+      fileName: 'Action Method (TS)',
+      language: 'typescript',
+      code: `// Update display values only on click
+getData() {
+  this.displayStateId = this.selectedStateId;
+  this.displayCityId = this.selectedCityId;
+}`
+    }
+  ];
 
 
   // --- Task 1  ---

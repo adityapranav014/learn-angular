@@ -37,29 +37,7 @@
         </div>
 
         <!-- Code Hint Card -->
-        <div class="card shadow-sm border-0 bg-dark text-light flex-grow-1">
-          <div class="card-header bg-dark border-bottom border-secondary pt-3 pb-2">
-            <h5 class="card-title text-light mb-0 fw-bold">
-              <i class="bi bi-code-slash me-2 text-warning"></i>Code Hint
-            </h5>
-          </div>
-          <div class="card-body">
-            <div class="mb-3">
-              <p class="small text-secondary fw-bold mb-2 tracking-wider"><i class="bi bi-cpu me-1"></i> Active Tab Switch (TS)</p>
-              <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary shadow-sm"><code>onTabChange(tab: string) &#123;
-  this.activeTab = tab;
-&#125;</code></pre>
-            </div>
-            <div>
-              <p class="small text-warning fw-bold mb-2 tracking-wider"><i class="bi bi-layout-text-window me-1"></i> HTML Bindings</p>
-              <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary shadow-sm"><code>&lt;button class="nav-link" 
-  [class.active]="activeTab === 'basic'" 
-  (click)="onTabChange('basic')"&gt;
-  Basic Details
-&lt;/button&gt;</code></pre>
-            </div>
-          </div>
-        </div>
+        <app-code-viewer [codeFiles]="codeFiles" class="flex-grow-1"></app-code-viewer>
 
       </div>
     </div>

@@ -17,12 +17,12 @@
         <i class="bi bi-chevron-left"></i>
       </button>
 
-      <ng-container *ngFor="let slide of slides; let i = index">
+      @for (slide of slides; track slide; let i = $index) {
         <button class="btn btn-sm" [class.btn-brand]="activeIndex === i"
           [class.btn-outline-secondary]="activeIndex !== i" (click)="carousel?.select('task-' + (i + 1))">
           {{ i + 1 }}
         </button>
-      </ng-container>
+      }
 
       <button class="btn btn-sm btn-light border" (click)="carousel?.next()">
         <i class="bi bi-chevron-right"></i>
@@ -52,12 +52,12 @@
             </div>
             <div class="card-body bg-white rounded-bottom">
               <div class="text-start pb-2">
-  <h5 class="fw-bold text-dark">Package Details Switcher</h5>
-</div>
-<ul class="mb-0 text-muted small">
-  <li class="mb-2"><strong>Package Details Switcher</strong>: Store selected package keys in component state, update values on click, and render details cards using <code>&#64;if</code> loops.</li>
-  <li><strong>Interactive Toggles</strong>: Bind details toggles that hide other active sections when a new one is selected.</li>
-</ul>
+                <h5 class="fw-bold text-dark">Package Details Switcher</h5>
+              </div>
+              <ul class="mb-0 text-muted small">
+                <li class="mb-2"><strong>Package Details Switcher</strong>: Store selected package keys in component state, update values on click, and render details cards using <code>&#64;if</code> loops.</li>
+                <li><strong>Interactive Toggles</strong>: Bind details toggles that hide other active sections when a new one is selected.</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -81,42 +81,42 @@
                 <div class="col-4">
                   <i class="bi bi-phone text-muted fs-4"></i>
                   <div class="small fw-bold text-dark mt-1 mb-2">Mobile</div>
-                  <button class="btn btn-sm w-100 transition-all" [class.btn-primary]="activePackage === 'mobile'"
-                    [class.btn-outline-primary]="activePackage !== 'mobile'"
-                    (click)="showPackageDetails('mobile')">Details</button>
+                  <button class="btn btn-sm w-100 transition-all" [class.btn-primary]="active === 'mobile'"
+                    [class.btn-outline-primary]="active !== 'mobile'"
+                    (click)="showPackage('mobile')">Details</button>
                 </div>
                 <div class="col-4 border-start border-end">
                   <i class="bi bi-router text-muted fs-4"></i>
                   <div class="small fw-bold text-dark mt-1 mb-2">Fiber</div>
-                  <button class="btn btn-sm w-100 transition-all" [class.btn-primary]="activePackage === 'fiber'"
-                    [class.btn-outline-primary]="activePackage !== 'fiber'"
-                    (click)="showPackageDetails('fiber')">Details</button>
+                  <button class="btn btn-sm w-100 transition-all" [class.btn-primary]="active === 'fiber'"
+                    [class.btn-outline-primary]="active !== 'fiber'"
+                    (click)="showPackage('fiber')">Details</button>
                 </div>
                 <div class="col-4">
                   <i class="bi bi-briefcase text-muted fs-4"></i>
                   <div class="small fw-bold text-dark mt-1 mb-2">Business</div>
-                  <button class="btn btn-sm w-100 transition-all" [class.btn-primary]="activePackage === 'business'"
-                    [class.btn-outline-primary]="activePackage !== 'business'"
-                    (click)="showPackageDetails('business')">Details</button>
+                  <button class="btn btn-sm w-100 transition-all" [class.btn-primary]="active === 'business'"
+                    [class.btn-outline-primary]="active !== 'business'"
+                    (click)="showPackage('business')">Details</button>
                 </div>
               </div>
 
               <div class="mt-auto">
-                @if (activePackage === 'mobile') {
+                @if (active === 'mobile') {
                 <div
                   class="p-3 bg-light border border-primary border-opacity-25 rounded-3 text-center transition-all shadow-sm">
                   <p class="small text-muted mb-2">Free SIM, calls, and SMS with invaluable digital experiences.</p>
                   <h5 class="text-primary fw-bold mb-0">₹2,000<span class="fs-6 text-muted fw-normal">/mo</span></h5>
                 </div>
                 }
-                @if (activePackage === 'fiber') {
+                @if (active === 'fiber') {
                 <div
                   class="p-3 bg-light border border-primary border-opacity-25 rounded-3 text-center transition-all shadow-sm">
                   <p class="small text-muted mb-2">Connected living experiences with superfast home internet.</p>
                   <h5 class="text-primary fw-bold mb-0">₹1,500<span class="fs-6 text-muted fw-normal">/mo</span></h5>
                 </div>
                 }
-                @if (activePackage === 'business') {
+                @if (active === 'business') {
                 <div
                   class="p-3 bg-light border border-primary border-opacity-25 rounded-3 text-center transition-all shadow-sm">
                   <p class="small text-muted mb-2">Enterprise-grade digital services to meet all your business needs.
@@ -124,7 +124,7 @@
                   <h5 class="text-primary fw-bold mb-0">₹4,000<span class="fs-6 text-muted fw-normal">/mo</span></h5>
                 </div>
                 }
-                @if (!activePackage) {
+                @if (!active) {
                 <div class="p-3 border border-dashed rounded-3 text-center opacity-50">
                   <span class="small text-muted">Select a package above to view details</span>
                 </div>
@@ -137,31 +137,7 @@
 
         <!-- Code Hint Column -->
         <div class="col-lg-4 col-md-12">
-          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
-            <div
-              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
-              <h5 class="card-title text-light mb-0">
-                <i class="bi bi-code-slash me-2"></i>Code Hint
-              </h5>
-            </div>
-            <div class="card-body">
-              <div class="mb-3">
-                <p class="small text-secondary fw-bold mb-2 tracking-wider">State Toggling (TS)</p>
-                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>showPackage(pkg: string) &#123;
-  // Toggle off if clicking active btn
-  this.active = this.active === pkg 
-    ? '' 
-    : pkg;
-&#125;</code></pre>
-              </div>
-              <div>
-                <p class="small text-warning fw-bold mb-2 tracking-wider">Conditional View (&#64;if)</p>
-                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>&#64;if (active === 'mobile') &#123;
-  &lt;div&gt;Mobile details...&lt;/div&gt;
-&#125;</code></pre>
-              </div>
-            </div>
-          </div>
+          <app-code-viewer [codeFiles]="codeFiles1" class="h-100"></app-code-viewer>
         </div>
       </div>
     </ng-template>
@@ -181,12 +157,12 @@
             </div>
             <div class="card-body bg-white rounded-bottom">
               <div class="text-start pb-2">
-  <h5 class="fw-bold text-dark">Radio Plan Selector</h5>
-</div>
-<ul class="mb-0 text-muted small">
-  <li class="mb-2"><strong>Radio Selector Validation</strong>: Bind selected plan model properties, validate they are not empty on continue, and toggle inline error blocks.</li>
-  <li><strong>Input Resets</strong>: Clear selected plan models and radio states on click of the reset action button.</li>
-</ul>
+                <h5 class="fw-bold text-dark">Radio Plan Selector</h5>
+              </div>
+              <ul class="mb-0 text-muted small">
+                <li class="mb-2"><strong>Radio Selector Validation</strong>: Bind selected plan model properties, validate they are not empty on continue, and toggle inline error blocks.</li>
+                <li><strong>Input Resets</strong>: Clear selected plan models and radio states on click of the reset action button.</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -209,83 +185,90 @@
               <div class="row g-2 mb-4 text-center">
 
                 <div class="col-6">
-                  <div class="card cursor-pointer transition-all h-100 border-2"
-                    [class.border-primary]="selectedPlanInput === 'Mobile Plan'"
-                    [class.bg-primary-subtle]="selectedPlanInput === 'Mobile Plan'"
-                    (click)="selectedPlanInput = 'Mobile Plan'">
-                    <div class="card-body p-2 d-flex flex-column align-items-center">
-                      <i class="bi bi-phone fs-3" [class.text-primary]="selectedPlanInput === 'Mobile Plan'"></i>
+                  <label class="card cursor-pointer transition-all h-100 border-2 w-100"
+                    [class.border-primary]="selectedPlan === 'Mobile Plan'"
+                    [class.bg-primary-subtle]="selectedPlan === 'Mobile Plan'">
+                    <div class="card-body p-2 d-flex flex-column align-items-center position-relative">
+                      <div class="position-absolute top-0 end-0 p-2">
+                        <input type="radio" name="plan" value="Mobile Plan" [(ngModel)]="selectedPlan" class="form-check-input cursor-pointer">
+                      </div>
+                      <i class="bi bi-phone fs-3 mt-2" [class.text-primary]="selectedPlan === 'Mobile Plan'"></i>
                       <span class="small fw-bold mt-1">Mobile</span>
                     </div>
-                  </div>
+                  </label>
                 </div>
 
                 <div class="col-6">
-                  <div class="card cursor-pointer transition-all h-100 border-2"
-                    [class.border-primary]="selectedPlanInput === 'Fibre Optics'"
-                    [class.bg-primary-subtle]="selectedPlanInput === 'Fibre Optics'"
-                    (click)="selectedPlanInput = 'Fibre Optics'">
-                    <div class="card-body p-2 d-flex flex-column align-items-center">
-                      <i class="bi bi-router fs-3" [class.text-primary]="selectedPlanInput === 'Fibre Optics'"></i>
+                  <label class="card cursor-pointer transition-all h-100 border-2 w-100"
+                    [class.border-primary]="selectedPlan === 'Fibre Optics'"
+                    [class.bg-primary-subtle]="selectedPlan === 'Fibre Optics'">
+                    <div class="card-body p-2 d-flex flex-column align-items-center position-relative">
+                      <div class="position-absolute top-0 end-0 p-2">
+                        <input type="radio" name="plan" value="Fibre Optics" [(ngModel)]="selectedPlan" class="form-check-input cursor-pointer">
+                      </div>
+                      <i class="bi bi-router fs-3 mt-2" [class.text-primary]="selectedPlan === 'Fibre Optics'"></i>
                       <span class="small fw-bold mt-1">Fibre</span>
                     </div>
-                  </div>
+                  </label>
                 </div>
 
                 <div class="col-6">
-                  <div class="card cursor-pointer transition-all h-100 border-2"
-                    [class.border-primary]="selectedPlanInput === 'Broadband'"
-                    [class.bg-primary-subtle]="selectedPlanInput === 'Broadband'"
-                    (click)="selectedPlanInput = 'Broadband'">
-                    <div class="card-body p-2 d-flex flex-column align-items-center">
-                      <i class="bi bi-hdd-network fs-3" [class.text-primary]="selectedPlanInput === 'Broadband'"></i>
+                  <label class="card cursor-pointer transition-all h-100 border-2 w-100"
+                    [class.border-primary]="selectedPlan === 'Broadband'"
+                    [class.bg-primary-subtle]="selectedPlan === 'Broadband'">
+                    <div class="card-body p-2 d-flex flex-column align-items-center position-relative">
+                      <div class="position-absolute top-0 end-0 p-2">
+                        <input type="radio" name="plan" value="Broadband" [(ngModel)]="selectedPlan" class="form-check-input cursor-pointer">
+                      </div>
+                      <i class="bi bi-hdd-network fs-3 mt-2" [class.text-primary]="selectedPlan === 'Broadband'"></i>
                       <span class="small fw-bold mt-1">Broadband</span>
                     </div>
-                  </div>
+                  </label>
                 </div>
 
                 <div class="col-6">
-                  <div class="card cursor-pointer transition-all h-100 border-2"
-                    [class.border-primary]="selectedPlanInput === 'Business TV'"
-                    [class.bg-primary-subtle]="selectedPlanInput === 'Business TV'"
-                    (click)="selectedPlanInput = 'Business TV'">
-                    <div class="card-body p-2 d-flex flex-column align-items-center">
-                      <i class="bi bi-briefcase fs-3" [class.text-primary]="selectedPlanInput === 'Business TV'"></i>
+                  <label class="card cursor-pointer transition-all h-100 border-2 w-100"
+                    [class.border-primary]="selectedPlan === 'Business TV'"
+                    [class.bg-primary-subtle]="selectedPlan === 'Business TV'">
+                    <div class="card-body p-2 d-flex flex-column align-items-center position-relative">
+                      <div class="position-absolute top-0 end-0 p-2">
+                        <input type="radio" name="plan" value="Business TV" [(ngModel)]="selectedPlan" class="form-check-input cursor-pointer">
+                      </div>
+                      <i class="bi bi-briefcase fs-3 mt-2" [class.text-primary]="selectedPlan === 'Business TV'"></i>
                       <span class="small fw-bold mt-1">Business</span>
                     </div>
-                  </div>
+                  </label>
                 </div>
 
               </div>
 
-              @if (planError) {
+              @if (error) {
               <div
                 class="text-danger small fw-bold mb-3 bg-danger bg-opacity-10 p-2 rounded border border-danger border-opacity-25 d-flex align-items-center">
                 <i class="bi bi-exclamation-triangle-fill me-2 fs-5"></i>
-                <span>{{ planError }}</span>
+                <span>{{ error }}</span>
               </div>
               }
 
               <div class="row g-2 mb-4">
                 <div class="col-6">
-                  <button class="btn btn-outline-secondary btn-sm w-100 fw-bold py-2" (click)="resetPlan()">
+                  <button class="btn btn-outline-secondary btn-sm w-100 fw-bold py-2" (click)="reset()">
                     <i class="bi bi-arrow-counterclockwise me-1"></i> Reset
                   </button>
                 </div>
                 <div class="col-6">
-                  <button class="btn btn-primary btn-sm w-100 fw-bold shadow-sm py-2" (click)="confirmPlan()">
+                  <button class="btn btn-primary btn-sm w-100 fw-bold shadow-sm py-2" (click)="confirm()">
                     Continue <i class="bi bi-arrow-right ms-1"></i>
                   </button>
                 </div>
               </div>
 
               <div class="mt-auto">
-                @if (confirmedPlan) {
+                @if (confirmed) {
                 <div
                   class="p-3 bg-success bg-opacity-10 border border-success border-opacity-25 rounded-3 text-center transition-all shadow-sm">
                   <span class="small text-muted d-block mb-1">Successfully Activated</span>
-                  <h5 class="text-success fw-bolder mb-0"><i class="bi bi-check-circle-fill me-2"></i>{{ confirmedPlan
-                    }}</h5>
+                  <h5 class="text-success fw-bolder mb-0"><i class="bi bi-check-circle-fill me-2"></i>{{ confirmed }}</h5>
                 </div>
                 }
               </div>
@@ -296,36 +279,10 @@
 
         <!-- Code Hint Column -->
         <div class="col-lg-4 col-md-12">
-          <div class="card h-100 shadow-sm border-0 bg-dark text-light">
-            <div
-              class="card-header bg-dark border-bottom border-secondary pt-3 pb-2 d-flex justify-content-between align-items-center">
-              <h5 class="card-title text-light mb-0">
-                <i class="bi bi-code-slash me-2"></i>Code Hint
-              </h5>
-            </div>
-            <div class="card-body">
-              <div class="mb-3">
-                <p class="small text-secondary fw-bold mb-2 tracking-wider">Radio Binding</p>
-                <pre class="bg-black text-white-50 rounded p-3 small mb-0 border border-secondary"><code>&lt;!-- Ensure 'name' is identical --&gt;
-&lt;input type="radio" name="plan" 
-       value="Mobile" 
-       [(ngModel)]="selectedPlan"&gt;</code></pre>
-              </div>
-              <div>
-                <p class="small text-warning fw-bold mb-2 tracking-wider">Validation Logic</p>
-                <pre class="bg-black text-warning rounded p-3 small mb-0 border border-secondary"><code>confirm() &#123;
-  if (!this.selectedPlan) &#123;
-    this.error = 'Please select!';
-  &#125; else &#123;
-    this.confirmed = this.selectedPlan;
-  &#125;
-&#125;</code></pre>
-              </div>
-            </div>
-          </div>
+          <app-code-viewer [codeFiles]="codeFiles2" class="h-100"></app-code-viewer>
         </div>
       </div>
     </ng-template>
 
   </ngb-carousel>
-</div>
+</div>
