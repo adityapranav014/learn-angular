@@ -28,7 +28,7 @@
   border: 1px solid #e2e8f0;
   list-style-type: none;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   margin-bottom: 1.5rem;
 }
 
