@@ -18,7 +18,7 @@ export class StudyNotesComponent {
   activeTopic = signal<StudyNote>(STUDY_NOTES[0]);
   activeVersion = signal<string>('fundamentals');
   activeIndex = 0;
-  isFocusedMode = signal(false);
+  isFocusedMode = signal(true);
   splitPercent = signal(50);
   isResizing = false;
 
@@ -46,7 +46,7 @@ export class StudyNotesComponent {
             this.activeVersion.set(found.versions[0].version);
           }
           this.activeIndex = 0;
-          this.isFocusedMode.set(false);
+          this.isFocusedMode.set(true);
           setTimeout(() => this.carousel?.select('slide-0'));
         }
       }
@@ -70,16 +70,13 @@ export class StudyNotesComponent {
   prevSlide() { this.carousel?.prev(); }
   nextSlide() { this.carousel?.next(); }
 
-  enterFocusMode() {
-    const idx = this.activeIndex;
-    this.isFocusedMode.set(true);
-    setTimeout(() => this.carousel?.select('slide-' + idx));
-  }
-
-  exitFocusMode() {
-    const idx = this.activeIndex;
-    this.isFocusedMode.set(false);
-    setTimeout(() => this.carousel?.select('slide-' + idx));
+  triggerMainMenu() {
+    if (typeof document !== 'undefined') {
+      const menuBtn = document.querySelector('app-navbar .custom-icon-btn') as HTMLButtonElement;
+      if (menuBtn) {
+        menuBtn.click();
+      }
+    }
   }
 
   startResize(event: MouseEvent) {
@@ -105,10 +102,5 @@ export class StudyNotesComponent {
   @HostListener('document:mouseup')
   onMouseUp() {
     this.isResizing = false;
-  }
-
-  @HostListener('document:keydown.escape')
-  onEscape() {
-    if (this.isFocusedMode()) this.exitFocusMode();
   }
 }

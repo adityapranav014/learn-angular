@@ -264,6 +264,24 @@ $focus-hdr: 3.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
+.focus-header-title-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  flex-shrink: 1;
+  margin-right: 0.5rem;
+}
+
+.focus-header-title {
+  font-size: 0.95rem;
+  max-width: 6.5rem;
+  
+  @media (min-width: 576px) {
+    max-width: 16rem;
+  }
+}
+
 /* ── Panels container ── */
 .focus-panels {
   flex: 1 1 0;
@@ -280,13 +298,6 @@ $focus-hdr: 3.5rem;
 .focus-panel-left {
   padding: 0.75rem;
 
-  /* Override the normal-mode max-height constraint so the card body
-     fills the taller focus-mode viewport gracefully */
-  .study-carousel ::ng-deep .card-body {
-    max-height: calc(100dvh - #{$focus-hdr} - 9rem) !important;
-    overflow-y: auto;
-  }
-
   /* Mermaid diagram: allow it to grow larger in focus mode */
   ::ng-deep .mermaid-render-shell svg {
     max-width: 100%;
@@ -299,10 +310,65 @@ $focus-hdr: 3.5rem;
   flex: 1 1 auto;
   min-width: 0;
   padding: 0.75rem;
+}
 
-  /* Lift the hard max-height from the code body so it fills the panel */
-  ::ng-deep .study-code-hint-body {
-    max-height: calc(100dvh - #{$focus-hdr} - 8rem) !important;
+/* ── Desktop Fullscreen: Equal Height Flex panels ── */
+@media (min-width: 992px) {
+  .study-carousel {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    ::ng-deep {
+      .carousel-inner,
+      .carousel-item {
+        height: 100% !important;
+      }
+    }
+  }
+
+  .focus-panel-left {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    ::ng-deep .card {
+      height: 100% !important;
+      display: flex;
+      flex-direction: column;
+      
+      .card-body {
+        flex: 1 1 auto !important;
+        max-height: none !important;
+        overflow-y: auto !important;
+      }
+    }
+  }
+
+  .focus-panel-right {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    ::ng-deep {
+      app-code-viewer {
+        height: 100% !important;
+        display: flex;
+        flex-direction: column;
+        padding: 0.15rem !important; /* Matches carousel slide padding for pixel-perfect top/bottom alignment */
+      }
+      .card {
+        height: 100% !important;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .study-code-hint-body {
+        flex: 1 1 auto !important;
+        max-height: none !important;
+        height: 100% !important;
+      }
+    }
   }
 }
 
@@ -338,7 +404,15 @@ $focus-hdr: 3.5rem;
   .focus-header {
     position: sticky;
     top: 0;
-    z-index: 1;
+    z-index: 3;
+  }
+
+  .focus-mobile-nav {
+    position: sticky;
+    top: 3.5rem;
+    z-index: 2;
+    flex-shrink: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
   }
 
   .focus-panels {
@@ -356,20 +430,32 @@ $focus-hdr: 3.5rem;
     width: 100% !important;
     flex: none;
 
-    .study-carousel ::ng-deep .card-body {
+    ::ng-deep .card-body {
       max-height: 55dvh !important;
       overflow-y: auto !important;
     }
   }
 
   .focus-panel-right {
-    width: 100%;
+    width: 100% !important;
     flex: none;
     height: 60dvh;
     padding-top: 0;
+    margin-bottom: 1.5rem;
 
-    ::ng-deep .study-code-hint-body {
-      max-height: calc(60dvh - 3.5rem) !important;
+    ::ng-deep {
+      app-code-viewer {
+        height: 100% !important;
+        display: block;
+      }
+      .study-code-hint-body {
+        max-height: calc(60dvh - 3.5rem) !important;
+        overflow-y: auto !important;
+      }
     }
   }
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
 }
