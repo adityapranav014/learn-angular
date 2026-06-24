@@ -489,12 +489,12 @@
                     <option value="Other">Other</option>
                   </select>
                 </div>
+                @if (selectedState === 'Other') {
                 <div class="col-md-6">
-                  @if (selectedState === 'Other') {
                   <label class="form-label small fw-bold mb-1 text-primary">Specify State</label>
                   <input type="text" class="form-control form-control-sm border-primary" name="otherState">
-                  }
                 </div>
+                }
 
                 <div class="col-md-6">
                   <label class="form-label small fw-bold mb-1">City</label>
@@ -507,19 +507,19 @@
                     <option value="Other">Other</option>
                   </select>
                 </div>
+                @if (selectedCity === 'Other') {
                 <div class="col-md-6">
-                  @if (selectedCity === 'Other') {
                   <label class="form-label small fw-bold mb-1 text-primary">Specify City</label>
                   <input type="text" class="form-control form-control-sm border-primary" name="otherCity">
-                  }
                 </div>
+                }
 
-                <div class="col-12 text-center mt-4">
+                <div class="col-12 text-start text-sm-center mt-4">
                   <span class="small fw-bold text-muted text-uppercase tracking-wider">What Are You?</span>
                   <hr class="mt-2 mb-3">
                 </div>
 
-                <div class="col-12 d-flex justify-content-center gap-3">
+                <div class="col-12 d-flex flex-column flex-sm-row justify-content-sm-center align-items-start align-items-sm-center gap-2 gap-sm-4 px-3 px-sm-0">
                   <div class="form-check">
                     <input class="form-check-input cursor-pointer" type="radio" name="profession" value="teacher"
                       id="radTeacher" [(ngModel)]="selectedProfession">
