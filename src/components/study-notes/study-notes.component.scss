@@ -1,8 +1,4 @@
-/* Study Notes SCSS Styles */
 $ng-magenta: #c026d3;
-$text-dark: #202124;
-$text-muted: #5f6368;
-$track-color: #e5e7eb;
 
 :host {
   display: block;
@@ -11,67 +7,14 @@ $track-color: #e5e7eb;
   overflow: hidden;
 }
 
-/* On mobile let everything scroll naturally */
 @media (max-width: 991.98px) {
   :host {
     height: auto;
     overflow: visible;
   }
 
-  .study-notes-page {
-    min-height: auto;
-  }
 }
 
-.study-notes-page {
-  min-height: 100%;
-}
-
-.study-notes-main {
-  align-items: stretch;
-}
-
-.text-magenta {
-  color: $ng-magenta !important;
-}
-
-.bg-magenta {
-  background-color: $ng-magenta !important;
-}
-
-/* Sidebar Styling matching Navbar */
-.docs-sub-menu-track {
-  border-left: 1px solid $track-color;
-  padding-left: 1.25rem;
-}
-
-.study-side-nav {
-  top: 0;
-}
-
-@media (min-width: 992px) {
-  .study-nav-card {
-    position: sticky;
-    top: 0.75rem;
-  }
-
-  .study-side-nav {
-    max-height: calc(100dvh - 10rem);
-    overflow-y: auto;
-    padding-right: 0.35rem;
-  }
-}
-
-.study-side-link {
-  background: transparent;
-  border: 0;
-}
-
-.study-content-shell {
-  min-height: 100%;
-}
-
-/* Carousel wrapper — clips slide animation inside bounds */
 .study-carousel {
   min-height: 1px;
 
@@ -90,84 +33,7 @@ $track-color: #e5e7eb;
   }
 }
 
-/* Pagination aligned with shared button design system */
-.study-page-btn {
-  min-width: 2.1rem;
-  font-weight: 600;
-}
-
-.study-pagination .btn-outline-secondary {
-  border-color: #d1d5db;
-  color: #4b5563;
-
-  &:hover,
-  &:focus-visible {
-    border-color: rgba(246, 55, 227, 0.45);
-    color: #c026d3;
-    background-color: #fdf4ff;
-  }
-}
-
-
-.docs-section-title {
-  font-size: 0.85rem;
-  letter-spacing: 0.05em;
-  color: $ng-magenta;
-}
-
-.docs-sub-link {
-  color: $text-muted;
-  padding: 0.4rem 0.5rem;
-  font-size: 0.95rem;
-  border-left: 2px solid transparent;
-  margin-left: calc(-1.25rem - 1px);
-  padding-left: calc(1.25rem - 1px);
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-
-  &:hover {
-    color: $text-dark !important;
-    background-color: #faf5ff;
-    border-left: 2px solid rgba(192, 38, 211, 0.45) !important;
-    padding-left: calc(1.5rem - 1px) !important;
-
-    i.bi {
-      color: $ng-magenta !important;
-      opacity: 0.85 !important;
-    }
-  }
-
-  &.active-sub {
-    color: $text-dark !important;
-    font-weight: 500;
-    border-left: 2px solid $ng-magenta !important;
-    background-color: #fdf4ff;
-
-    i.bi {
-      color: $ng-magenta !important;
-      opacity: 1 !important;
-    }
-  }
-}
-
 @media (max-width: 991.98px) {
-  .docs-sub-menu-track {
-    border-left: 0;
-    border-top: 1px solid $track-color;
-    padding-left: 0;
-    padding-top: 1rem;
-  }
-
-  .docs-sub-link {
-    margin-left: 0;
-    border-left: 0;
-  }
-
-  .docs-sub-link:hover,
-  .docs-sub-link.active-sub {
-    border-left: 0 !important;
-    padding-left: 0.5rem !important;
-  }
-
   .study-carousel ::ng-deep .card-body {
     overflow-y: visible;
     max-height: none;
@@ -175,17 +41,6 @@ $track-color: #e5e7eb;
 
 }
 
-/* Border highlighting for mobile inputs */
-.border-magenta-soft {
-  border-color: rgba(192, 38, 211, 0.2);
-
-  &:focus {
-    border-color: $ng-magenta;
-    box-shadow: 0 0 0 0.25rem rgba(192, 38, 211, 0.25);
-  }
-}
-
-/* Body formatting */
 .study-section-body {
   font-size: 0.975rem;
   line-height: 1.65;
@@ -215,7 +70,6 @@ $track-color: #e5e7eb;
   }
 }
 
-/* Custom Scrollbar inside elements if needed */
 pre::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -230,9 +84,6 @@ pre::-webkit-scrollbar-thumb:hover {
   background-color: rgba(128, 128, 128, 0.5);
 }
 
-/* ═══════════════════════════════════════════════
-   FOCUS MODE — Page-level immersive environment
-   ═══════════════════════════════════════════════ */
 
 $focus-hdr: 3.5rem;
 
@@ -282,7 +133,6 @@ $focus-hdr: 3.5rem;
   }
 }
 
-/* ── Panels container ── */
 .focus-panels {
   flex: 1 1 0;
   min-height: 0;
@@ -294,25 +144,21 @@ $focus-hdr: 3.5rem;
   overflow: hidden;
 }
 
-/* ── Left panel — content carousel ── */
 .focus-panel-left {
   padding: 0.75rem;
 
-  /* Mermaid diagram: allow it to grow larger in focus mode */
   ::ng-deep .mermaid-render-shell svg {
     max-width: 100%;
     height: auto;
   }
 }
 
-/* ── Right panel — code viewer ── */
 .focus-panel-right {
   flex: 1 1 auto;
   min-width: 0;
   padding: 0.75rem;
 }
 
-/* ── Desktop Fullscreen: Equal Height Flex panels ── */
 @media (min-width: 992px) {
   .study-carousel {
     height: 100%;
@@ -372,7 +218,6 @@ $focus-hdr: 3.5rem;
   }
 }
 
-/* ── Resize divider (desktop) ── */
 .focus-divider {
   width: 5px;
   flex-shrink: 0;
@@ -395,7 +240,6 @@ $focus-hdr: 3.5rem;
   border-radius: 2px;
 }
 
-/* ── Mobile focus mode: stacked, naturally scrollable ── */
 @media (max-width: 991.98px) {
   .focus-overlay {
     overflow-y: auto;
@@ -407,13 +251,6 @@ $focus-hdr: 3.5rem;
     z-index: 3;
   }
 
-  .focus-mobile-nav {
-    position: sticky;
-    top: 3.5rem;
-    z-index: 2;
-    flex-shrink: 0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-  }
 
   .focus-panels {
     flex-direction: column;
@@ -460,7 +297,6 @@ $focus-hdr: 3.5rem;
   display: none;
 }
 
-/* Topic fullscreen overlay matching Code Example */
 .topic-fullscreen {
   position: fixed !important;
   top: 0 !important;
@@ -486,3 +322,96 @@ $focus-hdr: 3.5rem;
     overflow-y: auto !important;
   }
 }
+
+.topic-dropdown-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.65rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  background: #fafafa;
+  color: #374151;
+  font: 600 0.9rem/1.4 inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  &:hover { background: #f3f4f6; border-color: rgba(192,38,211,0.3); }
+  &::after { display: none !important; }
+}
+
+.topic-dropdown-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 10rem;
+  @media (max-width: 575.98px) { max-width: 6rem; }
+}
+
+.topic-dropdown-badge {
+  font: 600 0.7rem/1 inherit;
+  background: #fdf4ff;
+  color: $ng-magenta;
+  border: 1px solid rgba(192,38,211,0.15);
+  padding: 0.15em 0.45em;
+  border-radius: 999px;
+}
+
+.topic-dropdown-chevron {
+  font-size: 0.65rem;
+  color: #9ca3af;
+  transition: transform 0.2s ease;
+}
+.topic-dropdown.show .topic-dropdown-chevron { transform: rotate(180deg); }
+
+.topic-dropdown-menu {
+  min-width: 16rem;
+  max-width: 22rem;
+  padding: 0.35rem 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1), 0 2px 6px rgba(0,0,0,0.05);
+  overflow: hidden;
+}
+
+.topic-dropdown-menu-header {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.85rem;
+  font: 600 0.72rem/1 inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #9ca3af;
+  border-bottom: 1px solid #f3f4f6;
+  margin-bottom: 0.25rem;
+}
+
+.topic-dropdown-item {
+  display: flex !important;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.85rem !important;
+  font: 500 0.85rem/1.4 inherit;
+  color: #374151 !important;
+  border-radius: 0 !important;
+  transition: all 0.15s ease;
+  &:hover { background: #fdf4ff !important; color: $ng-magenta !important; }
+  &.active { background: #fdf4ff !important; color: $ng-magenta !important; font-weight: 600; }
+}
+
+.topic-dropdown-item-index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  font: 700 0.72rem/1 inherit;
+  border-radius: 0.35rem;
+  background: #f3f4f6;
+  color: #6b7280;
+  flex-shrink: 0;
+  .topic-dropdown-item:hover &,
+  .topic-dropdown-item.active & { background: rgba(192,38,211,0.12); color: $ng-magenta; }
+}
+
+.topic-dropdown-item-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0; }
+.topic-dropdown-check { color: $ng-magenta; font-size: 0.9rem; flex-shrink: 0; }

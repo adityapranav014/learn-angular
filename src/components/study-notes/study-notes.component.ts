@@ -1,7 +1,7 @@
 import { Component, inject, signal, computed, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { NgbCarousel, NgbSlide, NgbSlideEvent, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarousel, NgbSlide, NgbSlideEvent, NgbTooltip, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { STUDY_NOTES, StudyNote } from '../../data/study-notes';
 import { CodeViewerComponent } from '../code-viewer/code-viewer.component';
 import { MermaidViewerComponent } from '../mermaid-viewer/mermaid-viewer.component';
@@ -10,7 +10,7 @@ import { MermaidViewerComponent } from '../mermaid-viewer/mermaid-viewer.compone
   selector: 'app-study-notes',
   templateUrl: './study-notes.component.html',
   styleUrls: ['./study-notes.component.scss'],
-  imports: [CommonModule, NgbCarousel, NgbSlide, NgbTooltip, CodeViewerComponent, MermaidViewerComponent]
+  imports: [CommonModule, NgbCarousel, NgbSlide, NgbTooltip, NgbDropdownModule, CodeViewerComponent, MermaidViewerComponent]
 })
 export class StudyNotesComponent {
   private route = inject(ActivatedRoute);
@@ -45,6 +45,11 @@ export class StudyNotesComponent {
   activeVersionLabel = computed(() => {
     const match = this.activeTopic().versions.find(v => v.version === this.activeVersion());
     return match ? match.label : '';
+  });
+
+  activeVersionIndex = computed(() => {
+    const idx = this.activeTopic().versions.findIndex(v => v.version === this.activeVersion());
+    return idx + 1;
   });
 
   activeTopicIconFill = computed(() => {
