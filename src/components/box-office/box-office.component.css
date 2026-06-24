@@ -151,3 +151,9 @@
 .transition-all {
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* Showtime Button Hover Override to resolve bg-white text visibility issue */
+.btn-showtime.btn-outline-secondary.bg-white:hover {
+  background-color: #6c757d !important;
+  color: #ffffff !important;
+}

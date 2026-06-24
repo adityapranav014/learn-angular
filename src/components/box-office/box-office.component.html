@@ -119,7 +119,7 @@
                 <h6 class="small fw-bold text-muted mb-2"><i class="bi bi-calendar-event me-1"></i> Select Showtime</h6>
                 <div class="d-flex flex-wrap gap-2">
                   @for (show of selectedMovie.shows; track show) {
-                  <button class="btn btn-sm transition-all rounded-pill px-3 shadow-sm"
+                  <button class="btn btn-sm transition-all rounded-pill px-3 shadow-sm btn-showtime"
                     [class.btn-dark]="selectedShow === show" [class.btn-outline-secondary]="selectedShow !== show"
                     [class.bg-white]="selectedShow !== show" (click)="selectShow(show)">
                     <i class="bi bi-clock-fill me-1" [class.text-warning]="selectedShow === show"></i> {{ show }}
@@ -145,7 +145,7 @@
                     <div class="col-4">
                       <button class="btn btn-primary btn-sm w-100 fw-bold shadow-sm rounded-3" (click)="bookTicket()"
                         [disabled]="!ticketCount || ticketCount <= 0">
-                        Book Now
+                        Book
                       </button>
                     </div>
                   </div>
