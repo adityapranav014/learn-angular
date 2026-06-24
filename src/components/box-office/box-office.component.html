@@ -116,10 +116,10 @@
 
               @if (selectedMovie) {
               <div class="mb-3 animate__animated animate__fadeIn">
-                <h6 class="small fw-bold text-muted mb-2"><i class="bi bi-calendar-event me-1"></i> Select Showtime</h6>
+                <h6 class="small fw-bold text-muted mb-3"><i class="bi bi-calendar-event me-1"></i> Select Showtime</h6>
                 <div class="d-flex flex-wrap gap-2">
                   @for (show of selectedMovie.shows; track show) {
-                  <button class="btn btn-sm transition-all rounded-pill px-3 shadow-sm btn-showtime"
+                  <button class="btn btn-sm transition-all rounded-pill px-3 btn-showtime"
                     [class.btn-dark]="selectedShow === show" [class.btn-outline-secondary]="selectedShow !== show"
                     [class.bg-white]="selectedShow !== show" (click)="selectShow(show)">
                     <i class="bi bi-clock-fill me-1" [class.text-warning]="selectedShow === show"></i> {{ show }}
@@ -131,7 +131,7 @@
 
               <div class="mt-auto">
                 @if (selectedMovie && selectedShow) {
-                <div class="p-3 bg-white border rounded-4 transition-all shadow-sm">
+                <div class="p-3 bg-white border rounded-4 transition-all">
 
                   <div class="row g-2 align-items-center">
                     <div class="col-8">
