@@ -10,8 +10,6 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ScrambleInComponent } from '../scramble-in/scramble-in.component';
-import { fromEvent, Subscription, interval, animationFrameScheduler } from 'rxjs';
-import { throttleTime, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-hero',
@@ -29,9 +27,11 @@ export class HeroComponent implements OnInit, AfterViewInit, OnDestroy {
   triggered = signal(false);
 
   private targetTime = 0;
-  private mouseSub!: Subscription;
-  private scrubSub!: Subscription;
+  private currentTime = 0;
+  private rafId = 0;
+  private mouseMoveHandler: ((e: MouseEvent) => void) | null = null;
   private entranceTimerId: any;
+  private isRunning = false;
 
   constructor(private ngZone: NgZone) {}
 
@@ -74,6 +74,7 @@ export class HeroComponent implements OnInit, AfterViewInit, OnDestroy {
     const setCenterFrame = () => {
       if (video.duration) {
         this.targetTime = video.duration / 2;
+        this.currentTime = video.duration / 2;
         video.currentTime = video.duration / 2;
       }
     };
@@ -84,39 +85,50 @@ export class HeroComponent implements OnInit, AfterViewInit, OnDestroy {
       video.onloadedmetadata = setCenterFrame;
     }
 
-    // Run outside Angular to avoid triggering Change Detection continuously
+    // Run outside Angular to avoid triggering Change Detection on every frame
     this.ngZone.runOutsideAngular(() => {
       
-      // 1. Reactive Mouse Movement Stream
-      this.mouseSub = fromEvent<MouseEvent>(window, 'mousemove')
-        .pipe(
-          throttleTime(0, animationFrameScheduler),
-          map(e => e.clientX / window.innerWidth)
-        )
-        .subscribe(fraction => {
-          if (video.duration) {
-            this.targetTime = fraction * video.duration;
-          }
-        });
-
-      // 2. Throttled Scrubbing Loop
-      this.scrubSub = interval(33).subscribe(() => {
-        if (!video.duration) return;
-        
-        const diff = this.targetTime - video.currentTime;
-        
-        if (Math.abs(diff) > 0.05) {
-          video.currentTime += diff * 0.4;
+      // Lightweight mouse listener — just stores the target value, no DOM work
+      this.mouseMoveHandler = (e: MouseEvent) => {
+        if (video.duration) {
+          this.targetTime = (e.clientX / window.innerWidth) * video.duration;
         }
-      });
+      };
+      window.addEventListener('mousemove', this.mouseMoveHandler, { passive: true });
 
+      // Single rAF loop for smooth interpolation
+      this.isRunning = true;
+      const scrubLoop = () => {
+        if (!this.isRunning) return;
+
+        if (video.duration) {
+          const diff = this.targetTime - this.currentTime;
+
+          // Only seek when the difference is meaningful (dead-zone avoids micro-seeks)
+          if (Math.abs(diff) > 0.01) {
+            // Smooth lerp — 0.12 gives a buttery trailing feel without lag
+            this.currentTime += diff * 0.12;
+            video.currentTime = this.currentTime;
+          }
+        }
+
+        this.rafId = requestAnimationFrame(scrubLoop);
+      };
+
+      this.rafId = requestAnimationFrame(scrubLoop);
     });
   }
 
   ngOnDestroy() {
     if (this.entranceTimerId) clearTimeout(this.entranceTimerId);
-    if (this.mouseSub) this.mouseSub.unsubscribe();
-    if (this.scrubSub) this.scrubSub.unsubscribe();
+
+    this.isRunning = false;
+    if (this.rafId) cancelAnimationFrame(this.rafId);
+
+    if (this.mouseMoveHandler) {
+      window.removeEventListener('mousemove', this.mouseMoveHandler);
+      this.mouseMoveHandler = null;
+    }
   }
 
   scrollDown() {
