@@ -56,7 +56,7 @@ export class HeroComponent implements OnInit, AfterViewInit, OnDestroy {
       const setEndFrame = () => {
         if (video.duration) {
           // Set to just before the absolute end to ensure a frame is rendered
-          video.currentTime = Math.max(0, video.duration - 0.1);
+          video.currentTime = Math.max(0, video.duration - 1.3);
         }
       };
 
