@@ -28,73 +28,75 @@
       </div>
     </div>
 
-    <div class="row layout-dashboard">
-      <!-- ── Left Pane: Category Selector ────────────────────────────── -->
-      <div class="col-12 col-lg-3 mb-4 mb-lg-0">
-        <div class="category-sidebar">
-          @for (section of sections; track section.title; let i = $index) {
-          <div 
-            class="category-tab"
-            [class.active]="selectedCategoryIndex === i"
-            (click)="selectCategory(i)">
-            
-            <div class="category-tab-indicator"></div>
-            
-            <div class="category-tab-content">
-              <span class="category-tab-number">0{{ i + 1 }} //</span>
-              <h4 class="category-tab-title">{{ section.title }}</h4>
-              <span class="category-tab-badge">{{ section.items.length }} LABS</span>
-            </div>
-            
-          </div>
-          }
-        </div>
-      </div>
-
-      <!-- ── Right Pane: Active Category Cards ───────────────────────── -->
-      <div class="col-12 col-lg-9">
-        <div class="active-category-header mb-4 pb-2 border-bottom border-secondary border-opacity-10 px-1">
-          <div>
-            <h4 class="directory-cat-title">{{ sections[selectedCategoryIndex].title }}</h4>
-            <p class="directory-cat-desc">{{ sections[selectedCategoryIndex].subtitle }}</p>
-          </div>
-        </div>
-
-        <div class="row g-4 cards-grid">
-          @for (item of sections[selectedCategoryIndex].items; track item.path) {
-          <div class="col-12 col-md-6 col-xl-4 card-entrance" [style.--stagger-delay]="($index * 0.1) + 's'">
-            <div 
-              class="directory-card h-100"
-              (mouseenter)="hoveredCard = item.path"
-              (mouseleave)="hoveredCard = null"
-              [class.directory-card--hovered]="hoveredCard === item.path"
-              [routerLink]="item.path">
-              
-              <div class="directory-card-body">
-                
-                <!-- Icon with custom halo / border glow -->
-                <div class="directory-icon-wrap" [class]="item.accentClass">
-                  <i class="bi" [class]="item.icon"></i>
-                </div>
-
-                <h5 class="directory-card-title">{{ item.title }}</h5>
-                <p class="directory-card-desc-text">{{ item.description }}</p>
-
-                <!-- Futuristic animated arrow link -->
-                <div class="directory-card-link">
-                  <app-scramble-text 
-                    [text]="'Launch Lab'" 
-                    [isHovered]="hoveredCard === item.path">
-                  </app-scramble-text>
-                  <i class="bi bi-arrow-right ms-2 link-arrow"></i>
-                </div>
-
+    <div class="directory-grid-container mt-4">
+      @for (section of sections; track section.title; let sIndex = $index) {
+        <div class="category-group mb-5">
+          <!-- Category Header -->
+          <div #categoryHeader class="category-header mb-4 pb-2 border-bottom border-secondary border-opacity-10" (click)="toggleAccordion(sIndex, categoryHeader)">
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+              <div class="d-flex align-items-center gap-3">
+                <span class="category-index-tag">0{{ sIndex + 1 }}</span>
+                <h3 class="category-group-title mb-0">{{ section.title }}</h3>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <span class="category-group-badge">{{ section.items.length }} MODULES</span>
+                <i class="bi bi-chevron-right fs-5 text-muted transition-transform" 
+                   [class.rotate-90]="activeAccordionIndex === sIndex"></i>
               </div>
             </div>
+            <p class="category-group-subtitle text-muted mt-2 mb-0">{{ section.subtitle }}</p>
           </div>
+          
+          <!-- Category Grid -->
+          @if (activeAccordionIndex === sIndex) {
+            <div class="row g-4">
+              @for (item of section.items; track item.path; let itemIndex = $index) {
+                <div class="col-12 col-md-6 col-xl-4 card-entrance" [style.--stagger-delay]="((sIndex * 3 + itemIndex) * 0.05) + 's'">
+                  <div 
+                    class="directory-card h-100"
+                    [attr.data-accent]="item.accentClass"
+                    (mouseenter)="hoveredCard = item.path"
+                    (mouseleave)="hoveredCard = null"
+                    [class.directory-card--hovered]="hoveredCard === item.path"
+                    [routerLink]="item.path">
+                    
+                    <div class="directory-card-body">
+                      
+                      <!-- Card Top Info -->
+                      <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="directory-icon-wrap mb-0" [class]="item.accentClass">
+                          <i class="bi" [class]="item.icon"></i>
+                        </div>
+                        <i class="bi bi-arrow-right link-arrow text-muted"></i>
+                      </div>
+
+                      <!-- Topic Title & Description -->
+                      <h5 class="directory-card-title">{{ item.title }}</h5>
+                      <p class="directory-card-desc-text mb-3">{{ item.description }}</p>
+
+                      <!-- Wireframe Task Index List -->
+                      @if (item.tasks && item.tasks.length > 0) {
+                        <div class="directory-tasks-container mt-auto pt-3 border-top border-secondary border-opacity-10">
+                          <div class="tasks-header text-uppercase mb-2">Index of Tasks</div>
+                          <ul class="tasks-list ps-0 mb-0">
+                            @for (task of item.tasks; track task) {
+                              <li class="d-flex align-items-start">
+                                <span class="task-marker me-2"></span>
+                                <span class="task-name">{{ task }}</span>
+                              </li>
+                            }
+                          </ul>
+                        </div>
+                      }
+
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
           }
         </div>
-      </div>
+      }
     </div>
 
   </div>

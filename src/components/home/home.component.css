@@ -2,9 +2,11 @@
 .directory-section {
     background-color: #000000;
     color: #ffffff;
-    padding: 6rem 0;
+    padding: 6rem 0 6rem 0;
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .directory-dot-grid {
@@ -44,176 +46,46 @@
     }
 }
 
-.directory-cat-section {
-    margin-bottom: 5rem;
+/* Card Accent-specific Custom Variables */
+.directory-card[data-accent="accent-primary"] {
+    --accent-color: #3b82f6;
+    --accent-glow: rgba(59, 130, 246, 0.15);
+    --accent-border: rgba(59, 130, 246, 0.35);
+    --accent-bg-hover: rgba(59, 130, 246, 0.1);
+    --accent-shadow-hover: rgba(59, 130, 246, 0.25);
+    --accent-task-bg: rgba(59, 130, 246, 0.4);
 }
-
-.directory-cat-title {
-    font-family: 'Space Mono', monospace;
-    font-size: 18px;
-    color: #ffffff;
-    font-weight: 500;
-    margin: 0 0 0.35rem 0;
+.directory-card[data-accent="accent-success"] {
+    --accent-color: #10b981;
+    --accent-glow: rgba(16, 185, 129, 0.15);
+    --accent-border: rgba(16, 185, 129, 0.35);
+    --accent-bg-hover: rgba(16, 185, 129, 0.1);
+    --accent-shadow-hover: rgba(16, 185, 129, 0.25);
+    --accent-task-bg: rgba(16, 185, 129, 0.4);
 }
-
-.directory-cat-desc {
-    font-family: 'Space Mono', monospace;
-    font-size: 13px;
-    color: rgba(255, 255, 255, 0.4);
-    margin: 0;
+.directory-card[data-accent="accent-warning"] {
+    --accent-color: #f59e0b;
+    --accent-glow: rgba(245, 158, 11, 0.15);
+    --accent-border: rgba(245, 158, 11, 0.35);
+    --accent-bg-hover: rgba(245, 158, 11, 0.1);
+    --accent-shadow-hover: rgba(245, 158, 11, 0.25);
+    --accent-task-bg: rgba(245, 158, 11, 0.4);
 }
-
-.directory-badge {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    color: rgba(255, 255, 255, 0.35);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-    padding: 0.2rem 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    flex-shrink: 0;
+.directory-card[data-accent="accent-brand"] {
+    --accent-color: #f637e3;
+    --accent-glow: rgba(246, 55, 227, 0.15);
+    --accent-border: rgba(246, 55, 227, 0.35);
+    --accent-bg-hover: rgba(246, 55, 227, 0.1);
+    --accent-shadow-hover: rgba(246, 55, 227, 0.25);
+    --accent-task-bg: rgba(246, 55, 227, 0.4);
 }
-
-/* Glassmorphic card design */
-.directory-card {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 12px;
-    cursor: pointer;
-    box-sizing: border-box;
-    transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
-    text-decoration: none;
-    display: block;
-}
-
-.directory-card:hover, 
-.directory-card--hovered {
-    background: rgba(255, 255, 255, 0.04);
-    transform: translateY(-4px);
-    border-color: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
-}
-
-.directory-card-body {
-    padding: 2.25rem 2rem;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    box-sizing: border-box;
-}
-
-/* Icons with subtle glows */
-.directory-icon-wrap {
-    width: 48px;
-    height: 48px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    font-size: 1.45rem;
-    margin-bottom: 1.5rem;
-    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-}
-
-.directory-card:hover .directory-icon-wrap {
-    transform: scale(1.08);
-}
-
-.directory-card-title {
-    font-family: 'Space Mono', monospace;
-    font-size: 17px;
-    font-weight: 500;
-    color: #ffffff;
-    margin: 0 0 0.75rem 0;
-}
-
-.directory-card-desc-text {
-    font-family: 'Space Mono', monospace;
-    font-size: 13px;
-    color: rgba(255, 255, 255, 0.45);
-    line-height: 1.6;
-    margin: 0 0 2rem 0;
-    flex-grow: 1;
-}
-
-/* Link alignment */
-.directory-card-link {
-    font-family: 'Space Mono', monospace;
-    font-size: 13px;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.5);
-    display: inline-flex;
-    align-items: center;
-    transition: color 0.25s ease;
-}
-
-.directory-card:hover .directory-card-link {
-    color: #ffffff;
-}
-
-.link-arrow {
-    transition: transform 0.25s ease;
-}
-
-.directory-card:hover .link-arrow {
-    transform: translateX(4px);
-}
-
-/* Category Accent Styles */
-.accent-primary {
-    background-color: rgba(59, 130, 246, 0.08);
-    color: #3b82f6;
-    border: 1px solid rgba(59, 130, 246, 0.12);
-}
-
-.directory-card:hover .accent-primary {
-    box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
-    border-color: rgba(59, 130, 246, 0.4);
-}
-
-.accent-success {
-    background-color: rgba(16, 185, 129, 0.08);
-    color: #10b981;
-    border: 1px solid rgba(16, 185, 129, 0.12);
-}
-
-.directory-card:hover .accent-success {
-    box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
-    border-color: rgba(16, 185, 129, 0.4);
-}
-
-.accent-warning {
-    background-color: rgba(245, 158, 11, 0.08);
-    color: #f59e0b;
-    border: 1px solid rgba(245, 158, 11, 0.12);
-}
-
-.directory-card:hover .accent-warning {
-    box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
-    border-color: rgba(245, 158, 11, 0.4);
-}
-
-.accent-brand {
-    background-color: rgba(246, 55, 227, 0.08);
-    color: #f637e3;
-    border: 1px solid rgba(246, 55, 227, 0.12);
-}
-
-.directory-card:hover .accent-brand {
-    box-shadow: 0 0 15px rgba(246, 55, 227, 0.3);
-    border-color: rgba(246, 55, 227, 0.4);
-}
-
-.accent-indigo {
-    background-color: rgba(99, 102, 241, 0.08);
-    color: #6366f1;
-    border: 1px solid rgba(99, 102, 241, 0.12);
-}
-
-.directory-card:hover .accent-indigo {
-    box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
-    border-color: rgba(99, 102, 241, 0.4);
+.directory-card[data-accent="accent-indigo"] {
+    --accent-color: #818cf8;
+    --accent-glow: rgba(129, 140, 248, 0.15);
+    --accent-border: rgba(129, 140, 248, 0.35);
+    --accent-bg-hover: rgba(129, 140, 248, 0.1);
+    --accent-shadow-hover: rgba(129, 140, 248, 0.25);
+    --accent-task-bg: rgba(129, 140, 248, 0.4);
 }
 
 /* --- Dashboard Layout Additions --- */
@@ -253,163 +125,201 @@
     z-index: 2;
 }
 
-/* Category Sidebar */
-.category-sidebar {
-    display: flex;
-    flex-direction: row;
-    gap: 0.5rem;
-    overflow-x: auto;
-    padding-bottom: 1rem;
-    scrollbar-width: none;
-    
-    @media (min-width: 992px) {
-        flex-direction: column;
-        overflow-x: visible;
-        padding-bottom: 0;
-        position: sticky;
-        top: 100px;
-    }
-}
-
-.category-sidebar::-webkit-scrollbar {
-    display: none;
-}
-
-.category-tab {
-    display: flex;
-    align-items: center;
-    padding: 1.25rem;
-    padding-right: 2.5rem;
+/* Wireframe Category Group & Headers */
+.category-group {
+    border: 1px solid rgba(255, 255, 255, 0.08);
     background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    min-width: 260px;
-    position: relative;
-    overflow: hidden;
+    padding: 1.5rem;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    -webkit-tap-highlight-color: transparent;
     
-    @media (min-width: 992px) {
-        min-width: 100%;
-    }
-
-    @media (max-width: 575px) {
-        min-width: 220px;
-        padding: 1rem;
-        padding-right: 2.25rem;
+    @media (min-width: 768px) {
+        padding: 2.5rem;
+        border-radius: 16px;
     }
 }
 
-/* Arrow indicator to signal clickability */
-.category-tab::after {
-    content: '\2192';
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 16px;
-    color: rgba(255, 255, 255, 0.2);
-    transition: color 0.3s ease, transform 0.3s ease;
+.category-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.25s ease;
+    scroll-margin-top: 90px;
 }
 
-.category-tab:hover::after {
-    color: rgba(255, 255, 255, 0.7);
-    transform: translateY(-50%) translateX(3px);
+.category-header:hover {
+    border-bottom-color: rgba(255, 255, 255, 0.2) !important;
 }
 
-.category-tab.active::after {
-    color: rgba(255, 255, 255, 0.5);
+.transition-transform {
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.25s ease !important;
 }
 
-.category-tab:hover {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.18);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+.rotate-90 {
+    transform: rotate(90deg) !important;
 }
 
-/* Touch/tap feedback for mobile */
-.category-tab:active {
-    transform: scale(0.97);
-    transition: transform 0.1s ease;
+.category-header:hover .transition-transform {
+    color: #ffffff !important;
 }
 
-.category-tab.active {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-    transform: none;
-}
-
-.category-tab.active:hover {
-    transform: none;
-}
-
-.category-tab-indicator {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    background: rgba(255, 255, 255, 0.5);
-    transform: scaleY(0);
-    transition: transform 0.3s ease, background-color 0.3s ease;
-    transform-origin: center;
-}
-
-.category-tab.active .category-tab-indicator {
-    transform: scaleY(1);
-    background: #ffffff;
-}
-
-.category-tab:nth-child(1).active .category-tab-indicator { background: #3b82f6; box-shadow: 0 0 10px #3b82f6; }
-.category-tab:nth-child(2).active .category-tab-indicator { background: #f637e3; box-shadow: 0 0 10px #f637e3; }
-.category-tab:nth-child(3).active .category-tab-indicator { background: #6366f1; box-shadow: 0 0 10px #6366f1; }
-
-/* Glow on hover matching each tab's accent */
-.category-tab:nth-child(1):hover { border-color: rgba(59, 130, 246, 0.3); box-shadow: 0 4px 20px rgba(59, 130, 246, 0.1); }
-.category-tab:nth-child(2):hover { border-color: rgba(246, 55, 227, 0.3); box-shadow: 0 4px 20px rgba(246, 55, 227, 0.1); }
-.category-tab:nth-child(3):hover { border-color: rgba(99, 102, 241, 0.3); box-shadow: 0 4px 20px rgba(99, 102, 241, 0.1); }
-
-.category-tab-content {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    margin-left: 0.5rem;
-    min-width: 0;
-    overflow: hidden;
-}
-
-.category-tab-number {
+.category-index-tag {
     font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    color: rgba(255, 255, 255, 0.4);
-    letter-spacing: 0.1em;
+    font-size: clamp(14px, 2vw, 18px);
+    color: rgba(255, 255, 255, 0.35);
+    letter-spacing: 0.15em;
+    font-weight: 500;
 }
 
-.category-tab-title {
+.category-group-title {
     font-family: 'Space Mono', monospace;
-    font-size: 15px;
+    font-size: clamp(18px, 3vw, 24px);
     color: #ffffff;
     font-weight: 500;
-    margin: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
 }
 
-.category-tab-badge {
+.category-group-badge {
     font-family: 'Space Mono', monospace;
     font-size: 10px;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.6);
     background: rgba(255, 255, 255, 0.05);
-    padding: 0.15rem 0.4rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.2rem 0.6rem;
     border-radius: 4px;
-    align-self: flex-start;
-    margin-top: 0.25rem;
+    letter-spacing: 0.05em;
+}
+
+.category-group-subtitle {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.4) !important;
+    line-height: 1.6;
+}
+
+/* Wireframe Tasks List Inside Cards */
+.directory-tasks-container {
+    margin-top: 1.25rem;
+    width: 100%;
+}
+
+.tasks-header {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.35);
+    letter-spacing: 0.08em;
+    font-weight: 600;
+}
+
+.tasks-list {
+    list-style: none;
+    padding-left: 0 !important;
+}
+
+.tasks-list li {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px !important;
+    color: var(--task-color, rgba(255, 255, 255, 0.7)) !important;
+    transition: color 0.25s ease, transform 0.25s ease;
+    margin-bottom: 0.35rem !important;
+    display: flex !important;
+    align-items: flex-start !important;
+}
+
+.directory-card:hover .tasks-list li,
+.directory-card--hovered .tasks-list li {
+    --task-color: rgba(255, 255, 255, 0.95);
+}
+
+.task-marker {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border: 1px solid var(--task-marker-border, rgba(255, 255, 255, 0.5));
+    background: var(--task-marker-bg, transparent);
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+    margin-top: 6px;
+}
+
+.directory-card:hover .task-marker,
+.directory-card--hovered .task-marker {
+    --task-marker-border: var(--accent-color);
+    --task-marker-bg: var(--accent-task-bg);
+    transform: scale(1.2);
+}
+
+.task-name {
+    line-height: 1.4;
+}
+
+/* Card adjustments for wireframe look */
+.directory-card {
+    border: 1px solid var(--card-border-color, rgba(255, 255, 255, 0.16)) !important;
+    background: var(--card-bg-color, rgba(255, 255, 255, 0.03)) !important;
+    box-shadow: var(--card-shadow, none);
+    border-radius: 8px !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.directory-card:hover,
+.directory-card--hovered {
+    --card-border-color: var(--accent-color);
+    --card-bg-color: rgba(255, 255, 255, 0.05);
+    --card-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), 0 0 15px var(--accent-glow);
+}
+
+.directory-card-body {
+    padding: 1.5rem !important;
+}
+
+.directory-icon-wrap {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 1.2rem !important;
+    border-radius: 50% !important;
+    margin-bottom: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.25s ease !important;
+    color: var(--accent-color) !important;
+    border: 1px solid var(--accent-border) !important;
+    background-color: transparent !important;
+}
+
+.directory-card:hover .directory-icon-wrap,
+.directory-card--hovered .directory-icon-wrap {
+    background-color: var(--accent-bg-hover) !important;
+    box-shadow: 0 0 10px var(--accent-shadow-hover) !important;
+    border-color: var(--accent-color) !important;
+}
+
+.directory-card-title {
+    font-size: 15px !important;
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.directory-card-desc-text {
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+    margin-bottom: 1.25rem !important;
+}
+
+.link-arrow {
+    font-size: 1.1rem;
+    color: var(--arrow-color, rgba(255, 255, 255, 0.3)) !important;
+    transform: var(--arrow-transform, translateX(0));
+    transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.directory-card:hover .link-arrow,
+.directory-card--hovered .link-arrow {
+    --arrow-color: #ffffff;
+    --arrow-transform: translateX(4px);
 }
 
 /* Card Grid Animations */
@@ -437,4 +347,36 @@
 .directory-card {
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
+}
+
+/* Mobile (Touch Screen) fallbacks to show active/hovered states by default */
+@media (max-width: 991.98px) {
+    .directory-card {
+        --card-border-color: var(--accent-color) !important;
+        --card-bg-color: rgba(255, 255, 255, 0.05) !important;
+        --card-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), 0 0 15px var(--accent-glow) !important;
+        --arrow-color: #ffffff !important;
+        --arrow-transform: translateX(4px) !important;
+        --task-color: rgba(255, 255, 255, 0.95) !important;
+    }
+    
+    .directory-icon-wrap {
+        background-color: var(--accent-bg-hover) !important;
+        box-shadow: 0 0 10px var(--accent-shadow-hover) !important;
+        border-color: var(--accent-color) !important;
+    }
+    
+    .task-marker {
+        border-color: var(--accent-color) !important;
+        background-color: var(--accent-task-bg) !important;
+        transform: scale(1.2) !important;
+    }
+
+    .category-header {
+        border-bottom-color: rgba(255, 255, 255, 0.2) !important;
+    }
+    
+    .category-header .transition-transform {
+        color: #ffffff !important;
+    }
 }
