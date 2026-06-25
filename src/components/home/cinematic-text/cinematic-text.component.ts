@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy, ElementRef, signal, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { IKVideoDirective } from '@imagekit/angular';
 
 @Component({
   selector: 'app-cinematic-text',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, IKVideoDirective],
   templateUrl: './cinematic-text.component.html',
   styleUrl: './cinematic-text.component.scss'
 })

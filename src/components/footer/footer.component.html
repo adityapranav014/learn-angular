@@ -3,16 +3,21 @@
     <div class="footer-layout">
       <!-- Left Column: Video -->
       <div class="footer-col-video">
-        <video
-          class="footer-video"
-          src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260622_080203_fd7f4f85-3a86-4837-8192-85e7bfe68e75.mp4"
-          autoplay
-          muted
-          loop
-          playsinline
-          preload="auto"
-          aria-hidden="true">
-        </video>
+        @defer (on viewport) {
+          <video
+            #footerVideo
+            class="footer-video"
+            ikSrc="/angular-aditya/footer_video.mp4"
+            muted
+            loop
+            playsinline
+            preload="auto"
+            aria-hidden="true"
+            (loadeddata)="footerVideo.play()">
+          </video>
+        } @placeholder {
+          <div class="footer-video placeholder"></div>
+        }
       </div>
 
       <!-- Right Column: Info -->

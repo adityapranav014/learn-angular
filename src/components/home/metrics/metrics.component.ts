@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy, ElementRef, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { IKVideoDirective } from '@imagekit/angular';
 
 @Component({
   selector: 'app-metrics',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, IKVideoDirective],
   templateUrl: './metrics.component.html',
   styleUrl: './metrics.component.scss'
 })

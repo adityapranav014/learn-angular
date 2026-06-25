@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy, ElementRef, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { IKVideoDirective } from '@imagekit/angular';
 
 @Component({
   selector: 'app-technology',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, IKVideoDirective],
   templateUrl: './technology.component.html',
   styleUrl: './technology.component.scss'
 })

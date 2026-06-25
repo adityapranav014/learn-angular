@@ -1,16 +1,21 @@
 <section class="metrics-section" aria-label="Performance Metrics">
   
   <!-- ── Autoplay Video Background ─────────────────────────────────── -->
+@defer (on viewport) {
   <video
+    #metricsVideo
     class="metrics-video"
-    src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260622_095810_ecea3dd2-fc5e-4e41-8696-4219290b6589.mp4"
-    autoplay
+    ikSrc="/angular-aditya/metrics_video.mp4"
     muted
     loop
     playsinline
     preload="auto"
-    aria-hidden="true">
+    aria-hidden="true"
+    (loadeddata)="metricsVideo.play()">
   </video>
+} @placeholder {
+  <div class="metrics-video placeholder"></div>
+}
 
   <!-- ── Grid Content Wrapper ────────────────────────────────────── -->
   <div class="metrics-content">

@@ -9,12 +9,13 @@ import {
   NgZone
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { IKVideoDirective } from '@imagekit/angular';
 import { ScrambleInComponent } from '../scramble-in/scramble-in.component';
 
 @Component({
   selector: 'app-hero',
   standalone: true,
-  imports: [CommonModule, ScrambleInComponent],
+  imports: [CommonModule, ScrambleInComponent, IKVideoDirective],
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.scss'
 })
@@ -56,7 +57,7 @@ export class HeroComponent implements OnInit, AfterViewInit, OnDestroy {
       const setEndFrame = () => {
         if (video.duration) {
           // Set to just before the absolute end to ensure a frame is rendered
-          video.currentTime = Math.max(0, video.duration - 1.3);
+          // video.currentTime = Math.max(0, video.duration - 1.3);
         }
       };
 
@@ -91,17 +92,28 @@ export class HeroComponent implements OnInit, AfterViewInit, OnDestroy {
       // Lightweight mouse listener — just stores the target value, no DOM work
       this.mouseMoveHandler = (e: MouseEvent) => {
         if (video.duration) {
-          this.targetTime = (e.clientX / window.innerWidth) * video.duration;
+          const raw = (e.clientX / window.innerWidth) * video.duration;
+          // Clamp to avoid seeking to the very start/end — browsers
+          // enter an "ended" state at the boundary and stop responding.
+          this.targetTime = Math.max(0.05, Math.min(raw, video.duration - 0.05));
         }
       };
       window.addEventListener('mousemove', this.mouseMoveHandler, { passive: true });
+
+      // Gate seeks behind the browser's decoder — only seek when the
+      // previous seek has finished. This prevents flooding and freezing.
+      let isSeeking = false;
+
+      video.addEventListener('seeked', () => {
+        isSeeking = false;
+      });
 
       // Single rAF loop for smooth interpolation
       this.isRunning = true;
       const scrubLoop = () => {
         if (!this.isRunning) return;
 
-        if (video.duration) {
+        if (video.duration && !isSeeking) {
           const diff = this.targetTime - this.currentTime;
 
           // Only seek when the difference is meaningful (dead-zone avoids micro-seeks)
@@ -109,6 +121,7 @@ export class HeroComponent implements OnInit, AfterViewInit, OnDestroy {
             // Smooth lerp — 0.12 gives a buttery trailing feel without lag
             this.currentTime += diff * 0.12;
             video.currentTime = this.currentTime;
+            isSeeking = true;
           }
         }
 

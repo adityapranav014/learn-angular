@@ -1,16 +1,21 @@
 <section class="cinematic-section" aria-label="Framework Philosophy">
   
   <!-- ── Autoplay Video Background ─────────────────────────────────── -->
+@defer (on viewport) {
   <video
+    #cinematicVideo
     class="cinematic-video"
-    src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260622_092455_089c54f8-3b03-4966-9df1-e9746063d0ef.mp4"
-    autoplay
+    ikSrc="/angular-aditya/cinematic_text_bg.mp4"
     muted
     loop
     playsinline
     preload="auto"
-    aria-hidden="true">
+    aria-hidden="true"
+    (loadeddata)="cinematicVideo.play()">
   </video>
+} @placeholder {
+  <div class="cinematic-video placeholder"></div>
+}
 
   <!-- ── Top Gradient Overlay ────────────────────────────────────── -->
   <div class="top-overlay" aria-hidden="true"></div>
