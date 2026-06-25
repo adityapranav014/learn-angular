@@ -30,71 +30,109 @@
 
     <div class="directory-grid-container mt-4">
       @for (section of sections; track section.title; let sIndex = $index) {
-        <div class="category-group mb-5">
-          <!-- Category Header -->
-          <div #categoryHeader class="category-header mb-4 pb-2 border-bottom border-secondary border-opacity-10" (click)="toggleAccordion(sIndex, categoryHeader)">
-            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
-              <div class="d-flex align-items-center gap-3">
-                <span class="category-index-tag">0{{ sIndex + 1 }}</span>
-                <h3 class="category-group-title mb-0">{{ section.title }}</h3>
+        <div class="category-group mb-5 position-relative overflow-hidden">
+          @if (sIndex === 0) {
+            <video
+              class="category-bg-video"
+              src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260511_230229_7c9bc431-46cf-489a-948d-e8144d8eb5d4.mp4"
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="auto"
+              aria-hidden="true">
+            </video>
+          }
+          @if (sIndex === 1) {
+            <video
+              class="category-bg-video"
+              src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260210_031346_d87182fb-b0af-4273-84d1-c6fd17d6bf0f.mp4"
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="auto"
+              aria-hidden="true">
+            </video>
+          }
+          @if (sIndex === 2) {
+            <video
+              class="category-bg-video"
+              src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260328_065045_c44942da-53c6-4804-b734-f9e07fc22e08.mp4"
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="auto"
+              aria-hidden="true">
+            </video>
+          }
+          <div class="position-relative z-1">
+            <!-- Category Header -->
+            <div #categoryHeader class="category-header mb-4 pb-2 border-bottom border-secondary border-opacity-10" (click)="toggleAccordion(sIndex, categoryHeader)">
+              <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+                <div class="d-flex align-items-center gap-3">
+                  <span class="category-index-tag">0{{ sIndex + 1 }}</span>
+                  <h3 class="category-group-title mb-0">{{ section.title }}</h3>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                  <span class="category-group-badge">{{ section.items.length }} MODULES</span>
+                  <i class="bi bi-chevron-right fs-5 text-muted transition-transform" 
+                     [class.rotate-90]="activeAccordionIndex === sIndex"></i>
+                </div>
               </div>
-              <div class="d-flex align-items-center gap-2">
-                <span class="category-group-badge">{{ section.items.length }} MODULES</span>
-                <i class="bi bi-chevron-right fs-5 text-muted transition-transform" 
-                   [class.rotate-90]="activeAccordionIndex === sIndex"></i>
-              </div>
+              <p class="category-group-subtitle text-muted mt-2 mb-0">{{ section.subtitle }}</p>
             </div>
-            <p class="category-group-subtitle text-muted mt-2 mb-0">{{ section.subtitle }}</p>
-          </div>
-          
-          <!-- Category Grid -->
-          @if (activeAccordionIndex === sIndex) {
-            <div class="row g-4">
-              @for (item of section.items; track item.path; let itemIndex = $index) {
-                <div class="col-12 col-md-6 col-xl-4 card-entrance" [style.--stagger-delay]="((sIndex * 3 + itemIndex) * 0.05) + 's'">
-                  <div 
-                    class="directory-card h-100"
-                    [attr.data-accent]="item.accentClass"
-                    (mouseenter)="hoveredCard = item.path"
-                    (mouseleave)="hoveredCard = null"
-                    [class.directory-card--hovered]="hoveredCard === item.path"
-                    [routerLink]="item.path">
-                    
-                    <div class="directory-card-body">
+            
+            <!-- Category Grid -->
+            @if (activeAccordionIndex === sIndex) {
+              <div class="row g-4">
+                @for (item of section.items; track item.path; let itemIndex = $index) {
+                  <div class="col-12 col-md-6 col-xl-4 card-entrance" [style.--stagger-delay]="((sIndex * 3 + itemIndex) * 0.05) + 's'">
+                    <div 
+                      class="directory-card h-100"
+                      [attr.data-accent]="item.accentClass"
+                      (mouseenter)="hoveredCard = item.path"
+                      (mouseleave)="hoveredCard = null"
+                      [class.directory-card--hovered]="hoveredCard === item.path"
+                      [routerLink]="item.path">
                       
-                      <!-- Card Top Info -->
-                      <div class="d-flex align-items-center justify-content-between mb-3">
-                        <div class="directory-icon-wrap mb-0" [class]="item.accentClass">
-                          <i class="bi" [class]="item.icon"></i>
+                      <div class="directory-card-body">
+                        
+                        <!-- Card Top Info -->
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                          <div class="directory-icon-wrap mb-0" [class]="item.accentClass">
+                            <i class="bi" [class]="item.icon"></i>
+                          </div>
+                          <i class="bi bi-arrow-right link-arrow text-muted"></i>
                         </div>
-                        <i class="bi bi-arrow-right link-arrow text-muted"></i>
+  
+                        <!-- Topic Title & Description -->
+                        <h5 class="directory-card-title">{{ item.title }}</h5>
+                        <p class="directory-card-desc-text mb-3">{{ item.description }}</p>
+  
+                        <!-- Wireframe Task Index List -->
+                        @if (item.tasks && item.tasks.length > 0) {
+                          <div class="directory-tasks-container mt-auto pt-3 border-top border-secondary border-opacity-10">
+                            <div class="tasks-header text-uppercase mb-2">Index of Tasks</div>
+                            <ul class="tasks-list ps-0 mb-0">
+                              @for (task of item.tasks; track task) {
+                                <li class="d-flex align-items-start">
+                                  <span class="task-marker me-2"></span>
+                                  <span class="task-name">{{ task }}</span>
+                                </li>
+                              }
+                            </ul>
+                          </div>
+                        }
+  
                       </div>
-
-                      <!-- Topic Title & Description -->
-                      <h5 class="directory-card-title">{{ item.title }}</h5>
-                      <p class="directory-card-desc-text mb-3">{{ item.description }}</p>
-
-                      <!-- Wireframe Task Index List -->
-                      @if (item.tasks && item.tasks.length > 0) {
-                        <div class="directory-tasks-container mt-auto pt-3 border-top border-secondary border-opacity-10">
-                          <div class="tasks-header text-uppercase mb-2">Index of Tasks</div>
-                          <ul class="tasks-list ps-0 mb-0">
-                            @for (task of item.tasks; track task) {
-                              <li class="d-flex align-items-start">
-                                <span class="task-marker me-2"></span>
-                                <span class="task-name">{{ task }}</span>
-                              </li>
-                            }
-                          </ul>
-                        </div>
-                      }
-
                     </div>
                   </div>
-                </div>
-              }
-            </div>
-          }
+                }
+              </div>
+            }
+          </div>
         </div>
       }
     </div>

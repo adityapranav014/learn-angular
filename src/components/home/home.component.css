@@ -1,18 +1,30 @@
-/* --- Redesigned Futuristic Dark Directory Section --- */
 .directory-section {
-    background-color: #000000;
-    color: #ffffff;
-    padding: 6rem 0 6rem 0;
+    background-color: #000;
+    color: #fff;
+    padding: 6rem 0;
     position: relative;
     overflow: hidden;
     display: flex;
     flex-direction: column;
 }
 
+.directory-section,
+.directory-section * {
+    font-family: 'Space Mono', monospace;
+}
+
+.directory-card,
+.directory-card-title,
+.directory-card-desc-text,
+.tasks-header,
+.tasks-list li {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+}
+
 .directory-dot-grid {
     position: absolute;
     inset: 0;
-    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
     background-size: 24px 24px;
     pointer-events: none;
     z-index: 0;
@@ -25,9 +37,8 @@
 }
 
 .directory-title {
-    font-family: 'Space Mono', monospace;
     font-size: clamp(24px, 5vw, 42px);
-    color: #ffffff;
+    color: #fff;
     font-weight: 300;
     letter-spacing: -0.02em;
     text-transform: uppercase;
@@ -35,9 +46,8 @@
 }
 
 .directory-subtitle {
-    font-family: 'Space Mono', monospace;
     font-size: 13px;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255,255,255,0.65);
     line-height: 1.6;
     margin: 0;
 
@@ -46,49 +56,52 @@
     }
 }
 
-/* Card Accent-specific Custom Variables */
 .directory-card[data-accent="accent-primary"] {
-    --accent-color: #3b82f6;
-    --accent-glow: rgba(59, 130, 246, 0.15);
-    --accent-border: rgba(59, 130, 246, 0.35);
-    --accent-bg-hover: rgba(59, 130, 246, 0.1);
-    --accent-shadow-hover: rgba(59, 130, 246, 0.25);
-    --accent-task-bg: rgba(59, 130, 246, 0.4);
+    --ac: #3b82f6;
+    --ag: rgba(59,130,246,0.15);
+    --ab: rgba(59,130,246,0.35);
+    --abh: rgba(59,130,246,0.1);
+    --ash: rgba(59,130,246,0.25);
+    --atb: rgba(59,130,246,0.4);
+    --abc: rgba(59,130,246,0.85);
 }
 .directory-card[data-accent="accent-success"] {
-    --accent-color: #10b981;
-    --accent-glow: rgba(16, 185, 129, 0.15);
-    --accent-border: rgba(16, 185, 129, 0.35);
-    --accent-bg-hover: rgba(16, 185, 129, 0.1);
-    --accent-shadow-hover: rgba(16, 185, 129, 0.25);
-    --accent-task-bg: rgba(16, 185, 129, 0.4);
+    --ac: #10b981;
+    --ag: rgba(16,185,129,0.15);
+    --ab: rgba(16,185,129,0.35);
+    --abh: rgba(16,185,129,0.1);
+    --ash: rgba(16,185,129,0.25);
+    --atb: rgba(16,185,129,0.4);
+    --abc: rgba(16,185,129,0.82);
 }
 .directory-card[data-accent="accent-warning"] {
-    --accent-color: #f59e0b;
-    --accent-glow: rgba(245, 158, 11, 0.15);
-    --accent-border: rgba(245, 158, 11, 0.35);
-    --accent-bg-hover: rgba(245, 158, 11, 0.1);
-    --accent-shadow-hover: rgba(245, 158, 11, 0.25);
-    --accent-task-bg: rgba(245, 158, 11, 0.4);
+    --ac: #f59e0b;
+    --ag: rgba(245,158,11,0.15);
+    --ab: rgba(245,158,11,0.35);
+    --abh: rgba(245,158,11,0.1);
+    --ash: rgba(245,158,11,0.25);
+    --atb: rgba(245,158,11,0.4);
+    --abc: rgba(245,158,11,0.82);
 }
 .directory-card[data-accent="accent-brand"] {
-    --accent-color: #f637e3;
-    --accent-glow: rgba(246, 55, 227, 0.15);
-    --accent-border: rgba(246, 55, 227, 0.35);
-    --accent-bg-hover: rgba(246, 55, 227, 0.1);
-    --accent-shadow-hover: rgba(246, 55, 227, 0.25);
-    --accent-task-bg: rgba(246, 55, 227, 0.4);
+    --ac: #f637e3;
+    --ag: rgba(246,55,227,0.15);
+    --ab: rgba(246,55,227,0.35);
+    --abh: rgba(246,55,227,0.1);
+    --ash: rgba(246,55,227,0.25);
+    --atb: rgba(246,55,227,0.4);
+    --abc: rgba(246,55,227,0.82);
 }
 .directory-card[data-accent="accent-indigo"] {
-    --accent-color: #818cf8;
-    --accent-glow: rgba(129, 140, 248, 0.15);
-    --accent-border: rgba(129, 140, 248, 0.35);
-    --accent-bg-hover: rgba(129, 140, 248, 0.1);
-    --accent-shadow-hover: rgba(129, 140, 248, 0.25);
-    --accent-task-bg: rgba(129, 140, 248, 0.4);
+    --ac: #818cf8;
+    --ag: rgba(129,140,248,0.15);
+    --ab: rgba(129,140,248,0.35);
+    --abh: rgba(129,140,248,0.1);
+    --ash: rgba(129,140,248,0.25);
+    --atb: rgba(129,140,248,0.4);
+    --abc: rgba(129,140,248,0.85);
 }
 
-/* --- Dashboard Layout Additions --- */
 .directory-video {
     position: absolute;
     inset: 0;
@@ -97,14 +110,14 @@
     object-fit: cover;
     pointer-events: none;
     z-index: 0;
-    filter: brightness(0.22) contrast(1.1) saturate(0.8);
+    filter: brightness(0.45) contrast(1.1) saturate(0.8);
 }
 
 .directory-watermark {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%,-50%);
     font-family: 'Anton SC', sans-serif;
     font-size: clamp(80px, 20vw, 350px);
     text-transform: uppercase;
@@ -113,7 +126,7 @@
     pointer-events: none;
     z-index: 0;
     opacity: 0.04;
-    background: radial-gradient(circle, rgba(142, 127, 148, 0) 0%, #8E7F94 70%);
+    background: radial-gradient(circle, rgba(142,127,148,0) 0%, #8E7F94 70%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -125,10 +138,9 @@
     z-index: 2;
 }
 
-/* Wireframe Category Group & Headers */
 .category-group {
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(0,0,0,0.25);
     border-radius: 12px;
     padding: 1.5rem;
     backdrop-filter: blur(12px);
@@ -141,15 +153,11 @@
 }
 
 .category-header {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.2);
     cursor: pointer;
     user-select: none;
     transition: all 0.25s ease;
     scroll-margin-top: 90px;
-}
-
-.category-header:hover {
-    border-bottom-color: rgba(255, 255, 255, 0.2) !important;
 }
 
 .transition-transform {
@@ -161,54 +169,48 @@
 }
 
 .category-header:hover .transition-transform {
-    color: #ffffff !important;
+    color: #fff !important;
 }
 
 .category-index-tag {
-    font-family: 'Space Mono', monospace;
     font-size: clamp(14px, 2vw, 18px);
-    color: rgba(255, 255, 255, 0.35);
+    color: rgba(255,255,255,0.35);
     letter-spacing: 0.15em;
     font-weight: 500;
 }
 
 .category-group-title {
-    font-family: 'Space Mono', monospace;
     font-size: clamp(18px, 3vw, 24px);
-    color: #ffffff;
+    color: #fff;
     font-weight: 500;
     letter-spacing: -0.01em;
     text-transform: uppercase;
 }
 
 .category-group-badge {
-    font-family: 'Space Mono', monospace;
     font-size: 10px;
-    color: rgba(255, 255, 255, 0.6);
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.2);
     padding: 0.2rem 0.6rem;
     border-radius: 4px;
     letter-spacing: 0.05em;
 }
 
 .category-group-subtitle {
-    font-family: 'Space Mono', monospace;
     font-size: 13px;
-    color: rgba(255, 255, 255, 0.4) !important;
+    color: rgba(255,255,255,0.65) !important;
     line-height: 1.6;
 }
 
-/* Wireframe Tasks List Inside Cards */
 .directory-tasks-container {
     margin-top: 1.25rem;
     width: 100%;
 }
 
 .tasks-header {
-    font-family: 'Space Mono', monospace;
     font-size: 10px;
-    color: rgba(255, 255, 255, 0.35);
+    color: rgba(255,255,255,0.55);
     letter-spacing: 0.08em;
     font-weight: 600;
 }
@@ -219,9 +221,8 @@
 }
 
 .tasks-list li {
-    font-family: 'Space Mono', monospace;
     font-size: 12px !important;
-    color: var(--task-color, rgba(255, 255, 255, 0.7)) !important;
+    color: var(--tc, rgba(255,255,255,0.85)) !important;
     transition: color 0.25s ease, transform 0.25s ease;
     margin-bottom: 0.35rem !important;
     display: flex !important;
@@ -230,15 +231,15 @@
 
 .directory-card:hover .tasks-list li,
 .directory-card--hovered .tasks-list li {
-    --task-color: rgba(255, 255, 255, 0.95);
+    --tc: #fff;
 }
 
 .task-marker {
     display: inline-block;
     width: 6px;
     height: 6px;
-    border: 1px solid var(--task-marker-border, rgba(255, 255, 255, 0.5));
-    background: var(--task-marker-bg, transparent);
+    border: 1px solid var(--tmb, rgba(255,255,255,0.5));
+    background: var(--tmg, transparent);
     transition: all 0.25s ease;
     flex-shrink: 0;
     margin-top: 6px;
@@ -246,8 +247,8 @@
 
 .directory-card:hover .task-marker,
 .directory-card--hovered .task-marker {
-    --task-marker-border: var(--accent-color);
-    --task-marker-bg: var(--accent-task-bg);
+    --tmb: var(--ac);
+    --tmg: var(--atb);
     transform: scale(1.2);
 }
 
@@ -255,20 +256,21 @@
     line-height: 1.4;
 }
 
-/* Card adjustments for wireframe look */
 .directory-card {
-    border: 1px solid var(--card-border-color, rgba(255, 255, 255, 0.16)) !important;
-    background: var(--card-bg-color, rgba(255, 255, 255, 0.03)) !important;
-    box-shadow: var(--card-shadow, none);
+    border: 1px solid var(--cbc, var(--abc)) !important;
+    background: var(--cbg, rgba(10,10,10,0.72)) !important;
+    box-shadow: var(--csh, none);
     border-radius: 8px !important;
     transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
 }
 
 .directory-card:hover,
 .directory-card--hovered {
-    --card-border-color: var(--accent-color);
-    --card-bg-color: rgba(255, 255, 255, 0.05);
-    --card-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), 0 0 15px var(--accent-glow);
+    --cbc: var(--ac);
+    --cbg: rgba(0,0,0,0.85);
+    --csh: 0 12px 30px rgba(0,0,0,0.6), 0 0 15px var(--ag);
 }
 
 .directory-card-body {
@@ -285,44 +287,46 @@
     align-items: center !important;
     justify-content: center !important;
     transition: all 0.25s ease !important;
-    color: var(--accent-color) !important;
-    border: 1px solid var(--accent-border) !important;
+    color: var(--ac) !important;
+    border: 1px solid var(--ab) !important;
     background-color: transparent !important;
 }
 
 .directory-card:hover .directory-icon-wrap,
 .directory-card--hovered .directory-icon-wrap {
-    background-color: var(--accent-bg-hover) !important;
-    box-shadow: 0 0 10px var(--accent-shadow-hover) !important;
-    border-color: var(--accent-color) !important;
+    background-color: var(--abh) !important;
+    box-shadow: 0 0 10px var(--ash) !important;
+    border-color: var(--ac) !important;
 }
 
 .directory-card-title {
     font-size: 15px !important;
     margin-top: 0.5rem !important;
     margin-bottom: 0.5rem !important;
+    color: var(--cbc, var(--abc)) !important;
+    transition: color 0.25s ease !important;
 }
 
 .directory-card-desc-text {
     font-size: 12px !important;
     line-height: 1.5 !important;
     margin-bottom: 1.25rem !important;
+    color: rgba(255,255,255,0.82) !important;
 }
 
 .link-arrow {
     font-size: 1.1rem;
-    color: var(--arrow-color, rgba(255, 255, 255, 0.3)) !important;
-    transform: var(--arrow-transform, translateX(0));
+    color: var(--arc, rgba(255,255,255,0.3)) !important;
+    transform: var(--art, translateX(0));
     transition: transform 0.25s ease, color 0.25s ease;
 }
 
 .directory-card:hover .link-arrow,
 .directory-card--hovered .link-arrow {
-    --arrow-color: #ffffff;
-    --arrow-transform: translateX(4px);
+    --arc: #fff;
+    --art: translateX(4px);
 }
 
-/* Card Grid Animations */
 .cards-grid {
     position: relative;
 }
@@ -344,39 +348,44 @@
     opacity: 0;
 }
 
-.directory-card {
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-}
-
-/* Mobile (Touch Screen) fallbacks to show active/hovered states by default */
 @media (max-width: 991.98px) {
     .directory-card {
-        --card-border-color: var(--accent-color) !important;
-        --card-bg-color: rgba(255, 255, 255, 0.05) !important;
-        --card-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), 0 0 15px var(--accent-glow) !important;
-        --arrow-color: #ffffff !important;
-        --arrow-transform: translateX(4px) !important;
-        --task-color: rgba(255, 255, 255, 0.95) !important;
+        --cbc: var(--ac) !important;
+        --cbg: rgba(0,0,0,0.8) !important;
+        --csh: 0 12px 30px rgba(0,0,0,0.6), 0 0 15px var(--ag) !important;
+        --arc: #fff !important;
+        --art: translateX(4px) !important;
+        --tc: #fff !important;
     }
     
     .directory-icon-wrap {
-        background-color: var(--accent-bg-hover) !important;
-        box-shadow: 0 0 10px var(--accent-shadow-hover) !important;
-        border-color: var(--accent-color) !important;
+        background-color: var(--abh) !important;
+        box-shadow: 0 0 10px var(--ash) !important;
+        border-color: var(--ac) !important;
     }
     
     .task-marker {
-        border-color: var(--accent-color) !important;
-        background-color: var(--accent-task-bg) !important;
+        border-color: var(--ac) !important;
+        background-color: var(--atb) !important;
         transform: scale(1.2) !important;
     }
 
     .category-header {
-        border-bottom-color: rgba(255, 255, 255, 0.2) !important;
+        border-bottom-color: rgba(255,255,255,0.2) !important;
     }
     
     .category-header .transition-transform {
-        color: #ffffff !important;
+        color: #fff !important;
     }
+}
+
+.category-bg-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    z-index: 0;
+    filter: brightness(0.45) contrast(1.1) saturate(0.8);
 }
