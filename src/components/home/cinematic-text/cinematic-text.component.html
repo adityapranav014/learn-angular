@@ -6,13 +6,13 @@
       #cinematicVideo
       class="cinematic-video"
       ikSrc="/angular-aditya/cinematic_text_bg.mp4"
-      autoplay
-      muted
-      loop
-      playsinline
+      [autoplay]="true"
+      [muted]="true"
+      [loop]="true"
+      [playsInline]="true"
       preload="auto"
       aria-hidden="true"
-      (loadeddata)="cinematicVideo.play()">
+      (canplay)="cinematicVideo.play()">
     </video>
 } @placeholder {
   <div class="cinematic-video placeholder"></div>

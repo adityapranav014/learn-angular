@@ -6,13 +6,13 @@
       #metricsVideo
       class="metrics-video"
       ikSrc="/angular-aditya/metrics_video.mp4"
-      autoplay
-      muted
-      loop
-      playsinline
+      [autoplay]="true"
+      [muted]="true"
+      [loop]="true"
+      [playsInline]="true"
       preload="auto"
       aria-hidden="true"
-      (loadeddata)="metricsVideo.play()">
+      (canplay)="metricsVideo.play()">
     </video>
 } @placeholder {
   <div class="metrics-video placeholder"></div>

@@ -8,13 +8,13 @@
             #footerVideo
             class="footer-video"
             ikSrc="/angular-aditya/footer_video.mp4"
-            autoplay
-            muted
-            loop
-            playsinline
+            [autoplay]="true"
+            [muted]="true"
+            [loop]="true"
+            [playsInline]="true"
             preload="auto"
             aria-hidden="true"
-            (loadeddata)="footerVideo.play()">
+            (canplay)="footerVideo.play()">
           </video>
         } @placeholder {
           <div class="footer-video placeholder"></div>
