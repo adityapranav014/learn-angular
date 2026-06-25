@@ -10,7 +10,9 @@
   box-sizing: border-box;
 
   // Global resets inside hero to ensure styling consistency
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     box-sizing: border-box;
   }
 
@@ -25,6 +27,7 @@
     .hero-content {
       opacity: 1;
     }
+
     .hero-watermark {
       opacity: 0.15; // Subtle presence for watermark
     }
@@ -40,7 +43,7 @@
   object-fit: cover;
   pointer-events: none;
   z-index: 0;
-  filter: brightness(0.7) contrast(1.1); // Darkened significantly for readability
+  filter: brightness(0.85) contrast(1.05);
 }
 
 // Dot grid overlay (subtle futuristic style)
@@ -80,7 +83,7 @@
   white-space: nowrap;
   pointer-events: none;
   z-index: 1;
-  
+
   // Radial color gradient effect
   background: radial-gradient(circle, rgba(142, 127, 148, 0) 10%, #8E7F94 70%);
   -webkit-background-clip: text;
@@ -149,8 +152,8 @@
   font-size: clamp(32px, 8vw, 96px); // Slightly smaller base for mobile
   margin: 0;
   text-transform: uppercase;
-  text-shadow: 0 4px 16px rgba(0,0,0,0.6); // Added for high contrast against background
-  
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.6); // Added for high contrast against background
+
   // Ensure the scramble element inline-blocks to prevent layout shifting
   ::ng-deep app-scramble-in {
     display: inline-block;
@@ -171,7 +174,7 @@
   line-height: 1.5;
   margin: 0;
   padding-right: 1rem;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.8); // Added for readability against video background
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8); // Added for readability against video background
 
   @media (min-width: 576px) {
     font-size: 14px;
@@ -184,7 +187,7 @@
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 1s cubic-bezier(0.215, 0.61, 0.355, 1) 0.3s,
-              transform 1s cubic-bezier(0.215, 0.61, 0.355, 1) 0.3s;
+  transform 1s cubic-bezier(0.215, 0.61, 0.355, 1) 0.3s;
 
   .hero-entrance-done & {
     opacity: 1;
@@ -244,7 +247,7 @@
       border-color: rgba(255, 255, 255, 0.95);
       transform: translateY(2px);
     }
-    
+
     .scroll-text {
       color: rgba(255, 255, 255, 0.95);
     }
@@ -256,13 +259,16 @@
     opacity: 1;
     transform: translateY(0);
   }
+
   30% {
     opacity: 1;
   }
+
   80% {
     opacity: 0;
     transform: translateY(12px);
   }
+
   100% {
     opacity: 0;
     transform: translateY(0);
