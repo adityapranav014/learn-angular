@@ -379,6 +379,8 @@
     flex-direction: column;
     gap: 0.25rem;
     margin-left: 0.5rem;
+    min-width: 0;
+    overflow: hidden;
 }
 
 .category-tab-number {
@@ -395,6 +397,8 @@
     font-weight: 500;
     margin: 0;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .category-tab-badge {
