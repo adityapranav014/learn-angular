@@ -18,7 +18,7 @@
 .directory-card-desc-text,
 .tasks-header,
 .tasks-list li {
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+    font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif !important;
 }
 
 .directory-dot-grid {
