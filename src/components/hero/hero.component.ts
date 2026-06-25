@@ -47,28 +47,6 @@ export class HeroComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     const video = this.heroVideoRef.nativeElement;
 
-    // Check if the device is a touch device (mobile/tablet)
-    const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-
-    if (isTouchDevice) {
-      // On mobile, the user wants the video paused at the very end frame.
-      video.pause();
-      
-      const setEndFrame = () => {
-        if (video.duration) {
-          // Set to just before the absolute end to ensure a frame is rendered
-          // video.currentTime = Math.max(0, video.duration - 1.3);
-        }
-      };
-
-      if (video.readyState >= 1) {
-        setEndFrame();
-      } else {
-        video.onloadedmetadata = setEndFrame;
-      }
-      return; // Exit early so we don't attach mouse listeners
-    }
-
     // --- Desktop / Mouse Behavior ---
     video.pause();
     // Default to center frame so it looks perfect before the user moves their mouse
@@ -100,28 +78,24 @@ export class HeroComponent implements OnInit, AfterViewInit, OnDestroy {
       };
       window.addEventListener('mousemove', this.mouseMoveHandler, { passive: true });
 
-      // Gate seeks behind the browser's decoder — only seek when the
-      // previous seek has finished. This prevents flooding and freezing.
-      let isSeeking = false;
-
-      video.addEventListener('seeked', () => {
-        isSeeking = false;
-      });
-
       // Single rAF loop for smooth interpolation
       this.isRunning = true;
       const scrubLoop = () => {
         if (!this.isRunning) return;
 
-        if (video.duration && !isSeeking) {
+        if (video.duration) {
           const diff = this.targetTime - this.currentTime;
 
-          // Only seek when the difference is meaningful (dead-zone avoids micro-seeks)
-          if (Math.abs(diff) > 0.01) {
-            // Smooth lerp — 0.12 gives a buttery trailing feel without lag
+          // 1. Update the animated currentTime smoothly at 60 FPS in memory
+          if (Math.abs(diff) > 0.005) {
             this.currentTime += diff * 0.12;
+          } else {
+            this.currentTime = this.targetTime;
+          }
+
+          // 2. Only seek if the video decoder is not busy and there is a meaningful change
+          if (!video.seeking && Math.abs(video.currentTime - this.currentTime) > 0.01) {
             video.currentTime = this.currentTime;
-            isSeeking = true;
           }
         }
 
