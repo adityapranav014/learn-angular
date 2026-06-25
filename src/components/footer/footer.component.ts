@@ -1,12 +1,11 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { LogoComponent } from '../logo/logo.component';
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [CommonModule, LogoComponent],
+  imports: [CommonModule],
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.css']
 })
