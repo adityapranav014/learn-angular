@@ -2,17 +2,18 @@
   
   <!-- ── Autoplay Video Background ─────────────────────────────────── -->
 @defer (on viewport) {
-  <video
-    #cinematicVideo
-    class="cinematic-video"
-    ikSrc="/angular-aditya/cinematic_text_bg.mp4"
-    muted
-    loop
-    playsinline
-    preload="auto"
-    aria-hidden="true"
-    (loadeddata)="cinematicVideo.play()">
-  </video>
+    <video
+      #cinematicVideo
+      class="cinematic-video"
+      ikSrc="/angular-aditya/cinematic_text_bg.mp4"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      aria-hidden="true"
+      (loadeddata)="cinematicVideo.play()">
+    </video>
 } @placeholder {
   <div class="cinematic-video placeholder"></div>
 }

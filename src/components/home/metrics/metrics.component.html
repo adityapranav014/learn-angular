@@ -2,17 +2,18 @@
   
   <!-- ── Autoplay Video Background ─────────────────────────────────── -->
 @defer (on viewport) {
-  <video
-    #metricsVideo
-    class="metrics-video"
-    ikSrc="/angular-aditya/metrics_video.mp4"
-    muted
-    loop
-    playsinline
-    preload="auto"
-    aria-hidden="true"
-    (loadeddata)="metricsVideo.play()">
-  </video>
+    <video
+      #metricsVideo
+      class="metrics-video"
+      ikSrc="/angular-aditya/metrics_video.mp4"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      aria-hidden="true"
+      (loadeddata)="metricsVideo.play()">
+    </video>
 } @placeholder {
   <div class="metrics-video placeholder"></div>
 }

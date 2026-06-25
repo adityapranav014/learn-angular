@@ -2,17 +2,18 @@
   
   <!-- ── Autoplay Video Background ─────────────────────────────────── -->
 @defer (on viewport) {
-  <video
-    #techVideo
-    class="technology-video"
-    ikSrc="/angular-aditya/technology_video.mp4"
-    muted
-    loop
-    playsinline
-    preload="auto"
-    aria-hidden="true"
-    (loadeddata)="techVideo.play()">
-  </video>
+    <video
+      #techVideo
+      class="technology-video"
+      ikSrc="/angular-aditya/technology_video.mp4"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      aria-hidden="true"
+      (loadeddata)="techVideo.play()">
+    </video>
 } @placeholder {
   <div class="technology-video placeholder"></div>
 }
