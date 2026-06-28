@@ -2,7 +2,7 @@
 $ng-magenta: #F637E3;
 $text-dark: #202124;
 $text-muted: #5f6368;
-$track-color: #e5e7eb;
+$track-color: var(--bs-border-color);
 
 .text-dark {
     color: $text-dark !important;
@@ -116,7 +116,7 @@ $track-color: #e5e7eb;
 /* Premium Header Styling */
 .custom-header-border {
     /* A softer, much cleaner border than the default Bootstrap gray */
-    border-bottom: 1px solid #f3f4f6;
+    border-bottom: 1px solid var(--bs-border-color);
 }
 
 .letter-spacing-wide {

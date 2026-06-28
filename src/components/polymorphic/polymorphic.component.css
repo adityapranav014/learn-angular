@@ -25,12 +25,12 @@
 }
 
 .submenu-btn:hover {
-  background-color: #fdf4ff;
+  background-color: rgba(246, 55, 227, 0.1);
   color: #F637E3 !important;
 }
 
 .submenu-btn.active-submenu {
-  background-color: #fdf4ff !important;
+  background-color: rgba(246, 55, 227, 0.1) !important;
   color: #F637E3 !important;
   font-weight: 600;
 }
@@ -74,10 +74,10 @@
 
 /* --- Dynamic Layout Adjustments --- */
 .form-container {
-  background-color: #fafbfc;
+  background-color: var(--bs-tertiary-bg);
   border-radius: 0.75rem;
   padding: 1.5rem;
-  border: 1px dashed rgba(0, 0, 0, 0.08);
+  border: 1px dashed var(--bs-border-color);
   min-height: 250px;
 }
 

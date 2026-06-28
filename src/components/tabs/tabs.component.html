@@ -3,7 +3,7 @@
   <!-- Header -->
   <div class="row align-items-center mb-4">
     <div class="col-auto">
-      <div class="d-flex align-items-center gap-2 brand-text bg-white px-3 py-2 border text-brand rounded-2">
+      <div class="d-flex align-items-center gap-2 brand-text bg-body px-3 py-2 border text-brand rounded-2">
         <i class="bi bi-segmented-nav fs-5"></i>
         <span class="vr opacity-25 mx-1"></span>
         <span class="fw-bold" style="font-size: 0.95rem;">Dynamic Tab Selection</span>
@@ -19,14 +19,14 @@
 
         <!-- Task Card -->
         <div class="card shadow-sm border-0">
-          <div class="card-header bg-white border-bottom-0 pt-3 pb-2">
+          <div class="card-header bg-body border-bottom-0 pt-3 pb-2">
             <h5 class="card-title text-secondary mb-0 fw-bold">
               <i class="bi bi-clipboard-data-fill me-2 brand-color"></i>Task 2
             </h5>
           </div>
-          <div class="card-body bg-white rounded-bottom">
+          <div class="card-body bg-body rounded-bottom">
             <div class="text-start pb-2">
-              <h5 class="fw-bold text-dark">Dynamic Tab Selection</h5>
+              <h5 class="fw-bold text-body">Dynamic Tab Selection</h5>
             </div>
             <ul class="mb-0 text-muted small">
   <li class="mb-2"><strong>Dynamic Tab Selector</strong>: Track <code>activeTab</code> state in component state.</li>
@@ -50,7 +50,7 @@
             <i class="bi bi-play-circle me-2"></i>Live Solution
           </h5>
         </div>
-        <div class="card-body bg-white rounded-bottom p-4 d-flex flex-column">
+        <div class="card-body bg-body rounded-bottom p-4 d-flex flex-column">
 
 
           <!-- Tabs Header (Bootstrap Tabs Styling) -->
@@ -77,11 +77,11 @@
 
             <!-- Tab 1: Basic Details -->
             @if (activeTab === 'basic') {
-            <div class="tab-pane active animate__animated animate__fadeIn p-4 border border-top-0 rounded-bottom bg-light flex-grow-1 d-flex flex-column" id="basicDiv">
-              <h5 class="fw-bold text-dark mb-3">Basic Details</h5>
+            <div class="tab-pane active animate__animated animate__fadeIn p-4 border border-top-0 rounded-bottom bg-body-tertiary flex-grow-1 d-flex flex-column" id="basicDiv">
+              <h5 class="fw-bold text-body mb-3">Basic Details</h5>
               
               <!-- Skeleton Loader: Profile Card Layout -->
-              <div class="card border-0 bg-white p-4 rounded-3 shadow-xs w-100">
+              <div class="card border-0 bg-body p-4 rounded-3 shadow-xs w-100">
                 <div class="d-flex align-items-center gap-3 mb-3 placeholder-glow">
                   <!-- Circular Avatar placeholder -->
                   <div class="placeholder rounded-circle" style="width: 50px; height: 50px;"></div>
@@ -100,16 +100,16 @@
 
             <!-- Tab 2: Project Details -->
             @if (activeTab === 'project') {
-            <div class="tab-pane active animate__animated animate__fadeIn p-4 border border-top-0 rounded-bottom bg-light flex-grow-1 d-flex flex-column" id="projectDiv">
-              <h5 class="fw-bold text-dark mb-3">Project Details</h5>
+            <div class="tab-pane active animate__animated animate__fadeIn p-4 border border-top-0 rounded-bottom bg-body-tertiary flex-grow-1 d-flex flex-column" id="projectDiv">
+              <h5 class="fw-bold text-body mb-3">Project Details</h5>
               
               <!-- Skeleton Loader: List Row Layout -->
               <div class="d-flex flex-column gap-3 placeholder-glow">
-                <div class="card border-0 bg-white p-3 rounded-3 shadow-xs">
+                <div class="card border-0 bg-body p-3 rounded-3 shadow-xs">
                   <span class="placeholder col-8 mb-2 rounded"></span>
                   <span class="placeholder col-4 rounded"></span>
                 </div>
-                <div class="card border-0 bg-white p-3 rounded-3 shadow-xs">
+                <div class="card border-0 bg-body p-3 rounded-3 shadow-xs">
                   <span class="placeholder col-6 mb-2 rounded"></span>
                   <span class="placeholder col-3 rounded"></span>
                 </div>
@@ -119,13 +119,13 @@
 
             <!-- Tab 3: Family Details -->
             @if (activeTab === 'family') {
-            <div class="tab-pane active animate__animated animate__fadeIn p-4 border border-top-0 rounded-bottom bg-light flex-grow-1 d-flex flex-column" id="familyDiv">
-              <h5 class="fw-bold text-dark mb-3">Family Details</h5>
+            <div class="tab-pane active animate__animated animate__fadeIn p-4 border border-top-0 rounded-bottom bg-body-tertiary flex-grow-1 d-flex flex-column" id="familyDiv">
+              <h5 class="fw-bold text-body mb-3">Family Details</h5>
               
               <!-- Skeleton Loader: Grid Card Layout -->
               <div class="row g-3 placeholder-glow">
                 <div class="col-md-6 col-12">
-                  <div class="card border-0 bg-white p-3 rounded-3 shadow-xs d-flex flex-row align-items-center gap-3">
+                  <div class="card border-0 bg-body p-3 rounded-3 shadow-xs d-flex flex-row align-items-center gap-3">
                     <div class="placeholder rounded-circle" style="width: 40px; height: 40px;"></div>
                     <div class="flex-grow-1">
                       <span class="placeholder col-7 d-block mb-2 rounded"></span>
@@ -134,7 +134,7 @@
                   </div>
                 </div>
                 <div class="col-md-6 col-12">
-                  <div class="card border-0 bg-white p-3 rounded-3 shadow-xs d-flex flex-row align-items-center gap-3">
+                  <div class="card border-0 bg-body p-3 rounded-3 shadow-xs d-flex flex-row align-items-center gap-3">
                     <div class="placeholder rounded-circle" style="width: 40px; height: 40px;"></div>
                     <div class="flex-grow-1">
                       <span class="placeholder col-6 d-block mb-2 rounded"></span>

@@ -1,5 +1,5 @@
 .nav-tabs {
-  border-bottom: 2px solid #e2e8f0;
+  border-bottom: 2px solid var(--bs-border-color);
 }
 
 .nav-tabs .nav-item {
@@ -7,7 +7,7 @@
 }
 
 .tab-pane {
-  border-color: #e2e8f0 !important;
+  border-color: var(--bs-border-color) !important;
 }
 
 .nav-tabs .nav-link {
@@ -30,11 +30,13 @@
   color: #F637E3;
   border-bottom: 2px solid #F637E3;
   background: transparent;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 /* Custom Focus Highlight for Input Fields */
 .input-group {
-  border: 1.5px solid #e2e8f0;
+  border: 1.5px solid var(--bs-border-color);
   border-radius: 0.5rem;
   transition: all 0.2s ease-in-out;
   overflow: hidden;
@@ -47,9 +49,9 @@
 }
 
 .input-group-text {
-  background-color: #f8fafc !important;
+  background-color: var(--bs-tertiary-bg) !important;
   border: none !important;
-  color: #64748b !important;
+  color: var(--bs-secondary-color) !important;
   padding-left: 1rem;
   padding-right: 0.75rem;
 }
@@ -68,7 +70,7 @@
   background: #f1f5f9;
   height: 6px;
   border-radius: 10px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--bs-border-color);
 }
 
 .form-range.range-magenta::-webkit-slider-thumb {
