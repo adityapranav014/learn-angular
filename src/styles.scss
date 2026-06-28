@@ -83,6 +83,10 @@
   animation: smoothFlow 10s ease infinite;
 }
 
+[data-bs-theme="dark"] .gradient-animated {
+  background: linear-gradient(135deg, #2b0c48, #3b0833, #4f0627);
+}
+
 @keyframes smoothFlow {
   0% {
     background-position: 0% 50%;
