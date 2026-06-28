@@ -88,9 +88,11 @@
                                     <h5 class="fw-bold text-dark mb-0" [innerHTML]="section.heading"></h5>
                                 </div>
                                 <div class="study-section-body text-dark mb-3" [innerHTML]="section.content"></div>
-                                @if (section.mermaidDefinition) {
-                                <div class="mt-4 pt-3 border-top border-light">
-                                    <app-mermaid-viewer [definition]="section.mermaidDefinition"></app-mermaid-viewer>
+                                @if (section.mermaidDefinitions && section.mermaidDefinitions.length > 0) {
+                                <div class="mt-4 pt-3 border-top border-light d-flex flex-column gap-4">
+                                    @for (def of section.mermaidDefinitions; track def) {
+                                        <app-mermaid-viewer [definition]="def"></app-mermaid-viewer>
+                                    }
                                 </div>
                                 }
                             </div>
