@@ -53,7 +53,7 @@
                     <!-- Left: Content Card -->
                     <div class="focus-panel focus-panel-left" [style.width.%]="splitPercent()">
                         <div class="card h-100 border-0 shadow-sm" [class.topic-fullscreen]="isTopicFullscreen()">
-                            <div class="card-header bg-white border-bottom-0 pt-3 pb-2 d-flex align-items-center justify-content-between">
+                            <div class="card-header bg-body border-bottom-0 pt-3 pb-2 d-flex align-items-center justify-content-between gap-2">
                                 <div ngbDropdown class="topic-dropdown">
                                     <button type="button" class="topic-dropdown-toggle" ngbDropdownToggle id="versionDropdownCard">
                                         <span class="topic-dropdown-item-index">{{ activeVersionIndex() }}</span>
@@ -77,19 +77,37 @@
                                         }
                                     </div>
                                 </div>
-                                <button class="btn btn-sm btn-light border-0 p-1 lh-1" type="button"
-                                    [ngbTooltip]="isTopicFullscreen() ? 'Exit fullscreen' : 'Fullscreen'" placement="left"
-                                    (click)="toggleTopicFullscreen(); $event.stopPropagation()">
-                                    <i class="bi" [class.bi-fullscreen]="!isTopicFullscreen()" [class.bi-fullscreen-exit]="isTopicFullscreen()"></i>
-                                </button>
-                            </div>
-                            <div class="card-body bg-white rounded-bottom">
-                                <div class="d-flex align-items-center gap-2 mb-3">
-                                    <h5 class="fw-bold text-dark mb-0" [innerHTML]="section.heading"></h5>
+                                <div class="d-flex align-items-center gap-2">
+                                    @if (isTopicFullscreen() && activeSections().length > 0) {
+                                    <div class="d-flex gap-1 align-items-center flex-shrink-0">
+                                        <button class="btn btn-sm btn-light border" (click)="prevSlide()" title="Previous">
+                                            <i class="bi bi-chevron-left"></i>
+                                        </button>
+                                        <!-- Tablet/Desktop: numbered buttons -->
+                                        @for (sec of activeSections(); track sec.heading; let k = $index) {
+                                        <button class="btn btn-sm d-none d-sm-inline-flex" [class.btn-brand]="activeIndex === k"
+                                            [class.btn-outline-secondary]="activeIndex !== k" (click)="goToSlide(k)"
+                                            [title]="sec.heading">{{ k + 1 }}</button>
+                                        }
+                                        <button class="btn btn-sm btn-light border" (click)="nextSlide()" title="Next">
+                                            <i class="bi bi-chevron-right"></i>
+                                        </button>
+                                    </div>
+                                    }
+                                    <button class="btn btn-sm btn-light border-0 p-1 lh-1" type="button"
+                                        [ngbTooltip]="isTopicFullscreen() ? 'Exit fullscreen' : 'Fullscreen'" placement="left"
+                                        (click)="toggleTopicFullscreen(); $event.stopPropagation()">
+                                        <i class="bi" [class.bi-fullscreen]="!isTopicFullscreen()" [class.bi-fullscreen-exit]="isTopicFullscreen()"></i>
+                                    </button>
                                 </div>
-                                <div class="study-section-body text-dark mb-3" [innerHTML]="section.content"></div>
+                            </div>
+                            <div class="card-body bg-body rounded-bottom">
+                                <div class="d-flex align-items-center gap-2 mb-3">
+                                    <h5 class="fw-bold mb-0" [innerHTML]="section.heading"></h5>
+                                </div>
+                                <div class="study-section-body mb-3" [innerHTML]="section.content"></div>
                                 @if (section.mermaidDefinitions && section.mermaidDefinitions.length > 0) {
-                                <div class="mt-4 pt-3 border-top border-light d-flex flex-column gap-4">
+                                <div class="mt-4 pt-3 d-flex flex-column gap-4">
                                     @for (def of section.mermaidDefinitions; track def) {
                                         <app-mermaid-viewer [definition]="def"></app-mermaid-viewer>
                                     }

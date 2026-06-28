@@ -418,7 +418,7 @@
                     @for (stud of students; track stud.studId; let i = $index) {
                     <tr [class.table-info]="selectedStudId === stud.studId" (click)="selectStudent(stud.studId)">
 
-                      <td class="text-muted fw-bold">{{ i + 1 }}</td>
+                      <td class="opacity-75 fw-bold">{{ i + 1 }}</td>
                       <td class="text-start fw-medium">{{ stud.name }}</td>
                       <td>{{ stud.gender }}</td>
                       <td>

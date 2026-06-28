@@ -1,8 +1,9 @@
 import { Component, inject, TemplateRef, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { NgbOffcanvas, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { NgbOffcanvas, NgbTooltip, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { take } from 'rxjs/operators';
 import { ScrollActiveDirective } from '../../app/directives/appScrollActive.directive';
+import { ThemeService, Theme } from '../../services/theme.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,12 +14,14 @@ import { ScrollActiveDirective } from '../../app/directives/appScrollActive.dire
     RouterLink,
     RouterLinkActive,
     ScrollActiveDirective,
-    NgbTooltip
+    NgbTooltip,
+    NgbDropdownModule
   ]
 })
 export class NavbarComponent {
   private offcanvasService = inject(NgbOffcanvas);
   public router = inject(Router);
+  public themeService = inject(ThemeService);
 
   isHome(): boolean {
     return this.router.url === '/';

@@ -117,6 +117,21 @@
   font-weight: 500 !important;
 }
 
+/* Force tooltip arrow to be perfectly centered, fixing alignment issues */
+.bs-tooltip-start .tooltip-arrow,
+.bs-tooltip-end .tooltip-arrow,
+.bs-tooltip-left .tooltip-arrow,
+.bs-tooltip-right .tooltip-arrow {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}
+
+.bs-tooltip-top .tooltip-arrow,
+.bs-tooltip-bottom .tooltip-arrow {
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+
 /* Brand Button Styles */
 .btn-brand {
   background-color: #F637E3 !important;
@@ -133,6 +148,12 @@
     color: #ffffff !important;
     box-shadow: 0 4px 8px rgba(246, 55, 227, 0.3) !important;
   }
+}
+
+/* Brand Dropdown Item Styles */
+.dropdown-item.active, .dropdown-item:active {
+  background-color: #F637E3 !important;
+  color: #ffffff !important;
 }
 
 /* Brand Accordion Styles */
@@ -642,4 +663,219 @@
 .custom-swap-btn i {
   font-size: 0.85rem !important;
   transition: color 0.25s ease !important;
+}
+
+/* ==========================================================================
+   Dark Mode Overrides
+   ========================================================================== */
+[data-bs-theme="dark"] {
+  /* Fix hardcoded utility classes that don't flip natively */
+  .bg-white {
+    background-color: var(--bs-body-bg) !important;
+  }
+  .text-dark {
+    color: var(--bs-body-color) !important;
+  }
+  .bg-light {
+    background-color: var(--bs-tertiary-bg) !important;
+  }
+  .text-brand {
+    color: #fca5f0 !important; /* brighter pink for dark mode readability */
+  }
+  .border {
+    border-color: var(--bs-border-color) !important;
+  }
+  
+  .btn-light {
+    background-color: var(--bs-tertiary-bg) !important;
+    border-color: var(--bs-border-color) !important;
+    color: var(--bs-body-color) !important;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1) !important;
+      color: #ffffff !important;
+    }
+  }
+
+  /* Accordion overrides */
+  .accordion-button:not(.collapsed) {
+    background-color: rgba(246, 55, 227, 0.08) !important;
+    color: #fca5f0 !important;
+    box-shadow: inset 0 -1px 0 rgba(246, 55, 227, 0.15) !important;
+
+    i.bi {
+      color: #fca5f0 !important;
+    }
+  }
+
+  /* Table overrides */
+  .table-light {
+    --bs-table-bg: var(--bs-tertiary-bg);
+    --bs-table-color: var(--bs-body-color);
+    --bs-table-border-color: var(--bs-border-color);
+  }
+  .table-success {
+    --bs-table-bg: rgba(25, 135, 84, 0.15) !important;
+    --bs-table-color: #a3cfbb !important;
+  }
+  .table-danger {
+    --bs-table-bg: rgba(220, 53, 69, 0.15) !important;
+    --bs-table-color: #f1aeb5 !important;
+  }
+  .table-info {
+    --bs-table-bg: rgba(13, 202, 240, 0.15) !important;
+    --bs-table-color: #9eeaf9 !important;
+  }
+  .table-warning {
+    --bs-table-bg: rgba(255, 193, 7, 0.15) !important;
+    --bs-table-color: #ffe69c !important;
+  }
+
+  /* Live Solution Card Dark Mode Overrides */
+  .card-live-solution {
+    border-color: rgba(246, 55, 227, 0.2) !important;
+    background-color: var(--bs-body-bg) !important;
+
+    .card-header-live-solution {
+      background-color: rgba(246, 55, 227, 0.08) !important;
+      border-bottom-color: rgba(246, 55, 227, 0.15) !important;
+
+      h5,
+      h6,
+      .card-title,
+      i {
+        color: #fca5f0 !important;
+      }
+    }
+  }
+  .shadow-sm, .shadow-xs {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  /* Adjust Card/Component Specific Backgrounds */
+  .card-header.bg-white, .card-body.bg-white {
+    background-color: #1e2532 !important; /* Slightly elevated dark color for cards */
+  }
+  .bg-light {
+    background-color: #2a3441 !important;
+  }
+
+  /* Fix for Mermaid diagrams in Dark Mode */
+  .mermaid-render-shell {
+    background-color: var(--bs-body-bg) !important;
+    border-color: var(--bs-border-color) !important;
+  }
+  .mermaid-render-shell svg .node rect,
+  .mermaid-render-shell svg .node polygon,
+  .mermaid-render-shell svg .node circle,
+  .mermaid-render-shell svg .node path {
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3)) !important;
+  }
+  .mermaid-render-shell svg .node.primaryNode rect,
+  .mermaid-render-shell svg .node.modern rect,
+  .mermaid-render-shell svg .node.reactive rect,
+  .mermaid-render-shell svg .node.sig rect,
+  .mermaid-render-shell svg .node.derived rect {
+    fill: #2d1832 !important; /* Dark purple */
+  }
+  .mermaid-render-shell svg .node.primaryNode .label,
+  .mermaid-render-shell svg .node.primaryNode text,
+  .mermaid-render-shell svg .node.modern .label,
+  .mermaid-render-shell svg .node.modern text,
+  .mermaid-render-shell svg .node.reactive .label,
+  .mermaid-render-shell svg .node.reactive text,
+  .mermaid-render-shell svg .node.sig .label,
+  .mermaid-render-shell svg .node.sig text,
+  .mermaid-render-shell svg .node.derived .label,
+  .mermaid-render-shell svg .node.derived text {
+    color: #fca5f0 !important;
+    fill: #fca5f0 !important;
+  }
+  .mermaid-render-shell svg .node.legacy rect,
+  .mermaid-render-shell svg .node.backgroundTask rect,
+  .mermaid-render-shell svg .node.default rect {
+    fill: #2a3441 !important;
+    stroke: #475569 !important;
+  }
+  .mermaid-render-shell svg .node.legacy .label,
+  .mermaid-render-shell svg .node.legacy text,
+  .mermaid-render-shell svg .node.backgroundTask .label,
+  .mermaid-render-shell svg .node.backgroundTask text,
+  .mermaid-render-shell svg .node.default .label,
+  .mermaid-render-shell svg .node.default text {
+    color: #cbd5e1 !important;
+    fill: #cbd5e1 !important;
+  }
+  .mermaid-render-shell svg .edgeLabel text,
+  .mermaid-render-shell svg .edgeLabel .label {
+    background-color: var(--bs-body-bg) !important;
+    color: #94a3b8 !important;
+    fill: #94a3b8 !important;
+    text-shadow: none !important;
+  }
+  .mermaid-render-shell svg .cluster rect {
+    fill: #161b22 !important;
+    stroke: #334155 !important;
+  }
+  .mermaid-render-shell svg .cluster .label text,
+  .mermaid-render-shell svg .cluster .label span {
+    text-shadow: none !important;
+    color: #94a3b8 !important;
+    fill: #94a3b8 !important;
+  }
+
+  /* Offcanvas Menu Overrides */
+  .offcanvas {
+    .text-dark {
+      color: var(--bs-body-color) !important;
+    }
+    .text-muted {
+      color: #9ca3af !important;
+    }
+    .main-menu-link {
+      color: var(--bs-body-color) !important;
+      background-color: transparent !important;
+      
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.08) !important;
+        /* Keep text color default on hover */
+      }
+
+      &.bg-light, &.active {
+        background-color: rgba(246, 55, 227, 0.15) !important;
+        color: #fca5f0 !important;
+        
+        i.bi {
+          color: #fca5f0 !important;
+        }
+      }
+    }
+    
+    .docs-sub-link {
+      color: #9ca3af !important;
+      
+      &:hover {
+        color: var(--bs-body-color) !important;
+        background-color: rgba(255, 255, 255, 0.05) !important;
+      }
+      
+      &.active-sub {
+        color: var(--bs-body-color) !important;
+        background-color: rgba(246, 55, 227, 0.15) !important;
+        border-left-color: #fca5f0 !important;
+      }
+    }
+
+    .docs-sub-menu-track {
+      border-left-color: #374151 !important;
+    }
+
+    .back-nav-btn {
+      color: var(--bs-body-color) !important;
+    }
+
+    .offcanvas-title {
+      color: var(--bs-body-color) !important;
+    }
+  }
 }

@@ -110,8 +110,8 @@ $focus-hdr: 3.5rem;
   align-items: center;
   gap: 0.5rem;
   padding: 0 1rem;
-  background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
+  background: var(--bs-body-bg);
+  border-bottom: 1px solid var(--bs-border-color);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
@@ -150,6 +150,60 @@ $focus-hdr: 3.5rem;
   ::ng-deep .mermaid-render-shell svg {
     max-width: 100%;
     height: auto;
+
+    /* Aggressively override Mermaid styles in dark mode for guaranteed readability */
+    .node rect,
+    .node circle,
+    .node ellipse,
+    .node polygon,
+    .node path {
+      fill: var(--bs-tertiary-bg) !important;
+      stroke: var(--bs-border-color) !important;
+    }
+    
+    .node .label,
+    .node span,
+    .node foreignObject div {
+      color: var(--bs-body-color) !important;
+    }
+
+    /* Subgraph/Cluster styling */
+    .cluster rect {
+      fill: rgba(255, 255, 255, 0.02) !important;
+      stroke: rgba(255, 255, 255, 0.1) !important;
+    }
+
+    .cluster .cluster-label span,
+    .cluster .cluster-label div {
+      color: #9ca3af !important; /* Subtle grey for cluster titles */
+    }
+
+    /* Edges and text */
+    /* Remove any background/border from the HTML span inside foreignObject */
+    foreignObject .edgeLabel,
+    foreignObject .label {
+      background-color: transparent !important;
+      color: var(--bs-body-color) !important;
+      padding: 0 !important;
+      border: none !important;
+    }
+    
+    /* Apply background to Mermaid's mathematically calculated SVG rect */
+    .edgeLabel rect,
+    rect.edgeLabel,
+    rect.labelBkg {
+      fill: var(--bs-body-bg) !important;
+      stroke: transparent !important;
+    }
+
+    .edgePath .path {
+      stroke: rgba(255, 255, 255, 0.2) !important;
+    }
+
+    .marker {
+      fill: rgba(255, 255, 255, 0.2) !important;
+      stroke: rgba(255, 255, 255, 0.2) !important;
+    }
   }
 }
 
@@ -224,7 +278,7 @@ $focus-hdr: 3.5rem;
   align-items: center;
   justify-content: center;
   cursor: col-resize;
-  background: #e5e7eb;
+  background: var(--bs-border-color);
   transition: background 0.15s;
 
   &:hover,
@@ -308,11 +362,11 @@ $focus-hdr: 3.5rem;
   border-radius: 0 !important;
   display: flex;
   flex-direction: column;
-  background: #ffffff !important;
+  background: var(--bs-body-bg) !important;
 
   .card-header {
     border-radius: 0 !important;
-    border-bottom: 1px solid #e5e7eb !important;
+    border-bottom: 1px solid var(--bs-border-color) !important;
   }
 
   .card-body {
@@ -328,10 +382,10 @@ $focus-hdr: 3.5rem;
   align-items: center;
   gap: 0.4rem;
   padding: 0.35rem 0.65rem;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--bs-border-color);
   border-radius: 0.5rem;
-  background: #fafafa;
-  color: #374151;
+  background: var(--bs-tertiary-bg);
+  color: var(--bs-body-color);
   font: 600 0.9rem/1.4 inherit;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -367,7 +421,7 @@ $focus-hdr: 3.5rem;
   min-width: 16rem;
   max-width: 22rem;
   padding: 0.35rem 0;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--bs-border-color);
   border-radius: 0.75rem;
   box-shadow: 0 8px 24px rgba(0,0,0,0.1), 0 2px 6px rgba(0,0,0,0.05);
   overflow: hidden;
@@ -415,3 +469,114 @@ $focus-hdr: 3.5rem;
 
 .topic-dropdown-item-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0; }
 .topic-dropdown-check { color: $ng-magenta; font-size: 0.9rem; flex-shrink: 0; }
+
+/* ==========================================================================
+   Dark Mode Context Overrides for Study Notes
+   ========================================================================== */
+:host-context([data-bs-theme="dark"]) {
+  .focus-overlay {
+    background: var(--bs-body-bg);
+  }
+  
+  .focus-header {
+    background: var(--bs-body-bg);
+    border-bottom-color: var(--bs-border-color) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  }
+  
+  .focus-header-title {
+    color: var(--bs-body-color) !important;
+  }
+  
+  .custom-icon-btn, .custom-icon-btn i {
+    color: var(--bs-body-color) !important;
+  }
+
+  .study-section-body {
+    color: var(--bs-body-color);
+    
+    code {
+      background-color: var(--bs-tertiary-bg);
+    }
+  }
+
+  .focus-divider {
+    background: var(--bs-border-color);
+    
+    &:hover,
+    &.focus-divider--active {
+      background: rgba(192, 38, 211, 0.5);
+    }
+  }
+
+  .focus-divider-grip {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .btn-light {
+    background: var(--bs-tertiary-bg) !important;
+    color: var(--bs-body-color) !important;
+    border-color: var(--bs-border-color) !important;
+  }
+
+  .vr {
+    background-color: var(--bs-border-color);
+  }
+
+  .topic-dropdown-toggle {
+    background: var(--bs-body-bg);
+    border-color: var(--bs-border-color);
+    color: var(--bs-body-color);
+    
+    &:hover {
+      background: var(--bs-tertiary-bg);
+      border-color: rgba(192, 38, 211, 0.5);
+    }
+  }
+
+  .topic-dropdown-badge {
+    background: rgba(192, 38, 211, 0.15);
+    border-color: rgba(192, 38, 211, 0.3);
+  }
+
+  .topic-dropdown-menu {
+    background: var(--bs-body-bg) !important;
+    border-color: var(--bs-border-color);
+  }
+
+  .topic-dropdown-header, .topic-dropdown-item {
+    border-color: var(--bs-border-color) !important;
+  }
+
+  .topic-dropdown-header {
+    color: #9ca3af;
+  }
+
+  .topic-dropdown-item {
+    color: var(--bs-body-color) !important;
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.05) !important;
+      color: var(--bs-body-color) !important;
+    }
+    
+    &.active {
+      background: rgba(192, 38, 211, 0.15) !important;
+      color: $ng-magenta !important;
+    }
+  }
+
+  .topic-dropdown-item-index {
+    background: var(--bs-tertiary-bg);
+    color: #9ca3af;
+    
+    .topic-dropdown-item:hover & {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--bs-body-color);
+    }
+    .topic-dropdown-item.active & {
+      background: rgba(192, 38, 211, 0.2);
+      color: $ng-magenta;
+    }
+  }
+}

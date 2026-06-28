@@ -1,6 +1,7 @@
-import { Component, Input, ElementRef, ViewChild, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, ElementRef, ViewChild, AfterViewInit, OnChanges, SimpleChanges, inject, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import mermaid from 'mermaid';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-mermaid-viewer',
@@ -29,14 +30,36 @@ export class MermaidViewerComponent implements AfterViewInit, OnChanges {
   @ViewChild('mermaidContainer', { static: true }) mermaidContainer!: ElementRef<HTMLDivElement>;
 
   private uniqueId = `mermaid-${Math.floor(Math.random() * 100000)}`;
+  private themeService = inject(ThemeService);
 
   constructor() {
-    // Initialize Mermaid with your exact Brand Guidelines
+    effect(() => {
+      const theme = this.themeService.resolvedTheme();
+      this.reInitializeMermaid(theme);
+      
+      // If the view is already initialized, re-render the diagram
+      if (this.mermaidContainer && this.mermaidContainer.nativeElement) {
+        this.renderDiagram();
+      }
+    });
+  }
+
+  private reInitializeMermaid(theme: 'light' | 'dark') {
+    const isDark = theme === 'dark';
+    
     mermaid.initialize({
       startOnLoad: false,
-      theme: 'base',
+      theme: isDark ? 'dark' : 'base',
       securityLevel: 'loose',
-      themeVariables: {
+      themeVariables: isDark ? {
+        primaryColor: '#1f2937', 
+        primaryTextColor: '#f3f4f6', 
+        primaryBorderColor: '#374151', 
+        lineColor: '#6b7280',
+        secondaryColor: '#111827',
+        tertiaryColor: '#1f2937',
+        fontFamily: '"Outfit", "Inter", system-ui, -apple-system, sans-serif'
+      } : {
         primaryColor: '#fdf4ff',
         primaryTextColor: '#202124',
         primaryBorderColor: '#fcc8f8',
@@ -50,9 +73,9 @@ export class MermaidViewerComponent implements AfterViewInit, OnChanges {
         useMaxWidth: false,
         padding: 15,
         diagramPadding: 20,
-        nodeSpacing: 65, /* Increased spacing between nodes horizontally */
-        rankSpacing: 75, /* Increased spacing between ranks vertically */
-        curve: 'basis' /* Premium smooth curved connectors */
+        nodeSpacing: 65,
+        rankSpacing: 75,
+        curve: 'basis'
       }
     });
   }
@@ -67,14 +90,38 @@ export class MermaidViewerComponent implements AfterViewInit, OnChanges {
     }
   }
 
+  private isRendering = false;
+  private pendingRender = false;
+
   private async renderDiagram() {
     if (!this.definition || !this.mermaidContainer) return;
+    
+    if (this.isRendering) {
+      this.pendingRender = true;
+      return;
+    }
+
+    this.isRendering = true;
+    this.pendingRender = false;
 
     try {
       this.mermaidContainer.nativeElement.innerHTML = '';
       
+      // Generate a fresh ID for every render to avoid Mermaid ID conflicts
+      const currentId = `mermaid-render-${Math.random().toString(36).substring(2, 9)}`;
+      
+      let finalDefinition = this.definition;
+      
+      // In dark mode, strip all the hardcoded light-theme classDef and style lines
+      // so Mermaid's native dark mode config (from our themeVariables) can properly apply.
+      if (this.themeService.resolvedTheme() === 'dark') {
+        finalDefinition = finalDefinition
+          .replace(/\bclassDef\s+[^\n]+/g, '')
+          .replace(/\bstyle\s+[^\n]+/g, '');
+      }
+      
       // Render the Mermaid syntax safely to an SVG string
-      const { svg } = await mermaid.render(this.uniqueId, this.definition);
+      const { svg } = await mermaid.render(currentId, finalDefinition);
       this.mermaidContainer.nativeElement.innerHTML = svg;
 
       // Post-process: fix subgraph label clipping
@@ -121,6 +168,11 @@ export class MermaidViewerComponent implements AfterViewInit, OnChanges {
           <i class="bi bi-exclamation-triangle-fill me-2"></i>Visualization rendering conflict.
         </div>
       `;
+    } finally {
+      this.isRendering = false;
+      if (this.pendingRender) {
+        this.renderDiagram();
+      }
     }
   }
 }

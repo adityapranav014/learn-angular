@@ -138,6 +138,10 @@ $track-color: #e5e7eb;
     cursor: pointer;
     outline: none;
 
+    &.dropdown-toggle::after {
+        display: none !important;
+    }
+
     i {
         font-size: 1.55rem;
         line-height: 1;
@@ -223,7 +227,11 @@ $track-color: #e5e7eb;
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 100;
+    z-index: 1030;
+}
+
+nav.navbar.sticky-top {
+    z-index: 1030 !important;
 }
 
 .navbar-home {
@@ -263,5 +271,58 @@ $track-color: #e5e7eb;
             color: #ffffff !important;
             text-shadow: 0 0 8px rgba(255, 255, 255, 0.3) !important;
         }
+    }
+}
+
+/* ==========================================================================
+   Dark Mode Context Overrides
+   ========================================================================== */
+:host-context([data-bs-theme="dark"]) {
+    .text-dark {
+        color: var(--bs-body-color) !important;
+    }
+    
+    .text-muted {
+        color: #9ca3af !important;
+    }
+    
+    .main-menu-link {
+        color: var(--bs-body-color) !important;
+        
+        &:hover, &.active {
+            background-color: rgba(246, 55, 227, 0.15) !important;
+            color: #fca5f0 !important;
+            
+            i.bi {
+                color: #fca5f0 !important;
+            }
+        }
+    }
+    
+    .docs-sub-link {
+        color: #9ca3af !important;
+        
+        &:hover {
+            color: var(--bs-body-color) !important;
+            background-color: rgba(246, 55, 227, 0.1) !important;
+        }
+        
+        &.active-sub {
+            color: var(--bs-body-color) !important;
+            background-color: rgba(246, 55, 227, 0.15) !important;
+            border-left-color: #fca5f0 !important;
+        }
+    }
+
+    .docs-sub-menu-track {
+        border-left-color: #374151 !important;
+    }
+
+    .back-nav-btn {
+        color: var(--bs-body-color) !important;
+    }
+
+    .offcanvas-title {
+        color: var(--bs-body-color) !important;
     }
 }

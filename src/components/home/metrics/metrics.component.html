@@ -34,7 +34,7 @@
         class="metric-card" 
         [class.animate-fade-up]="inView()" 
         style="--stagger-delay: 0.15s">
-        <span class="metric-value">3</span>
+        <span class="metric-value">{{ count1() }}</span>
         <span class="metric-label">Foundational Pillars</span>
       </div>
 
@@ -43,7 +43,7 @@
         class="metric-card" 
         [class.animate-fade-up]="inView()" 
         style="--stagger-delay: 0.3s">
-        <span class="metric-value">6</span>
+        <span class="metric-value">{{ count2() }}</span>
         <span class="metric-label">Architecture Tracks</span>
       </div>
 
@@ -52,7 +52,7 @@
         class="metric-card" 
         [class.animate-fade-up]="inView()" 
         style="--stagger-delay: 0.45s">
-        <span class="metric-value">12</span>
+        <span class="metric-value">{{ count3() }}</span>
         <span class="metric-label">Immersive Simulations</span>
       </div>
 

@@ -1,6 +1,6 @@
 <div class="app-shell d-flex flex-column bg-light">
 
-    <app-navbar [class.sticky-top]="!isHome()" [class.absolute-top]="isHome()" class="z-3"></app-navbar>
+    <app-navbar [class.sticky-top]="!isHome()" [class.absolute-top]="isHome()" style="position: relative; z-index: 1030;"></app-navbar>
 
     <main class="app-main d-flex flex-column flex-grow-1" [class.home-main]="isHome()">
         <div class="flex-grow-1 d-flex flex-column w-100" [class.pb-4]="!isHome()">

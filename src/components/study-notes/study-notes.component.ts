@@ -19,12 +19,12 @@ export class StudyNotesComponent {
   activeVersion = signal<string>('fundamentals');
   activeIndex = 0;
   isFocusedMode = signal(true);
-  splitPercent = signal(50);
+  splitPercent = signal(60);
   isResizing = false;
   isTopicFullscreen = signal(false);
 
   private resizeStartX = 0;
-  private resizeStartPercent = 50;
+  private resizeStartPercent = 60;
 
   @ViewChild('carousel') carousel?: NgbCarousel;
   @ViewChild('focusPanels') focusPanelsRef?: ElementRef<HTMLElement>;

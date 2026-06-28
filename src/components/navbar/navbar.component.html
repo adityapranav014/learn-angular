@@ -5,15 +5,42 @@
      [class.navbar-home]="isHome()"
      [class.sticky-top]="!isHome()"
      [class.absolute-top]="isHome()">
-    <div class="container-fluid px-3 d-flex align-items-center justify-content-start gap-3">
-        <button class="custom-icon-btn" type="button" (click)="openSidebar(content)"
-            aria-label="Open Menu" ngbTooltip="Menu" placement="bottom">
-            <i class="bi bi-list"></i>
-        </button>
-        <a class="navbar-brand fw-bolder d-flex align-items-center gap-2" href="#">
-            <img src="favicon.ico" alt="Logo" width="30" height="30" class="d-inline-block align-text-top rounded">
-            <span class="brand-text fs-5">Angular</span>
-        </a>
+    <div class="container-fluid px-3 d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center gap-3">
+            <button class="custom-icon-btn" type="button" (click)="openSidebar(content)"
+                aria-label="Open Menu" ngbTooltip="Menu" placement="bottom">
+                <i class="bi bi-list"></i>
+            </button>
+            <a class="navbar-brand fw-bolder d-flex align-items-center gap-2" href="#">
+                <img src="favicon.ico" alt="Logo" width="30" height="30" class="d-inline-block align-text-top rounded">
+                <span class="brand-text fs-5">Angular</span>
+            </a>
+        </div>
+        
+        <div class="d-flex align-items-center">
+            <div ngbDropdown placement="bottom-end" class="d-inline-block">
+                <button class="custom-icon-btn" id="themeDropdown" ngbDropdownToggle aria-label="Toggle Theme" ngbTooltip="Theme" placement="bottom">
+                    @if (themeService.theme() === 'light') {
+                        <i class="bi bi-sun-fill"></i>
+                    } @else if (themeService.theme() === 'dark') {
+                        <i class="bi bi-moon-stars-fill"></i>
+                    } @else {
+                        <i class="bi bi-circle-half"></i>
+                    }
+                </button>
+                <div ngbDropdownMenu aria-labelledby="themeDropdown" class="dropdown-menu-end shadow-sm border mt-2 py-2" style="z-index: 1050;">
+                    <button ngbDropdownItem (click)="themeService.setTheme('light')" class="d-flex align-items-center gap-3 px-3 py-2" [class.active]="themeService.theme() === 'light'">
+                        <i class="bi bi-sun-fill opacity-75"></i> <span class="fw-medium">Light</span>
+                    </button>
+                    <button ngbDropdownItem (click)="themeService.setTheme('dark')" class="d-flex align-items-center gap-3 px-3 py-2" [class.active]="themeService.theme() === 'dark'">
+                        <i class="bi bi-moon-stars-fill opacity-75"></i> <span class="fw-medium">Dark</span>
+                    </button>
+                    <button ngbDropdownItem (click)="themeService.setTheme('system')" class="d-flex align-items-center gap-3 px-3 py-2" [class.active]="themeService.theme() === 'system'">
+                        <i class="bi bi-circle-half opacity-75"></i> <span class="fw-medium">System</span>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 </nav>
 

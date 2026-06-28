@@ -25,6 +25,10 @@ import { TechnologyComponent } from './technology/technology.component';
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
+  host: {
+    'data-bs-theme': 'dark',
+    'class': 'd-block'
+  },
   imports: [
     RouterLink, 
     HeroComponent,
