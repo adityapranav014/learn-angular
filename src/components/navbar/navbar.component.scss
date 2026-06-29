@@ -277,7 +277,7 @@ nav.navbar.sticky-top {
 /* ==========================================================================
    Dark Mode Context Overrides
    ========================================================================== */
-:host-context([data-bs-theme="dark"]) {
+[data-bs-theme="dark"] {
     .text-dark {
         color: var(--bs-body-color) !important;
     }
@@ -324,5 +324,22 @@ nav.navbar.sticky-top {
 
     .offcanvas-title {
         color: var(--bs-body-color) !important;
+    }
+
+    .custom-icon-btn {
+        color: #d1d5db !important;
+        
+        &:hover {
+            background-color: rgba(246, 55, 227, 0.15) !important;
+            color: #fca5f0 !important;
+            
+            i {
+                color: #fca5f0 !important;
+            }
+        }
+        
+        &:active {
+            background-color: rgba(246, 55, 227, 0.25) !important;
+        }
     }
 }

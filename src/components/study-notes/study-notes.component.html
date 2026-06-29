@@ -16,27 +16,6 @@
 
 
         <div class="flex-fill"></div>
-
-        @if (activeSections().length > 0) {
-        <div class="d-flex gap-1 align-items-center flex-shrink-0">
-            <button class="btn btn-sm btn-light border" (click)="prevSlide()" title="Previous">
-                <i class="bi bi-chevron-left"></i>
-            </button>
-            <!-- Mobile: compact counter -->
-            <span class="text-muted small d-flex d-sm-none px-1" style="min-width:3rem;text-align:center;">
-                {{ activeIndex + 1 }}&thinsp;/&thinsp;{{ activeSections().length }}
-            </span>
-            <!-- Tablet/Desktop: numbered buttons -->
-            @for (section of activeSections(); track section.heading; let i = $index) {
-            <button class="btn btn-sm d-none d-sm-inline-flex" [class.btn-brand]="activeIndex === i"
-                [class.btn-outline-secondary]="activeIndex !== i" (click)="goToSlide(i)"
-                [title]="section.heading">{{ i + 1 }}</button>
-            }
-            <button class="btn btn-sm btn-light border" (click)="nextSlide()" title="Next">
-                <i class="bi bi-chevron-right"></i>
-            </button>
-        </div>
-        }
     </div>
 
 
@@ -78,7 +57,7 @@
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center gap-2">
-                                    @if (isTopicFullscreen() && activeSections().length > 0) {
+                                    @if (activeSections().length > 0) {
                                     <div class="d-flex gap-1 align-items-center flex-shrink-0">
                                         <button class="btn btn-sm btn-light border" (click)="prevSlide()" title="Previous">
                                             <i class="bi bi-chevron-left"></i>

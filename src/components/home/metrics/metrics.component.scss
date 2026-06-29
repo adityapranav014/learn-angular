@@ -35,17 +35,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .metrics-subtitle {
-  position: absolute;
-  top: 35%; /* Positioned between the character's ears */
-  left: 50%;
-  transform: translateX(-50%) perspective(500px) rotateX(20deg) translateY(20px);
   font-family: 'Space Mono', monospace;
-  color: rgba(255, 255, 255, 0.95);
-  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -53,71 +49,56 @@
   white-space: nowrap;
   pointer-events: none;
   z-index: 10;
+  margin-bottom: 2rem;
   
   /* Holographic HUD glow effect */
   text-shadow: 
-    0 0 8px rgba(255, 255, 255, 0.6),
-    0 0 16px rgba(255, 0, 64, 0.5),
-    0 0 32px rgba(255, 0, 64, 0.3);
+    0 0 8px rgba(255, 255, 255, 0.4),
+    0 0 16px rgba(255, 0, 64, 0.3);
   
   opacity: 0;
+  transform: perspective(500px) rotateX(20deg) translateY(20px);
   transition: opacity 1.5s ease, transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 
   &.animate-fade-in {
     opacity: 1;
     /* Flattens out and then floats */
-    transform: translateX(-50%) perspective(500px) rotateX(0deg) translateY(0);
+    transform: perspective(500px) rotateX(0deg) translateY(0);
     animation: hudFloat 3s ease-in-out infinite alternate 1.5s;
   }
 
   /* Mobile responsiveness */
-  @media (max-width: 992px) {
-    top: 32%;
-    font-size: 14px;
-    letter-spacing: 0.25em;
-  }
-
   @media (max-width: 768px) {
-    top: 28%;
-    font-size: 13px;
+    font-size: 12px;
     letter-spacing: 0.2em;
-  }
-  
-  @media (max-width: 480px) {
-    top: 24%;
-    font-size: 11px;
-    letter-spacing: 0.15em;
+    margin-bottom: 1.5rem;
   }
 }
 
 @keyframes hudFloat {
   0% {
-    transform: translateX(-50%) perspective(500px) rotateX(0deg) translateY(0);
+    transform: perspective(500px) rotateX(0deg) translateY(0);
     text-shadow: 
-      0 0 8px rgba(255, 255, 255, 0.6),
-      0 0 16px rgba(255, 0, 64, 0.5),
-      0 0 32px rgba(255, 0, 64, 0.3);
+      0 0 8px rgba(255, 255, 255, 0.4),
+      0 0 16px rgba(255, 0, 64, 0.3);
   }
   100% {
-    transform: translateX(-50%) perspective(500px) rotateX(5deg) translateY(-6px);
+    transform: perspective(500px) rotateX(5deg) translateY(-6px);
     text-shadow: 
-      0 0 12px rgba(255, 255, 255, 0.9),
-      0 0 24px rgba(255, 0, 64, 0.7),
-      0 0 48px rgba(255, 0, 64, 0.5);
+      0 0 12px rgba(255, 255, 255, 0.6),
+      0 0 24px rgba(255, 0, 64, 0.5);
   }
 }
 
 .metrics-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 4rem;
+  gap: 3rem;
   width: 100%;
-  margin-top: 15vh;
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
-    margin-top: 20vh;
   }
 }
 
@@ -139,23 +120,22 @@
 }
 
 .metric-value {
-  font-family: 'Space Mono', monospace;
+  font-family: system-ui, -apple-system, sans-serif;
   color: #ffffff;
   font-weight: 300;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  font-size: clamp(48px, 10vw, 96px);
-  text-shadow: 0 4px 12px rgba(0,0,0,0.8); // Ensure numbers pop against bright spots
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  text-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
 
 .metric-label {
   font-family: 'Space Mono', monospace;
-  color: rgba(255, 255, 255, 0.85); // Significantly brighter
+  color: rgba(255, 255, 255, 0.6); 
   font-size: 13px;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   letter-spacing: 0.05em;
-  text-transform: uppercase;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.9); // Deep shadow for readability
+  text-shadow: 0 2px 6px rgba(0,0,0,0.8);
 
   @media (min-width: 576px) {
     font-size: 14px;

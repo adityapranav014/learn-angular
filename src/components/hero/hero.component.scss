@@ -83,6 +83,11 @@
   white-space: nowrap;
   pointer-events: none;
   z-index: 1;
+  display: none; // Hidden on mobile
+
+  @media (min-width: 768px) {
+    display: block; // Visible on desktop
+  }
 
   // Radial color gradient effect
   background: radial-gradient(circle, rgba(142, 127, 148, 0) 10%, #8E7F94 70%);
@@ -115,19 +120,27 @@
   flex: 1;
 }
 
+// Top row for the left heading
+.hero-top-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
 // Bottom layout row containing texts
 .hero-bottom-row {
   display: flex;
   flex-direction: column;
   gap: 1.5rem; // Reduced to prevent pushing elements off screen on short mobiles
-  margin-bottom: 2rem;
+  margin-bottom: 0;
 
   @media (min-width: 768px) {
     flex-direction: row;
     align-items: flex-end;
     justify-content: space-between;
     gap: 3rem;
-    margin-bottom: 3rem;
+    margin-bottom: 0;
   }
 }
 
@@ -151,7 +164,7 @@
   letter-spacing: -0.03em;
   font-size: clamp(32px, 8vw, 96px); // Slightly smaller base for mobile
   margin: 0;
-  text-transform: uppercase;
+  /* Removed text-transform: uppercase to match title case from mockup */
   text-shadow: 0 4px 16px rgba(0, 0, 0, 0.6); // Added for high contrast against background
 
   // Ensure the scramble element inline-blocks to prevent layout shifting
@@ -170,7 +183,7 @@
   max-width: 100%; // Let it fill the screen on mobile to reduce wrapped lines
   width: 100%;
   font-size: 12px; // Slightly smaller to save vertical space
-  color: rgba(255, 255, 255, 0.75); // Increased from 0.6 for readability
+  color: rgba(255, 255, 255, 0.45); // Darker grey to match mockup
   line-height: 1.5;
   margin: 0;
   padding-right: 1rem;
@@ -197,8 +210,11 @@
 
 // Interactive Scroll Down Indicator
 .hero-scroll-indicator {
-  align-self: center;
-  display: flex;
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
@@ -208,7 +224,7 @@
   transition: opacity 0.5s ease;
 
   @media (min-width: 768px) {
-    align-self: flex-start;
+    display: flex;
   }
 
   // Scroll indicator mouse animation

@@ -435,7 +435,7 @@ $focus-hdr: 3.5rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: #9ca3af;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid var(--bs-border-color);
   margin-bottom: 0.25rem;
 }
 
@@ -443,10 +443,12 @@ $focus-hdr: 3.5rem;
   display: flex !important;
   align-items: center;
   gap: 0.6rem;
-  padding: 0.5rem 0.85rem !important;
+  padding: 0.5rem 0.65rem !important;
   font: 500 0.85rem/1.4 inherit;
   color: #374151 !important;
-  border-radius: 0 !important;
+  border-radius: 0.5rem !important;
+  margin: 0.2rem 0.4rem;
+  width: calc(100% - 0.8rem);
   transition: all 0.15s ease;
   &:hover { background: #fdf4ff !important; color: $ng-magenta !important; }
   &.active { background: #fdf4ff !important; color: $ng-magenta !important; font-weight: 600; }
@@ -540,15 +542,13 @@ $focus-hdr: 3.5rem;
   }
 
   .topic-dropdown-menu {
-    background: var(--bs-body-bg) !important;
+    background: var(--bs-tertiary-bg) !important;
     border-color: var(--bs-border-color);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 4px 10px rgba(0,0,0,0.3);
   }
 
-  .topic-dropdown-header, .topic-dropdown-item {
+  .topic-dropdown-menu-header {
     border-color: var(--bs-border-color) !important;
-  }
-
-  .topic-dropdown-header {
     color: #9ca3af;
   }
 
@@ -556,18 +556,18 @@ $focus-hdr: 3.5rem;
     color: var(--bs-body-color) !important;
     
     &:hover {
-      background: rgba(255, 255, 255, 0.05) !important;
+      background: rgba(255, 255, 255, 0.08) !important;
       color: var(--bs-body-color) !important;
     }
     
     &.active {
       background: rgba(192, 38, 211, 0.15) !important;
-      color: $ng-magenta !important;
+      color: #e879f9 !important;
     }
   }
 
   .topic-dropdown-item-index {
-    background: var(--bs-tertiary-bg);
+    background: var(--bs-body-bg);
     color: #9ca3af;
     
     .topic-dropdown-item:hover & {
@@ -575,8 +575,8 @@ $focus-hdr: 3.5rem;
       color: var(--bs-body-color);
     }
     .topic-dropdown-item.active & {
-      background: rgba(192, 38, 211, 0.2);
-      color: $ng-magenta;
+      background: rgba(192, 38, 211, 0.25);
+      color: #e879f9;
     }
   }
 }

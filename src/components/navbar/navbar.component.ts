@@ -1,4 +1,4 @@
-import { Component, inject, TemplateRef, signal } from '@angular/core';
+import { Component, inject, TemplateRef, signal, ViewEncapsulation } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { NgbOffcanvas, NgbTooltip, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { take } from 'rxjs/operators';
@@ -9,6 +9,7 @@ import { ThemeService, Theme } from '../../services/theme.service';
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [
     RouterLink,

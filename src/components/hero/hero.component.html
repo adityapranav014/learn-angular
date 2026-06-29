@@ -23,6 +23,13 @@
   <!-- ── Hero Content Layer ───────────────────────────────────────── -->
   <div class="hero-content">
 
+    <!-- ── Top Row ─────────────────────────────────────────────────── -->
+    <div class="hero-top-row">
+      <h1 class="hero-heading">
+        <app-scramble-in [text]="'Learn'" [delay]="200" [triggered]="triggered()"></app-scramble-in><br><app-scramble-in [text]="'Angular'" [delay]="500" [triggered]="triggered()"></app-scramble-in>
+      </h1>
+    </div>
+
     <!-- Spacer pushes content to the bottom -->
     <div class="hero-spacer"></div>
 
@@ -31,12 +38,6 @@
 
       <!-- Left Column -->
       <div class="hero-col-left">
-        <h1 class="hero-heading">
-          <app-scramble-in [text]="'Learn'" [delay]="200" [triggered]="triggered()"></app-scramble-in>
-          <br>
-          <app-scramble-in [text]="'Angular'" [delay]="500" [triggered]="triggered()"></app-scramble-in>
-        </h1>
-
         <p class="hero-desc">
           Behind every flawless interface is a story of meticulous architecture.
           We strip away the noise and invite you into the very core of Angular.
@@ -48,9 +49,7 @@
       <!-- Right Column -->
       <div class="hero-col-right">
         <h1 class="hero-heading hero-heading--right">
-          <app-scramble-in [text]="'The'" [delay]="700" [triggered]="triggered()"></app-scramble-in>
-          <br>
-          <app-scramble-in [text]="'Framework'" [delay]="1000" [triggered]="triggered()"></app-scramble-in>
+          <app-scramble-in [text]="'The'" [delay]="700" [triggered]="triggered()"></app-scramble-in><br><app-scramble-in [text]="'Framework'" [delay]="1000" [triggered]="triggered()"></app-scramble-in>
         </h1>
       </div>
 
