@@ -20,6 +20,7 @@ import { PolymorphicComponent } from '../components/polymorphic/polymorphic.comp
 
 
 import { StudyNotesComponent } from '../components/study-notes/study-notes.component';
+import { GlobalSearchComponent } from '../components/global-search/global-search.component';
 
 
 export const routes: Routes = [
@@ -76,6 +77,15 @@ export const routes: Routes = [
         data: {
             description: 'Specific topic study notes for Angular preparation, covering Reactivity, Components, Services, and Optimization.',
             keywords: 'Angular reactivity, Signals, RxJS, Dependency Injection, Defer blocks'
+        }
+    },
+    {
+        path: 'ai-search',
+        component: GlobalSearchComponent,
+        title: 'AI Study Search',
+        data: {
+            description: 'AI-powered Angular study notes search using Gemini. Get instant theory and runnable code examples for any topic.',
+            keywords: 'Angular AI search, Gemini study notes, Angular learning'
         }
     },
 

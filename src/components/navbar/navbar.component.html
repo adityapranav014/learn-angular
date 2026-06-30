@@ -18,6 +18,9 @@
         </div>
         
         <div class="d-flex align-items-center">
+            <a routerLink="/ai-search" class="custom-icon-btn me-1 text-decoration-none" aria-label="AI Search" ngbTooltip="AI Search" placement="bottom">
+                <i class="bi bi-stars"></i>
+            </a>
             <div ngbDropdown placement="bottom-end" class="d-inline-block">
                 <button class="custom-icon-btn" id="themeDropdown" ngbDropdownToggle aria-label="Toggle Theme" ngbTooltip="Theme" placement="bottom">
                     @if (themeService.theme() === 'light') {
@@ -75,6 +78,14 @@
                             <i class="bi me-3 fs-5 text-muted transition-all" [class.bi-house]="!rlaHome.isActive"
                                 [class.bi-house-fill]="rlaHome.isActive" [class.text-primary]="rlaHome.isActive"></i>
                             <span [class.fw-bold]="rlaHome.isActive">Home</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link main-menu-link d-flex align-items-center px-4 py-3 text-dark" routerLink="/ai-search"
+                            routerLinkActive="active" #rlaAI="routerLinkActive" (click)="offcanvas.dismiss()">
+                            <i class="bi bi-stars me-3 fs-5 text-muted transition-all" [class.text-primary]="rlaAI.isActive"></i>
+                            <span [class.fw-bold]="rlaAI.isActive">AI Search</span>
                         </a>
                     </li>
 

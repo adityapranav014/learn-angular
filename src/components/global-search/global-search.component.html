@@ -1,0 +1,184 @@
+<div class="gs-page">
+
+  <!-- ── Hero Header ── -->
+  @if (ai.state() === 'idle') {
+    <div class="gs-hero">
+      <div class="gs-hero-badge">
+        <i class="bi bi-stars me-1"></i>Powered by Gemini 2.5 Flash
+      </div>
+      <h1 class="gs-hero-title">
+        Your Angular<br>
+        <span class="gs-hero-gradient">AI Study Companion</span>
+      </h1>
+      <p class="gs-hero-sub">Ask any Angular or web dev concept and get instant theory with copy-paste ready code examples.</p>
+    </div>
+  }
+
+  <!-- ── Search Bar ── -->
+  <div class="gs-search-wrap" [class.gs-search-wrap--has-results]="ai.state() === 'success' || ai.state() === 'error' || ai.state() === 'loading'">
+    <div class="gs-search-box" [class.gs-search-box--loading]="ai.state() === 'loading'">
+      <i class="bi bi-stars gs-icon-left"></i>
+      <input
+        class="gs-input"
+        type="text"
+        placeholder="Ask anything… e.g. Angular Signals, RxJS switchMap, lazy loading"
+        [ngModel]="query()"
+        (ngModelChange)="query.set($event)"
+        (keydown)="onKeydown($event)"
+        [disabled]="ai.state() === 'loading'"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      @if (query()) {
+        <button class="gs-clear-btn" (click)="reset()" aria-label="Clear">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      }
+      <button
+        class="gs-search-btn"
+        (click)="onSearch()"
+        [disabled]="ai.state() === 'loading' || !query().trim()"
+        aria-label="Search"
+      >
+        @if (ai.state() === 'loading') {
+          <span class="spinner-border spinner-border-sm" role="status"></span>
+        } @else {
+          <i class="bi bi-send-fill"></i>
+        }
+      </button>
+    </div>
+  </div>
+
+  <!-- ── Loading Skeleton ── -->
+  @if (ai.state() === 'loading') {
+    <div class="gs-skeleton-wrap">
+      <div class="gs-skeleton-panel">
+        <div class="skeleton-line w-40 mb-4" style="height:18px"></div>
+        <div class="skeleton-line w-100"></div>
+        <div class="skeleton-line w-90"></div>
+        <div class="skeleton-line w-80"></div>
+        <div class="skeleton-line w-95 mb-4"></div>
+        <div class="skeleton-line w-70"></div>
+        <div class="skeleton-line w-100"></div>
+        <div class="skeleton-line w-60"></div>
+      </div>
+      <div class="gs-skeleton-panel">
+        <div class="skeleton-line w-30 mb-4" style="height:18px"></div>
+        <div class="skeleton-tabs">
+          <div class="skeleton-tab"></div>
+          <div class="skeleton-tab"></div>
+          <div class="skeleton-tab"></div>
+        </div>
+        <div class="skeleton-code"></div>
+      </div>
+    </div>
+  }
+
+  <!-- ── Error State ── -->
+  @if (ai.state() === 'error') {
+    <div class="gs-error" [attr.data-type]="ai.errorType()">
+      <div class="gs-error-icon">
+        @switch (ai.errorType()) {
+          @case ('quota')   { <i class="bi bi-hourglass-split"></i> }
+          @case ('auth')    { <i class="bi bi-shield-lock"></i> }
+          @case ('network') { <i class="bi bi-wifi-off"></i> }
+          @default          { <i class="bi bi-exclamation-circle"></i> }
+        }
+      </div>
+      <div class="gs-error-body">
+        <strong class="gs-error-title">
+          @switch (ai.errorType()) {
+            @case ('quota')   { Rate limit reached }
+            @case ('auth')    { Authentication error }
+            @case ('network') { Connection error }
+            @default          { Something went wrong }
+          }
+        </strong>
+        <p class="gs-error-msg">{{ ai.errorMessage() }}</p>
+        @if (ai.errorType() === 'auth') {
+          <span class="gs-error-hint">Update <code>environment.ts</code> with a valid API key.</span>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- ── Results ── -->
+  @if (ai.state() === 'success' && ai.result()) {
+    <div class="gs-results">
+
+      <!-- Theory Panel -->
+      <div class="gs-theory-panel">
+        <div class="gs-panel-header">
+          <div class="gs-panel-header-left">
+            <span class="gs-panel-icon"><i class="bi bi-book-half"></i></span>
+            <span class="gs-panel-title">Theory</span>
+          </div>
+        </div>
+        <div class="gs-theory-body markdown-body" [innerHTML]="theoryHtml()"></div>
+      </div>
+
+      <!-- Code Panel -->
+      <div class="gs-code-panel">
+        <div class="gs-panel-header">
+          <div class="gs-panel-header-left">
+            <span class="gs-panel-icon"><i class="bi bi-code-slash"></i></span>
+            <span class="gs-panel-title">Code Examples</span>
+          </div>
+          <span class="gs-file-count-badge">
+            {{ ai.result()!.files.length }} file{{ ai.result()!.files.length !== 1 ? 's' : '' }}
+          </span>
+        </div>
+
+        @if (ai.result()!.files.length > 1) {
+          <div class="gs-file-tabs">
+            @for (file of ai.result()!.files; track file.filename; let i = $index) {
+              <button
+                class="gs-file-tab"
+                [class.active]="activeFileIndex() === i"
+                (click)="selectFile(i)"
+              >
+                <i class="bi bi-file-earmark-code me-1"></i>{{ file.filename }}
+              </button>
+            }
+          </div>
+        }
+
+        @if (activeFile(); as file) {
+          <div class="gs-code-block-wrap">
+            <div class="gs-code-toolbar">
+              <span class="gs-lang-badge">{{ file.language }}</span>
+              <button
+                class="gs-copy-btn"
+                (click)="copyCode(file.code, activeFileIndex())"
+                [class.copied]="copiedIndex() === activeFileIndex()"
+              >
+                @if (copiedIndex() === activeFileIndex()) {
+                  <i class="bi bi-check2-all me-1"></i>Copied!
+                } @else {
+                  <i class="bi bi-clipboard me-1"></i>Copy code
+                }
+              </button>
+            </div>
+            <div class="gs-code-scroll">
+              <pre class="mb-0"><code [highlight]="file.code" [language]="file.language"></code></pre>
+            </div>
+          </div>
+        }
+      </div>
+
+    </div>
+  }
+
+  <!-- ── Idle / Welcome State ── -->
+  @if (ai.state() === 'idle') {
+    <div class="gs-suggestions-wrap">
+      <p class="gs-suggestions-label">Try a topic</p>
+      <div class="gs-suggestions">
+        @for (s of suggestions; track s) {
+          <button class="gs-suggestion-chip" (click)="query.set(s); onSearch()">{{ s }}</button>
+        }
+      </div>
+    </div>
+  }
+
+</div>
