@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npm run build",
+  "buildCommand": "mkdir -p src/environments && echo \"export const environment = { production: true, geminiApiKey: '${GEMINI_API_KEY}' };\" > src/environments/environment.ts && npm run build",
   "outputDirectory": "dist/angular-app/browser",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
