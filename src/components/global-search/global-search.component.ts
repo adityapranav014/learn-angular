@@ -11,12 +11,13 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Highlight } from 'ngx-highlightjs';
 import { AiSearchService, AiCodeFile } from '../../services/ai-search.service';
 import { marked } from 'marked';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-global-search',
   templateUrl: './global-search.component.html',
   styleUrls: ['./global-search.component.scss'],
-  imports: [CommonModule, FormsModule, Highlight]
+  imports: [CommonModule, FormsModule, Highlight, NgbTooltipModule]
 })
 export class GlobalSearchComponent implements OnDestroy {
   private sanitizer = inject(DomSanitizer);
@@ -49,6 +50,13 @@ export class GlobalSearchComponent implements OnDestroy {
     const idx = this.activeFileIndex();
     return files[idx < files.length ? idx : 0];
   });
+
+  // Track FullScreen status of code hint
+  readonly isFullscreen = signal<boolean>(false);
+
+  toggleFullscreen() {
+    this.isFullscreen.update(v => !v);
+  }
 
   async onSearch(): Promise<void> {
     const q = this.query().trim();
