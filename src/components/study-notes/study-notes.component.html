@@ -62,12 +62,6 @@
                                         <button class="btn btn-sm btn-light border" (click)="prevSlide()" title="Previous">
                                             <i class="bi bi-chevron-left"></i>
                                         </button>
-                                        <!-- Tablet/Desktop: numbered buttons -->
-                                        @for (sec of activeSections(); track sec.heading; let k = $index) {
-                                        <button class="btn btn-sm d-none d-sm-inline-flex" [class.btn-brand]="activeIndex === k"
-                                            [class.btn-outline-secondary]="activeIndex !== k" (click)="goToSlide(k)"
-                                            [title]="sec.heading">{{ k + 1 }}</button>
-                                        }
                                         <button class="btn btn-sm btn-light border" (click)="nextSlide()" title="Next">
                                             <i class="bi bi-chevron-right"></i>
                                         </button>
