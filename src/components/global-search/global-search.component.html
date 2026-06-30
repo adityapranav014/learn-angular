@@ -1,49 +1,40 @@
-<div class="gs-page">
+<div class="gs-page"
+  [class.gs-page--with-results]="ai.state() === 'success' || ai.state() === 'error' || ai.state() === 'loading'">
 
   <!-- ── Hero Header ── -->
   @if (ai.state() === 'idle') {
-    <div class="gs-hero">
-      <div class="gs-hero-badge">
-        <i class="bi bi-stars me-1"></i>Powered by Gemini 2.5 Flash
-      </div>
-      <h1 class="gs-hero-title">
-        Your Angular<br>
-        <span class="gs-hero-gradient">AI Study Companion</span>
-      </h1>
-      <p class="gs-hero-sub">Ask any Angular or web dev concept and get instant theory with copy-paste ready code examples.</p>
+  <div class="gs-hero">
+    <div class="gs-hero-badge">
+      <i class="bi bi-stars me-1"></i>Powered by Gemini 2.5 Flash
     </div>
+    <h1 class="gs-hero-title">
+      Your Angular<br>
+      <span class="gs-hero-gradient">AI Study Companion</span>
+    </h1>
+    <p class="gs-hero-sub">Ask any Angular or web dev concept and get instant theory with copy-paste ready code
+      examples.</p>
+  </div>
   }
 
   <!-- ── Search Bar ── -->
-  <div class="gs-search-wrap" [class.gs-search-wrap--has-results]="ai.state() === 'success' || ai.state() === 'error' || ai.state() === 'loading'">
+  <div class="gs-search-wrap"
+    [class.gs-search-wrap--has-results]="ai.state() === 'success' || ai.state() === 'error' || ai.state() === 'loading'">
     <div class="gs-search-box" [class.gs-search-box--loading]="ai.state() === 'loading'">
       <i class="bi bi-stars gs-icon-left"></i>
-      <input
-        class="gs-input"
-        type="text"
-        placeholder="Ask anything… e.g. Angular Signals, RxJS switchMap, lazy loading"
-        [ngModel]="query()"
-        (ngModelChange)="query.set($event)"
-        (keydown)="onKeydown($event)"
-        [disabled]="ai.state() === 'loading'"
-        autocomplete="off"
-        spellcheck="false"
-      />
+      <input class="gs-input" type="text" [attr.placeholder]="placeholderText()" [ngModel]="query()"
+        (ngModelChange)="query.set($event)" (keydown)="onKeydown($event)" [disabled]="ai.state() === 'loading'"
+        autocomplete="off" spellcheck="false" />
       @if (query()) {
-        <button class="gs-clear-btn" (click)="reset()" aria-label="Clear">
-          <i class="bi bi-x-lg"></i>
-        </button>
+      <button class="gs-clear-btn" (click)="reset()" aria-label="Clear">
+        <i class="bi bi-x-lg"></i>
+      </button>
       }
-      <button
-        class="gs-search-btn"
-        (click)="onSearch()"
-        [disabled]="ai.state() === 'loading' || !query().trim()"
-        aria-label="Search"
-      >
+      <button class="gs-search-btn" (click)="onSearch()" [disabled]="ai.state() === 'loading' || !query().trim()"
+        aria-label="Search">
         @if (ai.state() === 'loading') {
-          <span class="spinner-border spinner-border-sm" role="status"></span>
+        <span class="spinner-border spinner-border-sm" role="status"></span>
         } @else {
-          <i class="bi bi-send-fill"></i>
+        <i class="bi bi-send-fill"></i>
         }
       </button>
     </div>
@@ -51,142 +42,138 @@
 
   <!-- ── Loading Skeleton ── -->
   @if (ai.state() === 'loading') {
-    <div class="gs-skeleton-wrap">
-      <div class="gs-skeleton-panel">
-        <div class="skeleton-line w-40 mb-4" style="height:18px"></div>
-        <div class="skeleton-line w-100"></div>
-        <div class="skeleton-line w-90"></div>
-        <div class="skeleton-line w-80"></div>
-        <div class="skeleton-line w-95 mb-4"></div>
-        <div class="skeleton-line w-70"></div>
-        <div class="skeleton-line w-100"></div>
-        <div class="skeleton-line w-60"></div>
-      </div>
-      <div class="gs-skeleton-panel">
-        <div class="skeleton-line w-30 mb-4" style="height:18px"></div>
-        <div class="skeleton-tabs">
-          <div class="skeleton-tab"></div>
-          <div class="skeleton-tab"></div>
-          <div class="skeleton-tab"></div>
-        </div>
-        <div class="skeleton-code"></div>
-      </div>
+  <div class="gs-skeleton-wrap">
+    <div class="gs-skeleton-panel">
+      <div class="skeleton-line w-40 mb-4" style="height:18px"></div>
+      <div class="skeleton-line w-100"></div>
+      <div class="skeleton-line w-90"></div>
+      <div class="skeleton-line w-80"></div>
+      <div class="skeleton-line w-95 mb-4"></div>
+      <div class="skeleton-line w-70"></div>
+      <div class="skeleton-line w-100"></div>
+      <div class="skeleton-line w-60"></div>
     </div>
+    <div class="gs-skeleton-panel">
+      <div class="skeleton-line w-30 mb-4" style="height:18px"></div>
+      <div class="skeleton-tabs">
+        <div class="skeleton-tab"></div>
+        <div class="skeleton-tab"></div>
+        <div class="skeleton-tab"></div>
+      </div>
+      <div class="skeleton-code"></div>
+    </div>
+  </div>
   }
 
   <!-- ── Error State ── -->
   @if (ai.state() === 'error') {
-    <div class="gs-error" [attr.data-type]="ai.errorType()">
-      <div class="gs-error-icon">
-        @switch (ai.errorType()) {
-          @case ('quota')   { <i class="bi bi-hourglass-split"></i> }
-          @case ('auth')    { <i class="bi bi-shield-lock"></i> }
-          @case ('network') { <i class="bi bi-wifi-off"></i> }
-          @default          { <i class="bi bi-exclamation-circle"></i> }
-        }
-      </div>
-      <div class="gs-error-body">
-        <strong class="gs-error-title">
-          @switch (ai.errorType()) {
-            @case ('quota')   { Rate limit reached }
-            @case ('auth')    { Authentication error }
-            @case ('network') { Connection error }
-            @default          { Something went wrong }
-          }
-        </strong>
-        <p class="gs-error-msg">{{ ai.errorMessage() }}</p>
-        @if (ai.errorType() === 'auth') {
-          <span class="gs-error-hint">Update <code>environment.ts</code> with a valid API key.</span>
-        }
-      </div>
+  <div class="gs-error" [attr.data-type]="ai.errorType()">
+    <div class="gs-error-icon">
+      @switch (ai.errorType()) {
+      @case ('quota') { <i class="bi bi-hourglass-split"></i> }
+      @case ('auth') { <i class="bi bi-shield-lock"></i> }
+      @case ('network') { <i class="bi bi-wifi-off"></i> }
+      @default { <i class="bi bi-exclamation-circle"></i> }
+      }
     </div>
+    <div class="gs-error-body">
+      <strong class="gs-error-title">
+        @switch (ai.errorType()) {
+        @case ('quota') { Rate limit reached }
+        @case ('auth') { Authentication error }
+        @case ('network') { Connection error }
+        @default { Something went wrong }
+        }
+      </strong>
+      <p class="gs-error-msg">{{ ai.errorMessage() }}</p>
+      @if (ai.errorType() === 'auth') {
+      <span class="gs-error-hint">Update <code>environment.ts</code> with a valid API key.</span>
+      }
+    </div>
+  </div>
   }
 
   <!-- ── Results ── -->
   @if (ai.state() === 'success' && ai.result()) {
-    <div class="gs-results">
+  <div class="gs-results">
 
-      <!-- Theory Panel -->
-      <div class="gs-theory-panel">
-        <div class="gs-panel-header">
-          <div class="gs-panel-header-left">
-            <span class="gs-panel-icon"><i class="bi bi-book-half"></i></span>
-            <span class="gs-panel-title">Theory</span>
+    <!-- Theory Panel -->
+    <div class="gs-theory-panel">
+      <div class="gs-panel-header">
+        <div class="gs-panel-header-left">
+          <span class="gs-panel-icon"><i class="bi bi-book-half"></i></span>
+          <span class="gs-panel-title">Theory</span>
+        </div>
+      </div>
+      <div class="gs-theory-body markdown-body" [innerHTML]="theoryHtml()"></div>
+    </div>
+
+    <!-- Code Panel -->
+    <div class="gs-code-panel" [class.code-hint-fullscreen]="isFullscreen()">
+      <div class="gs-panel-header bg-dark text-light border-secondary px-0 pb-0 pt-3 flex-column align-items-stretch">
+        <div class="d-flex align-items-center justify-content-between px-3 mb-2 w-100">
+          <h5 class="gs-panel-title text-light mb-0 fw-bold d-flex align-items-center mb-0">
+            <i class="bi bi-code-slash me-2 text-warning fs-5"></i>
+            <span class="fs-6">Code Example</span>
+          </h5>
+          <div class="d-flex align-items-center gap-1">
+            <button class="btn btn-sm btn-outline-secondary border-0 text-light py-0 px-2"
+              [ngbTooltip]="copiedIndex() === activeFileIndex() ? null : 'Copy to clipboard'" placement="left"
+              (click)="copyCode(activeFile()!.code, activeFileIndex())">
+              <i class="bi" [class.bi-clipboard]="copiedIndex() !== activeFileIndex()"
+                [class.bi-check2-all]="copiedIndex() === activeFileIndex()"
+                [class.text-success]="copiedIndex() === activeFileIndex()"></i>
+              @if (copiedIndex() === activeFileIndex()) {
+              <span class="ms-1 small">Copied!</span>
+              }
+            </button>
+            <button class="btn btn-sm btn-dark border-0 p-1 lh-1 text-light"
+              [ngbTooltip]="isFullscreen() ? 'Exit fullscreen' : 'Fullscreen'" placement="left"
+              (click)="toggleFullscreen()">
+              <i class="bi" [class.bi-fullscreen]="!isFullscreen()" [class.bi-fullscreen-exit]="isFullscreen()"></i>
+            </button>
           </div>
         </div>
-        <div class="gs-theory-body markdown-body" [innerHTML]="theoryHtml()"></div>
-      </div>
 
-      <!-- Code Panel -->
-      <div class="gs-code-panel" [class.code-hint-fullscreen]="isFullscreen()">
-        <div class="gs-panel-header bg-dark text-light border-secondary px-0 pb-0 pt-3 flex-column align-items-stretch">
-          <div class="d-flex align-items-center justify-content-between px-3 mb-2 w-100">
-            <h5 class="gs-panel-title text-light mb-0 fw-bold d-flex align-items-center mb-0">
-               <i class="bi bi-code-slash me-2 text-warning fs-5"></i>
-               <span class="fs-6">Code Example</span>
-            </h5>
-            <div class="d-flex align-items-center gap-1">
-              <button
-                class="btn btn-sm btn-outline-secondary border-0 text-light py-0 px-2"
-                [ngbTooltip]="copiedIndex() === activeFileIndex() ? null : 'Copy to clipboard'"
-                placement="left"
-                (click)="copyCode(activeFile()!.code, activeFileIndex())"
-              >
-                <i class="bi"
-                  [class.bi-clipboard]="copiedIndex() !== activeFileIndex()"
-                  [class.bi-check2-all]="copiedIndex() === activeFileIndex()"
-                  [class.text-success]="copiedIndex() === activeFileIndex()"></i>
-                @if (copiedIndex() === activeFileIndex()) {
-                  <span class="ms-1 small">Copied!</span>
-                }
-              </button>
-              <button class="btn btn-sm btn-dark border-0 p-1 lh-1 text-light"
-                    [ngbTooltip]="isFullscreen() ? 'Exit fullscreen' : 'Fullscreen'" placement="left"
-                    (click)="toggleFullscreen()">
-                    <i class="bi" [class.bi-fullscreen]="!isFullscreen()" [class.bi-fullscreen-exit]="isFullscreen()"></i>
-              </button>
-            </div>
-          </div>
-          
-          @if (ai.result()!.files.length > 1) {
-            <div class="d-flex overflow-auto px-2 code-tabs-scroll w-100 gs-tabs-header-wrap">
-              @for (file of ai.result()!.files; track file.filename; let i = $index) {
-                <button class="btn btn-sm rounded-0 border-0 text-light code-tab" 
-                    [class.active]="activeFileIndex() === i"
-                    (click)="selectFile(i)">
-                    {{ file.filename }}
-                </button>
-              }
-            </div>
-          } @else {
-             <div class="px-3 pb-2 text-secondary small border-top border-secondary pt-2 mt-1 w-100">
-                {{ activeFile()!.filename }}
-            </div>
+        @if (ai.result()!.files.length > 1) {
+        <div class="d-flex overflow-auto px-2 code-tabs-scroll w-100 gs-tabs-header-wrap">
+          @for (file of ai.result()!.files; track file.filename; let i = $index) {
+          <button class="btn btn-sm rounded-0 border-0 text-light code-tab" [class.active]="activeFileIndex() === i"
+            (click)="selectFile(i)">
+            {{ file.filename }}
+          </button>
           }
         </div>
-
-        @if (activeFile(); as file) {
-          <div class="gs-code-block-wrap study-code-hint-body bg-dark p-0">
-            <div class="gs-code-scroll border-top border-secondary">
-              <pre class="m-0 h-100"><code [highlight]="file.code" [language]="file.language" class="h-100 p-3 custom-scrollbar"></code></pre>
-            </div>
-          </div>
+        } @else {
+        <div class="px-3 pb-2 text-secondary small border-top border-secondary pt-2 mt-1 w-100">
+          {{ activeFile()!.filename }}
+        </div>
         }
       </div>
 
+      @if (activeFile(); as file) {
+      <div class="gs-code-block-wrap study-code-hint-body bg-dark p-0">
+        <div class="gs-code-scroll border-top border-secondary">
+          <pre
+            class="m-0 h-100"><code [highlight]="file.code" [language]="file.language" class="h-100 p-3 custom-scrollbar"></code></pre>
+        </div>
+      </div>
+      }
     </div>
+
+  </div>
   }
 
   <!-- ── Idle / Welcome State ── -->
   @if (ai.state() === 'idle') {
-    <div class="gs-suggestions-wrap">
-      <p class="gs-suggestions-label">Try a topic</p>
-      <div class="gs-suggestions">
-        @for (s of suggestions; track s) {
-          <button class="gs-suggestion-chip" (click)="query.set(s); onSearch()">{{ s }}</button>
-        }
-      </div>
+  <div class="gs-suggestions-wrap">
+    <p class="gs-suggestions-label">Try a topic</p>
+    <div class="gs-suggestions">
+      @for (s of suggestions; track s) {
+      <button class="gs-suggestion-chip" (click)="query.set(s); onSearch()">{{ s }}</button>
+      }
     </div>
+  </div>
   }
 
 </div>

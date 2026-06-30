@@ -5,15 +5,20 @@ import { NgbCarousel, NgbSlide, NgbSlideEvent, NgbTooltip, NgbDropdownModule } f
 import { STUDY_NOTES, StudyNote } from '../../data/study-notes';
 import { CodeViewerComponent } from '../code-viewer/code-viewer.component';
 import { MermaidViewerComponent } from '../mermaid-viewer/mermaid-viewer.component';
+import { AiSearchBarComponent } from '../ai-search-bar/ai-search-bar.component';
+import { ThemeService } from '../../services/theme.service';
+import { AiSearchService } from '../../services/ai-search.service';
 
 @Component({
   selector: 'app-study-notes',
   templateUrl: './study-notes.component.html',
   styleUrls: ['./study-notes.component.scss'],
-  imports: [CommonModule, NgbCarousel, NgbSlide, NgbTooltip, NgbDropdownModule, CodeViewerComponent, MermaidViewerComponent]
+  imports: [CommonModule, NgbCarousel, NgbSlide, NgbTooltip, NgbDropdownModule, CodeViewerComponent, MermaidViewerComponent, AiSearchBarComponent]
 })
 export class StudyNotesComponent {
   private route = inject(ActivatedRoute);
+  readonly themeService = inject(ThemeService);
+  readonly ai = inject(AiSearchService);
 
   activeTopic = signal<StudyNote>(STUDY_NOTES[0]);
   activeVersion = signal<string>('fundamentals');
@@ -22,6 +27,8 @@ export class StudyNotesComponent {
   splitPercent = signal(60);
   isResizing = false;
   isTopicFullscreen = signal(false);
+  studyNotesSearchQuery = '';
+  readonly placeholderText = 'Ask anything... e.g. Angular Signals, RxJS switchMap, lazy loading';
 
   private resizeStartX = 0;
   private resizeStartPercent = 60;
@@ -105,6 +112,74 @@ export class StudyNotesComponent {
         menuBtn.click();
       }
     }
+  }
+
+  triggerGlobalSearch() {
+    this.openGlobalSearchShell();
+
+    const query = this.studyNotesSearchQuery.trim();
+    this.syncGlobalSearchInput(query);
+    if (!query) {
+      return;
+    }
+
+    const searchSubmit = document.querySelector('app-navbar .ai-search-submit') as HTMLButtonElement | null;
+    if (searchSubmit && !searchSubmit.disabled) {
+      searchSubmit.click();
+    }
+  }
+
+  onStudyNotesSearchQueryChange(value: string): void {
+    this.studyNotesSearchQuery = value;
+    this.syncGlobalSearchInput(value);
+  }
+
+  openGlobalSearchShell(): void {
+    if (typeof document === 'undefined') {
+      return;
+    }
+
+    const searchShell = document.querySelector('app-navbar .ai-search-shell') as HTMLElement | null;
+    if (searchShell) {
+      searchShell.click();
+    }
+  }
+
+  private syncGlobalSearchInput(query: string): void {
+    if (typeof document === 'undefined') {
+      return;
+    }
+
+    const searchInput = document.getElementById('global-nav-search-input') as HTMLInputElement | null;
+    if (!searchInput) {
+      return;
+    }
+
+    searchInput.focus();
+    searchInput.value = query;
+    searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+
+  onStudyNotesSearchKeydown(event: KeyboardEvent): void {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      this.triggerGlobalSearch();
+    }
+  }
+
+  clearStudyNotesSearch(): void {
+    this.studyNotesSearchQuery = '';
+    this.openGlobalSearchShell();
+
+    if (typeof document !== 'undefined') {
+      const clearButton = document.querySelector('app-navbar .ai-search-clear') as HTMLButtonElement | null;
+      if (clearButton) {
+        clearButton.click();
+        return;
+      }
+    }
+
+    this.syncGlobalSearchInput('');
   }
 
   startResize(event: MouseEvent) {

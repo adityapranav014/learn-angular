@@ -2,20 +2,66 @@
 
     <!-- Focus Header -->
     <div class="focus-header">
-        <button class="custom-icon-btn border-0 bg-transparent p-0 flex-shrink-0" type="button" (click)="triggerMainMenu()"
-            aria-label="Open Menu" ngbTooltip="Menu" placement="bottom">
-            <i class="bi bi-list fs-4"></i>
-        </button>
-        <span class="vr opacity-25 me-1 ms-1"></span>
+        <div class="focus-header-left">
+            <button class="custom-icon-btn border-0 bg-transparent p-0 flex-shrink-0" type="button"
+                (click)="triggerMainMenu()" aria-label="Open Menu" ngbTooltip="Menu" placement="bottom">
+                <i class="bi bi-list fs-4"></i>
+            </button>
+            <span class="vr opacity-25 me-1 ms-1"></span>
 
-        <div class="focus-header-title-container">
-            <i class="bi fs-5 flex-shrink-0" [class]="activeTopic().icon" style="color:#F637E3"></i>
-            <span class="vr opacity-25"></span>
-            <span class="fw-bold text-truncate focus-header-title">{{ activeTopic().title }}</span>
+            <div class="focus-header-title-container">
+                <i class="bi fs-5 flex-shrink-0" [class]="activeTopic().icon" style="color:#F637E3"></i>
+                <span class="vr opacity-25"></span>
+                <span class="fw-bold text-truncate focus-header-title">{{ activeTopic().title }}</span>
+            </div>
         </div>
 
+        <div class="focus-header-center">
+            <div class="focus-ai-search-wrap">
+                <app-ai-search-bar [query]="studyNotesSearchQuery" [placeholder]="placeholderText"
+                    [ariaLabel]="'Search with AI'" [showClear]="!!studyNotesSearchQuery"
+                    [loading]="ai.state() === 'loading'"
+                    [disabled]="ai.state() === 'loading' || !studyNotesSearchQuery.trim()" [expandOnHover]="true"
+                    (queryChange)="onStudyNotesSearchQueryChange($event)" (shellClicked)="openGlobalSearchShell()"
+                    (inputFocused)="openGlobalSearchShell()" (inputKeydown)="onStudyNotesSearchKeydown($event)"
+                    (clearClicked)="clearStudyNotesSearch()" (submitClicked)="triggerGlobalSearch()">
+                </app-ai-search-bar>
+            </div>
+        </div>
 
-        <div class="flex-fill"></div>
+        <div class="focus-header-right">
+            <div ngbDropdown placement="bottom-end" class="d-inline-block">
+                <button class="custom-icon-btn" id="focusThemeDropdown" ngbDropdownToggle aria-label="Toggle Theme"
+                    ngbTooltip="Theme" placement="bottom">
+                    @if (themeService.theme() === 'light') {
+                    <i class="bi bi-sun-fill"></i>
+                    } @else if (themeService.theme() === 'dark') {
+                    <i class="bi bi-moon-stars-fill"></i>
+                    } @else {
+                    <i class="bi bi-circle-half"></i>
+                    }
+                </button>
+                <div ngbDropdownMenu aria-labelledby="focusThemeDropdown"
+                    class="dropdown-menu-end shadow-sm border mt-2 py-2" style="z-index: 1050;">
+                    <button ngbDropdownItem (click)="themeService.setTheme('light')"
+                        class="d-flex align-items-center gap-3 px-3 py-2"
+                        [class.active]="themeService.theme() === 'light'">
+                        <i class="bi bi-sun-fill opacity-75"></i> <span class="fw-medium">Light</span>
+                    </button>
+                    <button ngbDropdownItem (click)="themeService.setTheme('dark')"
+                        class="d-flex align-items-center gap-3 px-3 py-2"
+                        [class.active]="themeService.theme() === 'dark'">
+                        <i class="bi bi-moon-stars-fill opacity-75"></i> <span class="fw-medium">Dark</span>
+                    </button>
+                    <button ngbDropdownItem (click)="themeService.setTheme('system')"
+                        class="d-flex align-items-center gap-3 px-3 py-2"
+                        [class.active]="themeService.theme() === 'system'">
+                        <i class="bi bi-circle-half opacity-75"></i> <span class="fw-medium">System</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 
@@ -32,21 +78,27 @@
                     <!-- Left: Content Card -->
                     <div class="focus-panel focus-panel-left" [style.width.%]="splitPercent()">
                         <div class="card h-100 border-0 shadow-sm" [class.topic-fullscreen]="isTopicFullscreen()">
-                            <div class="card-header bg-body border-bottom-0 pt-3 pb-2 d-flex align-items-center justify-content-between gap-2">
+                            <div
+                                class="card-header bg-body border-bottom-0 pt-3 pb-2 d-flex align-items-center justify-content-between gap-2">
                                 <div ngbDropdown class="topic-dropdown">
-                                    <button type="button" class="topic-dropdown-toggle" ngbDropdownToggle id="versionDropdownCard">
+                                    <button type="button" class="topic-dropdown-toggle" ngbDropdownToggle
+                                        id="versionDropdownCard">
                                         <span class="topic-dropdown-item-index">{{ activeVersionIndex() }}</span>
                                         <span class="topic-dropdown-label">{{ activeVersionLabel() }}</span>
-                                        <span class="topic-dropdown-badge">{{ i + 1 }}/{{ activeSections().length }}</span>
+                                        <span class="topic-dropdown-badge">{{ i + 1 }}/{{ activeSections().length
+                                            }}</span>
                                         <i class="bi bi-chevron-down topic-dropdown-chevron"></i>
                                     </button>
-                                    <div ngbDropdownMenu aria-labelledby="versionDropdownCard" class="topic-dropdown-menu">
+                                    <div ngbDropdownMenu aria-labelledby="versionDropdownCard"
+                                        class="topic-dropdown-menu">
                                         <div class="topic-dropdown-menu-header">
                                             <i class="bi bi-journal-text me-2" style="color: #c026d3;"></i>
                                             <span>Switch version</span>
                                         </div>
                                         @for (v of availableVersions(); track v.version; let j = $index) {
-                                        <button ngbDropdownItem class="topic-dropdown-item" [class.active]="activeVersion() === v.version" (click)="selectVersion(v.version)">
+                                        <button ngbDropdownItem class="topic-dropdown-item"
+                                            [class.active]="activeVersion() === v.version"
+                                            (click)="selectVersion(v.version)">
                                             <span class="topic-dropdown-item-index">{{ j + 1 }}</span>
                                             <span class="topic-dropdown-item-title">{{ v.label }}</span>
                                             @if (activeVersion() === v.version) {
@@ -59,7 +111,8 @@
                                 <div class="d-flex align-items-center gap-2">
                                     @if (activeSections().length > 0) {
                                     <div class="d-flex gap-1 align-items-center flex-shrink-0">
-                                        <button class="btn btn-sm btn-light border" (click)="prevSlide()" title="Previous">
+                                        <button class="btn btn-sm btn-light border" (click)="prevSlide()"
+                                            title="Previous">
                                             <i class="bi bi-chevron-left"></i>
                                         </button>
                                         <button class="btn btn-sm btn-light border" (click)="nextSlide()" title="Next">
@@ -68,9 +121,10 @@
                                     </div>
                                     }
                                     <button class="btn btn-sm btn-light border-0 p-1 lh-1" type="button"
-                                        [ngbTooltip]="isTopicFullscreen() ? 'Exit fullscreen' : 'Fullscreen'" placement="left"
-                                        (click)="toggleTopicFullscreen(); $event.stopPropagation()">
-                                        <i class="bi" [class.bi-fullscreen]="!isTopicFullscreen()" [class.bi-fullscreen-exit]="isTopicFullscreen()"></i>
+                                        [ngbTooltip]="isTopicFullscreen() ? 'Exit fullscreen' : 'Fullscreen'"
+                                        placement="left" (click)="toggleTopicFullscreen(); $event.stopPropagation()">
+                                        <i class="bi" [class.bi-fullscreen]="!isTopicFullscreen()"
+                                            [class.bi-fullscreen-exit]="isTopicFullscreen()"></i>
                                     </button>
                                 </div>
                             </div>
@@ -82,7 +136,7 @@
                                 @if (section.mermaidDefinitions && section.mermaidDefinitions.length > 0) {
                                 <div class="mt-4 pt-3 d-flex flex-column gap-4">
                                     @for (def of section.mermaidDefinitions; track def) {
-                                        <app-mermaid-viewer [definition]="def"></app-mermaid-viewer>
+                                    <app-mermaid-viewer [definition]="def"></app-mermaid-viewer>
                                     }
                                 </div>
                                 }

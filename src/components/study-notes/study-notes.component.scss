@@ -106,13 +106,89 @@ $focus-hdr: 3.5rem;
   height: $focus-hdr;
   min-height: $focus-hdr;
   flex-shrink: 0;
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
   gap: 0.5rem;
   padding: 0 1rem;
   background: var(--bs-body-bg);
   border-bottom: 1px solid var(--bs-border-color);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.focus-header-left {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.focus-header-center {
+  justify-self: center;
+  width: min(440px, calc(100vw - 2rem));
+}
+
+.focus-header-right {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  min-width: 36px;
+  min-height: 36px;
+}
+
+.focus-header .custom-icon-btn {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  color: var(--bs-body-color);
+  transition: background 0.18s ease, transform 0.18s ease;
+
+  &:hover {
+    background: rgba(246, 55, 227, 0.08);
+  }
+
+  &:active {
+    transform: scale(0.96);
+  }
+}
+
+.focus-ai-search-wrap {
+  width: 100%;
+  min-width: 220px;
+}
+
+@media (max-width: 767.98px) {
+  .focus-header {
+    grid-template-columns: minmax(0, 1fr) auto;
+    height: auto;
+    min-height: $focus-hdr;
+    padding: 0.5rem 0.75rem;
+    row-gap: 0.45rem;
+  }
+
+  .focus-header-left {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  .focus-header-center {
+    grid-row: 2;
+    grid-column: 1 / -1;
+    justify-self: stretch;
+    width: 100%;
+  }
+
+  .focus-header-right {
+    grid-row: 1;
+    grid-column: 2;
+  }
+
+  .focus-ai-search-wrap {
+    width: 100%;
+    min-width: 0;
+  }
 }
 
 .focus-header-title-container {
@@ -127,7 +203,7 @@ $focus-hdr: 3.5rem;
 .focus-header-title {
   font-size: 0.95rem;
   max-width: 6.5rem;
-  
+
   @media (min-width: 576px) {
     max-width: 16rem;
   }
@@ -160,7 +236,7 @@ $focus-hdr: 3.5rem;
       fill: var(--bs-tertiary-bg) !important;
       stroke: var(--bs-border-color) !important;
     }
-    
+
     .node .label,
     .node span,
     .node foreignObject div {
@@ -175,7 +251,8 @@ $focus-hdr: 3.5rem;
 
     .cluster .cluster-label span,
     .cluster .cluster-label div {
-      color: #9ca3af !important; /* Subtle grey for cluster titles */
+      color: #9ca3af !important;
+      /* Subtle grey for cluster titles */
     }
 
     /* Edges and text */
@@ -187,7 +264,7 @@ $focus-hdr: 3.5rem;
       padding: 0 !important;
       border: none !important;
     }
-    
+
     /* Apply background to Mermaid's mathematically calculated SVG rect */
     .edgeLabel rect,
     rect.edgeLabel,
@@ -220,6 +297,7 @@ $focus-hdr: 3.5rem;
     flex-direction: column;
 
     ::ng-deep {
+
       .carousel-inner,
       .carousel-item {
         height: 100% !important;
@@ -236,7 +314,7 @@ $focus-hdr: 3.5rem;
       height: 100% !important;
       display: flex;
       flex-direction: column;
-      
+
       .card-body {
         flex: 1 1 auto !important;
         max-height: none !important;
@@ -255,14 +333,16 @@ $focus-hdr: 3.5rem;
         height: 100% !important;
         display: flex;
         flex-direction: column;
-        padding: 0.15rem !important; /* Matches carousel slide padding for pixel-perfect top/bottom alignment */
+        padding: 0.15rem !important;
+        /* Matches carousel slide padding for pixel-perfect top/bottom alignment */
       }
+
       .card {
         height: 100% !important;
         display: flex;
         flex-direction: column;
       }
-      
+
       .study-code-hint-body {
         flex: 1 1 auto !important;
         max-height: none !important;
@@ -339,6 +419,7 @@ $focus-hdr: 3.5rem;
         height: 100% !important;
         display: block;
       }
+
       .study-code-hint-body {
         max-height: calc(60dvh - 3.5rem) !important;
         overflow-y: auto !important;
@@ -389,8 +470,15 @@ $focus-hdr: 3.5rem;
   font: 600 0.9rem/1.4 inherit;
   cursor: pointer;
   transition: all 0.2s ease;
-  &:hover { background: #f3f4f6; border-color: rgba(192,38,211,0.3); }
-  &::after { display: none !important; }
+
+  &:hover {
+    background: #f3f4f6;
+    border-color: rgba(192, 38, 211, 0.3);
+  }
+
+  &::after {
+    display: none !important;
+  }
 }
 
 .topic-dropdown-label {
@@ -398,14 +486,17 @@ $focus-hdr: 3.5rem;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 10rem;
-  @media (max-width: 575.98px) { max-width: 6rem; }
+
+  @media (max-width: 575.98px) {
+    max-width: 6rem;
+  }
 }
 
 .topic-dropdown-badge {
   font: 600 0.7rem/1 inherit;
   background: #fdf4ff;
   color: $ng-magenta;
-  border: 1px solid rgba(192,38,211,0.15);
+  border: 1px solid rgba(192, 38, 211, 0.15);
   padding: 0.15em 0.45em;
   border-radius: 999px;
 }
@@ -415,7 +506,10 @@ $focus-hdr: 3.5rem;
   color: #9ca3af;
   transition: transform 0.2s ease;
 }
-.topic-dropdown.show .topic-dropdown-chevron { transform: rotate(180deg); }
+
+.topic-dropdown.show .topic-dropdown-chevron {
+  transform: rotate(180deg);
+}
 
 .topic-dropdown-menu {
   min-width: 16rem;
@@ -423,7 +517,7 @@ $focus-hdr: 3.5rem;
   padding: 0.35rem 0;
   border: 1px solid var(--bs-border-color);
   border-radius: 0.75rem;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1), 0 2px 6px rgba(0,0,0,0.05);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.05);
   overflow: hidden;
 }
 
@@ -450,8 +544,17 @@ $focus-hdr: 3.5rem;
   margin: 0.2rem 0.4rem;
   width: calc(100% - 0.8rem);
   transition: all 0.15s ease;
-  &:hover { background: #fdf4ff !important; color: $ng-magenta !important; }
-  &.active { background: #fdf4ff !important; color: $ng-magenta !important; font-weight: 600; }
+
+  &:hover {
+    background: #fdf4ff !important;
+    color: $ng-magenta !important;
+  }
+
+  &.active {
+    background: #fdf4ff !important;
+    color: $ng-magenta !important;
+    font-weight: 600;
+  }
 }
 
 .topic-dropdown-item-index {
@@ -465,12 +568,27 @@ $focus-hdr: 3.5rem;
   background: #f3f4f6;
   color: #6b7280;
   flex-shrink: 0;
+
   .topic-dropdown-item:hover &,
-  .topic-dropdown-item.active & { background: rgba(192,38,211,0.12); color: $ng-magenta; }
+  .topic-dropdown-item.active & {
+    background: rgba(192, 38, 211, 0.12);
+    color: $ng-magenta;
+  }
 }
 
-.topic-dropdown-item-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0; }
-.topic-dropdown-check { color: $ng-magenta; font-size: 0.9rem; flex-shrink: 0; }
+.topic-dropdown-item-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  min-width: 0;
+}
+
+.topic-dropdown-check {
+  color: $ng-magenta;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
 
 /* ==========================================================================
    Dark Mode Context Overrides for Study Notes
@@ -479,24 +597,25 @@ $focus-hdr: 3.5rem;
   .focus-overlay {
     background: var(--bs-body-bg);
   }
-  
+
   .focus-header {
     background: var(--bs-body-bg);
     border-bottom-color: var(--bs-border-color) !important;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
   }
-  
+
   .focus-header-title {
     color: var(--bs-body-color) !important;
   }
-  
-  .custom-icon-btn, .custom-icon-btn i {
+
+  .custom-icon-btn,
+  .custom-icon-btn i {
     color: var(--bs-body-color) !important;
   }
 
   .study-section-body {
     color: var(--bs-body-color);
-    
+
     code {
       background-color: var(--bs-tertiary-bg);
     }
@@ -504,7 +623,7 @@ $focus-hdr: 3.5rem;
 
   .focus-divider {
     background: var(--bs-border-color);
-    
+
     &:hover,
     &.focus-divider--active {
       background: rgba(192, 38, 211, 0.5);
@@ -529,7 +648,7 @@ $focus-hdr: 3.5rem;
     background: var(--bs-body-bg);
     border-color: var(--bs-border-color);
     color: var(--bs-body-color);
-    
+
     &:hover {
       background: var(--bs-tertiary-bg);
       border-color: rgba(192, 38, 211, 0.5);
@@ -544,7 +663,7 @@ $focus-hdr: 3.5rem;
   .topic-dropdown-menu {
     background: var(--bs-tertiary-bg) !important;
     border-color: var(--bs-border-color);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 4px 10px rgba(0,0,0,0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 4px 10px rgba(0, 0, 0, 0.3);
   }
 
   .topic-dropdown-menu-header {
@@ -554,12 +673,12 @@ $focus-hdr: 3.5rem;
 
   .topic-dropdown-item {
     color: var(--bs-body-color) !important;
-    
+
     &:hover {
       background: rgba(255, 255, 255, 0.08) !important;
       color: var(--bs-body-color) !important;
     }
-    
+
     &.active {
       background: rgba(192, 38, 211, 0.15) !important;
       color: #e879f9 !important;
@@ -569,11 +688,12 @@ $focus-hdr: 3.5rem;
   .topic-dropdown-item-index {
     background: var(--bs-body-bg);
     color: #9ca3af;
-    
+
     .topic-dropdown-item:hover & {
       background: rgba(255, 255, 255, 0.1);
       color: var(--bs-body-color);
     }
+
     .topic-dropdown-item.active & {
       background: rgba(192, 38, 211, 0.25);
       color: #e879f9;

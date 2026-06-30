@@ -1,0 +1,26 @@
+<div class="ai-search-shell" [class.ai-search-shell--loading]="loading()"
+    [class.ai-search-shell--expand]="expandOnHover()" (click)="shellClicked.emit()"
+    (mouseenter)="shellMouseEnter.emit()" (mouseleave)="shellMouseLeave.emit()"
+    (transitionend)="onShellTransitionEnd($event)">
+    <i class="bi bi-stars ai-search-icon" aria-hidden="true"></i>
+
+    <input [id]="inputId() ?? null" class="ai-search-input" type="text" [value]="query()"
+        [attr.placeholder]="placeholder()" [attr.aria-label]="ariaLabel()" autocomplete="off" spellcheck="false"
+        (input)="onInput($event)" (focus)="inputFocused.emit()" (keydown)="inputKeydown.emit($event)" />
+
+    @if (showClear()) {
+    <button class="ai-search-clear" type="button" aria-label="Clear search"
+        (click)="clearClicked.emit(); $event.stopPropagation()">
+        <i class="bi bi-x-lg"></i>
+    </button>
+    }
+
+    <button class="ai-search-submit" type="button" aria-label="Search" [disabled]="disabled()"
+        (click)="submitClicked.emit(); $event.stopPropagation()">
+        @if (loading()) {
+        <span class="spinner-border spinner-border-sm" role="status"></span>
+        } @else {
+        <i class="bi bi-send-fill"></i>
+        }
+    </button>
+</div>

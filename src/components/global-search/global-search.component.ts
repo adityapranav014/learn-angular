@@ -3,6 +3,7 @@ import {
   inject,
   signal,
   computed,
+  PLATFORM_ID,
   OnDestroy
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -12,6 +13,7 @@ import { Highlight } from 'ngx-highlightjs';
 import { AiSearchService, AiCodeFile } from '../../services/ai-search.service';
 import { marked } from 'marked';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-global-search',
@@ -22,8 +24,14 @@ import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 export class GlobalSearchComponent implements OnDestroy {
   private sanitizer = inject(DomSanitizer);
   protected readonly ai = inject(AiSearchService);
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly isBrowser = isPlatformBrowser(this.platformId);
+  private readonly fullPlaceholder = 'Ask anything... e.g. Angular Signals, RxJS switchMap, lazy loading';
+  private readonly mobileBreakpoint = 767;
+  private readonly resizeHandler = () => this.updatePlaceholderText();
 
   query = signal('');
+  placeholderText = signal(this.fullPlaceholder);
   activeFileIndex = signal(0);
   copiedIndex = signal<number | null>(null);
   private copyTimer: ReturnType<typeof setTimeout> | null = null;
@@ -53,6 +61,39 @@ export class GlobalSearchComponent implements OnDestroy {
 
   // Track FullScreen status of code hint
   readonly isFullscreen = signal<boolean>(false);
+
+  constructor() {
+    if (this.isBrowser) {
+      this.updatePlaceholderText();
+      window.addEventListener('resize', this.resizeHandler, { passive: true });
+    }
+  }
+
+  private updatePlaceholderText(): void {
+    if (!this.isBrowser) {
+      return;
+    }
+
+    const width = window.innerWidth;
+    if (width > this.mobileBreakpoint) {
+      this.placeholderText.set(this.fullPlaceholder);
+      return;
+    }
+
+    // Reserve space for the icon, action button, and input paddings on compact screens.
+    const reservedWidth = 150;
+    const usableWidth = Math.max(140, width - reservedWidth);
+    const approxCharWidth = 7;
+    const maxChars = Math.max(22, Math.floor(usableWidth / approxCharWidth));
+
+    if (this.fullPlaceholder.length <= maxChars) {
+      this.placeholderText.set(this.fullPlaceholder);
+      return;
+    }
+
+    const truncated = `${this.fullPlaceholder.slice(0, Math.max(0, maxChars - 1)).trimEnd()}...`;
+    this.placeholderText.set(truncated);
+  }
 
   toggleFullscreen() {
     this.isFullscreen.update(v => !v);
@@ -92,5 +133,8 @@ export class GlobalSearchComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     if (this.copyTimer) clearTimeout(this.copyTimer);
+    if (this.isBrowser) {
+      window.removeEventListener('resize', this.resizeHandler);
+    }
   }
 }

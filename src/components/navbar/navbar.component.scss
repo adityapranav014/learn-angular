@@ -46,127 +46,275 @@ $track-color: var(--bs-border-color);
     }
 }
 
-/* Level 2 Documentation Track Container */
-.docs-sub-menu-track {
-    border-left: 1px solid $track-color;
-    margin-left: 0.5rem;
-    padding-left: 1.25rem;
+.nav-global-search-wrap {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    min-width: 0;
+    margin: 0 0.35rem;
 }
 
-.docs-section-title {
-    font-size: 0.9rem;
-    font-weight: 500;
-    margin-left: -2px;
+.global-search-popover {
+    max-width: none !important;
+    width: min(1080px, calc(100vw - 2rem));
 }
 
-/* Sub-Menu Links */
-.docs-sub-link {
-    color: $text-muted;
-    padding: 0.4rem 0.5rem;
+.global-search-popover .popover-body {
+    padding: 0.75rem;
+}
+
+.global-search-panel {
+    max-height: min(72vh, 680px);
+    overflow: hidden;
+}
+
+.global-search-empty-title {
+    margin: 0;
     font-size: 0.95rem;
-    border-left: 2px solid transparent;
-    margin-left: calc(-1.25rem - 1px);
-    padding-left: calc(1.25rem - 1px);
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 700;
+    color: var(--bs-body-color);
+}
+
+.global-search-empty-sub {
+    margin: 0.35rem 0 0;
+    font-size: 0.83rem;
+    color: var(--bs-secondary-color);
+}
+
+.global-search-suggestion-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.global-search-chip {
+    border: 1px solid var(--bs-border-color);
+    border-radius: 999px;
+    background: var(--bs-body-bg);
+    color: var(--bs-body-color);
+    padding: 0.25rem 0.65rem;
+    font-size: 0.78rem;
 
     &:hover {
-        color: $text-dark !important;
-        background-color: #faf5ff;
-        border-left: 2px solid rgba(192, 38, 211, 0.45) !important;
-        padding-left: calc(1.5rem - 1px) !important;
-
-        i.bi {
-            color: $ng-magenta !important;
-            opacity: 0.85 !important;
-        }
-    }
-
-    &.active-sub {
-        color: $text-dark !important;
-        font-weight: 500;
-        /* Forced border application to override Bootstrap defaults */
-        border-left: 2px solid $ng-magenta !important;
-        background-color: #fdf4ff;
-        /* Optional: adds a very subtle highlight to the active row */
-
-        i.bi {
-            color: $ng-magenta !important;
-            opacity: 1 !important;
-        }
+        border-color: rgba(246, 55, 227, 0.5);
+        color: $ng-magenta;
     }
 }
 
-/* Badges */
-.badge {
-    font-size: 0.75rem;
-    font-weight: 500;
-    padding: 0.35em 0.65em;
-    border-radius: 4px;
-}
-
-.badge-new {
-    background-color: #e6f4ea;
-    color: #1e8e3e;
-}
-
-.transition-all {
-    transition: all 0.2s ease;
-}
-
-/* Premium Header Styling */
-.custom-header-border {
-    /* A softer, much cleaner border than the default Bootstrap gray */
-    border-bottom: 1px solid var(--bs-border-color);
-}
-
-.letter-spacing-wide {
-    letter-spacing: 0.02em;
-}
-
-/* Custom Interactive Icon Buttons */
-.custom-icon-btn {
+.global-search-skeleton-wrap {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
+    gap: 0.75rem;
+}
+
+.global-search-skeleton-col {
+    flex: 1;
+}
+
+@keyframes navSearchShimmer {
+    0% {
+        background-position: -280px 0;
+    }
+
+    100% {
+        background-position: 280px 0;
+    }
+}
+
+.global-search-skeleton-wrap .skeleton-line {
+    height: 12px;
+    border-radius: 7px;
+    margin-bottom: 0.55rem;
+    background: linear-gradient(90deg,
+            rgba(148, 163, 184, 0.16) 25%,
+            rgba(148, 163, 184, 0.3) 50%,
+            rgba(148, 163, 184, 0.16) 75%);
+    background-size: 560px 100%;
+    animation: navSearchShimmer 1.25s linear infinite;
+}
+
+.global-search-skeleton-wrap .skeleton-line.w-100 {
+    width: 100%;
+}
+
+.global-search-skeleton-wrap .skeleton-line.w-90 {
+    width: 90%;
+}
+
+.global-search-skeleton-wrap .skeleton-line.w-80 {
+    width: 80%;
+}
+
+.global-search-skeleton-wrap .skeleton-line.w-70 {
+    width: 70%;
+}
+
+.global-search-skeleton-wrap .skeleton-line.w-60 {
+    width: 60%;
+}
+
+.global-search-skeleton-wrap .skeleton-line.w-40 {
+    width: 40%;
+}
+
+.global-search-skeleton-wrap .skeleton-line.w-30 {
+    width: 30%;
+}
+
+.global-search-error {
+    border-radius: 10px;
+    border: 1px solid var(--bs-border-color);
+    background: var(--bs-secondary-bg);
+    padding: 0.75rem 0.9rem;
+}
+
+.global-search-error-title {
+    display: block;
+    font-size: 0.86rem;
+    margin-bottom: 0.15rem;
+}
+
+.global-search-error-msg {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--bs-secondary-color);
+}
+
+.global-search-results {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 0.75rem;
+    min-height: 380px;
+    height: min(68vh, 620px);
+    max-height: min(68vh, 620px);
+    overflow: hidden;
+}
+
+.global-search-theory,
+.global-search-code {
+    border: 1px solid var(--bs-border-color);
+    border-radius: 12px;
+    background: var(--bs-body-bg);
+    min-height: 0;
+    height: 100%;
+}
+
+.global-search-theory {
+    overflow: auto;
+    padding: 1rem 1.05rem;
+}
+
+.global-search-code {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.global-search-tabs {
+    display: flex;
+    gap: 0.25rem;
+    overflow: auto;
+    border-bottom: 1px solid var(--bs-border-color);
+    padding: 0.35rem 0.35rem 0;
+}
+
+.global-search-tab {
     border: none;
     background: transparent;
-    border-radius: 50%;
-    color: #4b5563;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
-    outline: none;
+    color: var(--bs-secondary-color);
+    font-size: 0.75rem;
+    padding: 0.35rem 0.45rem;
+    border-bottom: 2px solid transparent;
 
-    &.dropdown-toggle::after {
-        display: none !important;
-    }
-
-    i {
-        font-size: 1.55rem;
-        line-height: 1;
-        pointer-events: none;
-        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), color 0.25s ease;
-    }
-
-    /* Soft hover state */
-    &:hover {
-        background-color: #fdf4ff;
+    &.active {
         color: $ng-magenta;
-
-        i {
-            transform: scale(1.08);
-            
-            &.bi-x-lg {
-                transform: scale(1.08) rotate(90deg);
-            }
-        }
+        border-bottom-color: $ng-magenta;
     }
 
-    /* Micro-interaction on click */
-    &:active {
-        background-color: #f3e8ff;
-        transform: scale(0.92);
+    &:focus,
+    &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(246, 55, 227, 0.28);
+        border-color: rgba(246, 55, 227, 0.32);
+    }
+}
+
+.global-search-code-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--bs-border-color);
+    padding: 0.4rem 0.65rem;
+    gap: 0.5rem;
+}
+
+.global-search-file-name {
+    font-size: 0.75rem;
+    color: var(--bs-secondary-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.global-search-copy {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    border: 1px solid var(--bs-border-color);
+    background: transparent;
+    color: var(--bs-secondary-color);
+}
+
+.global-search-code-body {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+}
+
+@media (max-width: 991px) {
+    .nav-global-search-wrap {
+        margin: 0 0.35rem;
+    }
+
+    .nav-global-search {
+        width: 100%;
+    }
+
+    .nav-global-search:hover,
+    .nav-global-search:focus-within {
+        width: 100%;
+    }
+
+    .global-search-results {
+        grid-template-columns: 1fr;
+        max-height: min(72vh, 660px);
+    }
+}
+
+@media (max-width: 767px) {
+    .nav-global-search-wrap {
+        margin: 0 0.2rem;
+    }
+
+    .nav-global-search-input {
+        font-size: 0.76rem;
+    }
+
+    .global-search-popover {
+        width: calc(100vw - 1rem);
+    }
+
+    .global-search-panel {
+        max-height: min(86vh, 820px);
+    }
+
+    .global-search-results {
+        height: min(80vh, 760px);
+        max-height: min(80vh, 760px);
+    }
+
+    .global-search-skeleton-wrap {
+        flex-direction: column;
     }
 }
 
@@ -202,20 +350,20 @@ $track-color: var(--bs-border-color);
     cursor: pointer;
     outline: none;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    
+
     i {
         font-size: 1.1rem;
         transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    
+
     &:hover {
         color: $ng-magenta !important;
-        
+
         i {
             transform: translateX(-3px);
         }
     }
-    
+
     &:active {
         transform: scale(0.97);
     }
@@ -237,36 +385,86 @@ nav.navbar.sticky-top {
 .navbar-home {
     background: transparent !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-    
+
+    .nav-global-search {
+        border-color: rgba(255, 255, 255, 0.52);
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.12));
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+
+        &:focus-within {
+            border-color: rgba(246, 55, 227, 0.52);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.33), rgba(255, 255, 255, 0.18));
+            box-shadow: 0 0 0 2px rgba(246, 55, 227, 0.18), 0 10px 24px rgba(0, 0, 0, 0.28);
+        }
+
+        &.nav-global-search--loading::after {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.33), rgba(255, 255, 255, 0.18));
+        }
+    }
+
+    .nav-global-search-icon {
+        color: rgba(255, 137, 240, 0.96);
+    }
+
+    .nav-global-search-input {
+        color: rgba(255, 255, 255, 0.88);
+
+        &::placeholder {
+            color: rgba(255, 255, 255, 0.62);
+        }
+    }
+
+    .nav-search-clear {
+        background: rgba(255, 255, 255, 0.14);
+        color: rgba(255, 255, 255, 0.82);
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.24);
+            color: #ffffff;
+        }
+    }
+
+    .nav-search-submit {
+        background: linear-gradient(135deg, rgba(246, 55, 227, 0.42), rgba(168, 85, 247, 0.4));
+        color: rgba(255, 245, 254, 0.96);
+    }
+
     .brand-text {
         color: #ffffff !important;
-        
+
         &:hover {
             color: #ffffff !important;
             text-shadow: none !important;
         }
     }
-    
+
     .custom-icon-btn {
-        color: rgba(255, 255, 255, 0.8) !important;
+        color: rgba(255, 255, 255, 0.94) !important;
         border: 1px solid rgba(255, 255, 255, 0.15) !important;
         background-color: rgba(0, 0, 0, 0.2) !important;
         backdrop-filter: blur(4px);
-        
+
         &:hover {
             background-color: rgba(255, 255, 255, 0.15) !important;
             color: #ffffff !important;
             border-color: rgba(255, 255, 255, 0.3) !important;
         }
-        
+
         &:active {
             background-color: rgba(255, 255, 255, 0.25) !important;
+        }
+
+        &:focus,
+        &:focus-visible {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.5) !important;
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.22), 0 0 0 4px rgba(246, 55, 227, 0.25);
         }
     }
 
     .navbar-brand:hover {
         opacity: 1 !important;
-        
+
         .brand-text {
             color: #ffffff !important;
             text-shadow: 0 0 8px rgba(255, 255, 255, 0.3) !important;
@@ -275,38 +473,39 @@ nav.navbar.sticky-top {
 }
 
 /* ==========================================================================
-   Dark Mode Context Overrides
-   ========================================================================== */
+           Dark Mode Context Overrides
+           ========================================================================== */
 [data-bs-theme="dark"] {
     .text-dark {
         color: var(--bs-body-color) !important;
     }
-    
+
     .text-muted {
         color: #9ca3af !important;
     }
-    
+
     .main-menu-link {
         color: var(--bs-body-color) !important;
-        
-        &:hover, &.active {
+
+        &:hover,
+        &.active {
             background-color: rgba(246, 55, 227, 0.15) !important;
             color: #fca5f0 !important;
-            
+
             i.bi {
                 color: #fca5f0 !important;
             }
         }
     }
-    
+
     .docs-sub-link {
         color: #9ca3af !important;
-        
+
         &:hover {
             color: var(--bs-body-color) !important;
             background-color: rgba(246, 55, 227, 0.1) !important;
         }
-        
+
         &.active-sub {
             color: var(--bs-body-color) !important;
             background-color: rgba(246, 55, 227, 0.15) !important;
@@ -327,19 +526,59 @@ nav.navbar.sticky-top {
     }
 
     .custom-icon-btn {
-        color: #d1d5db !important;
-        
+        color: #e5e7eb !important;
+        border-color: rgba(255, 255, 255, 0.14) !important;
+        background: rgba(255, 255, 255, 0.04) !important;
+
         &:hover {
             background-color: rgba(246, 55, 227, 0.15) !important;
             color: #fca5f0 !important;
-            
+
             i {
                 color: #fca5f0 !important;
             }
         }
-        
+
         &:active {
             background-color: rgba(246, 55, 227, 0.25) !important;
         }
+
+        &:focus,
+        &:focus-visible {
+            outline: none;
+            border-color: rgba(246, 55, 227, 0.42) !important;
+            box-shadow: 0 0 0 2px rgba(246, 55, 227, 0.22);
+        }
     }
-}
+
+    .nav-global-search {
+        background: rgba(17, 24, 39, 0.68);
+        border-color: rgba(255, 255, 255, 0.14);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+
+        &:focus-within {
+            border-color: rgba(246, 55, 227, 0.45);
+            background: rgba(17, 24, 39, 0.86);
+            box-shadow: 0 0 0 2px rgba(246, 55, 227, 0.15);
+        }
+    }
+
+    .nav-global-search-input::placeholder {
+        color: rgba(255, 255, 255, 0.58);
+    }
+
+    .nav-search-clear {
+        background: rgba(255, 255, 255, 0.14);
+        color: rgba(255, 255, 255, 0.9);
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.24);
+            color: #ffffff;
+        }
+    }
+
+    .nav-search-submit {
+        background: rgba(246, 55, 227, 0.34);
+        color: #ffd7f6;
+    }
+}
