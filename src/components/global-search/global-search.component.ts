@@ -4,7 +4,8 @@ import {
   signal,
   computed,
   PLATFORM_ID,
-  OnDestroy
+  OnDestroy,
+  effect
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -14,6 +15,7 @@ import { AiSearchService, AiCodeFile } from '../../services/ai-search.service';
 import { marked } from 'marked';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { isPlatformBrowser } from '@angular/common';
+import { FullscreenService } from '../../services/fullscreen.service';
 
 @Component({
   selector: 'app-global-search',
@@ -26,6 +28,7 @@ export class GlobalSearchComponent implements OnDestroy {
   protected readonly ai = inject(AiSearchService);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
+  private readonly fullscreenService = inject(FullscreenService);
   private readonly fullPlaceholder = 'Ask anything... e.g. Angular Signals, RxJS switchMap, lazy loading';
   private readonly mobileBreakpoint = 767;
   private readonly resizeHandler = () => this.updatePlaceholderText();
@@ -67,6 +70,10 @@ export class GlobalSearchComponent implements OnDestroy {
       this.updatePlaceholderText();
       window.addEventListener('resize', this.resizeHandler, { passive: true });
     }
+
+    effect(() => {
+      this.fullscreenService.setFullscreen(this.isFullscreen());
+    });
   }
 
   private updatePlaceholderText(): void {
@@ -136,5 +143,6 @@ export class GlobalSearchComponent implements OnDestroy {
     if (this.isBrowser) {
       window.removeEventListener('resize', this.resizeHandler);
     }
+    this.fullscreenService.setFullscreen(false);
   }
 }

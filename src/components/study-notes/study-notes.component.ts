@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { Component, inject, signal, computed, ViewChild, ElementRef, HostListener, DestroyRef, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { NgbCarousel, NgbSlide, NgbSlideEvent, NgbTooltip, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
@@ -8,6 +8,7 @@ import { MermaidViewerComponent } from '../mermaid-viewer/mermaid-viewer.compone
 import { AiSearchBarComponent } from '../ai-search-bar/ai-search-bar.component';
 import { ThemeService } from '../../services/theme.service';
 import { AiSearchService } from '../../services/ai-search.service';
+import { FullscreenService } from '../../services/fullscreen.service';
 
 @Component({
   selector: 'app-study-notes',
@@ -19,6 +20,8 @@ export class StudyNotesComponent {
   private route = inject(ActivatedRoute);
   readonly themeService = inject(ThemeService);
   readonly ai = inject(AiSearchService);
+  private destroyRef = inject(DestroyRef);
+  private fullscreenService = inject(FullscreenService);
 
   activeTopic = signal<StudyNote>(STUDY_NOTES[0]);
   activeVersion = signal<string>('fundamentals');
@@ -71,6 +74,14 @@ export class StudyNotesComponent {
   });
 
   constructor() {
+    this.destroyRef.onDestroy(() => {
+      this.fullscreenService.setFullscreen(false);
+    });
+
+    effect(() => {
+      this.fullscreenService.setFullscreen(this.isTopicFullscreen());
+    });
+
     this.route.paramMap.subscribe(params => {
       const topicId = params.get('topicId');
       if (topicId) {

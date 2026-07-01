@@ -883,3 +883,11 @@
     }
   }
 }
+
+/* Hide default Bootstrap caret on theme dropdown toggles */
+#themeDropdown::after,
+#focusThemeDropdown::after {
+  display: none !important;
+}
+
+

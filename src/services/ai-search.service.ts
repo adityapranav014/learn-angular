@@ -14,7 +14,7 @@ export interface AiSearchResult {
 }
 
 export type SearchState = 'idle' | 'loading' | 'success' | 'error';
-export type ErrorType = 'quota' | 'auth' | 'network' | 'generic';
+export type ErrorType = 'quota' | 'auth' | 'network' | 'unavailable' | 'generic';
 
 @Injectable({ providedIn: 'root' })
 export class AiSearchService {
@@ -125,7 +125,7 @@ Write code that can be directly copied into an Angular project and run without m
           return { type: 'generic', message: 'The request was malformed. Please rephrase your query and try again.' };
         }
         if (status === 'UNAVAILABLE' || code === 503) {
-          return { type: 'network', message: 'The Gemini service is temporarily unavailable. Please try again in a moment.' };
+          return { type: 'unavailable', message: 'The Gemini service is temporarily overloaded or experiencing high demand. Please try again in a moment.' };
         }
       }
     } catch { /* not JSON — fall through */ }
@@ -136,6 +136,8 @@ Write code that can be directly copied into an Angular project and run without m
       return { type: 'quota', message: 'API rate limit reached. Please wait a moment and try again.' };
     if (lower.includes('api key') || lower.includes('api_key') || lower.includes('401') || lower.includes('403') || lower.includes('permission'))
       return { type: 'auth', message: 'API key is invalid or missing. Check the key in environment.ts.' };
+    if (lower.includes('503') || lower.includes('unavailable') || lower.includes('high demand') || lower.includes('spikes in demand') || lower.includes('temporary'))
+      return { type: 'unavailable', message: 'The model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again in a moment.' };
     if (lower.includes('fetch') || lower.includes('network') || lower.includes('net::') || lower.includes('failed to fetch'))
       return { type: 'network', message: 'Network error. Please check your internet connection.' };
     if (lower.includes('empty') || lower.includes('json') || lower.includes('parse'))

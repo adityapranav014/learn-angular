@@ -135,22 +135,39 @@ $focus-hdr: 3.5rem;
   min-height: 36px;
 }
 
-.focus-header .custom-icon-btn {
+.focus-header .focus-header-icon-btn {
   width: 36px;
   height: 36px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  color: var(--bs-body-color);
-  transition: background 0.18s ease, transform 0.18s ease;
+  color: #6b7280 !important;
+  border: 1px solid #d1d5db !important;
+  background-color: #e5e7eb !important;
+  transition: all 0.18s ease;
+
+  i {
+    color: inherit !important;
+  }
 
   &:hover {
-    background: rgba(246, 55, 227, 0.08);
+    background-color: #d1d5db !important;
+    color: #4b5563 !important;
+    border-color: #9ca3af !important;
   }
 
   &:active {
     transform: scale(0.96);
+    background-color: #cbd5e1 !important;
+    color: #374151 !important;
+  }
+
+  &:focus,
+  &:focus-visible {
+    outline: none;
+    border-color: rgba(246, 55, 227, 0.5) !important;
+    box-shadow: 0 0 0 2px rgba(246, 55, 227, 0.2);
   }
 }
 
@@ -608,9 +625,30 @@ $focus-hdr: 3.5rem;
     color: var(--bs-body-color) !important;
   }
 
-  .custom-icon-btn,
-  .custom-icon-btn i {
-    color: var(--bs-body-color) !important;
+  .focus-header .focus-header-icon-btn {
+    color: #e5e7eb !important;
+    border-color: rgba(255, 255, 255, 0.14) !important;
+    background: rgba(255, 255, 255, 0.04) !important;
+
+    &:hover {
+      background-color: rgba(246, 55, 227, 0.15) !important;
+      color: #fca5f0 !important;
+
+      i {
+        color: #fca5f0 !important;
+      }
+    }
+
+    &:active {
+      background-color: rgba(246, 55, 227, 0.25) !important;
+    }
+
+    &:focus,
+    &:focus-visible {
+      outline: none;
+      border-color: rgba(246, 55, 227, 0.42) !important;
+      box-shadow: 0 0 0 2px rgba(246, 55, 227, 0.22);
+    }
   }
 
   .study-section-body {

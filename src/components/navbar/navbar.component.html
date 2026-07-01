@@ -102,6 +102,7 @@
                 @switch (ai.errorType()) {
                 @case ('quota') { Rate limit reached }
                 @case ('auth') { Authentication error }
+                @case ('unavailable') { Service Overloaded }
                 @case ('network') { Connection error }
                 @default { Something went wrong }
                 }
@@ -114,7 +115,7 @@
         <div class="global-search-results">
             <div class="global-search-theory markdown-body" [innerHTML]="theoryHtml()"></div>
 
-            <div class="global-search-code">
+            <div class="global-search-code" [class.code-hint-fullscreen]="isCodeFullscreen()">
                 @if (ai.result()!.files.length > 1) {
                 <div class="global-search-tabs">
                     @for (file of ai.result()!.files; track file.filename; let i = $index) {
@@ -129,12 +130,20 @@
                 @if (activeFile(); as file) {
                 <div class="global-search-code-head">
                     <span class="global-search-file-name">{{ file.filename }}</span>
-                    <button class="global-search-copy" type="button" (click)="copyCode(file.code, activeFileIndex())"
-                        [ngbTooltip]="copiedIndex() === activeFileIndex() ? null : 'Copy to clipboard'"
-                        placement="left">
-                        <i class="bi" [class.bi-clipboard]="copiedIndex() !== activeFileIndex()"
-                            [class.bi-check2-all]="copiedIndex() === activeFileIndex()"></i>
-                    </button>
+                    <div class="d-flex align-items-center gap-1">
+                        <button class="global-search-copy" type="button" (click)="copyCode(file.code, activeFileIndex())"
+                            [ngbTooltip]="copiedIndex() === activeFileIndex() ? null : 'Copy to clipboard'"
+                            placement="bottom">
+                            <i class="bi" [class.bi-clipboard]="copiedIndex() !== activeFileIndex()"
+                                [class.bi-check2-all]="copiedIndex() === activeFileIndex()"></i>
+                        </button>
+                        <button class="global-search-copy" type="button" (click)="toggleCodeFullscreen()"
+                            [ngbTooltip]="isCodeFullscreen() ? 'Exit fullscreen' : 'Fullscreen'"
+                            placement="bottom">
+                            <i class="bi" [class.bi-fullscreen]="!isCodeFullscreen()"
+                                [class.bi-fullscreen-exit]="isCodeFullscreen()"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="global-search-code-body">

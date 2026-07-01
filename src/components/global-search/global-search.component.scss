@@ -472,7 +472,8 @@ $brand-focus-ring: rgba(246, 55, 227, 0.18);
   border: 1px solid var(--bs-border-color);
   background: var(--bs-secondary-bg);
 
-  &[data-type="quota"] {
+  &[data-type="quota"],
+  &[data-type="unavailable"] {
     background: rgba(251, 191, 36, 0.06);
     border-color: rgba(251, 191, 36, 0.3);
 
@@ -515,7 +516,8 @@ $brand-focus-ring: rgba(246, 55, 227, 0.18);
   }
 }
 
-[data-bs-theme="dark"] .gs-error[data-type="quota"] {
+[data-bs-theme="dark"] .gs-error[data-type="quota"],
+[data-bs-theme="dark"] .gs-error[data-type="unavailable"] {
   .gs-error-title {
     color: #fbbf24;
   }

@@ -1,11 +1,11 @@
 <div class="focus-overlay" [class.focus-resizing]="isResizing">
 
     <!-- Focus Header -->
-    <div class="focus-header">
+    <div class="focus-header" [class.d-none]="isTopicFullscreen()">
         <div class="focus-header-left">
-            <button class="custom-icon-btn border-0 bg-transparent p-0 flex-shrink-0" type="button"
-                (click)="triggerMainMenu()" aria-label="Open Menu" ngbTooltip="Menu" placement="bottom">
-                <i class="bi bi-list fs-4"></i>
+            <button class="custom-icon-btn focus-header-icon-btn" type="button" (click)="triggerMainMenu()"
+                aria-label="Open Menu" ngbTooltip="Menu" placement="bottom">
+                <i class="bi bi-list"></i>
             </button>
             <span class="vr opacity-25 me-1 ms-1"></span>
 
@@ -31,8 +31,8 @@
 
         <div class="focus-header-right">
             <div ngbDropdown placement="bottom-end" class="d-inline-block">
-                <button class="custom-icon-btn" id="focusThemeDropdown" ngbDropdownToggle aria-label="Toggle Theme"
-                    ngbTooltip="Theme" placement="bottom">
+                <button class="custom-icon-btn focus-header-icon-btn" id="focusThemeDropdown" ngbDropdownToggle
+                    aria-label="Toggle Theme" ngbTooltip="Theme" placement="bottom">
                     @if (themeService.theme() === 'light') {
                     <i class="bi bi-sun-fill"></i>
                     } @else if (themeService.theme() === 'dark') {

@@ -72,6 +72,7 @@
       @switch (ai.errorType()) {
       @case ('quota') { <i class="bi bi-hourglass-split"></i> }
       @case ('auth') { <i class="bi bi-shield-lock"></i> }
+      @case ('unavailable') { <i class="bi bi-exclamation-triangle"></i> }
       @case ('network') { <i class="bi bi-wifi-off"></i> }
       @default { <i class="bi bi-exclamation-circle"></i> }
       }
@@ -81,6 +82,7 @@
         @switch (ai.errorType()) {
         @case ('quota') { Rate limit reached }
         @case ('auth') { Authentication error }
+        @case ('unavailable') { Service Overloaded }
         @case ('network') { Connection error }
         @default { Something went wrong }
         }

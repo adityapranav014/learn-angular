@@ -1,7 +1,8 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, Input, signal, inject, DestroyRef, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { Highlight } from 'ngx-highlightjs';
+import { FullscreenService } from '../../services/fullscreen.service';
 
 export interface CodeFile {
     fileName: string;
@@ -21,6 +22,21 @@ export class CodeViewerComponent {
     activeFileIndex = 0;
     isCopied = false;
     isFullscreen = false;
+
+    private destroyRef = inject(DestroyRef);
+    private fullscreenService = inject(FullscreenService);
+
+    constructor() {
+        this.destroyRef.onDestroy(() => {
+            this.fullscreenService.setFullscreen(false);
+        });
+
+        effect(() => {
+            if (!this.fullscreenService.isFullscreen()) {
+                this.isFullscreen = false;
+            }
+        });
+    }
 
     get safeIdx(): number {
         return this.activeFileIndex < this.codeFiles.length ? this.activeFileIndex : 0;
@@ -48,5 +64,6 @@ export class CodeViewerComponent {
 
     toggleFullscreen() {
         this.isFullscreen = !this.isFullscreen;
+        this.fullscreenService.setFullscreen(this.isFullscreen);
     }
 }

@@ -10,6 +10,7 @@ import { NgbOffcanvas, NgbTooltip, NgbDropdownModule, NgbPopover, NgbPopoverModu
 import { take } from 'rxjs/operators';
 import { ScrollActiveDirective } from '../../app/directives/appScrollActive.directive';
 import { ThemeService, Theme } from '../../services/theme.service';
+import { FullscreenService } from '../../services/fullscreen.service';
 import { AiSearchBarComponent } from '../ai-search-bar/ai-search-bar.component';
 
 @Component({
@@ -42,7 +43,10 @@ export class NavbarComponent {
   private readonly resizeHandler = () => this.updatePlaceholderText();
   public router = inject(Router);
   public themeService = inject(ThemeService);
+  public fullscreenService = inject(FullscreenService);
   protected readonly ai = inject(AiSearchService);
+
+  isCodeFullscreen = signal(false);
 
   searchQuery = signal('');
   placeholderText = signal(this.fullPlaceholder);
@@ -184,6 +188,19 @@ export class NavbarComponent {
     return currentPath.startsWith('/study-notes');
   }
 
+  toggleCodeFullscreen(): void {
+    const nextVal = !this.isCodeFullscreen();
+    this.isCodeFullscreen.set(nextVal);
+    this.fullscreenService.setFullscreen(nextVal);
+  }
+
+  resetCodeFullscreen(): void {
+    if (this.isCodeFullscreen()) {
+      this.isCodeFullscreen.set(false);
+      this.fullscreenService.setFullscreen(false);
+    }
+  }
+
   openSearchPopover(popover: NgbPopover): void {
     this.queuePlaceholderSync();
     if (!popover.isOpen()) {
@@ -192,6 +209,7 @@ export class NavbarComponent {
   }
 
   closeSearchPopover(popover: NgbPopover): void {
+    this.resetCodeFullscreen();
     if (popover.isOpen()) {
       popover.close();
     }
@@ -211,6 +229,7 @@ export class NavbarComponent {
   }
 
   async runSearch(popover: NgbPopover): Promise<void> {
+    this.resetCodeFullscreen();
     const query = this.searchQuery().trim();
     this.openSearchPopover(popover);
 
@@ -224,6 +243,7 @@ export class NavbarComponent {
   }
 
   clearSearch(popover: NgbPopover): void {
+    this.resetCodeFullscreen();
     this.searchQuery.set('');
     this.ai.reset();
     this.activeFileIndex.set(0);
@@ -231,6 +251,7 @@ export class NavbarComponent {
   }
 
   applySuggestion(topic: string, popover: NgbPopover): void {
+    this.resetCodeFullscreen();
     this.searchQuery.set(topic);
     void this.runSearch(popover);
   }
@@ -324,6 +345,7 @@ export class NavbarComponent {
   }
 
   ngOnDestroy(): void {
+    this.resetCodeFullscreen();
     if (this.copyTimer) {
       clearTimeout(this.copyTimer);
     }

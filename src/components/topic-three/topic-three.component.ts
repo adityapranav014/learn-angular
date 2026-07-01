@@ -1,9 +1,10 @@
 import { CommonModule, JsonPipe } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap/accordion';
 import { NgbCarousel, NgbSlide, NgbSlideEvent } from '@ng-bootstrap/ng-bootstrap/carousel';
 import { CodeViewerComponent, CodeFile } from '../code-viewer/code-viewer.component';
+import { FullscreenService } from '../../services/fullscreen.service';
 
 @Component({
   selector: 'app-topic-three',
@@ -11,6 +12,7 @@ import { CodeViewerComponent, CodeFile } from '../code-viewer/code-viewer.compon
   imports: [NgbAccordionModule, CommonModule, FormsModule, JsonPipe, NgbCarousel, NgbSlide, CodeViewerComponent],
 })
 export class TopicThreeComponent {
+  private fullscreenService = inject(FullscreenService);
 
   activeIndex = 0;
 
@@ -21,6 +23,7 @@ export class TopicThreeComponent {
 
   onSlide(event: NgbSlideEvent) {
     this.activeIndex = parseInt(event.current.replace('task-', '')) - 1;
+    this.fullscreenService.setFullscreen(false);
   }
 
   // Slide 1: Theory
